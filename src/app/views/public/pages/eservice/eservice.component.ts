@@ -18,7 +18,7 @@ import { PrestationItemComponent } from '../../../components/prestation-item/pre
   templateUrl: './eservice.component.html',
 
     standalone: true,
-      imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,PrestationItemComponentgit ],
+      imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,PrestationItemComponent],
   styleUrls: ['./eservice.component.css']
 })
 export class EserviceComponent implements OnInit {

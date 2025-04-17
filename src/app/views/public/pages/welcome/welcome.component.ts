@@ -58,9 +58,9 @@ pageSizerv = 100;
 collectionSize = 0;
 collectionSizerv = 0;
 collectionSizeWhats = 0;
-dataReq:any
-dataReqrv:any
-dataWhats:any
+dataReq:any[]=[]
+dataReqrv:any[]=[]
+dataWhats:any[]=[]
 etapes = []
 _tempReq: any[]=[];
 _tempReqrv: any[]=[];

@@ -6,13 +6,13 @@ import { GlobalName } from './core/utils/global-name';
 import { LocalStorageService } from './core/utils/local-stoarge-service';
 import { AuthService } from './core/services/auth.service';
 import { PdaService } from './core/services/pda.servic';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,RouterModule],
+    RouterOutlet,RouterModule,CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -92,9 +92,9 @@ settings:any
     this.subs=this.user_auth_service.getUserLoggedIn().subscribe((res:boolean) => {
       this.isLogin = res
       });
-      if(this.getCookie('accept_cookie') != ""){
-        this.isConsented = true;
-      }
+      // if(this.getCookie('accept_cookie') != ""){
+      //   this.isConsented = true;
+      // }
 
 
       this.settings = JSON.parse(this.local_service.get('pdaSetting'))

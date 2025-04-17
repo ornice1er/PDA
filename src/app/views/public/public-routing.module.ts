@@ -7,6 +7,8 @@ import { EserviceCorrectionComponent } from "./pages/eservice-correction/eservic
 import { EserviceCreateComponent } from "./pages/eservice-create/eservice-create.component";
 import { EserviceProofComponent } from "./pages/eservice-proof/eservice-proof.component";
 import { EserviceComponent } from "./pages/eservice/eservice.component";
+import { LogUsagerComponent } from "./pages/log-usager/log-usager.component";
+import { RequeteComponent } from "./pages/requete/requete.component";
 
 export const PublicRoutes: any = [ // ✅ Doit être un tableau
     {
@@ -50,7 +52,17 @@ export const PublicRoutes: any = [ // ✅ Doit être un tableau
         canActivate: [IsAuthGuard]
       
   },
-        
+  {
+    component: LogUsagerComponent,
+    path:"logusager",
+          // canActivate: [AuthGuard]
+      },
       ]
-    } 
+    },
+    {
+      component: RequeteComponent,
+        path: "requetes",
+        canActivate: [IsAuthGuard]
+      
+  },
   ]

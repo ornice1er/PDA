@@ -1,0 +1,181 @@
+
+<div class="bg-body-tertiary p-5">
+    <h1 class="mb-3 meb blueColorT text-center" >SOUMETTRE UNE PREOCCUPATION INSTANTANNEE</h1>
+
+    <div class="container bg-white py-5">    
+        <div class="row mb-3 no-gutters">
+            <div class="col-8 mx-auto shadow p-3 mb-5 bg-white rounded">
+                <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value,frmrequeteusager)" class="form-horizontal " novalidate="">
+        
+                        <div style="color:red">{{errormessage}}</div>
+                        <div class="form-group row mb-3">
+                            <label for="plainte" class="col-sm-6 control-label">Etes vous agent de l'état ? :</label>
+                            <div class="col-sm-2">
+                            <label for=""> Oui  <input type="radio" [value]="1" [(ngModel)]="is_administrative_officer" name="is_administrative_officer"> </label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label for=""> Non <input type="radio" [value]="0" [(ngModel)]="is_administrative_officer" name="is_administrative_officer"> </label>
+                            </div>
+                        </div>
+            
+                        <fieldset>
+                         <div class="row mb-3">
+                            <div *ngIf="is_administrative_officer==1" class="form-group col-12 col-md-6 mb-3">
+                                <label  for="mailUs" class=" control-label">Matricule :</label>
+                                <div class="">
+                                    <input   type="text" class="form-control form-control-sm has-error" id="mailUs"
+                                        name="matricule" placeholder="" ngModel required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-6 mb-3">
+                                <label for="contactUs" class=" control-label">Nom :</label>
+                                <div class="">
+                                    <input type="text" class="form-control form-control-sm has-error" id="contactUs"
+                                        name="lastname" placeholder="" ngModel required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-6 mb-3">
+                                <label for="contactUs" class=" control-label">Prénom(s) :</label>
+                                <div class="">
+                                    <input type="text" class="form-control form-control-sm has-error" id="contactUs"
+                                        name="firstname" placeholder="" ngModel required>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-6 mb-3">
+                                <label for="contactUs" class="control-label">Contact :</label>
+                                <div class="">
+                                    <input type="text" class="form-control form-control-sm has-error" id="contactUs"
+                                        name="phone" placeholder="" ngModel required >
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-md-6 mb-3">
+                                <label for="mailUs" class="control-label">E-mail :</label>
+                                <div class="">
+                                    <input type="email" class="form-control form-control-sm has-error" id="mailUs"
+                                        name="email" placeholder="" ngModel required>
+                                        <span class="text-muted helper-text text-danger"><small>Important pour recevoir la réponse à votre préoccupation</small></span>
+                                </div>
+                            </div>
+                         </div>
+                          
+                           
+                        </fieldset>
+                        <fieldset class="divusager">
+            
+                            
+                            <div class="form-group mb-3">
+                                <label for="idEntite" class="">A quelle entité (Ministère ou Institution) s'adresse votre préoccupation ?</label>
+                                <div class="">
+                                    <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+                                       [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
+                                        <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="form-group mb-3">
+                                <label for="plainte" class=" control-label">Type de préoccupation:</label>
+                                <div class="">
+                                    <select name="plainte" id="plainte" class="form-control form-control-sm"
+                                        required [(ngModel)]="selected_type_preoccupation">
+                                        <option disabled selected>Choisir</option>
+                                        <!-- <option value="0">Requete</option>agent_user -->
+                                        <option value="1">Plainte</option>
+                                        <option value="2">Demande d'information</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row mb-3" *ngIf="selected_type_preoccupation!=0">
+                                <label for="plainte" class="col-sm-6 control-label">Préoccupation liée à une prestation  :</label>
+                                <div class="col-sm-2">
+                                <label for=""> Oui  <input type="radio" value="1" [(ngModel)]="link_to_prestation" name="link_to_prestation"> </label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label for=""> Non <input type="radio" value="0" [(ngModel)]="link_to_prestation" name="link_to_prestation"> </label>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="form-group col-6"  *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+                                
+                                    <label for="idType" class=" control-label">Catégorie de la prestation :</label>
+                                    <div class="">
+                                        <select name="idType" id="idType" required class="form-control form-control-sm" required
+                                            ngModel (change)="chargerPrestation($event)">
+                                            <option disabled selected>Choisir</option>
+                                            <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-6"  *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+                                    <label for="idPrestation" required class=" control-label">Prestation :</label>
+                                    <div class="">
+                                        <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm"
+                                            ngModel (change)="openDetailModal($event, detailPresta)">
+                                            <option disabled selected>Choisir</option>
+                                            <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="form-group mb-3">
+                                <label for="objet" class="control-label">Objet de la préoccupation:</label>
+                                <div class="">
+                                    <input type="text" class="form-control form-control-sm has-error" id="objet"
+                                        name="objet" placeholder="" ngModel required [(ngModel)]="selected_data_rvMat">
+                                </div>
+                            </div>
+            
+            
+                            <div class="form-group mb-3">
+                                <label for="msgrequest" class="control-label">Préoccupation :</label>
+                                <div class="">
+                                    <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
+                                        placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" ngModel [value]="1" name="has_consent" id="flexRadioCheckedDisabled">
+                            <label class="form-check-label" for="flexRadioCheckedDisabled">
+                            Je donne librement mon consentement pour la collecte et le traitement de mes données personnelles dans le cadre de l’enregistrement et le traitement de ma préoccupation
+                            </label>
+                            </div>
+                           <button type="submit" [disabled]="loading" class="btn blueColor text-white btn-sm mx-1 mb-3" id="btn-save"><i class="fas fa-save"></i>&nbsp;
+                            Soumettre</button>
+        
+                            <p><b>NB:</b> Pour le suivi de vos préoccupations, veuillez vous inscrire pour disposer d'un espace personnalisé. <a routerLink="/register">Cliquez ici</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #detailPresta let-modal>
+    <form #frmrdv="ngForm"  class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
+        <div class="modal-header bg-info">
+            <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
+            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+        </div>
+        <div class="modal-body">
+            <label > Prestation : </label>
+            <div class="form-group row mb-3" >
+                <label class="col-sm-10" style="padding-right:0px;" > {{ depi.libelle }} </label>
+            </div><br/>
+            <div class="form-group row mb-3" >
+                <label class="col-sm-3" > Structure : </label>
+                <div class="col-sm-9" >{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}</div>
+            </div><br/>
+            <div class="form-group row mb-3" >
+                <label for="objet" class="col-sm-2">Délai : </label>
+                <div class="col-sm-10" >{{ depi.delai }}</div>
+            </div><br/>
+            <label for="objet" class="col-sm-12">Liste des pièces : </label>
+            <ul class="col-sm-12">
+            <li *ngFor="let piece of depi.listepieces ; index as y " style="margin-bottom: 10px; list-style: none;">{{ y+1}}. {{ piece.libellePiece }} </li>
+            </ul>
+        </div>
+    </form>
+</ng-template>
