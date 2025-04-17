@@ -3,14 +3,19 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from '../utils/config-service';
 import { GlobalName } from '../utils/global-name';
 import { LocalStorageService } from '../utils/local-stoarge-service';
+import { Observable, Subject } from 'rxjs';
+import { globalName } from './_utils/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+    private userLoggedIn = new Subject<boolean>();
 
-  url :string =ConfigService.toApiUrl("logout");
+ // url :string =ConfigService.toApiUrl("logout");
   url2 :string =ConfigService.toFile('');
+  url= "https://preprodmtfp.gouv.bj/pprod-mataccueilapi/api/"
+
 
   constructor(private appLocalStorage: LocalStorageService, private http:HttpClient) { }
 
@@ -30,16 +35,16 @@ export class AuthService {
      ConfigService.httpHeader(null,true));
   }
 
-  login(ressource:any){
+  // login(ressource:any){
 
-    /*ressource['grant_type']=LoginParamProd.grantType;
-    ressource['client_id']=LoginParamProd.clientId;
-    ressource['client_secret']=LoginParamProd.clientSecret;
-    ressource['scope']=LoginParamProd.scope;*/
+  //   /*ressource['grant_type']=LoginParamProd.grantType;
+  //   ressource['client_id']=LoginParamProd.clientId;
+  //   ressource['client_secret']=LoginParamProd.clientSecret;
+  //   ressource['scope']=LoginParamProd.scope;*/
 
-    return this.http.post<any>(`${this.url2}api/login`, ressource,
-     ConfigService.httpHeader(null,true));
-  }
+  //   return this.http.post<any>(`${this.url2}api/login`, ressource,
+  //    ConfigService.httpHeader(null,true));
+  // }
 
   sendMail(ressource:any){
     return this.http.post<any>(`${this.url2}api/send-reset-password-link`, ressource,
@@ -48,9 +53,9 @@ export class AuthService {
 
 
   
-  update(ressource:any){
-    return this.http.post<any>(`${this.url2}api/update-profile`, ressource,ConfigService.addAction('edit'));
-  }
+  // update(ressource:any){
+  //   return this.http.post<any>(`${this.url2}api/update-profile`, ressource,ConfigService.addAction('edit'));
+  // }
 
   recoverPassword(token:any,ressource:any){
     return this.http.post<any>(`${this.url2}api/recovery-password/${token}`, ressource,
@@ -58,9 +63,9 @@ export class AuthService {
   }
 
 
-  logout(){
-    return this.http.get<any>(`${this.url}`);
-  }
+  // logout(){
+  //   return this.http.get<any>(`${this.url}`);
+  // }
 
   changePassword(ressource:any){
 
@@ -81,4 +86,216 @@ export class AuthService {
 
         return this.http.get<any>(`${this.url2}api/backups`,ConfigService.addAction('list'));
         }
+
+
+
+
+
+        /*************************Ancien PDA*********************************** */
+
+
+            
+            setUserLoggedIn(userLoggedIn: boolean) {
+                this.userLoggedIn.next(userLoggedIn);
+            }
+        
+            setUserData(data:any) {
+              this.userLoggedIn.next(data);
+            }
+            getUserLoggedIn(): Observable<boolean> {
+                return this.userLoggedIn.asObservable();
+            }
+        
+            login(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('oauth/token'), ressource, ConfigService.httpHeader());
+            }
+            // MATACCUEIL EXTERNE   this.localStorage.setJsonValue('mataccueilUserData', res);
+            // Authentication/Authorization
+            loginUsager(value:any) {
+                return this.http.post(`${this.url+"authusers"}`, value,{headers:ConfigService.httpHeader(null,false)});
+              }
+            loginpfc(value:any) {
+                return this.http.post(this.url+`authpfc`, value,ConfigService.httpHeader());
+            }
+            noterRequetePfc(ressource:any){
+              
+              return this.http.post<any>(`${this.url+"noter"}`, ressource,ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+            }
+            getUserByToken(token:any){
+                
+                return this.http.get(`${this.url+'auth/userdatamat'}?token=${token}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+              }
+            getAll(search=null,page:any){
+                
+                if(search==null){
+                  return this.http.get<any[]>(`${this.url+"usager"}?page=${page}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }else{
+                  return this.http.get<any[]>(`${this.url+"usager"}?search=${search}&page=${page}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+              }
+              createUsager(ressource:any){
+                return this.http.post<any>(`${this.url+"usager"}`, ressource,ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+              }
+              updateUsager(ressource:any,id:any){
+                return this.http.post<any>(`${this.url+"usager/"}${id}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+              }
+              resetPasswordpfc(ressource: object){
+                return this.http.post<any>(`${this.url+"reset-password"}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+              }
+        
+                getAllTypePrest(type:any){
+            
+                  return this.http.get<any[]>(`${this.url+"service/type"}/${type}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+              
+                getThema(id:any){
+                    return this.http.get<any>(`${this.url+"type/getLine/"}${id}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                createrequeteusager(ressource:any){
+                    return this.http.post<any>(`${this.url+"requeteusager"}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                transmettreRequeteExterne(ressource:any){
+                  return this.http.post<any>(`${this.url+"requeteusager/transmettre/externe"}`, ressource,ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                Updaterequeteusager(ressource:any,id:any){
+                    return this.http.post<any>(`${this.url+"requeteusagerpfc/"}${id}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                createrequeteVisite(ressource:any){
+                    return this.http.post<any>(`${this.url+"registre"}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                createDiscussionWhats(ressource:any){
+                    return this.http.post<any>(`${this.url+"echange"}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                CloturerequeteVisite(ressource:any){
+                    return this.http.post<any>(`${this.url+"cloturerv"}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                updaterequeteVisite(ressource:any,id:any){
+                    return this.http.post<any>(`${this.url+"registreup/"}${id}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                updateWhatsapp(ressource:any,id:any){
+                    return this.http.post<any>(`${this.url+"echangeup/"}${id}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                updateWhatsReponse(ressource:any,id:any){
+                    return this.http.post<any>(`${this.url+"echangeupreponse/"}${id}`, ressource, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                deleteReq(id:number){
+                    return this.http.delete<any[]>(`${this.url+"requeteusager/"}${id}`,ConfigService.httpHeader(localStorage.getItem("matToken"),false));
+                }
+                getAllDepartement(){
+                    return this.http.get<any[]>(`${this.url+"departement"}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                
+                getAllInstitu(){
+                
+                  return this.http.get<any[]>(`${this.url+"institution"}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                
+                getListDay(id:any){
+                
+                  return this.http.get<any[]>(`${this.url+"nbrDay"}/${id}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                getAllForPfcom(idUsager:any,page:any){
+           
+                    return this.http.get<any[]>(`${this.url+"requetepfc/getrequetebypfc"}/${idUsager}?page=${page}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                getAllForRegistreVis(idUsager:any,page:any){
+           
+                    return this.http.get<any[]>(`${this.url+"requeteRv/getrequetebypfcRv"}/${idUsager}?page=${page}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                getAllForWhatsapp(page:any,traite:any){
+           
+                    return this.http.get<any[]>(`${this.url+"getEchangeWhat"}?page=${page}&traite=${traite}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                
+                  deleteRegistreVis(id:number){
+           
+                    return this.http.delete<any[]>(`${this.url+"registre/"}${id}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                  deleteDiscWhats(id:number){
+           
+                    return this.http.delete<any[]>(`${this.url+"echange/"}${id}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                  ConfirmerDiscWhats(idus:any,id:any){
+           
+                    return this.http.get<any[]>(`${this.url+"echangeConfi/"}${idus}/${id}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                  getAllEtap(idEntite:any){
+                    return this.http.get<any[]>(`${this.url+"etape"}/${idEntite}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+                getServPiece(idSer:any){
+           
+                    return this.http.get<any[]>(`${this.url+"servicePiece"}/${idSer}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                  }
+              getAllServ(OnlyDirection:any,idEntite:any){
+        
+                 return this.http.get<any[]>(`${this.url+"structure"}/${OnlyDirection}/${idEntite}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+              }
+              getAllForUsagerNT(idUsager:any,page:any){
+                return this.http.get<any[]>(`${this.url+"requeteusager/getrequetebyusagerNT"}/${idUsager}?page=${page}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+              }
+               
+                getAllNatu(idEntite:any){
+                
+                    return this.http.get<any[]>(`${this.url+"nature"}/${idEntite}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+                
+                getAllThe(idEntite:any){
+                
+                    return this.http.get<any[]>(`${this.url+"type"}/${idEntite}`, ConfigService.httpHeader(localStorage.getItem("matToken"),true));
+                }
+               
+            // MATACCUEIL EXTERNE
+            resend(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('user/mail/check'), ressource, ConfigService.httpHeader());
+            }
+        
+            verifyCode(ressource: object) {
+        
+                //code, user_id, ip,client_id, client_secret, username, password, authorized_always_id
+        
+                return this.http.post(ConfigService.toApiUrl('oauth/verifyCode'), ressource, ConfigService.httpHeader());
+            }
+            resendCode(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('oauth/resendCode'), ressource, ConfigService.httpHeader());
+            }
+        
+            register(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('register'), ressource, ConfigService.httpHeader());
+            }
+        
+        
+            forgotPassword(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('user/forgot-password'), ressource, ConfigService.httpHeader());
+            }
+        
+            resetPassword(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('user/reset-password'), ressource, ConfigService.httpHeader(this.appLocalStorage.get(globalName.token)));
+            }
+            update(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('user/update'), ressource, ConfigService.httpHeader(this.appLocalStorage.get(globalName.token)));
+            }
+            setNotif(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('notifications'), ressource, ConfigService.httpHeader(this.appLocalStorage.get(globalName.token)));
+            }
+        
+            checkMail(ressource: object) {
+        
+                return this.http.post(ConfigService.toApiUrl('register'), ressource, ConfigService.httpHeader());
+            }
+        
+            logout() {
+                return this.http.post(ConfigService.toApiUrl('logout'),{}, ConfigService.httpHeader(this.appLocalStorage.get(globalName.token)));
+            }
+        
+            getApps(id:number){
+                return this.http.get(ConfigService.toApiUrl(`status_has_applications/${id}`), ConfigService.httpHeader(this.appLocalStorage.get(globalName.token)));
+            }
 }

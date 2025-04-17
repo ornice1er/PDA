@@ -7,41 +7,41 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class StatusService {
-    url = Config.toApiUrl('status');
-    urlI = Config.toApiUrl('institution');
+    url = ConfigService.toApiUrl('status');
+    urlI = ConfigService.toApiUrl('institution');
 
     constructor(private http: HttpClient) { }
 
     getAll(): Observable<any> {
-        return this.http.get<any[]>(this.url, Config.httpHeader());
+        return this.http.get<any[]>(this.url, ConfigService.httpHeader());
     }
 
     getAllStruc(): Observable<any> {
-        return this.http.get<any[]>(this.urlI, Config.httpHeader());
+        return this.http.get<any[]>(this.urlI, ConfigService.httpHeader());
     }
 
     getNbreServ(): Observable<any> {
-        return this.http.get<any[]>(Config.toApiUrl('serviceEnLign'), Config.httpHeader());
+        return this.http.get<any[]>(ConfigService.toApiUrl('serviceEnLign'), ConfigService.httpHeader());
     }
 
     store(ressource: object) {
-        return this.http.post(this.url, ressource, Config.httpHeader());
+        return this.http.post(this.url, ressource, ConfigService.httpHeader());
     }
     show(id: number) {
-        return this.http.get(`${this.url}/${id}`, Config.httpHeader());
+        return this.http.get(`${this.url}/${id}`, ConfigService.httpHeader());
     }
     update(ressource: object, id: number) {
-        return this.http.put(`${this.url}/${id}`, ressource, Config.httpHeader());
+        return this.http.put(`${this.url}/${id}`, ressource, ConfigService.httpHeader());
     }
     delete(id: number) {
-        return this.http.delete(`${this.url}/${id}`, Config.httpHeader());
+        return this.http.delete(`${this.url}/${id}`, ConfigService.httpHeader());
     }
     state(id: number) {
-        return this.http.get(`${this.url}/${id}/status`, Config.httpHeader());
+        return this.http.get(`${this.url}/${id}/status`, ConfigService.httpHeader());
     }
 
     stats() {
-        return this.http.get(`${Config.toApiUrl('stats')}`, Config.httpHeader());
+        return this.http.get(`${ConfigService.toApiUrl('stats')}`, ConfigService.httpHeader());
     }
 
     

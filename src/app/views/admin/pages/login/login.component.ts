@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
     active=1
     loadFile(file:any){
-        return Config.toFile(file)
+        return ConfigService.toFile(file)
     }
 
      confirmation(service:any)

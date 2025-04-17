@@ -30,7 +30,7 @@ import { LocalService } from '../../../../core/services/storage_services/local.s
 export class HomepfcComponent implements OnInit {
 
   loadFile(file:any){
-    return Config.toFile(file)
+    return ConfigService.toFile(file)
   }
   page = 1;
   

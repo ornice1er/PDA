@@ -33,7 +33,7 @@ export class HomepfcComponent implements OnInit {
   @ViewChild('contentCarriere') contentCarriere : any;
 
   loadFile(file:any){
-    return Config.toFile(file)
+    return ConfigService.toFile(file)
   }
   page = 1;
   pagerv = 1;
