@@ -6,13 +6,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
-import { globalName } from '../../../../core/services/_utils/utils';
 import { AuthService } from '../../../../core/services/auth.service';
 import { IpServiceService } from '../../../../core/services/ip-service.service';
 import { StatusService } from '../../../../core/services/status.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { GlobalName } from '../../../../core/utils/global-name';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 
 
 @Component({
@@ -24,7 +25,7 @@ import { StatutComponent } from '../../../components/statut/statut.component';
 })
 export class RegisterComponent implements OnInit {
 
-    loading: boolean;
+    loading: boolean | undefined;
     status:any;
     struct:any;
     needIfu:boolean=false;
@@ -32,10 +33,10 @@ export class RegisterComponent implements OnInit {
     isAgent:boolean=false;
     isInstitu:boolean=false;
     default_status:number=4
-    default_Institu:number
-    ipAddress:string
+    default_Institu:number | undefined
+    ipAddress:string | undefined
 
-    constructor(private status_service:StatusService,private user_auth_service:AuthService,private local_service:LocalService,private router:Router,private ip:IpServiceService) { }
+    constructor(private status_service:StatusService,private user_auth_service:AuthService,private local_service:LocalStorageService,private router:Router,private ip:IpServiceService) { }
 
     getIP()
     {
@@ -90,23 +91,23 @@ export class RegisterComponent implements OnInit {
             (res:any)=>{
                 this.loading=false;
                 if(res.user.is_active){
-                    this.local_service.setItem(globalName.token,res.token)
-                    this.local_service.setItem(globalName.current_user,res.user)
+                    this.local_service.set(GlobalName.token,res.token)
+                    this.local_service.set(GlobalName.current_user,res.user)
                     this.router.navigate(['/main']);
                 }else{
                     localStorage.setItem("is_registered","");
                     this.router.navigate(['/register-success']);
                 }
-                AlertNotif.finish("Inscription","Inscription effectuée avec succès. Vous pouvez à présent vous connecter","success")
+                AppSweetAlert.simpleAlert("Inscription","Inscription effectuée avec succès. Vous pouvez à présent vous connecter","success")
             },
             (err:any)=>{
                 this.loading=false;
                 let message="";
-                err.error.errors.forEach(element => {
+                err.error.errors.forEach((element:any) => {
                     message=message+" "+element
                 });
                 console.log(message);
-                AlertNotif.finish("Inscription","Echec d'inscription, "+message,"error")}
+                AppSweetAlert.simpleAlert("Inscription","Echec d'inscription, "+message,"error")}
         )
 
     }

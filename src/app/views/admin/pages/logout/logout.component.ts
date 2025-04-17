@@ -8,8 +8,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
-import { globalName } from '../../../../core/services/_utils/utils';
 import { AuthService } from '../../../../core/services/auth.service';
+import { GlobalName } from '../../../../core/utils/global-name';
 
 @Component({
   selector: 'app-logout',
@@ -27,8 +27,8 @@ export class LogoutComponent implements OnInit {
   ngOnInit(): void {
   }
     logout(){
-        localStorage.removeItem(globalName.token);
-        localStorage.removeItem(globalName.current_user);
+        localStorage.removeItem(GlobalName.token);
+        localStorage.removeItem(GlobalName.current_user);
 
         this.user_auth_service.setUserLoggedIn(false)
         this.router.navigate(['/main']);
@@ -36,7 +36,7 @@ export class LogoutComponent implements OnInit {
              (res:any)=>{
              },
              (err)=>{
-                 AlertNotif.finish("Déconnexion","Echec de déconnexion","error")}
+                 AppSweetAlert.simpleAlert("Déconnexion","Echec de déconnexion","error")}
          )*/
 
     }

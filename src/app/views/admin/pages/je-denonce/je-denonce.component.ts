@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { PdaService } from '../../core/_services/pda.servic';
-// import { AlertNotif } from '../../alert';
+// 
 import { Router } from '@angular/router';
 import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
 import { PdaService } from '../../../../core/services/pda.servic';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { PdaService } from '../../../../core/services/pda.servic';
 })
 export class JeDenonceComponent implements OnInit {
   
-  institutions = []
+  institutions:any = []
   constructor(private pdaService: PdaService, private router: Router,private modalService:NgbModal) { }
 
   recup_data:any
@@ -55,12 +56,12 @@ export class JeDenonceComponent implements OnInit {
         this.institutions = res
       })
   }
-  file: File
+  file: File | undefined |null
   select_entity=""
   loading = false
 
   showEntity(id:any){
-    let el=this.institutions.filter(e=>(e.id==id))[0]
+    let el=this.institutions.filter((e:any)=>(e.id==id))[0]
     return el.libelle
   }
   save(value:any) {
@@ -93,12 +94,12 @@ export class JeDenonceComponent implements OnInit {
       this.loading = false
       this.modalService.dismissAll()
       if (res.success) {
-        AlertNotif.finish("Dénonciation", "Votre dénonciation a été envoyée avec succès", "success")
+        AppSweetAlert.simpleAlert("Dénonciation", "Votre dénonciation a été envoyée avec succès", "success")
         this.router.navigateByUrl('/main')
       }
     }, (err)=>{
       this.loading=false;
-        AlertNotif.finish("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
       )
   }
   onFileChange(event:any) {
@@ -108,4 +109,6 @@ export class JeDenonceComponent implements OnInit {
       //  this.form.get('avatar').setValue(file);
     }
   }
+
+  validate(){}  
 }

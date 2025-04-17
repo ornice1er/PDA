@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 // import {AuthService} from '../../core/_services/auth.service';
 // import {AlertNotif} from '../../alert';
-// import {clientData, globalName} from '../../core/_utils/utils';
-// import {LocalService} from '../../core/_services/storage_services/local.service';
+// import {clientData, GlobalName} from '../../core/_utils/utils';
+// import {LocalStorageService} from '../../core/_services/storage_services/local.service';
 import { Subscription } from 'rxjs';
 // import { Config } from '../../app.config';
 import { Router } from '@angular/router';
@@ -15,7 +15,8 @@ import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 
 @Component({
   selector: 'app-logpfc',
@@ -27,9 +28,9 @@ import { LocalService } from '../../../../core/services/storage_services/local.s
 export class LogpfcComponent implements OnInit {
 
 
-  subs:Subscription
+  subs:Subscription | undefined
 
-  constructor(private user_auth_service:AuthService, private  local_service:LocalService,private router:Router) { 
+  constructor(private user_auth_service:AuthService, private  local_service:LocalStorageService,private router:Router) { 
     
     }
   loading:boolean=false
@@ -55,21 +56,21 @@ export class LogpfcComponent implements OnInit {
           localStorage.setItem('matToken',res.token);
           this.user_auth_service.getUserByToken(res.token).subscribe((res:any) => {
             localStorage.setItem('matUserData',res);
-            this.local_service.setJsonValue('matUserData', res);
+            this.local_service.set('matUserData', res);
           })
           this.router.navigateByUrl("/homepfc"); 
           setTimeout(function(){
             window.location.reload()
           },1000)	
         }
-      },err: => {
+      },(err:any) => {
         this.loading = false; 
         if(err.error.error=="invalid_credentials"){
-          AlertNotif.finish("Erreur de connexion","Email ou mot de passe incorrect","error")
+          AppSweetAlert.simpleAlert("Erreur de connexion","Email ou mot de passe incorrect","error")
           // this.error="Email ou mot de passe incorrect"
         }else{
           // this.error="Erreur de connexion ou paramètres incorrects"
-          AlertNotif.finish("Erreur de connexion","Erreur de connexion ou paramètres incorrects","error")
+          AppSweetAlert.simpleAlert("Erreur de connexion","Erreur de connexion ou paramètres incorrects","error")
         }
       });
   }

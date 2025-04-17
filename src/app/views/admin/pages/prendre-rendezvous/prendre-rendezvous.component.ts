@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // import { PdaService } from '../../core/_services/pda.servic';
-// import { AlertNotif } from '../../alert';
+// 
 import { Router } from '@angular/router';
 import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,7 @@ import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
 import { PdaService } from '../../../../core/services/pda.servic';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 
 @Component({
   selector: 'app-prendre-rendezvous',
@@ -21,8 +22,8 @@ import { PdaService } from '../../../../core/services/pda.servic';
 })
 export class PrendreRendezvousComponent implements OnInit {
 
-  structures = []
-  crenaux = []
+  structures:any = []
+  crenaux:any= []
   constructor(private pdaService: PdaService,private router:Router, private modalService:NgbModal) { }
   recup_data:any
   closeResult=""
@@ -70,11 +71,11 @@ export class PrendreRendezvousComponent implements OnInit {
   }
 
   showCreneaux(id:any){
-    let el=this.crenaux.filter(e=>(e.id==id))[0]
+    let el=this.crenaux.filter((e:any)=>(e.id==id))[0]
     return el.heureDebut+" "+el.heureFin
   }
   showStructure(id:any){
-    let el=this.structures.filter(e=>(e.id==id))[0]
+    let el=this.structures.filter((e:any)=>(e.id==id))[0]
     return el.libelle
   }
 
@@ -87,14 +88,14 @@ export class PrendreRendezvousComponent implements OnInit {
       this.loading=false
       this.modalService.dismissAll()
       if(res.status=="success"){
-        AlertNotif.finish("Rendez-vous","Demande de rendez-vous envoyée avec succès","success")
+        AppSweetAlert.simpleAlert("Rendez-vous","Demande de rendez-vous envoyée avec succès","success")
         this.router.navigateByUrl('/main')
       }else{
-        AlertNotif.finish("Rendez-vous",res.msg,"error")
+        AppSweetAlert.simpleAlert("Rendez-vous",res.msg,"error")
       }
      }, (err)=>{
       this.loading=false;
-        AlertNotif.finish("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
       )
   }
 }

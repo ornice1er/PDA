@@ -18,7 +18,7 @@ import { PdaService } from '../../../../core/services/pda.servic';
 })
 export class FaqComponent implements OnInit {
 
-  data=[]
+  data:any=[]
   constructor(private pdaService:PdaService) { }
 
   ngOnInit(): void {

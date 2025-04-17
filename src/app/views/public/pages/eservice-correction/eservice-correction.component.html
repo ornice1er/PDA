@@ -1,0 +1,9 @@
+<div class="container-fluid p-2 bg-white">
+    <div class="container-fluid p-2" style="background-color: #F2F5F9;">
+        <app-vca *ngIf="prestationCode == 'PS00577'"></app-vca>
+        <app-vcn *ngIf="prestationCode == 'PS00035'" [checkData]="req"></app-vcn>
+        <app-vri *ngIf="prestationCode == 'PS00565'"></app-vri>
+        <app-dam *ngIf="prestationCode == 'PS00569'"></app-dam>
+
+    </div>
+</div>

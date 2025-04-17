@@ -1,0 +1,24 @@
+<div class="containter py-5" style="background-color: #f2f5f9;">
+
+    <div class="row">
+        <div class="col-8 mx-auto">
+            <div class="container py-5" id="checkStatus">
+                <form #addForm="ngForm" (ngSubmit)="send()">
+            
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                  <h6 class="text-center">Demande d'ajout de preuve</h6>
+                  <p class="text-center">Le nommé {{data?.identity}} dispose d'un contrat en cours chez vous dans notre base. si ce contrat n'est plus d'actualié veuillez nous fournir une preuve justificative de résilience.</p>
+                    <div class="form-group mb-3">
+                        <label for="">Charger la preuve</label>
+                        <input type="file" class="form-control" (change)="upload($event)">
+                    </div>
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-sm btn-primary"  [disabled]="addForm.invalid || loading">Valider <app-loading [isVisible]="loading"></app-loading></button> 
+                  </div>
+                </div>
+              </form>
+            
+              </div>
+        </div>
+    </div>
+</div>

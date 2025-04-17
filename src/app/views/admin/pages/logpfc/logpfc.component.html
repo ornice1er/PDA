@@ -37,7 +37,7 @@
                             <label for="">Email </label>
                             <input type="email" class="form-control" name="email" #login="ngModel" ngModel>
                             <span *ngIf="login.invalid && (login.dirty || login.touched)" class="text-danger">
-                                <small *ngIf="login.errors?.required" id="typeLabelHelp" class="form-text">Identifiant
+                                <small *ngIf="login.errors?.['required']" id="typeLabelHelp" class="form-text">Identifiant
                                     requis</small>
                             </span>
                         </div>
@@ -52,7 +52,7 @@
                             </div>
                             <input type="password" class="form-control" name="password" #password="ngModel" ngModel>
                             <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                                <small *ngIf="password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                <small *ngIf="password.errors?.['required']" id="typeLabelHelp" class="form-text">Mot
                                     de passe requis</small>
                             </span>
                         </div>

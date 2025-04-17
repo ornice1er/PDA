@@ -1,0 +1,7 @@
+input[type="radio"] {
+    border: 1px solid black;
+  }
+
+  .igx-stepper__step-indicator{
+    background-color: red !important;
+  }

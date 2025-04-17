@@ -7,11 +7,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register-success',
   standalone: true,
-    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent],
+    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,RouterModule],
   templateUrl: './register-success.component.html',
   styleUrls: ['./register-success.component.css']
 })

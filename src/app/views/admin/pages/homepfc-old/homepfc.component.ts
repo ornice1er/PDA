@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
 // import { Usager } from '../../core/_models/usager.model';
 import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, Subscription } from 'rxjs';
-// import {clientData, globalName} from '../../core/_utils/utils';
-// import {LocalService} from '../../core/_services/storage_services/local.service';
+// import {clientData, GlobalName} from '../../core/_utils/utils';
+// import {LocalStorageService} from '../../core/_services/storage_services/local.service';
 // import { Subscription } from 'rxjs';
 // import { Config } from '../../app.config';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,9 +16,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
-import { globalName } from '../../../../core/services/_utils/utils';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { ConfigService } from '../../../../core/utils/config-service';
+import { GlobalName } from '../../../../core/utils/global-name';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 
 @Component({
   selector: 'app-homepfc',
@@ -35,7 +37,7 @@ export class HomepfcComponent implements OnInit {
   page = 1;
   
 
-  subs:Subscription
+  subs:Subscription | undefined
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -48,13 +50,13 @@ export class HomepfcComponent implements OnInit {
   }
   constructor(
     private user_auth_service:AuthService, 
-    private  local_service:LocalService,
+    private  local_service:LocalStorageService,
     private router:Router,
     private modalService: NgbModal,
-    private localStorageService:LocalService,
+    private localStorageService:LocalStorageService,
     private activatedRoute: ActivatedRoute,
     ) { 
-    if(localStorage.getItem(globalName.current_user)!=undefined) this.user=this.local_service.getItem('matUserData');
+    if(localStorage.getItem(GlobalName.current_user)!=undefined) this.user=this.local_service.get('matUserData');
   }
   loading:boolean=false
   id:any
@@ -74,9 +76,9 @@ export class HomepfcComponent implements OnInit {
   link_to_prestation=1
   selected_type_preoccupation=0
   error=""
-  searchText=""
+  searchText:any=""
   
-  selected_data:Usager
+  selected_data:any
   closeResult = '';
   departements:[]=[]
   detailpiece=[]
@@ -89,10 +91,10 @@ export class HomepfcComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('matUserData') != null) {
-      this.user = this.localStorageService.getJsonValue("matUserData")
+      this.user = this.localStorageService.get("matUserData")
     }
         console.log(this.user)
-      this.activatedRoute.queryParams.subscribe(x => this.init(x.page || 1));
+      this.activatedRoute.queryParams.subscribe((x:any) => this.init(x.page || 1));
   
       this.subject.subscribe((val) => {
        this.pager=val
@@ -146,21 +148,21 @@ export class HomepfcComponent implements OnInit {
   createUsager(value:any){
     if(value.idDepartement == ""){
       // this.error="Les deux mot de passe doivent être identique"
-      AlertNotif.finish("Nouvel ajout", "Sélectionner le département", 'error')
+      AppSweetAlert.simpleAlert("Nouvel ajout", "Sélectionner le département", 'error')
     }else if(value.password!=value.conf_password && value.password != ""){
-      AlertNotif.finish("Nouvel ajout", "Les deux mot de passe doivent être identique", 'error')
+      AppSweetAlert.simpleAlert("Nouvel ajout", "Les deux mot de passe doivent être identique", 'error')
     }else{
       this.user_auth_service.createUsager(value).subscribe((res:any)=>{
       
         this.modalService.dismissAll()
-        AlertNotif.finish("Nouvel ajout","Ajout effectué avec succès" , 'success')
+        AppSweetAlert.simpleAlert("Nouvel ajout","Ajout effectué avec succès" , 'success')
          this.init(this.page) 
        },(err:any)=>{
          
          if(err.error.detail!=null){    
-           AlertNotif.finish("Nouvel ajout", err.error.detail, 'error')
+           AppSweetAlert.simpleAlert("Nouvel ajout", err.error.detail, 'error')
          }else{
-           AlertNotif.finish("Nouvel ajout", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+           AppSweetAlert.simpleAlert("Nouvel ajout", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
          }
        })
     }
@@ -178,9 +180,9 @@ export class HomepfcComponent implements OnInit {
       this.user_auth_service.updateUsager(value,this.selected_data.id).subscribe((res)=>{
         this.modalService.dismissAll()
         this.init(this.page)
-        AlertNotif.finish("Nouvelle modification",  "Motification effectué avec succès", 'success')
+        AppSweetAlert.simpleAlert("Nouvelle modification",  "Motification effectué avec succès", 'success')
       }, (err:any)=>{
-        AlertNotif.finish("Nouvelle modification", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+        AppSweetAlert.simpleAlert("Nouvelle modification", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
       })
     }
     
@@ -199,17 +201,17 @@ export class HomepfcComponent implements OnInit {
   }
 
   addRequeteusager(value:any){
-    let service = null
+    let service:any = null
     // if (this.link_to_prestation==1 || this.selected_type_preoccupation==0) {
     if (this.link_to_prestation==1) {
-      service = this.services.filter(e => (e.id == value.idPrestation))[0]
+      service = this.services.filter((e:any) => (e.id == value.idPrestation))[0]
     }else{
-      service=this.services.filter(e => (e.hide_for_public == 1))[0]
+      service=this.services.filter((e:any)  => (e.hide_for_public == 1))[0]
     }
     if(!value.objet){
-      AlertNotif.finish("Renseigner l'objet", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("Renseigner l'objet", "Champ obligatoire", 'error')
     }else if(!value.msgrequest){
-      AlertNotif.finish("Renseigner le message", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("Renseigner le message", "Champ obligatoire", 'error')
     }else{
       var param = {
         objet: value.objet,
@@ -229,7 +231,7 @@ export class HomepfcComponent implements OnInit {
 
      this.user_auth_service.createrequeteusager(param).subscribe((rest:any)=>{
       this.modalService.dismissAll()
-      AlertNotif.finish("Ajout requête",  "Requête ajoutée avec succès", 'success')
+      AppSweetAlert.simpleAlert("Ajout requête",  "Requête ajoutée avec succès", 'success')
     })     
 
     }
@@ -258,7 +260,7 @@ export class HomepfcComponent implements OnInit {
       (err:any)=>{
           this.loading=false;
           console.log(err)
-         // AlertNotif.finish("Applications","Echec de récupération des applications","error")
+         // AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")
         }
   )
   }
@@ -300,7 +302,7 @@ export class HomepfcComponent implements OnInit {
   
   openEditModal(content:any){
     if (this.selected_data == null) {
-      AlertNotif.finish("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -312,7 +314,7 @@ export class HomepfcComponent implements OnInit {
   
   openEditModalLg(content:any){
     if (this.selected_data == null) {
-      AlertNotif.finish("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
@@ -343,21 +345,21 @@ searchReq() {
 }
 dropRequeteusager() {
   if (this.selected_data_req == null) {
-    AlertNotif.finish("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
     return;
   }
   if (this.selected_data_req.visible == 1) {
-    AlertNotif.finish("Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.", 'error');
+    AppSweetAlert.simpleAlert("Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.", 'error');
     return;
   }
-  AlertNotif.finishConfirm("Suppression requete",
+  AppSweetAlert.confirmBox("Suppression requete",
     "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
       if (result.value) {
         this.user_auth_service.deleteReq(this.selected_data_req.id).subscribe((res: any) => {
           this.loadRequest()
-          AlertNotif.finish("Suppression requete", "Suppression effectuée avec succès", 'success')
+          AppSweetAlert.simpleAlert("Suppression requete", "Suppression effectuée avec succès", 'success')
         }, (err:any) => {
-          AlertNotif.finish("Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+          AppSweetAlert.simpleAlert("Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
         })
       }
     })

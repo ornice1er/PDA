@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 // import {AuthService} from '../../core/_services/auth.service';
 // import {AlertNotif} from '../../alert';
-// import {clientData, globalName} from '../../core/_utils/utils';
-// import {LocalService} from '../../core/_services/storage_services/local.service';
+// import {clientData, GlobalName} from '../../core/_utils/utils';
+// import {LocalStorageService} from '../../core/_services/storage_services/local.service';
 import { Subscription } from 'rxjs';
 // import { Config } from '../../app.config';
 import { Router } from '@angular/router';
@@ -13,9 +13,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 
 @Component({
   selector: 'app-profilpfc',
@@ -27,12 +28,12 @@ standalone: true,
 export class ProfilpfcComponent implements OnInit {
 
 
-  subs:Subscription
+  subs:Subscription | undefined
 
   constructor(
     private user_auth_service:AuthService, 
-    private  local_service:LocalService,
-    private localStorageService:LocalService,
+    private  local_service:LocalStorageService,
+    private localStorageService:LocalStorageService,
     private router:Router) { 
     
     }
@@ -44,20 +45,20 @@ export class ProfilpfcComponent implements OnInit {
   error=''
   ngOnInit(): void {
     if (localStorage.getItem('matUserData') != null) {
-      this.user = this.localStorageService.getJsonValue("matUserData")
+      this.user = this.localStorageService.get("matUserData")
     }
   }
 
   UpdatePassWord(value:any){
     
     if (!value.last_password) {
-      AlertNotif.finish("Erreur", "Renseigner l'ancien mot de passe", 'error');
+      AppSweetAlert.simpleAlert("Erreur", "Renseigner l'ancien mot de passe", 'error');
     }else if(!value.new_password){
-      AlertNotif.finish("Erreur", "Renseigner le nouveau mot de passe", 'error');
+      AppSweetAlert.simpleAlert("Erreur", "Renseigner le nouveau mot de passe", 'error');
     }else if(!value.confirm_password){
-      AlertNotif.finish("Erreur", "Confirmer le nouveau mot de passe", 'error');
+      AppSweetAlert.simpleAlert("Erreur", "Confirmer le nouveau mot de passe", 'error');
     }else if(value.confirm_password !== value.new_password){
-      AlertNotif.finish("Erreur", "La confirmation n'est pas correcte", 'error');
+      AppSweetAlert.simpleAlert("Erreur", "La confirmation n'est pas correcte", 'error');
     }else{
       this.loading=true;
       value['id']=this.user.id;
@@ -66,14 +67,14 @@ export class ProfilpfcComponent implements OnInit {
             this.loading=false;
             if(res.success == true){
               this.router.navigate(['/homepfc']);
-              AlertNotif.finish("Modification du mot de passe","Nouveau mot de passe pris en compte","success")
+              AppSweetAlert.simpleAlert("Modification du mot de passe","Nouveau mot de passe pris en compte","success")
             }else{
-              AlertNotif.finish("Modification du mot de passe",res.message,"success")
+              AppSweetAlert.simpleAlert("Modification du mot de passe",res.message,"success")
             }
           },
           (err:any)=>{
               this.loading=false;
-              AlertNotif.finish("Modification du mot de passe",err.error.message,"error")}
+              AppSweetAlert.simpleAlert("Modification du mot de passe",err.error.message,"error")}
       )
     }
 

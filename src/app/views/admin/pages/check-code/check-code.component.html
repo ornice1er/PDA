@@ -18,7 +18,7 @@
                                 <label for="">Code de vérification</label> <label class="ml-2" style="color:red; font-size: 14px; font-style: italic;">(Le code sera détruit dans 5 min. Cliquez sur Renvoyer le code  pour obtenir un autre.)</label>
                                 <input type="text" class="form-control" name="code" #code="ngModel" ngModel>
                                 <span *ngIf="code.invalid && (code.dirty || code.touched)" class="text-danger">
-                                    <small *ngIf="code.errors?.required" id="typeLabelHelp" class="form-text">Code requis</small>
+                                    <small *ngIf="code.errors?.['required']" id="typeLabelHelp" class="form-text">Code requis</small>
                                 </span>
                             </div>
 

@@ -172,7 +172,7 @@
                                                 <input class="form-control form-control-sm" #nom="ngModel" maxlength="250" required
                                                     name="nom" ngModel>
                                                 <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="text-danger">
-                                                    <small *ngIf="nom.errors?.required">
+                                                    <small *ngIf="nom.errors?.['required']">
                                                         nom est requis
                                                     </small>
                                                     <small *ngIf="nom.errors.maxlength">
@@ -187,7 +187,7 @@
                                                 <input class="form-control form-control-sm" #prenoms="ngModel" maxlength="250"
                                                     required name="prenoms" ngModel>
                                                 <span *ngIf="prenoms.invalid && (prenoms.dirty || prenoms.touched)" class="text-danger">
-                                                    <small *ngIf="prenoms.errors?.required">
+                                                    <small *ngIf="prenoms.errors?.['required']">
                                                         prénoms est requis
                                                     </small>
                                                     <small *ngIf="prenoms.errors.maxlength">
@@ -202,7 +202,7 @@
                                                 <input class="form-control form-control-sm" #tel="ngModel" maxlength="250" required
                                                     name="tel" ngModel>
                                                 <span *ngIf="tel.invalid && (tel.dirty || tel.touched)" class="text-danger">
-                                                    <small *ngIf="prenoms.errors?.required">
+                                                    <small *ngIf="prenoms.errors?.['required']">
                                                         téléphone est requis
                                                     </small>
                                                     <small *ngIf="prenoms.errors.maxlength">
@@ -221,7 +221,7 @@
                                                 </select>
                                                 <span *ngIf="idDepartement.invalid && (idDepartement.dirty || idDepartement.touched)"
                                                     class="text-danger">
-                                                    <small *ngIf="idDepartement.errors?.required">
+                                                    <small *ngIf="idDepartement.errors?.['required']">
                                                         Département est requis
                                                     </small>
                                                     <small *ngIf="idDepartement.errors.maxlength">
@@ -236,7 +236,7 @@
                                                 <input type="email" class="form-control form-control-sm" #email="ngModel" maxlength="250"
                                                     name="email" ngModel>
                                                 <!-- <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-                                                    <small *ngIf="email.errors?.required">
+                                                    <small *ngIf="email.errors?.['required']">
                                                         email est requis
                                                     </small>
                                                     <small *ngIf="email.errors.maxlength">
@@ -253,7 +253,7 @@
                                                 <input type="password" class="form-control form-control-sm" #password="ngModel"
                                                     maxlength="250"  name="password" ngModel>
                                                 <!-- <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                                                    <small *ngIf="password.errors?.required">
+                                                    <small *ngIf="password.errors?.['required']">
                                                         Mot de passe est requis
                                                     </small>
                                                     <small *ngIf="password.errors.maxlength">
@@ -269,7 +269,7 @@
                                                     maxlength="250" name="conf_password" ngModel>
                                                 <!-- <span *ngIf="conf_password.invalid && (conf_password.dirty || conf_password.touched)"
                                                     class="text-danger">
-                                                    <small *ngIf="password.errors?.required">
+                                                    <small *ngIf="password.errors?.['required']">
                                                         Mot de passe est requis
                                                     </small>
                                                     <small *ngIf="conf_password.errors.maxlength">
@@ -306,7 +306,7 @@
                                                 <input class="form-control form-control-sm" #nom="ngModel" maxlength="250" required
                                                     name="nom" [(ngModel)]="selected_data.nom">
                                                 <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="text-danger">
-                                                    <small *ngIf="nom.errors?.required">
+                                                    <small *ngIf="nom.errors?.['required']">
                                                         nom est requis
                                                     </small>
                                                     <small *ngIf="nom.errors.maxlength">
@@ -321,7 +321,7 @@
                                                 <input class="form-control form-control-sm" #prenoms="ngModel" maxlength="250"
                                                     required name="prenoms" [(ngModel)]="selected_data.prenoms">
                                                 <span *ngIf="prenoms.invalid && (prenoms.dirty || prenoms.touched)" class="text-danger">
-                                                    <small *ngIf="prenoms.errors?.required">
+                                                    <small *ngIf="prenoms.errors?.['required']">
                                                         prenoms est requis
                                                     </small>
                                                     <small *ngIf="prenoms.errors.maxlength">
@@ -336,7 +336,7 @@
                                                 <input class="form-control form-control-sm" #tel="ngModel" maxlength="250" required
                                                     name="tel" [(ngModel)]="selected_data.tel">
                                                 <span *ngIf="tel.invalid && (tel.dirty || tel.touched)" class="text-danger">
-                                                    <small *ngIf="prenoms.errors?.required">
+                                                    <small *ngIf="prenoms.errors?.['required']">
                                                         tel est requis
                                                     </small>
                                                     <small *ngIf="prenoms.errors.maxlength">

@@ -1,1 +1,145 @@
-<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-lg bg-white">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-list text-primary"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" routerLink="/main">
+          <img src="assets/logo-mtfp.png" alt="Bootstrap" width="180"  height="60">
+        </a>
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item d-flex"> 
+            <a class="nav-link text-dark h6 meb text-center align-self-center" aria-current="page" routerLink="/main" routerLinkActive="active">ACCUEIL</a>
+          </li>
+          <li class="nav-item "> 
+            <a class="nav-link text-dark h6 meb text-center" aria-current="page" routerLink="/prestations-par-thematique" routerLinkActive="active">NOS PRESTATIONS</a>
+          </li>
+          <li class="nav-item "> 
+            <a class="nav-link text-dark h6 meb text-center" aria-current="page" routerLink="/e-services" routerLinkActive="active">e-SERVICES</a>
+          </li>
+          <li class="nav-item "> 
+            <a class="nav-link text-dark h6 meb text-center" aria-current="page" routerLink="/logusager" routerLinkActive="active">MON ESPACE USAGER</a>
+          </li>
+          <li class="nav-item "> 
+            <a class="nav-link text-dark h6 meb text-center" aria-current="page" routerLink="/requetes" routerLinkActive="active">SOUMETTRE UNE PREOCCUPATION</a>
+          </li>
+          <li class="nav-item "> 
+            <a class="nav-link text-dark h6 meb text-center" target="_blank" href="https://travail.gouv.bj/contact">NOS CONTACTS</a>
+          </li>
+        </ul>
+  
+      </div>
+    </div>
+  </nav>
+        <router-outlet></router-outlet>
+
+
+
+  <footer>
+        <div class="text-center my-3">
+            <a class="text-white" routerLink="mentions-legales">Politique de confidentialité</a>
+        </div>
+            
+        <p class="text-center text-white">République du Bénin - Ministère du Travail et de la Fonction Publique</p>
+        <p class="text-center text-white">© Tous Droits Reservés 2021</p>
+
+        <div class="d-flex">
+            <div class="green" style="height:5px; width:33%"></div>
+            <div class="yellow" style="height:5px;width:34%"></div>
+            <div class="red" style="height:5px;width:33%"></div>
+        </div>
+</footer>
+
+<!--  -->
+
+  <div class="my-cookie" *ngIf="!isConsented">
+        <div class="container text-left mb-3">
+        <img src="assets/logo-mtfp.png" class="img-fluid h100" style="height: 3vw;" alt="..." >
+        </div>
+        <div class="container" style="font-size:15px">
+            <p>Ce site utilise des cookies pour collecter des données auprès de nos internautes. Cette collecte a pour finalité de vous fournir des contenues plus riche et adaptés à vos recherches. Les données collectées sont conservées pendant 1 an.</p>
+            <p>Visitez notre <a routerLink="/mentions-legales">politique de protection des données personnelles </a></p>
+        </div>
+        <div class="container text-center">
+            <button type="button" (click)="consent()" class="btn btn-sm blueColor text-white mr-2">TOUT REFUSER</button>
+            <!-- <button type="button" class="btn btn-sm blueColor text-white mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">PLUS D'OPTION</button> -->
+            <button type="button" (click)="consent()" class="btn btn-sm blueColor text-white mr-2">TOUT ACCEPTER</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+     
+      <div class="modal-body">
+      <div class="container p-5">
+  <div class="block-1 blueColor p-5">
+  <h6 class='text-center text-white'>Panneau de gestion des cookies</h6>
+  <hr class="mb-3 text-white">
+  <p class="p-3 text-center text-white">En autorisant ces services tiers, vous acceptez le dépôt et la lecture de cookies et l'utilisation de technologies de suivi nécessaires à  leur bon fonctionnement.</p> 
+  <div class="text-center">
+  <a routerLink="/mentions-legales" class="btn btn-light btn-sm text-center">Politique de confidentialité</a>
+
+  </div> 
+  <hr class="mb-3 text-white">
+  <div class="row text-white">
+    <div class="col-6">Préférence pour tous les services</div>
+    <div class="col-6 d-flex justify-content-between">
+      <button class="btn btn-gray btn-sm text-white accepted-all"><i class="fa fa-check"></i>Autoriser tous les cookies</button>
+      <button class="btn btn-gray btn-sm text-white rejected-all"><i class="fa fa-times"></i>Interdire tous les cookies</button>
+    </div>
+  </div>
+  </div>
+<div class="bloc-2 py-3 mb-3">
+    <div class="opt-title pt-2 ">
+        <p class="text-center"><i class="fa fa-plus fa-1x mr-2"></i> Mesures d'audience</p>
+    </div>
+    <div class="opt-bloc p-3">
+        <div class="row">
+            <div class="col-6">
+                <h4 class="" style="color:black">Google analytics</h4>
+                <p>
+                Une mesure est également réalisée grâce aux solutions Google Analytics y compris dans le cadre de campagnes d'informations. Si vous ne souhaitez pas être audité, vous pouvez vous reporter aux règles de confidentialité
+                </p>
+            </div>
+            <div class="col-6 d-flex justify-content-end ">
+                <div class="">
+                       <button class="btn btn-gray btn-sm text-white mr-3 accepted" id="accepted1"><i class="fa fa-check mr-2"></i>Autoriser</button>
+                <button class="btn btn-gray btn-sm text-white rejected" id="rejected1"><i class="fa fa-times mr-2"></i>Interdire</button>
+                
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+<div class="bloc-2 py-3">
+    <div class="opt-title pt-2 ">
+        <p class="text-center"><i class="fa fa-plus fa-1x mr-2"></i> Mesures d'audience</p>
+    </div>
+    <div class="opt-bloc p-3">
+        <div class="row">
+            <div class="col-6">
+                <h4 class="" style="color:black">Google analytics</h4>
+                <p>
+                Une mesure est également réalisée grâce aux solutions Google Analytics y compris dans le cadre de campagnes d'informations. Si vous ne souhaitez pas être audité, vous pouvez vous reporter aux règles de confidentialité
+                </p>
+            </div>
+            <div class="col-6 d-flex justify-content-end ">
+                <div class="">
+                       <button class="btn btn-gray btn-sm text-white mr-3 accepted" id="accepted2"><i class="fa fa-check mr-2"></i>Autoriser</button>
+                <button class="btn btn-gray btn-sm text-white rejected" id="rejected2"><i class="fa fa-times mr-2"></i>Interdire</button>
+                
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

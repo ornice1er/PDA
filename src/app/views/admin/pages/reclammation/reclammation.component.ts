@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 // import { PdaService } from '../../core/_services/pda.servic';
-// import { AlertNotif } from '../../alert';
+// 
 import { Router } from '@angular/router';
 //import { ReCaptchaV3Service } from 'ng-recaptcha';
 import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +12,7 @@ import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { PdaService } from '../../../../core/services/pda.servic';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class ReclammationComponent implements OnInit {
   constructor(private pdaService: PdaService, private router: Router,private modalService: NgbModal) { }
 
   closeResult = '';
-  prestations = []
+  prestations:any = []
   recup_data:any
   @ViewChild('content') content : any;
 
@@ -77,7 +78,7 @@ export class ReclammationComponent implements OnInit {
   }
 
   showPrestation(id:any){
-    return this.prestations.filter(e=>(e.id==id))[0].libelle
+    return this.prestations.filter((e:any)=>(e.id==id))[0].libelle
   }
   validate(){
     let value:any=this.recup_data
@@ -91,12 +92,12 @@ export class ReclammationComponent implements OnInit {
       this.loading = false
       this.modalService.dismissAll()
       if (res.success) {
-        AlertNotif.finish("Demande de reclamation", "Reclamation envoyée avec succès", "success")
+        AppSweetAlert.simpleAlert("Demande de reclamation", "Reclamation envoyée avec succès", "success")
         this.router.navigateByUrl('/main')
       }
     }, (err) => {
       this.loading = false;
-      AlertNotif.finish("Erreur", "Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard", "error")
+      AppSweetAlert.simpleAlert("Erreur", "Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard", "error")
     })
   }
 }

@@ -1,18 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { PdaService } from '../../core/_services/pda.servic';
 import { ActivatedRoute } from '@angular/router';
+import { PdaService } from '../../../../core/services/pda.servic';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
+import { LoadingComponent } from '../../../components/loading/loading.component';
+import { StatutComponent } from '../../../components/statut/statut.component';
 
 @Component({
   selector: 'app-prestations-par-structure',
   templateUrl: './prestations-par-structure.component.html',
+   standalone: true,
+      imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent],
   styleUrls: ['./prestations-par-structure.component.css']
 })
 export class PrestationsParStructureComponent implements OnInit {
 
   searchText=""
-  data=[]
-  structures=[]
-  _temp=[]
+  data:any[]=[]
+  structures:any[]=[]
+  _temp:any[]=[]
   selected_key=""
   collectionSize=0
   page=1
@@ -20,7 +30,7 @@ export class PrestationsParStructureComponent implements OnInit {
 
   loading=false
   search(){
-    this.data=this._temp.filter(r => {
+    this.data=this._temp.filter((r:any) => {
       const term = this.searchText.toLowerCase();
       return r.libelle.toLowerCase().includes(term) 
     })
@@ -35,7 +45,7 @@ export class PrestationsParStructureComponent implements OnInit {
     this.structures=[]
     this.pdaService.getStructures_new(1).subscribe(
       (res:any)=>{
-        // this.structures=res.filter(e=> (e.services.length!=0))
+        // this.structures=res.filter((e:any)=> (e.services.length!=0))
         this.structures=res
         // console.log(res)
       },)
@@ -53,10 +63,11 @@ export class PrestationsParStructureComponent implements OnInit {
     }else{
       this.pdaService.getPrestations().subscribe(
         (res:any)=>{
-            this.data=res.filter(e=>{
+            this.data=res.filter((e:any)=>{
               if(e.service_parent != null){
                 return (e.service_parent.type_s=='dt' && e.service_parent.active=='1')
               }
+              return ;
             })
             this._temp=this.data
             this.collectionSize=this.data.length
@@ -66,7 +77,7 @@ export class PrestationsParStructureComponent implements OnInit {
         },)
       // this.pdaService.getPrestations().subscribe(
       //   (res:any)=>{
-      //           this.data=res.filter(e=> (e.service_parent != null ? e.service_parent.type_s=='dt' && e.service_parent.active=='1' : ''))
+      //           this.data=res.filter((e:any)=> (e.service_parent != null ? e.service_parent.type_s=='dt' && e.service_parent.active=='1' : ''))
       //           this._temp=this.data
       //           this.collectionSize=this.data.length
       //           this.loading=false
@@ -76,12 +87,12 @@ export class PrestationsParStructureComponent implements OnInit {
     
   }
 
-  filter(event){
+  filter(event:any){
     this.data=[]
     if(event.target.value=="0"){
       this.data=this._temp
     }else{
-      this.data=this._temp.filter(e=> (e.idParent==event.target.value))
+      this.data=this._temp.filter((e:any)=> (e.idParent==event.target.value))
     }
     this.searchText=""
     this.collectionSize=this.data.length

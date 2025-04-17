@@ -3,18 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { Router } from 'express';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { Subscription } from 'rxjs';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
-import { globalName } from '../../../../core/services/_utils/utils';
 import { AuthService } from '../../../../core/services/auth.service';
 import { StatusService } from '../../../../core/services/status.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
 import { animate } from '@angular/animations';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { GlobalName } from '../../../../core/utils/global-name';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -34,16 +35,16 @@ export class ProfileComponent implements OnInit {
 
     subs:Subscription
 
-  constructor(private local_service:LocalService, private status_service:StatusService, private router:Router, private user_auth_service:AuthService) { 
+  constructor(private local_service:LocalStorageService, private status_service:StatusService, private router:Router, private user_auth_service:AuthService) { 
 
-    if(localStorage.getItem(globalName.current_user)!=undefined) this.user=this.local_service.getItem(globalName.current_user);
-        this.subs=this.user_auth_service.getUserLoggedIn().subscribe(res: => {
+    if(localStorage.getItem(GlobalName.current_user)!=undefined) this.user=this.local_service.get(GlobalName.current_user);
+        this.subs=this.user_auth_service.getUserLoggedIn().subscribe((res:any) => {
             this.isLogin = res
         });
   }
 
   ngOnInit(): void {
-      this.user=this.local_service.getItem(globalName.current_user)
+      this.user=this.local_service.get(GlobalName.current_user)
       this.status_service.getAll().subscribe(
           (res:any)=>{
               this.status=res.data;
@@ -59,12 +60,12 @@ export class ProfileComponent implements OnInit {
           (res:any)=>{
               this.loading=false;
               this.router.navigate(['/home']);
-              AlertNotif.finish("Mise à jour profil","Mise à jour effectuée avec succès","success")
+              AppSweetAlert.simpleAlert("Mise à jour profil","Mise à jour effectuée avec succès","success")
           },
           (err)=>{
               this.loading=false;
 
-              AlertNotif.finish("Mise à jour profil","Mise à jour effectuée avec succès","error")}
+              AppSweetAlert.simpleAlert("Mise à jour profil","Mise à jour effectuée avec succès","error")}
       )
     }
 
@@ -77,12 +78,12 @@ export class ProfileComponent implements OnInit {
             (res:any)=>{
                 this.loading=false;
                 this.router.navigate(['/home']);
-                AlertNotif.finish("Modification du mot de passe","Nouveau mot de passe pris en compte","success")
+                AppSweetAlert.simpleAlert("Modification du mot de passe","Nouveau mot de passe pris en compte","success")
             },
             (err:any)=>{
                 this.loading=false;
 
-                AlertNotif.finish("Modification du mot de passe","Echec de réinitialisation","error")}
+                AppSweetAlert.simpleAlert("Modification du mot de passe","Echec de réinitialisation","error")}
         )
 
     }

@@ -18,7 +18,7 @@ import { PdaService } from '../../../../core/services/pda.servic';
 })
 export class EvenementDeclencheurComponent implements OnInit {
 
-  data=[]
+  data:any=[]
   constructor(private pdaService:PdaService) { }
 
   ngOnInit(): void {

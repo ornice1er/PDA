@@ -339,7 +339,7 @@
                                                                 <option [value]="el.id" *ngFor="let el of prestations">{{el.libelle}}</option>
                                                             </select>
                                                             <span *ngIf="prestation.invalid && (prestation.dirty || prestation.touched)" class="text-danger">
-                                                                <small *ngIf="prestation.errors?.required"  class="form-text text-danger">Ce champs est requis
+                                                                <small *ngIf="prestation.errors?.['required']"  class="form-text text-danger">Ce champs est requis
                                                                     requis</small>
                                                             </span>
                                                     </div>

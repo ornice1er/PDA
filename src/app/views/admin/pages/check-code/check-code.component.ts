@@ -9,10 +9,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
-import { globalName } from '../../../../core/services/_utils/utils';
 import { AuthService } from '../../../../core/services/auth.service';
 import { IpServiceService } from '../../../../core/services/ip-service.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
+import { GlobalName } from '../../../../core/utils/global-name';
 
 @Component({
   selector: 'app-check-code',
@@ -24,7 +25,7 @@ import { LocalService } from '../../../../core/services/storage_services/local.s
 })
 export class CheckCodeComponent implements OnInit {
     loading:boolean=false
-  constructor(private user_auth_service:AuthService,private local_service:LocalService,private router:Router, private route:ActivatedRoute,private ip:IpServiceService) { }
+  constructor(private user_auth_service:AuthService,private local_service:LocalStorageService,private router:Router, private route:ActivatedRoute,private ip:IpServiceService) { }
   user:any;
   ngOnInit(): void {
     window.scroll(0,0);
@@ -32,7 +33,7 @@ export class CheckCodeComponent implements OnInit {
   }
 
   resendCode(){
-    this.user=this.local_service.getItem(globalName.params)
+    this.user=this.local_service.get(GlobalName.params)
     console.log(this.user)
     
     this.user_auth_service.resendCode({
@@ -42,16 +43,16 @@ export class CheckCodeComponent implements OnInit {
         (res:any)=>{
             this.loading=false;
           if(res.send_code){
-            AlertNotif.finish("Code de verification","Code envoyé avec succès. Consulter votre boite mail.","success")
+            AppSweetAlert.simpleAlert("Code de verification","Code envoyé avec succès. Consulter votre boite mail.","success")
           }else{
-            AlertNotif.finish("Code de verification",res.message+" ","error")
+            AppSweetAlert.simpleAlert("Code de verification",res.message+" ","error")
           }
           //  this.router.navigate(['/main']);
-          //  AlertNotif.finish("Mot de passe oublié","Email envoyé","success")
+          //  AppSweetAlert.simpleAlert("Mot de passe oublié","Email envoyé","success")
         },
         (err)=>{
             this.loading=false;
-            AlertNotif.finish("Code de verification","Echec d'envoi du code","error")}
+            AppSweetAlert.simpleAlert("Code de verification","Echec d'envoi du code","error")}
     )
     // setTimeout(this.resendCode, 5000);
   }
@@ -59,7 +60,7 @@ export class CheckCodeComponent implements OnInit {
     codeVerification(value:any){
         //code, user_id, ip,client_id, client_secret, username, password, authorized_always_id
 
-        var data=this.local_service.getItem(globalName.params);
+        var data=this.local_service.get(GlobalName.params);
         data['code']=value.code
         data['authorized_always_id']=value.authorized_always_id==""?false:true
         this.user_auth_service.verifyCode(data).subscribe(
@@ -69,19 +70,19 @@ export class CheckCodeComponent implements OnInit {
                 console.log(res)
 
                 if(res.message){
-                  AlertNotif.finish("Vérification de code",res.message,"error")
+                  AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
                 }else{
 
                   if(res.user.active){
                     this.loading=false;
                     console.log(res.user)
                     if(res.user.is_portal_admin==true){
-                        url=globalName.back_url+'?access_token='+res.access_token+'&email='+res.user.email;
+                        url=GlobalName.back_url+'?access_token='+res.access_token+'&email='+res.user.email;
 
                     }else{
-                        this.local_service.setItem(globalName.token,res.access_token)
-                        this.local_service.setItem(globalName.current_user,res.user)
-                        this.local_service.setItem(globalName.refresh_token,res.refresh_token)
+                        this.local_service.set(GlobalName.token,res.access_token)
+                        this.local_service.set(GlobalName.current_user,res.user)
+                        this.local_service.set(GlobalName.refresh_token,res.refresh_token)
                         this.user_auth_service.setUserLoggedIn(true);
                         
                         url=res.redirect_url+'?access_token='+res.access_token+'&email='+res.user.email;
@@ -94,14 +95,14 @@ export class CheckCodeComponent implements OnInit {
                         this.router.navigate(['/home']);
                     }
                 }else{
-                    AlertNotif.finish("Vérification de code",res.message,"error")
+                    AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
                 }
               }
             },
             (err)=>{
                 this.loading=false;
                 console.log(err)
-                AlertNotif.finish("Vérification de code","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("Vérification de code","Echec de connexion","error")}
         )
     }
 

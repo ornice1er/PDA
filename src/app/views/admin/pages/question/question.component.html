@@ -35,7 +35,7 @@
                 <input type="text" name="nom" #nom="ngModel" ngModel id="nom" class="form-control" placeholder=""
                   required="">
                 <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="text-danger">
-                  <small *ngIf="nom.errors?.required" class="form-text text-danger">Ce champs est requis
+                  <small *ngIf="nom.errors?.['required']" class="form-text text-danger">Ce champs est requis
                     requis</small>
                 </span>
               </div>
@@ -47,7 +47,7 @@
                 <input type="text" name="prenoms" #prenoms="ngModel" ngModel id="prenoms" class="form-control"
                   placeholder="" required="">
                 <span *ngIf="prenoms.invalid && (prenoms.dirty || prenoms.touched)" class="text-danger">
-                  <small *ngIf="prenoms.errors?.required" class="form-text text-danger">Ce champs est requis
+                  <small *ngIf="prenoms.errors?.['required']" class="form-text text-danger">Ce champs est requis
                     requis</small>
                 </span>
               </div>
@@ -60,7 +60,7 @@
                 <input type="email" name="email" #email="ngModel" ngModel id="email" class="form-control" placeholder=""
                   required="">
                 <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-                  <small *ngIf="email.errors?.required" class="form-text text-danger">Ce champs est requis
+                  <small *ngIf="email.errors?.['required']" class="form-text text-danger">Ce champs est requis
                     requis</small>
                 </span>
               </div>
@@ -73,7 +73,7 @@
                 <input type="text" name="objet" #objet="ngModel" ngModel id="objet" class="form-control" placeholder=""
                   required="">
                 <span *ngIf="objet.invalid && (objet.dirty || objet.touched)" class="text-danger">
-                  <small *ngIf="objet.errors?.required" class="form-text text-danger">Ce champs est requis
+                  <small *ngIf="objet.errors?.['required']" class="form-text text-danger">Ce champs est requis
                     requis</small>
                 </span>
               </div>
@@ -86,7 +86,7 @@
                 <textarea class="form-control" #questions="ngModel" ngModel name="questions" id="questions" rows="3"
                   required=""></textarea>
                 <span *ngIf="questions.invalid && (questions.dirty || questions.touched)" class="text-danger">
-                  <small *ngIf="questions.errors?.required" class="form-text text-danger">Ce champs est requis
+                  <small *ngIf="questions.errors?.['required']" class="form-text text-danger">Ce champs est requis
                     requis</small>
                 </span>
               </div>

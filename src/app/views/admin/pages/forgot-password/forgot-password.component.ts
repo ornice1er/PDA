@@ -8,13 +8,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
-import { Router } from 'express';
 import { AuthService } from '../../../../core/services/auth.service';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent],
+    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,RouterModule],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })
@@ -42,16 +43,16 @@ export class ForgotPasswordComponent implements OnInit {
             (res:any)=>{
                 this.loading=false;
                 this.router.navigate(['/main']);
-                AlertNotif.finish("Mot de passe oublié","Un mail vous a été envoyé. Veuillez consulter votre boîte mail","success")
+                AppSweetAlert.simpleAlert("Mot de passe oublié","Un mail vous a été envoyé. Veuillez consulter votre boîte mail","success")
             },
             (err)=>{
             this.loading=false;
             console.log(err)
             if(err.error.message=="Reset password failed.")
             {
-                AlertNotif.finish("Mot de passe oublié","Le mail renseigné n'existe pas. Veuillez vérifier le mail puis réessayer","error")
+                AppSweetAlert.simpleAlert("Mot de passe oublié","Le mail renseigné n'existe pas. Veuillez vérifier le mail puis réessayer","error")
             }else{
-                AlertNotif.finish("Mot de passe oublié","Echec de réinitialisation du mot de passe","error")
+                AppSweetAlert.simpleAlert("Mot de passe oublié","Echec de réinitialisation du mot de passe","error")
             }
         }
     )

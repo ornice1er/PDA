@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertNotif } from '../../alert';
+
 import { Router } from '@angular/router';
 import {NgbModal, ModalDismissReasons, NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -10,6 +10,7 @@ import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
 import { PdaService } from '../../../../core/services/pda.servic';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 
 
 
@@ -24,7 +25,7 @@ export class DemandeInformationComponent implements OnInit {
 
   active=1
   constructor(private router:Router, private pdaService:PdaService,private modalService:NgbModal) { }
-  prestations=[]
+  prestations:any=[]
   _temp=[]
 
   recup_data:any
@@ -60,12 +61,12 @@ export class DemandeInformationComponent implements OnInit {
     this.pdaService.getPrestations().subscribe(
       (res:any)=>{
           this._temp=res;
-          this.prestations=this._temp.filter(e=>(e.idParent==15 || e.idParent==16 || e.idParent==106))
+          this.prestations=this._temp.filter((e:any)=>(e.idParent==15 || e.idParent==16 || e.idParent==106))
 
       })
   }
   showPrestation(id:any){
-    return this.prestations.filter(e=>(e.id==id))[0].libelle
+    return this.prestations.filter((e:any)=>(e.id==id))[0].libelle
   }
 
   loading=false
@@ -106,12 +107,12 @@ export class DemandeInformationComponent implements OnInit {
       this.loading=false
       this.modalService.dismissAll()
       if(res.success){
-        AlertNotif.finish("Demande d'information pension","Demande envoyée avec succès","success")
+        AppSweetAlert.simpleAlert("Demande d'information pension","Demande envoyée avec succès","success")
         this.router.navigateByUrl('/main')
       }
      }, (err)=>{
       this.loading=false;
-        AlertNotif.finish("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
       )
   }
   validateCarriere(){
@@ -134,12 +135,12 @@ export class DemandeInformationComponent implements OnInit {
       this.loading2=false
       this.modalService.dismissAll()
         if(res.success){
-          AlertNotif.finish("Demande d'information carrère","Demande envoyée avec succès","success")
+          AppSweetAlert.simpleAlert("Demande d'information carrère","Demande envoyée avec succès","success")
           this.router.navigateByUrl('/main')
         }
      }, (err)=>{
       this.loading2=false;
-        AlertNotif.finish("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
       )
   }
   validateFormation(){
@@ -158,12 +159,12 @@ export class DemandeInformationComponent implements OnInit {
       this.loading3=false
       this.modalService.dismissAll()
         if(res.success){
-          AlertNotif.finish("Demande d'information formation","Demande envoyée avec succès","success")
+          AppSweetAlert.simpleAlert("Demande d'information formation","Demande envoyée avec succès","success")
           this.router.navigateByUrl('/main')
         }
      }, (err)=>{
       this.loading3=false;
-        AlertNotif.finish("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
       )
   }
 

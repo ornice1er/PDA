@@ -1,0 +1,25 @@
+
+<div class="container-fluid p-5" style="background-color: #f2f5f9;">
+    <h1 class="mb-3 meb blueColorT text-center" >e-SERVICES</h1>
+
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-4" *ngFor="let d of data">
+            <app-prestation-item  [data]="d"></app-prestation-item>
+
+            <!-- <div class="d-flex justify-content-between shadow p-3 mb-5 bg-body-tertiary rounded wow slideInLeft" style="height: 8rem;">
+                    <div class="align-self-center">
+                        <img src="assets/children-computer.svg" height="80" width="120" alt="">
+                    </div>
+                <div class="d-flex flex-column justify-content-between py-1 w-100">
+                    <h6 class="text-center blueColorT">{{d.title}}</h6>
+                    <div class="d-flex justify-content-between">
+                        <a  type="button" target="_blank" href="{{d.desc_link}}" class="blueColorT">M'informer</a>
+                        <a *ngIf="d.is_external_service" type="button" target="_blank" href="{{d.link}}" class="blueColorT ">Faire une demande</a>
+                        <a *ngIf="!d.is_external_service" type="button" routerLink="/e-services/{{d.code}}" class="blueColorT ">Faire une demande</a>
+                    </div>
+                </div>
+            </div> -->
+         
+        </div>
+    </div>
+</div>

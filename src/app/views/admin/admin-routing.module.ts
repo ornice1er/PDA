@@ -2,7 +2,7 @@ import { AuthGuard } from "../../core/guards/auth.guard";
 import { AuthGuardm } from "../../core/guards/authm.guard";
 import { IsAuthGuard } from "../../core/guards/is-auth.guard";
 import { RegisterguardGuard } from "../../core/guards/registerguard.guard";
-import { MentionsLegalesComponent } from "../../core/services/mentions-legales/mentions-legales.component";
+import { MentionsLegalesComponent } from "../public/pages/mentions-legales/mentions-legales.component";
 import { WelcomeComponent } from "../public/pages/welcome/welcome.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { AboutComponent } from "./pages/about/about.component";
@@ -22,7 +22,7 @@ import { LogpfcComponent } from "./pages/logpfc/logpfc.component";
 import { PlanComponent } from "./pages/plan/plan.component";
 import { PrendreRendezvousComponent } from "./pages/prendre-rendezvous/prendre-rendezvous.component";
 import { PrestationsParStructureComponent } from "./pages/prestations-par-structure/prestations-par-structure.component";
-import { PrestationsParThematiqueComponent } from "./pages/prestations-par-thematique/prestations-par-thematique.component";
+import { PrestationsParThematiqueComponent } from "../public/pages/prestations-par-thematique/prestations-par-thematique.component";
 import { ProfileComponent } from "./pages/profile/profile.component";
 import { ProfilpfcComponent } from "./pages/profilpfc/profilpfc.component";
 import { QuestionComponent } from "./pages/question/question.component";
@@ -43,12 +43,7 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
             canActivate: [IsAuthGuard]
           
       },
-      {
-          component: PrestationsParThematiqueComponent,
-            path: "prestations-par-thematique",
-            canActivate: [IsAuthGuard]
-          
-      },
+    
       {
           component: PrestationsParStructureComponent,
             path: "prestations-par-structure",

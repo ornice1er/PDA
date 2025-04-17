@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 // import {AuthService} from '../../core/_services/auth.service';
 // import {AlertNotif} from '../../alert';
-// import {clientData, globalName} from '../../core/_utils/utils';
-// import {LocalService} from '../../core/_services/storage_services/local.service';
+// import {clientData, GlobalName} from '../../core/_utils/utils';
+// import {LocalStorageService} from '../../core/_services/storage_services/local.service';
 import { Subscription } from 'rxjs';
 // import { Config } from '../../app.config';
 import { Router } from '@angular/router';
-import { globalName } from '../../../../core/services/_utils/utils';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { ConfigService } from '../../../../core/utils/config-service';
+import { GlobalName } from '../../../../core/utils/global-name';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 
 @Component({
   selector: 'app-home',
@@ -22,10 +24,10 @@ export class HomeComponent implements OnInit {
   }
 
 
-  subs:Subscription
+  subs:Subscription | undefined
 
-  constructor(private user_auth_service:AuthService, private  local_service:LocalService,private router:Router) { 
-    if(localStorage.getItem(globalName.current_user)!=undefined) this.user=this.local_service.getItem(globalName.current_user);
+  constructor(private user_auth_service:AuthService, private  local_service:LocalStorageService,private router:Router) { 
+    if(localStorage.getItem(GlobalName.current_user)!=undefined) this.user=this.local_service.get(GlobalName.current_user);
     
   }
   loading:boolean=false
@@ -35,9 +37,9 @@ export class HomeComponent implements OnInit {
   access_token:any
 
   ngOnInit(): void {
-      this.user=this.local_service.getItem(globalName.current_user)
+      this.user=this.local_service.get(GlobalName.current_user)
       this.id=this.user.status_id
-      this.access_token=this.local_service.getItem(globalName.token)
+      this.access_token=this.local_service.get(GlobalName.token)
       this.user_auth_service.getApps(this.id).subscribe(
           (res:any)=>{
                   this.loading=false;
@@ -46,7 +48,7 @@ export class HomeComponent implements OnInit {
           (err:any)=>{
               this.loading=false;
               console.log(err)
-              AlertNotif.finish("Applications","Echec de récupération des applications","error")}
+              AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")}
       )
 
       
@@ -62,13 +64,13 @@ export class HomeComponent implements OnInit {
       (err:any)=>{
           this.loading=false;
           console.log(err)
-         // AlertNotif.finish("Applications","Echec de récupération des applications","error")
+         // AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")
         }
   )
   }
   logout(){
-    localStorage.removeItem(globalName.token);
-    localStorage.removeItem(globalName.current_user);
+    localStorage.removeItem(GlobalName.token);
+    localStorage.removeItem(GlobalName.current_user);
 
     this.user_auth_service.setUserLoggedIn(false)
     this.router.navigate(['/main']);
@@ -77,7 +79,7 @@ export class HomeComponent implements OnInit {
 
         },
         (err)=>{
-            AlertNotif.finish("Déconnexion","Echec de déconnexion","error")}
+            AppSweetAlert.simpleAlert("Déconnexion","Echec de déconnexion","error")}
     )*/
 
 }

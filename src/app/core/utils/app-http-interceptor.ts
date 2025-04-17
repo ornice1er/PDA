@@ -31,7 +31,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
-              if (error.error instanceof ErrorEvent) {
+              if (typeof ErrorEvent !== 'undefined' && error.error instanceof ErrorEvent) {
                 console.log("Error Event");
               } else {
                 console.log(

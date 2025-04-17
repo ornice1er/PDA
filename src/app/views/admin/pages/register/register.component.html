@@ -26,7 +26,7 @@
                                         <input type="text" [className]="lastname.invalid && (lastname.dirty || lastname.touched)?'form-control border-danger':lastname.valid && lastname.dirty?'form-control border-info':'form-control '"
                                             name="lastname" #lastname="ngModel" ngModel required>
                                         <span *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
-                                            <small *ngIf="lastname.errors?.required" id="typeLabelHelp" class="form-text">Nom
+                                            <small *ngIf="lastname.errors?.['required']" id="typeLabelHelp" class="form-text">Nom
                                                 requis</small>
                                         </span>
                                     </div>
@@ -38,7 +38,7 @@
                                         <input type="text" [className]="firstname.invalid && (firstname.dirty || firstname.touched)?'form-control border-danger':firstname.invalid?'form-control':'form-control border-info'"
                                             name="firstname" #firstname="ngModel" ngModel required>
                                         <span *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
-                                            <small *ngIf="firstname.errors?.required" id="typeLabelHelp" class="form-text">Prénoms
+                                            <small *ngIf="firstname.errors?.['required']" id="typeLabelHelp" class="form-text">Prénoms
                                                 requis</small>
                                         </span>
                                     </div>
@@ -50,7 +50,7 @@
                                         <input type="date"  max="2010-12-31" [className]="birthday.invalid && (birthday.dirty || birthday.touched)?'form-control border-danger':birthday.valid && birthday.dirty ?'form-control border-info':'form-control '"
                                             name="birthday" #birthday="ngModel" ngModel>
                                         <span *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)" class="text-danger">
-                                            <small *ngIf="birthday.errors?.required" id="typeLabelHelp" class="form-text">Date
+                                            <small *ngIf="birthday.errors?.['required']" id="typeLabelHelp" class="form-text">Date
                                                 de naissance requis</small>
                                         </span>
                                     </div>
@@ -64,7 +64,7 @@
                                             type="tel" pattern="^\+?\s*(\d+\s?){8,}$" name="phone" #phone="ngModel"
                                             ngModel required placeholder="+22990909090">
                                         <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
-                                            <small *ngIf="phone.errors?.required" id="typeLabelHelp" class="form-text">Téléphone
+                                            <small *ngIf="phone.errors?.['required']" id="typeLabelHelp" class="form-text">Téléphone
                                                 requis</small>
                                         </span>
                                     </div>
@@ -78,7 +78,7 @@
                                         </select>
                                         <span *ngIf="statusAgent.invalid && (statusAgent.dirty || statusAgent.touched)"
                                             class="text-danger">
-                                            <small *ngIf="statusAgent.errors?.required" id="typeLabelHelp" class="form-text">Status
+                                            <small *ngIf="statusAgent.errors?.['required']" id="typeLabelHelp" class="form-text">Status
                                                 requis</small>
                                         </span>
                                     </div>
@@ -92,7 +92,7 @@
                                         <input [className]="matricule.invalid && (matricule.dirty || matricule.touched)?'form-control border-danger':matricule.valid && matricule.dirty ?'form-control border-info':'form-control '"
                                             type="text" name="matricule" #matricule="ngModel" ngModel required>
                                         <span *ngIf="matricule.invalid && (matricule.dirty || matricule.touched)" class="text-danger">
-                                            <small *ngIf="matricule.errors?.required" id="typeLabelHelp" class="form-text">Matricule
+                                            <small *ngIf="matricule.errors?.['required']" id="typeLabelHelp" class="form-text">Matricule
                                                 requis</small>
                                         </span>
                                     </div>
@@ -103,7 +103,7 @@
                                         <input [className]="ifu.invalid && (ifu.dirty || ifu.touched)?'form-control border-danger':ifu.valid && ifu.dirty ?'form-control border-info':'form-control '"
                                             type="text" name="ifu" #ifu="ngModel" ngModel required>
                                         <span *ngIf="ifu.invalid && (ifu.dirty || ifu.touched)" class="text-danger">
-                                            <small *ngIf="ifu.errors?.required" id="typeLabelHelp" class="form-text">N°IFU
+                                            <small *ngIf="ifu.errors?.['required']" id="typeLabelHelp" class="form-text">N°IFU
                                                 requis</small>
                                         </span>
                                     </div>
@@ -115,7 +115,7 @@
                                         <input [className]="rccm.invalid && (rccm.dirty || rccm.touched)?'form-control border-danger':rccm.valid && rccm.dirty ?'form-control border-info':'form-control '"
                                             type="text" name="rccm" #rccm="ngModel" ngModel required>
                                         <span *ngIf="rccm.invalid && (rccm.dirty || rccm.touched)" class="text-danger">
-                                            <small *ngIf="rccm.errors?.required" id="typeLabelHelp" class="form-text">RCCM
+                                            <small *ngIf="rccm.errors?.['required']" id="typeLabelHelp" class="form-text">RCCM
                                                 requis</small>
                                         </span>
                                     </div>
@@ -129,7 +129,7 @@
                                         </select>
                                         <span *ngIf="instituAgent.invalid && (instituAgent.dirty || instituAgent.touched)"
                                             class="text-danger">
-                                            <small *ngIf="instituAgent.errors?.required" id="typeLabelHelp" class="form-text">Status
+                                            <small *ngIf="instituAgent.errors?.['required']" id="typeLabelHelp" class="form-text">Status
                                                 requis</small>
                                         </span>
                                     </div>
@@ -149,7 +149,7 @@
                                             name="email" #email="ngModel" ngModel email="true">
 
                                         <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-                                            <small *ngIf="email.errors?.required" id="typeLabelHelp" class="form-text">Email
+                                            <small *ngIf="email.errors?.['required']" id="typeLabelHelp" class="form-text">Email
                                                 requis</small>
                                         </span>
                                     </div>
@@ -160,7 +160,7 @@
                                         <input type="password" class="form-control" name="password" #password="ngModel"
                                             ngModel>
                                         <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                                            <small *ngIf="password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                            <small *ngIf="password.errors?.['required']" id="typeLabelHelp" class="form-text">Mot
                                                 de passe requis</small>
                                         </span>
                                     </div>
@@ -172,7 +172,7 @@
                                             #confirm_password="ngModel" ngModel>
                                         <span *ngIf="confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)"
                                             class="text-danger">
-                                            <small *ngIf="confirm_password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                            <small *ngIf="confirm_password.errors?.['required']" id="typeLabelHelp" class="form-text">Mot
                                                 de passe requis</small>
                                         </span>
                                     </div>

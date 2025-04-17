@@ -1,0 +1,25 @@
+<div class="containter py-5" style="background-color: #f2f5f9;">
+
+    <div class="row">
+        <div class="col-8 mx-auto">
+            <div class="container py-5" id="checkStatus">
+                <form #addForm="ngForm" (ngSubmit)="send(addForm)">
+            
+                <div class="shadow p-3 mb-5 bg-white rounded">
+                  <h6 class="text-center">Faites le suivi de votre demande ici</h6>
+                  <p class="text-center">Veuillez renseigner la référence de votre demande.</p>
+            
+                  <div class="form-group mb-3">
+                    <input type="text" class="form-control" name="code" [(ngModel)]="code" placeholder="Saisissez la référence de la demande">
+                  </div>
+            
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-sm btn-primary"  [disabled]="addForm.invalid || loading">Voir le statut <app-loading [isVisible]="loading"></app-loading></button> 
+                  </div>
+                </div>
+              </form>
+            
+              </div>
+        </div>
+    </div>
+</div>

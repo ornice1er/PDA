@@ -1,0 +1,409 @@
+<form #myForm="ngForm">
+
+<div class="containter py-5" style="background-color: #f2f5f9;">
+    <h2 class="mb-3 text-center">Décision d'agrément d'exercice en qualité de médecin d'entreprise</h2>
+    <h6 class="text-center text-info">Cet e-service est réservé aux médecins qui ne sont pas agents de l'état.</h6>
+
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div #reqTop>
+                        
+                        <igx-stepper #stepper  [linear]="false" [orientation]="'horizontal'" (activeStepChanging)="handleActiveStepChanging($event)">
+     
+                         
+                             <igx-step > 
+                                <p igxStepTitle><b class="blueColorT">Informations sur le soumissionnaire</b></p>
+                           
+                                <div igxStepContent>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <div class=" form-group ">
+                                                <label for="">Nom et prénom(s)<span class="text-danger ml-2">(*)</span></label>
+                                                <input type="text" name="identity" class="form-control" [(ngModel)]="myRequestForm.identity">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <div class=" form-group ">
+                                                <label for="">cip</label>
+                                                <input type="text" name="cip" class="form-control" [(ngModel)]="myRequestForm.cip">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <div class=" form-group ">
+                                                <label for="">Téléphone <span class="text-danger ml-2">(*)</span></label>
+                                                <input type="text" name="phone" class="form-control" [(ngModel)]="myRequestForm.phone">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <div class=" form-group ">
+                                                <label for="">Email <span class="text-danger ml-2">(*)</span></label>
+                                                <input type="email" name="email" class="form-control" [(ngModel)]="myRequestForm.email">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 mb-3">
+                                            <div class=" form-group ">
+                                                <label for="">Ifu <span class="text-danger ml-2">(*)</span></label>
+                                                <input type="email" name="ifu" class="form-control" [(ngModel)]="myRequestForm.ifu">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" >
+                                            <div class=" p-2 bg-light mb-2 " >
+                                          <div class="d-flex justify-content-between" >
+                                              <div>
+                                                  <h5 class="m-1">{{myRequestForm.ifu_file?.name}} <span class="mx-1 text-danger">*</span></h5>
+                                                  <ng-container *ngIf="!myRequestForm.ifu_file.isSetted">
+                                                      <div class="form-group mb-3 col-lg-6 col-md-6 col-sm-12">
+                                                          <label for="">Fichier</label>
+                                                          <input type="file" #fileInp (change)="uploadIfu($event)" 
+                                                          accept="application/pdf">
+                                                      </div>
+                                                  </ng-container>
+                                                 
+                                              </div>
+                                              <div class="align-self-center">
+                                                  <ng-container *ngIf="myRequestForm.ifu_file.isSetted">
+                                                      <div >
+                                                          <div class="">
+                                                                <div class="d-flex justify-content-around">
+                                                              <i class="fa fa-eye text-info mx-1" (click)="open(content,myRequestForm.ifu_file?.file)" style="cursor: pointer;"></i>
+                                                              <i class="fa fa-trash text-danger  mx-1" (click)="changeIfu()"  style="cursor: pointer;"></i> 
+                                                          </div>
+                                                          </div>
+                                                      </div>
+                                                  </ng-container>
+                                          
+                                              </div>
+                                          </div>
+                                      </div>
+                                        </div>
+                                    
+                                    </div>
+                        
+                                 <div class="d-flex justify-content-center mt-5">
+                                    <button igxButton="raised"  type="button" class="btn btn-warning text-white px-5 rounded-0" (click)="prev()">  <i class="fa fa-arrow-left me-1"></i> Précédent </button>
+                                    <button igxButton="raised"  type="button" class="btn btn-primary px-5 rounded-0" (click)="next()">Suivant <i class="fa fa-arrow-right ms-1"></i></button>
+                                 </div>
+                                </div>
+                             </igx-step>
+                            <igx-step> 
+                               
+                        
+                               <p igxStepTitle><b class="blueColorT">Chargement des pièces à fournir(Version PDF)</b></p>
+                               <div igxStepContent>
+                                <div class="col-12 col-md-6" >
+                                    <div class=" p-2 bg-light mb-2 " >
+                                  <div class="d-flex justify-content-between" >
+                                      <div>
+                                          <h5 class="m-1">{{myRequestForm.an_file?.name}} <span class="mx-1 text-danger">*</span></h5>
+                                          <ng-container *ngIf="!myRequestForm.an_file.isSetted">
+                                              <div class="form-group mb-3 col-lg-6 col-md-6 col-sm-12">
+                                                  <label for="">Fichier</label>
+                                                  <input type="file" #fileInp (change)="uploadAn($event)" 
+                                                  accept="application/pdf">
+                                              </div>
+                                          </ng-container>
+                                         
+                                      </div>
+                                      <div class="align-self-center">
+                                          <ng-container *ngIf="myRequestForm.an_file.isSetted">
+                                              <div >
+                                                  <div class="">
+                                                        <div class="d-flex justify-content-around">
+                                                      <i class="fa fa-eye text-info mx-1" (click)="open(content,myRequestForm.an_file?.file)" style="cursor: pointer;"></i>
+                                                      <i class="fa fa-trash text-danger  mx-1" (click)="changeAn()"  style="cursor: pointer;"></i> 
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                          </ng-container>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                                </div>
+                                <div class="col-12 col-md-6" >
+                                    <div class=" p-2 bg-light mb-2 " >
+                                  <div class="d-flex justify-content-between" >
+                                      <div>
+                                          <h5 class="m-1">{{myRequestForm.certificat_file?.name}} <span class="mx-1 text-danger">*</span></h5>
+                                          <ng-container *ngIf="!myRequestForm.certificat_file.isSetted">
+                                              <div class="form-group mb-3 col-lg-6 col-md-6 col-sm-12">
+                                                  <label for="">Fichier</label>
+                                                  <input type="file" #fileInp (change)="uploadCertificat($event)" 
+                                                  accept="application/pdf">
+                                              </div>
+                                          </ng-container>
+                                         
+                                      </div>
+                                      <div class="align-self-center">
+                                          <ng-container *ngIf="myRequestForm.certificat_file.isSetted">
+                                              <div >
+                                                  <div class="">
+                                                        <div class="d-flex justify-content-around">
+                                                      <i class="fa fa-eye text-info mx-1" (click)="open(content,myRequestForm.certificat_file?.file)" style="cursor: pointer;"></i>
+                                                      <i class="fa fa-trash text-danger  mx-1" (click)="changeCertificat()"  style="cursor: pointer;"></i> 
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                          </ng-container>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                                </div>
+                                <div class="col-12 col-md-6" >
+                                    <div class=" p-2 bg-light mb-2 " >
+                                  <div class="d-flex justify-content-between" >
+                                      <div>
+                                          <h5 class="m-1">{{myRequestForm.authenticite_file?.name}} <span class="mx-1 text-danger">*</span></h5>
+                                          <ng-container *ngIf="!myRequestForm.authenticite_file.isSetted">
+                                              <div class="form-group mb-3 col-lg-6 col-md-6 col-sm-12">
+                                                  <label for="">Fichier</label>
+                                                  <input type="file" #fileInp (change)="uploadAuth($event)" 
+                                                  accept="application/pdf">
+                                              </div>
+                                          </ng-container>
+                                         
+                                      </div>
+                                      <div class="align-self-center">
+                                          <ng-container *ngIf="myRequestForm.authenticite_file.isSetted">
+                                              <div >
+                                                  <div class="">
+                                                        <div class="d-flex justify-content-around">
+                                                      <i class="fa fa-eye text-info mx-1" (click)="open(content,myRequestForm.authenticite_file?.file)" style="cursor: pointer;"></i>
+                                                      <i class="fa fa-trash text-danger  mx-1" (click)="changeAuth()"  style="cursor: pointer;"></i> 
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                          </ng-container>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                                </div>
+                                <div class="col-12 col-md-6" >
+                                    <div class=" p-2 bg-light mb-2 " >
+                                  <div class="d-flex justify-content-between" >
+                                      <div>
+                                          <h5 class="m-1">{{myRequestForm.private_file?.name}} <span class="mx-1 text-danger">*</span></h5>
+                                          <ng-container *ngIf="!myRequestForm.private_file.isSetted">
+                                              <div class="form-group mb-3 col-lg-6 col-md-6 col-sm-12">
+                                                  <label for="">Fichier</label>
+                                                  <input type="file" #fileInp (change)="uploadPrivate($event)" 
+                                                  accept="application/pdf">
+                                              </div>
+                                          </ng-container>
+                                         
+                                      </div>
+                                      <div class="align-self-center">
+                                          <ng-container *ngIf="myRequestForm.private_file.isSetted">
+                                              <div >
+                                                  <div class="">
+                                                        <div class="d-flex justify-content-around">
+                                                      <i class="fa fa-eye text-info mx-1" (click)="open(content,myRequestForm.private_file?.file)" style="cursor: pointer;"></i>
+                                                      <i class="fa fa-trash text-danger  mx-1" (click)="changePrivate()"  style="cursor: pointer;"></i> 
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                          </ng-container>
+                                  
+                                      </div>
+                                  </div>
+                              </div>
+                                </div>
+                                   
+                                <div class="d-flex justify-content-center mt-5">
+                                    <button igxButton="raised"  type="button" class="btn btn-warning text-white px-5 rounded-0" (click)="prev()">  <i class="fa fa-arrow-left me-1"></i> Précédent </button>
+    
+                                    <button igxButton="raised"  type="button" class="btn btn-primary px-5 rounded-0" (click)="next()">Suivant <i class="fa fa-arrow-right ms-1"></i></button>
+    
+                                </div>
+                               </div>
+                          
+                            </igx-step>
+                            
+                            <igx-step> 
+                                <!-- <igx-icon igxStepIndicator><i class="fa fa-file text-info fa-2x"></i></igx-icon> -->
+                                <p igxStepTitle><b class="blueColorT"> Récapitulatif de votre demande</b></p>
+                                <div igxStepContent>
+                                    <fieldset >
+                                        <legend><h5><b class="blueColorT">Informations sur le soumissionnaire</b></h5></legend>
+                                        <div class="row">
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>Nom et prénom(s)</strong></dt>
+                                                    <dd>{{myRequestForm.identity}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>Numéro CIP</strong></dt>
+                                                    <dd>{{myRequestForm.cip}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>Téléphone</strong></dt>
+                                                    <dd>{{myRequestForm.phone}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>Email</strong></dt>
+                                                    <dd>{{myRequestForm.email}}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>Ifu</strong></dt>
+                                                    <dd>{{myRequestForm.ifu}} <span (click)="open(content,myRequestForm.ifu_file.file)"  class="text-info"><u>Voir fichier</u></span></dd>
+                                                </dl>
+                                            </div>
+                                           
+                                        </div>
+                                    </fieldset>
+                                 
+                                    <fieldset>
+                                        <legend><h5><b class="blueColorT">Pièces fournies</b></h5></legend>
+                                        <div class="row">
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>{{myRequestForm.an_file.name}}</strong></dt>
+                                                    <dd><span (click)="open(content,myRequestForm.an_file.file)"  class="text-info"><u>Voir fichier</u></span></dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>{{myRequestForm.certificat_file.name}}</strong></dt>
+                                                    <dd><span (click)="open(content,myRequestForm.certificat_file.file)"  class="text-info"><u>Voir fichier</u></span></dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>{{myRequestForm.authenticite_file.name}}</strong></dt>
+                                                    <dd><span (click)="open(content,myRequestForm.authenticite_file.file)"  class="text-info"><u>Voir fichier</u></span></dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4 col-sm-6 col-md-4">
+                                                <dl>
+                                                    <dt> <strong>{{myRequestForm.private_file.name}}</strong></dt>
+                                                    <dd><span (click)="open(content,myRequestForm.private_file.file)"  class="text-info"><u>Voir fichier</u></span></dd>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        
+                                    </fieldset>
+                                   
+                                <div class="d-flex justify-content-center mt-5">
+                                    <button igxButton="raised"  type="button" class="btn btn-warning text-white px-5 rounded-0" (click)="prev()">  <i class="fa fa-arrow-left me-1"></i> Précédent </button>
+    
+                                    <button   type="button" class="btn btn-success px-5 rounded-0" (click)="store(myForm)" [disabled]="loading">Soumettre <app-loading [isVisible]="loading"></app-loading></button>
+                                </div>    
+                                </div>
+                            </igx-step>
+                        </igx-stepper>
+                    </div>
+                    
+                </div>
+            </div>   
+
+        </div>
+    </div>
+</div>
+</form>
+<ng-template #content let-offcanvas id="myCanvas">
+	<div class="offcanvas-header">
+		<h4 class="offcanvas-title">Visualisation du document</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="offcanvas.dismiss('Cross click')"></button>
+	</div>
+	<div class="offcanvas-body" *ngIf="imageSrc!=undefined">
+        <object [data]="imageSrc" type="application/pdf" width="100%" height="600px"></object>
+
+	</div>
+</ng-template>
+
+
+
+<ng-template #addContent let-c="close" let-d="dismiss">
+    <form #addForm="ngForm" (ngSubmit)="addElement(addForm)">
+    <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">Renseigner les champs</h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body" >
+        <div class="row mb-3" >
+      
+            <div class=" form-group mb-3">
+                <label for="">Nom et prénom(s)<span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="identity" class="form-control" ngModel>
+            </div>
+            <div class=" form-group  mb-3">
+                <label for="">Nationalité <span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="nationality" class="form-control" [(ngModel)]="nationality" readonly>
+            </div>
+            <div class=" form-group mb-3">
+                <label for="">Spécialité <span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="speciality" class="form-control" ngModel>
+            </div>
+            <div class=" form-group mb-3">
+                <label for="">Fonction <span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="job" class="form-control" ngModel>
+            </div>
+            <div class="mb-3">
+                <div class=" form-group mb-3">
+                    <label for="">Nature contrat <span class="text-danger ml-2">(*)</span></label>
+                    <select  name="nature" class="form-control" ngModel>
+                        <option disabled selected></option>
+                        <option *ngFor="let nc of ncs" [value]="nc.id">{{nc.name}}</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class=" form-group ">
+                <label for="">Charger le contrat<span class="text-danger ml-2">(*)</span></label>
+                <input type="file" class="form-control" name="file" ngModel (change)="uploadAtachementFile($event)">
+            </div>
+        </div>
+       
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" [disabled]="addForm.invalid"  >Sauvegarder <app-loading [isVisible]="loading"></app-loading></button>
+    </div>
+</form>
+  </ng-template>
+<ng-template #editContent let-c="close" let-d="dismiss">
+    <form #addForm="ngForm" (ngSubmit)="editElement()">
+    <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">Renseigner les champs</h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+    </div>
+    <div class="modal-body" >
+        <div class="row mb-3" >
+      
+            <div class=" form-group ">
+                <label for="">Apprenti bénéficiaire<span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="myRequestForm.list[elementCurrentIndex].beneficiary" class="form-control" [(ngModel)]="myRequestForm.list[elementCurrentIndex].beneficiary">
+            </div>
+            <div class=" form-group ">
+                <label for="">Age<span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="myRequestForm.list[elementCurrentIndex].age" class="form-control" [(ngModel)]="myRequestForm.list[elementCurrentIndex].age">
+            </div>
+            <div class=" form-group ">
+                <label for="">Métier<span class="text-danger ml-2">(*)</span></label>
+                <input type="text" name="myRequestForm.list[elementCurrentIndex].job" class="form-control" [(ngModel)]="myRequestForm.list[elementCurrentIndex].job">
+            </div>
+            <div class=" form-group " *ngFor="let f of myRequestForm.list[elementCurrentIndex].files; let i=index">
+                <label for="">Changer: {{f.name}} <span class="text-danger ml-2">(*)</span></label>
+                <input type="file" class="form-control" name="file" ngModel (change)="uploadChangedAtachementFile($event,i)">
+            </div>
+         
+        </div>
+       
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" [disabled]="addForm.invalid"  >Sauvegarder <app-loading [isVisible]="loading"></app-loading></button>
+    </div>
+</form>
+  </ng-template>

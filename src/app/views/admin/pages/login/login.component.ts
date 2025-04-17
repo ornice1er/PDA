@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 // import {AuthService} from "../../core/_services/auth.service";
 // import {AlertNotif} from "../../alert";
-// import {clientData, globalName} from '../../core/_utils/utils';
-// import {LocalService} from "../../core/_services/storage_services/local.service";
+// import {clientData, GlobalName} from '../../core/_utils/utils';
+// import {LocalStorageService} from "../../core/_services/storage_services/local.service";
 import {ActivatedRoute, Router} from '@angular/router';
 // import {IpServiceService} from '../../core/_services/ip-service.service';
 // import {ApplicationService} from '../../core/_services/application.service';
 //import {isExpired} from '../../core/_utils/jwt_decoder';
 
 // import { OwlOptions } from 'ngx-owl-carousel-o';
-// import {Config} from '../../app.config';
+// import { ConfigService } from '../utils/config-service';
 import Swal from 'sweetalert2'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,11 +19,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../components/loading/loading.component';
 import { StatutComponent } from '../../../components/statut/statut.component';
-import { globalName, clientData } from '../../../../core/services/_utils/utils';
 import { ApplicationService } from '../../../../core/services/application.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { IpServiceService } from '../../../../core/services/ip-service.service';
-import { LocalService } from '../../../../core/services/storage_services/local.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
+import { ConfigService } from '../../../../core/utils/config-service';
+import { GlobalName, clientData } from '../../../../core/utils/global-name';
+import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 
 
 @Component({
@@ -81,21 +84,21 @@ export class LoginComponent implements OnInit {
             }
         }
       }
-  loading: boolean;
+  loading: boolean | undefined;
   visitor:boolean=false
-  client_id:string;
-  client_secret:string;
+  client_id:string | undefined;
+  client_secret:string | undefined;
   needMailCheck:boolean=false
-  email:string
+  email:string | undefined
 
-    ipAddress:string
+    ipAddress:string | undefined
 
-  constructor(private applicationService:ApplicationService,private user_auth_service:AuthService,private local_service:LocalService,private router:Router, private route:ActivatedRoute,private ip:IpServiceService) {
+  constructor(private applicationService:ApplicationService,private user_auth_service:AuthService,private local_service:LocalStorageService,private router:Router, private route:ActivatedRoute,private ip:IpServiceService) {
 
       if(this.route.snapshot.paramMap.get('client_id') && this.route.snapshot.paramMap.get('client_secret')){
           this.visitor=true;
-          this.client_id=this.route.snapshot.paramMap.get('client_id')
-          this.client_secret=this.route.snapshot.paramMap.get('client_secret')
+          this.client_id=this.route.snapshot.paramMap.get('client_id') ?? ""
+          this.client_secret=this.route.snapshot.paramMap.get('client_secret') ?? ""
       }
      /* if(!isExpired){
           this.refreshTokenAndRedirect();
@@ -113,7 +116,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
       this.getIP();
-      if(localStorage.getItem(globalName.current_user)!=undefined) {
+      if(localStorage.getItem(GlobalName.current_user)!=undefined) {
         this.router.navigateByUrl('/home')
       }
       this.applications=[]
@@ -144,7 +147,7 @@ export class LoginComponent implements OnInit {
                     data['grant_type']=value['grant_type']
                     data['client_secret']=value['client_secret']
                     data['user_id']=res.user_id
-                    this.local_service.setItem(globalName.params,data)
+                    this.local_service.set(GlobalName.params,data)
                     this.router.navigate(['/check-code']);
                 }else{
                     var url="";
@@ -155,13 +158,13 @@ export class LoginComponent implements OnInit {
                        
                         console.log(res.user)
                         if(res.user.is_portal_admin==true){
-                            url=globalName.back_url+'?access_token='+res.access_token+'&email='+res.user.email;
+                            url=GlobalName.back_url+'?access_token='+res.access_token+'&email='+res.user.email;
 
                         }else{
-                            this.local_service.setItem(globalName.token,res.access_token)
-                            this.local_service.setItem(globalName.current_user,res.user)
-                            localStorage.setItem(globalName.admin_client,res.user.is_portal_admin)
-                            this.local_service.setItem(globalName.refresh_token,res.refresh_token)
+                            this.local_service.set(GlobalName.token,res.access_token)
+                            this.local_service.set(GlobalName.current_user,res.user)
+                            localStorage.setItem(GlobalName.admin_client,res.user.is_portal_admin)
+                            this.local_service.set(GlobalName.refresh_token,res.refresh_token)
                             this.user_auth_service.setUserLoggedIn(true);
 
                             url=res.redirect_url+'?access_token='+res.access_token+'&email='+res.user.email;
@@ -183,15 +186,15 @@ export class LoginComponent implements OnInit {
             (err)=>{
                 this.loading=false;
                 console.log(err)
-                AlertNotif.finish("Connexion","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("Connexion","Echec de connexion","error")}
         )
 
     }
 
     refreshTokenAndRedirect(){
-        var data={
+        var data:any={
             'grant_type' : 'refresh_token',
-            'refresh_token' : this.local_service.getItem(globalName.refresh_token),
+            'refresh_token' : this.local_service.get(GlobalName.refresh_token),
             'scope' : '',
         }
         if(this.visitor){
@@ -209,9 +212,9 @@ export class LoginComponent implements OnInit {
                 this.loading=false;
 
                 if(res.user.active){
-                    this.local_service.setItem(globalName.token,res.access_token.accessToken)
-                    this.local_service.setItem(globalName.current_user,res.user)
-                    this.local_service.setItem(globalName.refresh_token,res.refresh_token)
+                    this.local_service.set(GlobalName.token,res.access_token.accessToken)
+                    this.local_service.set(GlobalName.current_user,res.user)
+                    this.local_service.set(GlobalName.refresh_token,res.refresh_token)
                     const url=res.redirect_url+'?access_token='+res.accessToken+'&email='+res.user.email;
                     if(this.visitor){
                         window.location.href=url;
@@ -226,7 +229,7 @@ export class LoginComponent implements OnInit {
             (err)=>{
                 this.loading=false;
                 console.log(err)
-                AlertNotif.finish("Connexion","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("Connexion","Echec de connexion","error")}
         )
     }
 
@@ -242,7 +245,7 @@ export class LoginComponent implements OnInit {
             (err:any)=>{
                 this.loading=false;
                 console.log(err)
-                AlertNotif.finish("Connexion","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("Connexion","Echec de connexion","error")}
         )
     }
 

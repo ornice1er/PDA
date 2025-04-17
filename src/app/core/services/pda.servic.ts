@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Config} from '../../app.config';
+import { ConfigService } from '../utils/config-service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
+import { state } from '@angular/animations';
+import { LocalStorageService } from '../utils/local-stoarge-service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,29 @@ export class PdaService {
 
     // url = "http://localhost:8003/api";
     // url = "http://api.mataccueil.sevmtfp.test/api";
-   // url = "https://api.mataccueil.gouv.bj/api";
+    url = "https://api.mataccueil.gouv.bj/api";
     url_igsep="https://api.igsep.hebergeappli.bj/api"
-    url= "https://preprodmtfp.gouv.bj/pprod-mataccueilapi/api/"
+   // url= "https://preprodmtfp.gouv.bj/pprod-mataccueilapi/api/"
 
-    constructor(private http: HttpClient) { 
+    constructor(private http: HttpClient, private lsService:LocalStorageService) {
+        
+    
       
+    }
+
+
+
+    getEservices(): Observable<any> {
+        return this.http.get<any[]>(`${this.url}/eservices`, ConfigService.httpHeader());
+    }
+
+    getSettings(): Observable<any> {
+        return this.http.get<any[]>(`${this.url}/settings2`, ConfigService.httpHeader());
+    }
+
+
+    createrequeteusager(ressource:any){
+        return this.http.post<any>(`${this.url+"/requeteusager"}`, ressource, ConfigService.httpHeader(null,true));
     }
 
     getFaqs(): Observable<any> {
@@ -29,36 +48,36 @@ export class PdaService {
     getEntiteFromIGSEP(): Observable<any> {
         return this.http.get<any[]>(`${this.url}/institution`, ConfigService.httpHeader());
     }
-    getStructures(onlyDirection,entite): Observable<any> {
+    getStructures(onlyDirection:any,entite:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}/structure/${onlyDirection}/${entite}`, ConfigService.httpHeader());
     }
-    getStructures_new(entite): Observable<any> {
+    getStructures_new(entite:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}/structure/${entite}`, ConfigService.httpHeader());
     }
-    getOneStructure(id): Observable<any> {
+    getOneStructure(id:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}/structure/getLine/${id}`, ConfigService.httpHeader());
     }
     getThematiques(): Observable<any> {
         return this.http.get<any[]>(`${this.url}/type/1`, ConfigService.httpHeader());
     }
-    getOneThematique(id): Observable<any> {
+    getOneThematique(id:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}/type/getLine/${id}`, ConfigService.httpHeader());
     }
-    getPrestationsByThematique(type_id): Observable<any> {
+    getPrestationsByThematique(type_id:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}/service/type/${type_id}`, ConfigService.httpHeader());
     }
     getPrestations(): Observable<any> {
         return this.http.get<any[]>(`${this.url}/service/1`, ConfigService.httpHeader());
     }
-    getPrestationsByStructure(structure_id): Observable<any> {
+    getPrestationsByStructure(structure_id:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}/service/structure/${structure_id}`, ConfigService.httpHeader());
     }
     getRdvCreneaux(): Observable<any> {
         return this.http.get<any[]>(`${this.url}/rdvcreneau/1`, ConfigService.httpHeader());
     }
-    getStat(param,idEntite){
+    getStat(param:any,idEntite:any){
    
-        return this.http.post<any[]>(`${this.url}/statistiques/prestations/${idEntite}`,param, ConfigService.httpHeader(localStorage.getItem("mataccueilToken"),true));
+        return this.http.post<any[]>(`${this.url}/statistiques/prestations/${idEntite}`,param, ConfigService.httpHeader(this.lsService.get("mataccueilToken"),true));
       }
 
     storeRDV(ressource: object) {
@@ -67,8 +86,8 @@ export class PdaService {
     storePreoccupation(ressource: object) {
         return this.http.post(`${this.url}/usagers/externe/requete_new`, ressource, ConfigService.httpHeader());
     }
-    verifyRecaptcha(token) {
-        return this.http.get(`https://www.google.com/recaptcha/api/siteverify?secret=${environment.recaptcha.secret}&response=${token}`, ConfigService.httpHeader());
+    verifyRecaptcha(token:any) {
+      //  return this.http.get(`https://www.google.com/recaptcha/api/siteverify?secret=${environment.recaptcha.secret}&response=${token}`, ConfigService.httpHeader());
     }
     storeDenonciation(ressource: object) {
         return this.http.post(`${this.url_igsep}/requeteusager`, ressource, ConfigService.httpHeader());

@@ -141,13 +141,13 @@
                                                 </td>
                                                 <!--<td>{{Date.dateDiff('d',s.created_at,s.dateReponse)}} </td>-->
                                                 <td>
-                                                    <button (click)="openNoteModal(note,elr)" *ngIf="elr.traiteOuiNon==1 && elr.noteUsager==NULL"
+                                                    <button (click)="openNoteModal(note,elr)" *ngIf="elr.traiteOuiNon==1 && elr.noteUsager==null"
                                                         title="Apprécier la prestation" class="btn btn-xs btn-danger edit"><svg
                                                             width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil"
                                                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                             <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                                         </svg> </button>
-                                                        <span *ngIf="elr.noteUsager!=NULL">{{elr.noteUsager}}</span>   
+                                                        <span *ngIf="elr.noteUsager!=null">{{elr.noteUsager}}</span>   
                         
                                                 </td>
                         
@@ -270,7 +270,7 @@
                                             <label for="idPrestation" required class="col-sm-2 control-label">Prestation :</label>
                                             <div class="col-sm-10">
                                                 <select name="idPrestation2" id="idPrestation2" class="form-control form-control-sm form-control-sm"
-                                                [(ngModel)]="selected_data_req.service==null?'':selected_data_req.service.id" (change)="openDetailModal($event, detailPresta)">
+                                                [(ngModel)]="selected_data_req.service_id" (change)="openDetailModal($event, detailPresta)">
                                                     <option disabled selected>Choisir</option>
                                                     <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
                                                 </select>
@@ -435,7 +435,7 @@
                             <label for="contactUs" class="col-sm-2 control-label">Contact :</label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control form-control-sm has-error" id="contactUs"
-                                    name="contactUs" placeholder="" ngModel required value="{{selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep}}" [(ngModel)]="selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep">
+                                    name="contactUs" placeholder="" ngModel required value="{{selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep}}" [(ngModel)]="selected_data_rvMat">
                             </div>
                             <label for="mailUs" class="col-sm-2 control-label">E-mail :</label>
                             <div class="col-sm-4">
@@ -447,7 +447,7 @@
                             <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
                             <div class="col-sm-10">
                                 <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                                    ngModel={{user.idEntite}} [(ngModel)]="selected_data_rvMat==null ? '' : selected_data_rvMat.idEntite" (change)="onEntiteChange($event)">
+                                    ngModel={{user.idEntite}} [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
                                     <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
                                 </select>
                             </div>
@@ -510,7 +510,7 @@
                             <label for="objet" class="col-sm-2 control-label">Objet :</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control form-control-sm has-error" id="objet"
-                                    name="objet" placeholder="" ngModel required [(ngModel)]="selected_data_rvMat==null ? '' : selected_data_rvMat.contenu_visite">
+                                    name="objet" placeholder="" ngModel required [(ngModel)]="selected_data_rvMat">
                             </div>
                         </div>
         
@@ -519,7 +519,7 @@
                             <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
                             <div class="col-sm-10">
                                 <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
-                                    placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat==null ? '' : selected_data_rvMat.observ_visite"></textarea>
+                                    placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -681,7 +681,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let elrv of dataReqrv | slice: (pagerv-1) * pageSizerv : (pagerv-1) * pageSizerv + pageSizerv; index as i">
+                                            <tr *ngFor="let elrv of dataReqrv ; index as i">
                                                 <td>
                                                     <span *ngIf="elrv.requete == null ">
                                                         <input type="radio" [value]="elrv" ngModel name="getrv" (change)="checkedReqrv($event,elrv)">
@@ -713,19 +713,7 @@
                                         </tbody>
                                     </table>
                                     <div class="d-flex justify-content-between p-2">
-                                        <ngb-pagination class="" [collectionSizerv]="collectionSizerv" [(pagerv)]="pagerv"
-                                            [maxSize]="5" [pageSizerv]="pageSizerv" [rotate]="true" [ellipses]="false"
-                                            [boundaryLinks]="true">
-                                        </ngb-pagination>
-
-                                        <select class="custom-select custom-select-sm float-right" style="width: auto"
-                                            [(ngModel)]="pageSizerv">
-                                            <option selected disabled>Filtrer</option>
-                                            <option [ngValue]="3">3 elements par page</option>
-                                            <option [ngValue]="5">5 elements par page</option>
-                                            <option [ngValue]="10">10 elements par page</option>
-                                            <option [ngValue]="100">100 elements par page</option>
-                                        </select>
+                                      
                                     </div>
                                 </div>
                                 <!--end::Table-->
@@ -1031,7 +1019,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let elwh of dataWhats | slice: (pagerv-1) * pageSizerv : (pagerv-1) * pageSizerv + pageSizerv; index as i">
+                                            <tr *ngFor="let elwh of dataWhats ">
                                                 <td>
                                                     <span *ngIf="elwh.requete == null && elwh.reponse_agent == null">
                                                         <input type="radio" [value]="elwh" ngModel name="getrv" (change)="checkedWhatsap($event,elwh)">
@@ -1072,19 +1060,7 @@
                                         </tbody>
                                     </table>
                                     <div class="d-flex justify-content-between p-2">
-                                        <ngb-pagination class="" [collectionSizerv]="collectionSizerv" [(pagerv)]="pagerv"
-                                            [maxSize]="5" [pageSizerv]="pageSizerv" [rotate]="true" [ellipses]="false"
-                                            [boundaryLinks]="true">
-                                        </ngb-pagination>
-
-                                        <select class="custom-select custom-select-sm float-right" style="width: auto"
-                                            [(ngModel)]="pageSizerv">
-                                            <option selected disabled>Filtrer</option>
-                                            <option [ngValue]="3">3 elements par page</option>
-                                            <option [ngValue]="5">5 elements par page</option>
-                                            <option [ngValue]="10">10 elements par page</option>
-                                            <option [ngValue]="100">100 elements par page</option>
-                                        </select>
+                                    
                                     </div>
                                 </div>
                                 <!--end::Table-->
