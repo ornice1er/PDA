@@ -1,0 +1,66 @@
+@font-face {
+    font-family: MEB;
+    src: url('assets/Montserrat/static/Montserrat-ExtraBold.ttf');
+  }
+@font-face {
+    font-family: MB;
+    src: url('assets/Montserrat/static/Montserrat-Bold.ttf');
+  }
+@font-face {
+    font-family: MSB;
+    src: url('assets/Montserrat/static/Montserrat-SemiBold.ttf');
+  }
+
+@font-face {
+font-family: MR;
+src: url('assets/Montserrat/static/Montserrat-Regular.ttf');
+}
+
+@font-face {
+font-family: MM;
+src: url('assets/Montserrat/static/Montserrat-Medium.ttf');
+}
+
+.meb{
+    font-family: MEB !important;
+}
+.mtb{
+    font-family: MB !important;
+}
+.msb{
+    font-family: MSB !important;
+}
+
+.mr{
+    font-family: MR !important;
+}
+.mm{
+    font-family: MM !important;
+}
+
+*{
+    font-family: MR;
+}
+
+input[type=radio]{
+    border:  1px solid black;
+}
+.pda-text-success{
+    color: #298658;
+}
+.pda-text-yellow{
+    color: #FBD61B;
+}
+.pda-text-danger{
+    color: #EB1C30;
+}
+.pda-bg-success{
+    background-color: #298658;
+}
+.pda-bg-yellow{
+    background-color: #FBD61B;
+}
+
+.pda-bg-danger{
+    background-color: #EB1C30;
+}
