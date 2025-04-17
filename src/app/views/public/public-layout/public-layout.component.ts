@@ -1,14 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { Router } from 'express';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SampleSearchPipe } from '../../../core/pipes/sample-search.pipe';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { StatutComponent } from '../../components/statut/statut.component';
 
 @Component({
   selector: 'app-public-layout',
   standalone: true,
-  imports: [
-    RouterModule,
-    RouterOutlet
-  ],
+    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,    RouterModule,    RouterOutlet
+
+    ],
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.css'
 })
