@@ -1,14 +1,19 @@
 import {  HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment.dev';
 
 export const ConfigService: any = {
   apiVersion: environment.API_VERSION,
   apiScheme: environment.API_SCHEME,
   apiFile: environment.API_FILE,
   apiDomain: environment.API_DOMAIN,
+  apiMataccueilDomain: environment.API_MATACCUEIL_DOMAIN,
   toApiUrl(path:any) {
 
     return `${this.apiScheme}://${this.apiDomain}/${path}`;
+  },
+  toMataccueilApiUrl(path:any) {
+
+    return `${this.apiScheme}://${this.apiMataccueilDomain}/${path}`;
   },
   toFile(path:any) {
     return `${this.apiScheme}://${this.apiFile}/${path}`;

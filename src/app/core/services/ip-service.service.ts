@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient  } from '@angular/common/http';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
+import { ConfigService } from '../utils/config-service';
 
 @Injectable({
     providedIn: 'root'
@@ -7,8 +8,9 @@ import { HttpClient  } from '@angular/common/http';
 export class IpServiceService  {
 
     constructor(private http:HttpClient) { }
-    public getIPAddress()
-    {
-        return this.http.get("https://api.ipify.org/?format=json");
+    
+    getIPAddress() {
+           
+        return this.http.get(ConfigService.toApiUrl('ip'), ConfigService.httpHeader());
     }
 }

@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class StatusService {
     url = ConfigService.toApiUrl('status');
-    urlI = ConfigService.toApiUrl('institution');
+    urlI = ConfigService.toMataccueilApiUrl('');
 
     constructor(private http: HttpClient) { }
 
@@ -17,11 +17,11 @@ export class StatusService {
     }
 
     getAllStruc(): Observable<any> {
-        return this.http.get<any[]>(this.urlI, ConfigService.httpHeader());
+        return this.http.get<any[]>(`${this.urlI}institution`, ConfigService.httpHeader());
     }
 
     getNbreServ(): Observable<any> {
-        return this.http.get<any[]>(ConfigService.toApiUrl('serviceEnLign'), ConfigService.httpHeader());
+        return this.http.get<any[]>(`${this.urlI}e-services`, ConfigService.httpHeader());
     }
 
     store(ressource: object) {

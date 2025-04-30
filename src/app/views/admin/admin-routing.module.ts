@@ -8,13 +8,12 @@ import { LayoutComponent } from "./layout/layout.component";
 import { AboutComponent } from "./pages/about/about.component";
 import { AlloRetraiteComponent } from "./pages/allo-retraite/allo-retraite.component";
 import { BaseConnaissanceComponent } from "./pages/base-connaissance/base-connaissance.component";
-import { CheckCodeComponent } from "./pages/check-code/check-code.component";
+import { CheckCodeComponent } from "../public/pages/check-code/check-code.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { DemandeInformationComponent } from "./pages/demande-information/demande-information.component";
 import { EvenementDeclencheurComponent } from "./pages/evenement-declencheur/evenement-declencheur.component";
 import { FaqComponent } from "./pages/faq/faq.component";
 import { ForgotPasswordComponent } from "./pages/forgot-password/forgot-password.component";
-import { HomeComponent } from "./pages/home/home.component";
 import { HomepfcComponent } from "./pages/homepfc/homepfc.component";
 import { JeDenonceComponent } from "./pages/je-denonce/je-denonce.component";
 import { LogoutComponent } from "./pages/logout/logout.component";
@@ -27,8 +26,8 @@ import { ProfileComponent } from "./pages/profile/profile.component";
 import { ProfilpfcComponent } from "./pages/profilpfc/profilpfc.component";
 import { QuestionComponent } from "./pages/question/question.component";
 import { ReclammationComponent } from "./pages/reclammation/reclammation.component";
-import { RegisterSuccessComponent } from "./pages/register-success/register-success.component";
-import { RegisterComponent } from "./pages/register/register.component";
+import { RegisterSuccessComponent } from "../public/pages/register-success/register-success.component";
+import { RegisterComponent } from "../public/pages/register/register.component";
 
 
 export const AdminRoutes: any = [ // ✅ Doit être un tableau
@@ -154,16 +153,7 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
           component: MentionsLegalesComponent,
           path: "mentions-legales",
       },
-      {
-          component: RegisterComponent,
-          path:"register",
-          canActivate: [IsAuthGuard]
-      },
-      {
-          component: HomeComponent,
-          path:"home",
-          canActivate: [AuthGuard]
-      },
+
       {
           component: HomepfcComponent,
           path:"homepfc",

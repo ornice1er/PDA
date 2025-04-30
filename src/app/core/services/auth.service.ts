@@ -12,8 +12,8 @@ export class AuthService {
     private userLoggedIn = new Subject<boolean>();
 
  // url :string =ConfigService.toApiUrl("logout");
-  url2 :string =ConfigService.toFile('');
-  url= "https://api.mataccueil.gouv.bj/api/"
+  url=ConfigService.toApiUrl('');
+  url2=ConfigService.toMataccueilApiUrl()
 
 
   constructor(private appLocalStorage: LocalStorageService, private http:HttpClient) { }
@@ -49,6 +49,13 @@ export class AuthService {
     return this.http.post<any>(`${this.url2}api/send-reset-password-link`, ressource,
      ConfigService.httpHeader(null,true));
   }
+
+
+  goTo(ressource:any){
+    return this.http.post<any>(`${this.url}go-to`, ressource,
+     ConfigService.httpHeader(null,true));
+  }
+
 
 
   
@@ -107,7 +114,7 @@ export class AuthService {
         
             login(ressource: object) {
         
-                return this.http.post(ConfigService.toApiUrl('oauth/token'), ressource, ConfigService.httpHeader());
+                return this.http.post(ConfigService.toApiUrl('login'), ressource, ConfigService.httpHeader());
             }
             // MATACCUEIL EXTERNE   this.this.appLocalStorage.setJsonValue('mataccueilUserData', res);
             // Authentication/Authorization
@@ -254,11 +261,11 @@ export class AuthService {
         
                 //code, user_id, ip,client_id, client_secret, username, password, authorized_always_id
         
-                return this.http.post(ConfigService.toApiUrl('oauth/verifyCode'), ressource, ConfigService.httpHeader());
+                return this.http.post(ConfigService.toApiUrl('verifyCode'), ressource, ConfigService.httpHeader());
             }
             resendCode(ressource: object) {
         
-                return this.http.post(ConfigService.toApiUrl('oauth/resendCode'), ressource, ConfigService.httpHeader());
+                return this.http.post(ConfigService.toApiUrl('resendCode'), ressource, ConfigService.httpHeader());
             }
         
             register(ressource: object) {

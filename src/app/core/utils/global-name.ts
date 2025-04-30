@@ -1,14 +1,14 @@
 
 
  export const GlobalName:any ={
-    tokenName:"fspToken",
-    currentRoleIndex:"fspRoleIndex",
-    refreshTokenName:"fspRefreshToken",
-    userName:"fspUserConnected",
-    childName:"fspChildSelected",
-    exercice:"fspExercise",
-    expireIn:'fspExpireIn',
-    features:'fspFeatures'
+    tokenName:"guvToken",
+    currentRoleIndex:"guvRoleIndex",
+    refreshTokenName:"guvRefreshToken",
+    userName:"guvUserConnected",
+    childName:"guvChildSelected",
+    exercice:"guvExercise",
+    expireIn:'guvExpireIn',
+    features:'guvFeatures'
  }
 
  export enum clientData {

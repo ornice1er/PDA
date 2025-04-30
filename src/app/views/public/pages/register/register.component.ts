@@ -14,6 +14,7 @@ import { StatutComponent } from '../../../components/statut/statut.component';
 import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 import { GlobalName } from '../../../../core/utils/global-name';
 import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
+import { WindowRef } from '../../../../core/utils/window-ref.service';
 
 
 @Component({
@@ -36,16 +37,21 @@ export class RegisterComponent implements OnInit {
     default_Institu:number | undefined
     ipAddress:string | undefined
 
-    constructor(private status_service:StatusService,private user_auth_service:AuthService,private local_service:LocalStorageService,private router:Router,private ip:IpServiceService) { }
+    constructor(private status_service:StatusService,
+                private user_auth_service:AuthService,
+                private local_service:LocalStorageService,
+                private windowRef: WindowRef,
+                private router:Router,
+                private ip:IpServiceService) { }
 
     getIP()
     {
         this.ip.getIPAddress().subscribe((res:any)=>{
-            this.ipAddress=res.ip;
+            this.ipAddress=res.data;
         });
     }
     ngOnInit(): void {
-        window.scroll(0,0);
+        this.windowRef.nativeWindow?.scroll(0,0);
         this.getIP()
         this.status_service.getAll().subscribe((res:any)=>{
                 this.status=res.data;

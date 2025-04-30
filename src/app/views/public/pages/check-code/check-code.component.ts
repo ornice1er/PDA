@@ -14,6 +14,7 @@ import { IpServiceService } from '../../../../core/services/ip-service.service';
 import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 import { GlobalName } from '../../../../core/utils/global-name';
+import { WindowRef } from '../../../../core/utils/window-ref.service';
 
 @Component({
   selector: 'app-check-code',
@@ -25,10 +26,16 @@ import { GlobalName } from '../../../../core/utils/global-name';
 })
 export class CheckCodeComponent implements OnInit {
     loading:boolean=false
-  constructor(private user_auth_service:AuthService,private local_service:LocalStorageService,private router:Router, private route:ActivatedRoute,private ip:IpServiceService) { }
+  constructor(
+    private winRef:WindowRef,
+    private user_auth_service:AuthService,
+    private local_service:LocalStorageService,
+    private router:Router, 
+    private route:ActivatedRoute,
+    private ip:IpServiceService) { }
   user:any;
   ngOnInit(): void {
-    window.scroll(0,0);
+   this.winRef.nativeWindow.scroll(0,0);
     // localStorage.setItem("activeSer","")
   }
 
@@ -65,38 +72,22 @@ export class CheckCodeComponent implements OnInit {
         data['authorized_always_id']=value.authorized_always_id==""?false:true
         this.user_auth_service.verifyCode(data).subscribe(
             (res:any)=>{
-                var url="";
-                console.log('------------1---------------')
-                console.log(res)
 
                 if(res.message){
                   AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
                 }else{
 
+                  this.local_service.set(GlobalName.tokenName,res.access_token)
+                this.local_service.set(GlobalName.userName,res.user)
+                  this.user_auth_service.setUserLoggedIn(true);
                   if(res.user.active){
                     this.loading=false;
                     console.log(res.user)
-                    if(res.user.is_portal_admin==true){
-                        url=GlobalName.back_url+'?access_token='+res.access_token+'&email='+res.user.email;
-
-                    }else{
-                        this.local_service.set(GlobalName.token,res.access_token)
-                        this.local_service.set(GlobalName.current_user,res.user)
-                        this.local_service.set(GlobalName.refresh_token,res.refresh_token)
-                        this.user_auth_service.setUserLoggedIn(true);
-                        
-                        url=res.redirect_url+'?access_token='+res.access_token+'&email='+res.user.email;
-
-                    }
-                    if( res.user.is_portal_admin==true){
-                        console.log(url)
-                        window.location.href=url;
-                    }else{
-                        this.router.navigate(['/home']);
-                    }
-                }else{
-                    AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
-                }
+                    this.router.navigate(['/home'])
+                  
+                  }else{
+                      AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
+                  }
               }
             },
             (err)=>{

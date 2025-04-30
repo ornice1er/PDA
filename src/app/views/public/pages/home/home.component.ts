@@ -11,10 +11,20 @@ import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
 import { ConfigService } from '../../../../core/utils/config-service';
 import { GlobalName } from '../../../../core/utils/global-name';
 import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
+import { LoadingComponent } from '../../../components/loading/loading.component';
+import { StatutComponent } from '../../../components/statut/statut.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  standalone: true,
+  imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent], 
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
@@ -32,14 +42,15 @@ export class HomeComponent implements OnInit {
   }
   loading:boolean=false
   id:any
-  data:any
+  data:any[]=[]
   user:any
   access_token:any
 
   ngOnInit(): void {
-      this.user=this.local_service.get(GlobalName.current_user)
+      this.user=this.local_service.get(GlobalName.userName)
+      console.log(this.user)
       this.id=this.user.status_id
-      this.access_token=this.local_service.get(GlobalName.token)
+      this.access_token=this.local_service.get(GlobalName.tokenName)
       this.user_auth_service.getApps(this.id).subscribe(
           (res:any)=>{
                   this.loading=false;
@@ -52,6 +63,21 @@ export class HomeComponent implements OnInit {
       )
 
       
+  }
+
+  goTo(id:any){
+    this.user_auth_service.goTo({
+      client_id:id
+    }).subscribe(
+      (res:any)=>{
+          window.open(res.redirect_uri, '_blank');   
+      },
+      (err:any)=>{
+          this.loading=false;
+          console.log(err)
+         // AlertNotif.finish("Applications","Echec de récupération des applications","error")
+        }
+  )
   }
 
   setNotif(){

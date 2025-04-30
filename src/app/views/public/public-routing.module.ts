@@ -9,6 +9,12 @@ import { EserviceProofComponent } from "./pages/eservice-proof/eservice-proof.co
 import { EserviceComponent } from "./pages/eservice/eservice.component";
 import { LogUsagerComponent } from "./pages/log-usager/log-usager.component";
 import { RequeteComponent } from "./pages/requete/requete.component";
+import { RegisterComponent } from "./pages/register/register.component";
+import { RegisterSuccessComponent } from "./pages/register-success/register-success.component";
+import { RegisterguardGuard } from "../../core/guards/registerguard.guard";
+import { CheckCodeComponent } from "./pages/check-code/check-code.component";
+import { AuthGuard } from "../../core/guards/auth.guard";
+import { HomeComponent } from "./pages/home/home.component";
 
 export const PublicRoutes: any = [ // ✅ Doit être un tableau
     {
@@ -16,6 +22,21 @@ export const PublicRoutes: any = [ // ✅ Doit être un tableau
       component: PublicLayoutComponent,
       children: [
         { path: 'main', component: WelcomeComponent },
+        { path: 'register', component: RegisterComponent },
+        {
+            component: RegisterSuccessComponent,
+            path:"register-success",
+            canActivate:[RegisterguardGuard]
+        },
+        {
+            component: CheckCodeComponent,
+            path: "check-code",
+        },
+         {
+          component: HomeComponent,
+          path:"home",
+          canActivate: [AuthGuard]
+      },
         {
                   component: PrestationsParThematiqueComponent,
                     path: "prestations-par-thematique",
