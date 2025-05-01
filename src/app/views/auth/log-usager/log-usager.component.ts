@@ -57,7 +57,7 @@ export class LogUsagerComponent implements OnInit {
             if (res.check_code) {
                 var data = res.params;
                 this.local_service.set(GlobalName.params, data)
-                this.router.navigate(['/auht/check-code']);
+                this.router.navigate(['/auth/check-code']);
             } else {
                 this.local_service.set(GlobalName.tokenName,res.access_token)
                 this.local_service.set(GlobalName.userName,res.user)
