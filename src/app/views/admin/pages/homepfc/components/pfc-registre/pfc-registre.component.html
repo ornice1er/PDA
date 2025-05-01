@@ -176,7 +176,7 @@
                     <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
                     <div class="col-sm-10">
                         <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                            ngModel={{user.idEntite}}>
+                            ngModel={{user?.idEntite}}>
                             <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
                         </select>
                     </div>
@@ -353,7 +353,7 @@
             <div style="color:red">{{errormessage}}</div>
 
             <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user.agent_user.nomprenoms}} / {{user.email}}</h4> 
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4> 
 
             </fieldset>
 
@@ -382,7 +382,7 @@
                     <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
                     <div class="col-sm-10">
                         <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                            ngModel={{user.idEntite}} [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
+                            ngModel={{user?.idEntite}} [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
                             <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
                         </select>
                     </div>
@@ -481,7 +481,7 @@
             <div style="color:red">{{errormessage}}</div>
 
             <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user.agent_user.nomprenoms}} / {{user.email}}</h4> 
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4> 
             </fieldset>
 
             <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">

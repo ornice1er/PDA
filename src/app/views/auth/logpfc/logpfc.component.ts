@@ -28,7 +28,6 @@ import { GlobalName } from '../../../core/utils/global-name';
 })
 export class LogpfcComponent implements OnInit {
 
-
   subs:Subscription | undefined
 
   constructor(
@@ -37,7 +36,7 @@ export class LogpfcComponent implements OnInit {
     private router:Router) { 
     
     }
-  loading:boolean=false
+  loading:any=false
   id:any
   data:any
   user:any

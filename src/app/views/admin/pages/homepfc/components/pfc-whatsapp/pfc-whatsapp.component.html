@@ -84,12 +84,12 @@
                                 <td>{{elwh.created_at | date:'dd/MM/yyy'}} </td>
                                 <td>{{elwh.numerowhatsapp}}</td>
                                 <td>{{elwh.discussions}} </td>
-                                <td class="text-center"> {{elwh.creator.agent_user.nomprenoms}}</td>
+                                <td class="text-center"> {{elwh.creator.agent_user?.nomprenoms}}</td>
                                 <td class="text-center"> 
                                     <span *ngIf="elwh.requete == null && elwh.user_trait==null">--</span>
-                                    <span *ngIf="elwh.requete == null && elwh.user_trait!=null">{{elwh.user_trait==null ? '--' : 'En cours par '+elwh.user_trait.agent_user.nomprenoms}}</span>
-                                    <span *ngIf="elwh.requete != null && elwh.user_trait!=null">{{elwh.user_trait==null ? '--' : elwh.user_trait.agent_user.nomprenoms}}</span>
-                                    <span *ngIf="elwh.requete != null && elwh.requete.visible==1  && elwh.requete.reponseStructure == ''">{{elwh.user_trait==null ? '--' : elwh.user_trait.agent_user.nomprenoms}}</span>
+                                    <span *ngIf="elwh.requete == null && elwh.user_trait!=null">{{elwh.user_trait==null ? '--' : 'En cours par '+elwh.user_trait.agent_user?.nomprenoms}}</span>
+                                    <span *ngIf="elwh.requete != null && elwh.user_trait!=null">{{elwh.user_trait==null ? '--' : elwh.user_trait.agent_user?.nomprenoms}}</span>
+                                    <span *ngIf="elwh.requete != null && elwh.requete.visible==1  && elwh.requete.reponseStructure == ''">{{elwh.user_trait==null ? '--' : elwh.user_trait.agent_user?.nomprenoms}}</span>
                                 </td>
                                 <td class="text-center">
                                     <span  class="badge badge-success" *ngIf="elwh.traite_disc=='oui' && elwh.requete != null && elwh.requete.reponseStructure != null">Traité</span>
@@ -99,7 +99,7 @@
                                 </td>
                                 <td>
                                     <button  *ngIf="elwh.traite_disc=='non' && elwh.user_trait == null" (click)="ConfirmerTraitement(elwh)" class="mx-1 btn btn-sm btn-success">Confirmer le traitement </button>
-                                    <span *ngIf="elwh.traite_disc=='non' && elwh.user_trait != null && elwh.id_userTraite == user.id">
+                                    <span *ngIf="elwh.traite_disc=='non' && elwh.user_trait != null && elwh.id_userTraite == user?.id">
                                         <button title="Transferer vers mataccueil" (click)="openEditModalAdd(addRequete)"  (click)="checkedWhatsap($event,elwh)" class="mx-1 btn btn-sm btn-info">Transférer </button>
                                          ou 
                                         <button  title="Donner une réponse" (click)="openEditModalAdd(addAnswer)"  (click)="checkedWhatsap($event,elwh)" class="mx-1 btn btn-sm btn-secondary">Répondre</button>
@@ -219,7 +219,7 @@
             <div style="color:red">{{errormessage}}</div>
 
             <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user.agent_user.nomprenoms}} / {{user.email}}</h4> 
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4> 
 
             </fieldset>
 
@@ -248,7 +248,7 @@
                     <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
                     <div class="col-sm-10">
                         <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                            ngModel={{user.idEntite}} [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
+                            ngModel={{user?.idEntite}} [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
                             <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
                         </select>
                     </div>
@@ -347,7 +347,7 @@
             <div style="color:red">{{errormessage}}</div>
 
             <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user.agent_user.nomprenoms}} / {{user.email}}</h4> 
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4> 
             </fieldset>
 
             <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">

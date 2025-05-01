@@ -44,7 +44,9 @@
                                 <div class="d-flex justify-content-between">
         
                                     <button class="btn btn-warning btn-block" [disabled]="loginForm.invalid || loading">Se
-                                        connecter</button>
+                                        connecter
+                                        <app-loading [isVisible]="loading"></app-loading>
+                                    </button>
                                 </div>
                                 <hr class="my-4">
                                 <!--div *ngIf="needMailCheck" class="d-flex justify-content-center">

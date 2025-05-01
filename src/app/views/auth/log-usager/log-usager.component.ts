@@ -26,7 +26,7 @@ templateUrl: './log-usager.component.html',
 styleUrls: ['./log-usager.component.css']
 })
 export class LogUsagerComponent implements OnInit {
-  loading: boolean | undefined;
+  loading: any=false;
   visitor: boolean = false
   client_id: string | undefined;
   client_secret: string | undefined;
