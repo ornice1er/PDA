@@ -31,8 +31,8 @@ import { PrestationItemComponent } from '../../../components/prestation-item/pre
   styleUrl: './welcome.component.css'
 })
 export class WelcomeComponent {
-  ServiceEnligne:any;
-    ServiceTotal:any;
+  ServiceEnligne:any=0;
+    ServiceTotal:any=0;
     active = 1
     loadFile(file:any) {
         return ConfigService.toFile(file)
@@ -259,10 +259,12 @@ eservices:any[]=[]
     ngOnInit(): void {
     
         this.getIP();
-        this.status_service.getNbreServ().subscribe((res:any) =>{
-            this.ServiceEnligne = res.nbreServ
-            this.ServiceTotal = res.nbreToServ
-        })
+
+        // this.status_service.getNbreServ().subscribe((res:any) =>{
+        //     this.ServiceEnligne = res.nbreServ
+        //     this.ServiceTotal = res.nbreToServ
+        // })
+
         this.applications = []
         this.applicationService.getAll().subscribe((res: any) => {
             this.applications = res.data
@@ -271,29 +273,30 @@ eservices:any[]=[]
         this.pdaService.getEvenementsDeclencheur().subscribe((res: any) => {
             this.events = res
         });
-        this.statusService.stats().subscribe((res: any) => {
-            this.stats_guv = res.data
-        });
+        // this.statusService.stats().subscribe((res: any) => {
+        //     this.stats_guv = res.data
+        // });
         
         this.pdaService.getPrestations().subscribe(
             (res: any) => {
                 this.count_prestation = res.length
             })
+
             this.pdaService.getFaqs().subscribe(
                 (res:any)=>{
                         this.first_faq=res[0]
                 },)
                 let param={"idUser":2,"startDate":"all","endDate":"all"}
-                this.pdaService.getStat(param,1).subscribe((res:any)=>{
-                  console.log('stat',res)
-                 this.first_prestation=res.stats[0]
-                // this.pourcent=res.pourcent
-                 this.totalPrestation=res.stats.length
-                 res.stats.forEach((element:any) => {
-                  this.totalInfo+=parseInt(element.totalInfo)
-                  this.totalPlainte+=parseInt(element.totalPlainte)
-                 });
-                })
+                // this.pdaService.getStat(param,1).subscribe((res:any)=>{
+                //   console.log('stat',res)
+                //  this.first_prestation=res.stats[0]
+                // // this.pourcent=res.pourcent
+                //  this.totalPrestation=res.stats.length
+                //  res.stats.forEach((element:any) => {
+                //   this.totalInfo+=parseInt(element.totalInfo)
+                //   this.totalPlainte+=parseInt(element.totalPlainte)
+                //  });
+                // })
                 this.pdaService.getSettings().subscribe((res: any) => {
                 
                     this.local_service.set('pdaSetting',JSON.stringify(res.data))
@@ -305,24 +308,24 @@ eservices:any[]=[]
     init(){
 
         this.departements=[]
-        this.user_auth_service.getAllDepartement().subscribe((res:any)=>{
-          this.departements=res
-        })
+        // this.user_auth_service.getAllDepartement().subscribe((res:any)=>{
+        //   this.departements=res
+        // })
     
         this.institutions=[]
         this.user_auth_service.getAllInstitu().subscribe((res: any) => {
          this.institutions = res
          })
     
-         this.pdaService.getEservices().subscribe((res:any)=>{
-          this.eservices=res.data
-        })
+        //  this.pdaService.getEservices().subscribe((res:any)=>{
+        //   this.eservices=res.data
+        // })
 
-        this.pdaService.getPrestations().subscribe(
-          (res:any)=>{
-                  this.data=res
-               //  this.totalPrestation=res.length
-          },)
+        // this.pdaService.getPrestations().subscribe(
+        //   (res:any)=>{
+        //           this.data=res
+        //        //  this.totalPrestation=res.length
+        //   },)
       }
 
       chargerPrestation(event:any){

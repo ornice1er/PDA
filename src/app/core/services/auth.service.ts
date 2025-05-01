@@ -13,7 +13,7 @@ export class AuthService {
 
  // url :string =ConfigService.toApiUrl("logout");
   url=ConfigService.toApiUrl('');
-  url2=ConfigService.toMataccueilApiUrl()
+  url2=ConfigService.toMataccueilApiUrl('')
 
 
   constructor(private appLocalStorage: LocalStorageService, private http:HttpClient) { }
@@ -119,136 +119,136 @@ export class AuthService {
             // MATACCUEIL EXTERNE   this.this.appLocalStorage.setJsonValue('mataccueilUserData', res);
             // Authentication/Authorization
             loginUsager(value:any) {
-                return this.http.post(`${this.url+"authusers"}`, value,{headers:ConfigService.httpHeader(null,false)});
+                return this.http.post(`${this.url2+"authusers"}`, value,{headers:ConfigService.httpHeader(null,false)});
               }
             loginpfc(value:any) {
-                return this.http.post(this.url+`authpfc`, value,ConfigService.httpHeader());
+                return this.http.post(this.url2+`authpfc`, value,ConfigService.httpHeader());
             }
             noterRequetePfc(ressource:any){
               
-              return this.http.post<any>(`${this.url+"noter"}`, ressource,ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+              return this.http.post<any>(`${this.url2+"noter"}`, ressource);
             }
-            getUserByToken(token:any){
+            getUserByToken(){
                 
-                return this.http.get(`${this.url+'auth/userdatamat'}?token=${token}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                return this.http.get(`${this.url2+'auth/userdatamat'}`);
               }
             getAll(search=null,page:any){
                 
                 if(search==null){
-                  return this.http.get<any[]>(`${this.url+"usager"}?page=${page}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                  return this.http.get<any[]>(`${this.url2+"usager"}?page=${page}`);
                 }else{
-                  return this.http.get<any[]>(`${this.url+"usager"}?search=${search}&page=${page}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                  return this.http.get<any[]>(`${this.url2+"usager"}?search=${search}&page=${page}`);
                 }
               }
               createUsager(ressource:any){
-                return this.http.post<any>(`${this.url+"usager"}`, ressource,ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                return this.http.post<any>(`${this.url2+"usager"}`, ressource);
               }
               updateUsager(ressource:any,id:any){
-                return this.http.post<any>(`${this.url+"usager/"}${id}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                return this.http.post<any>(`${this.url2+"usager/"}${id}`, ressource);
               }
               resetPasswordpfc(ressource: object){
-                return this.http.post<any>(`${this.url+"reset-password"}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                return this.http.post<any>(`${this.url2+"reset-password"}`, ressource);
               }
         
                 getAllTypePrest(type:any){
             
-                  return this.http.get<any[]>(`${this.url+"service/type"}/${type}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                  return this.http.get<any[]>(`${this.url2+"service/type"}/${type}`);
                 }
               
                 getThema(id:any){
-                    return this.http.get<any>(`${this.url+"type/getLine/"}${id}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any>(`${this.url2+"type/getLine/"}${id}`);
                 }
                 createrequeteusager(ressource:any){
-                    return this.http.post<any>(`${this.url+"requeteusager"}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"requeteusager"}`, ressource);
                 }
                 transmettreRequeteExterne(ressource:any){
-                  return this.http.post<any>(`${this.url+"requeteusager/transmettre/externe"}`, ressource,ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                  return this.http.post<any>(`${this.url2+"requeteusager/transmettre/externe"}`, ressource);
                 }
                 Updaterequeteusager(ressource:any,id:any){
-                    return this.http.post<any>(`${this.url+"requeteusagerpfc/"}${id}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"requeteusagerpfc/"}${id}`, ressource);
                 }
                 createrequeteVisite(ressource:any){
-                    return this.http.post<any>(`${this.url+"registre"}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"registre"}`, ressource);
                 }
                 createDiscussionWhats(ressource:any){
-                    return this.http.post<any>(`${this.url+"echange"}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"echange"}`, ressource);
                 }
                 CloturerequeteVisite(ressource:any){
-                    return this.http.post<any>(`${this.url+"cloturerv"}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"cloturerv"}`, ressource);
                 }
                 updaterequeteVisite(ressource:any,id:any){
-                    return this.http.post<any>(`${this.url+"registreup/"}${id}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"registreup/"}${id}`, ressource);
                 }
                 updateWhatsapp(ressource:any,id:any){
-                    return this.http.post<any>(`${this.url+"echangeup/"}${id}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"echangeup/"}${id}`, ressource);
                 }
                 updateWhatsReponse(ressource:any,id:any){
-                    return this.http.post<any>(`${this.url+"echangeupreponse/"}${id}`, ressource, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.post<any>(`${this.url2+"echangeupreponse/"}${id}`, ressource);
                 }
                 deleteReq(id:number){
-                    return this.http.delete<any[]>(`${this.url+"requeteusager/"}${id}`,ConfigService.httpHeader(this.appLocalStorage.get("matToken"),false));
+                    return this.http.delete<any[]>(`${this.url2+"requeteusager/"}${id}`,ConfigService.httpHeader(this.appLocalStorage.get("matToken"),false));
                 }
                 getAllDepartement(){
-                    return this.http.get<any[]>(`${this.url+"departement"}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"departement"}`);
                 }
                 
                 getAllInstitu(){
                 
-                  return this.http.get<any[]>(`${this.url+"institution"}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                  return this.http.get<any[]>(`${this.url2+"institution"}`);
                 }
                 
                 getListDay(id:any){
                 
-                  return this.http.get<any[]>(`${this.url+"nbrDay"}/${id}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                  return this.http.get<any[]>(`${this.url2+"nbrDay"}/${id}`);
                 }
                 getAllForPfcom(idUsager:any,page:any){
            
-                    return this.http.get<any[]>(`${this.url+"requetepfc/getrequetebypfc"}/${idUsager}?page=${page}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"requetepfc/getrequetebypfc"}/${idUsager}?page=${page}`);
                   }
                 getAllForRegistreVis(idUsager:any,page:any){
            
-                    return this.http.get<any[]>(`${this.url+"requeteRv/getrequetebypfcRv"}/${idUsager}?page=${page}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"requeteRv/getrequetebypfcRv"}/${idUsager}?page=${page}`);
                   }
                 getAllForWhatsapp(page:any,traite:any){
            
-                    return this.http.get<any[]>(`${this.url+"getEchangeWhat"}?page=${page}&traite=${traite}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"getEchangeWhat"}?page=${page}&traite=${traite}`);
                   }
                 
                   deleteRegistreVis(id:number){
            
-                    return this.http.delete<any[]>(`${this.url+"registre/"}${id}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.delete<any[]>(`${this.url2+"registre/"}${id}`);
                   }
                   deleteDiscWhats(id:number){
            
-                    return this.http.delete<any[]>(`${this.url+"echange/"}${id}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.delete<any[]>(`${this.url2+"echange/"}${id}`);
                   }
                   ConfirmerDiscWhats(idus:any,id:any){
            
-                    return this.http.get<any[]>(`${this.url+"echangeConfi/"}${idus}/${id}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"echangeConfi/"}${idus}/${id}`);
                   }
                   getAllEtap(idEntite:any){
-                    return this.http.get<any[]>(`${this.url+"etape"}/${idEntite}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"etape"}/${idEntite}`);
                   }
                 getServPiece(idSer:any){
            
-                    return this.http.get<any[]>(`${this.url+"servicePiece"}/${idSer}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"servicePiece"}/${idSer}`);
                   }
               getAllServ(OnlyDirection:any,idEntite:any){
         
-                 return this.http.get<any[]>(`${this.url+"structure"}/${OnlyDirection}/${idEntite}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                 return this.http.get<any[]>(`${this.url2+"structure"}/${OnlyDirection}/${idEntite}`);
               }
               getAllForUsagerNT(idUsager:any,page:any){
-                return this.http.get<any[]>(`${this.url+"requeteusager/getrequetebyusagerNT"}/${idUsager}?page=${page}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                return this.http.get<any[]>(`${this.url2+"requeteusager/getrequetebyusagerNT"}/${idUsager}?page=${page}`);
               }
                
                 getAllNatu(idEntite:any){
                 
-                    return this.http.get<any[]>(`${this.url+"nature"}/${idEntite}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"nature"}/${idEntite}`);
                 }
                 
                 getAllThe(idEntite:any){
                 
-                    return this.http.get<any[]>(`${this.url+"type"}/${idEntite}`, ConfigService.httpHeader(this.appLocalStorage.get("matToken"),true));
+                    return this.http.get<any[]>(`${this.url2+"type"}/${idEntite}`);
                 }
                
             // MATACCUEIL EXTERNE
@@ -281,15 +281,15 @@ export class AuthService {
         
             resetPassword(ressource: object) {
         
-                return this.http.post(ConfigService.toApiUrl('user/reset-password'), ressource, ConfigService.httpHeader(this.appLocalStorage.get(GlobalName.token)));
+                return this.http.post(ConfigService.toApiUrl('user/reset-password'), ressource);
             }
             update(ressource: object) {
         
-                return this.http.post(ConfigService.toApiUrl('user/update'), ressource, ConfigService.httpHeader(this.appLocalStorage.get(GlobalName.token)));
+                return this.http.post(ConfigService.toApiUrl('user/update'), ressource);
             }
             setNotif(ressource: object) {
         
-                return this.http.post(ConfigService.toApiUrl('notifications'), ressource, ConfigService.httpHeader(this.appLocalStorage.get(GlobalName.token)));
+                return this.http.post(ConfigService.toApiUrl('notifications'), ressource);
             }
         
             checkMail(ressource: object) {
@@ -298,10 +298,13 @@ export class AuthService {
             }
         
             logout() {
-                return this.http.post(ConfigService.toApiUrl('logout'),{}, ConfigService.httpHeader(this.appLocalStorage.get(GlobalName.token)));
+                return this.http.post(ConfigService.toMataccueilApiUrl('logout'),{});
+            }
+            logout2() {
+                return this.http.post(ConfigService.toApiUrl('logout'),{});
             }
         
             getApps(id:number){
-                return this.http.get(ConfigService.toApiUrl(`status_has_applications/${id}`), ConfigService.httpHeader(this.appLocalStorage.get(GlobalName.token)));
+                return this.http.get(ConfigService.toApiUrl(`status_has_applications/${id}`));
             }
 }

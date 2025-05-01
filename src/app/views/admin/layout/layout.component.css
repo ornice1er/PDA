@@ -9,10 +9,23 @@
     width: 250px;
   }
 
-  mat-toolbar{
-    background-color: black;
-    color: orange;
+  mat-icon{
+    color:  white !important;
   }
 
+  mat-toolbar{
+    background-color: #0A3764;
+    color: white;
+  }
+  mat-sidenav-content{
+    height: 100vh !important;
+  }
+
+.blueColor{
+    background-color: #0A3764 !important;
+}
+.blueColorT{
+    color: #0A3764;
+}
 
   

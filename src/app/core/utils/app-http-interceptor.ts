@@ -20,7 +20,14 @@ export class AppHttpInterceptor implements HttpInterceptor {
     ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.authService.getJWTToken();
+    var token:any=""
+    if (req.url && req.url.includes(ConfigService.toApiUrl(''))) {
+       token = this.lsService.get(GlobalName.tokenName);
+
+    } else {
+      token = this.lsService.get(GlobalName.tokenNameMat);
+
+    }
     req = req.clone({
       url:  req.url,
       setHeaders: {

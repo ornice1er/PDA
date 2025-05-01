@@ -8,7 +8,6 @@ import { LayoutComponent } from "./layout/layout.component";
 import { AboutComponent } from "./pages/about/about.component";
 import { AlloRetraiteComponent } from "./pages/allo-retraite/allo-retraite.component";
 import { BaseConnaissanceComponent } from "./pages/base-connaissance/base-connaissance.component";
-import { CheckCodeComponent } from "../public/pages/check-code/check-code.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { DemandeInformationComponent } from "./pages/demande-information/demande-information.component";
 import { EvenementDeclencheurComponent } from "./pages/evenement-declencheur/evenement-declencheur.component";
@@ -17,7 +16,6 @@ import { ForgotPasswordComponent } from "./pages/forgot-password/forgot-password
 import { HomepfcComponent } from "./pages/homepfc/homepfc.component";
 import { JeDenonceComponent } from "./pages/je-denonce/je-denonce.component";
 import { LogoutComponent } from "./pages/logout/logout.component";
-import { LogpfcComponent } from "./pages/logpfc/logpfc.component";
 import { PlanComponent } from "./pages/plan/plan.component";
 import { PrendreRendezvousComponent } from "./pages/prendre-rendezvous/prendre-rendezvous.component";
 import { PrestationsParStructureComponent } from "./pages/prestations-par-structure/prestations-par-structure.component";
@@ -26,9 +24,10 @@ import { ProfileComponent } from "./pages/profile/profile.component";
 import { ProfilpfcComponent } from "./pages/profilpfc/profilpfc.component";
 import { QuestionComponent } from "./pages/question/question.component";
 import { ReclammationComponent } from "./pages/reclammation/reclammation.component";
-import { RegisterSuccessComponent } from "../public/pages/register-success/register-success.component";
-import { RegisterComponent } from "../public/pages/register/register.component";
-
+import { HomeComponent } from "./pages/home/home.component";
+import { PfcMataccueilComponent } from "./pages/homepfc/components/pfc-mataccueil/pfc-mataccueil.component";
+import { PfcRegistreComponent } from "./pages/homepfc/components/pfc-registre/pfc-registre.component";
+import { PfcWhatsappComponent } from "./pages/homepfc/components/pfc-whatsapp/pfc-whatsapp.component";
 
 export const AdminRoutes: any = [ // ✅ Doit être un tableau
     {
@@ -141,9 +140,6 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
           component: ProfileComponent,
           path: "profile",
           canActivate: [AuthGuard]
-      },{
-          component: CheckCodeComponent,
-          path: "check-code",
       },
       {
           component: LogoutComponent,
@@ -157,27 +153,31 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
       {
           component: HomepfcComponent,
           path:"homepfc",
-          canActivate: [AuthGuardm]
+          canActivate: [AuthGuardm],
+          children:[
+            {
+              component: PfcMataccueilComponent,
+              path:"pfc-mataccueil",
+          },
+          {
+            component: PfcRegistreComponent,
+            path:"pfc-registre",
+          },
+          {
+            component: PfcWhatsappComponent,
+            path:"pfc-whatsapp",
+          }
+          ]
       },
       {
-          component: LogpfcComponent,
-          path:"logpfc",
-          // canActivate: [AuthGuard]
-      },
+        component: HomeComponent,
+        path:"home",
+        canActivate: [AuthGuard]
+    },
       {
           component: ProfilpfcComponent,
           path:"profilepfc",
           // canActivate: [AuthGuard]
-      },
-      {
-          component: RegisterSuccessComponent,
-          path:"register-success",
-          canActivate:[RegisterguardGuard]
-      },
-      {
-          component: RegisterSuccessComponent,
-          path:"mail-check-code-resent",
-          canActivate:[RegisterguardGuard]
       },
       ]
     }

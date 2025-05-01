@@ -8,7 +8,10 @@
     childName:"guvChildSelected",
     exercice:"guvExercise",
     expireIn:'guvExpireIn',
-    features:'guvFeatures'
+    features:'guvFeatures',
+    tokenNameMat:"pfcMataccueilToken",
+    userNameMat:"pfcMataccueilUserConnected",
+
  }
 
  export enum clientData {

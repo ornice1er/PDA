@@ -12,9 +12,11 @@ import { UserSettingComponent } from './views/auth/user-setting/user-setting.com
 import { NotFoundComponent } from './views/not-found-component/not-found-component.component';
 import { LayoutComponent } from './views/auth/layout/layout.component';
 import { PublicRoutes } from './views/public/public-routing.module';
+import { AuthRoutes } from './views/auth/auth-routing.module';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'main',pathMatch:'full'},
+    ...AuthRoutes,
     ...AdminRoutes,
     ...PublicRoutes,
     {

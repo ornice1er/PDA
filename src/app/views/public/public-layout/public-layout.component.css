@@ -1,0 +1,29 @@
+
+a .active{
+    color: #0A3764 !important;
+}
+body {
+    font-family: 'Open Sans',"Century Gothic",calibri !important;
+}
+
+.nav-link:focus, .nav-link:hover {
+    color: #0a58ca;
+}
+
+.my-cookie{
+    position:fixed;
+    bottom:20px;
+    right: 10px;
+    height:300px;
+    width:500px;
+    background-color:white;
+    opacity:0.9;
+    
+}
+
+.blueColor{
+    background-color: #0A3764 !important;
+}
+.blueColorT{
+    color: #0A3764;
+}

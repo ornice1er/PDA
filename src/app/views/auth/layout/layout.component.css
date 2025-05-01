@@ -1,4 +1,11 @@
+.blueColor{
+    background-color: #0A3764 !important;
+}
+.blueColorT{
+    color: #0A3764;
+}
+
 .main{
-    background-color: orange;
-    
+    background-color: #f2f5f9;
+    min-height: 100vh;
 }

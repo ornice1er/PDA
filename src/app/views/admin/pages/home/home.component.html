@@ -1,0 +1,45 @@
+<h2 class="text-center">Bienvenue cher {{user?.name}}</h2>
+
+<div class="container p-5 bg-light" >
+    <h4 class="text-center mx-1 mb-3"><u>Accédez aux différents services</u></h4>
+  
+    <div class="row ">
+            <div class="col-12 col-md-4" *ngFor="let d of data">
+
+                    <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation" *ngIf="d.client.name!=''">
+                        <a  class="tbtn text-decoration-none" type="button"  *ngIf="!d.client.revoked" (click)="goTo(d.client?.client_id)">
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column justify-content-around">
+                                    <div class="align-self-center text-center text-sm-start mb-3">
+                                        <img src="assets/images/default_app.jpg" height="50px" alt="" srcset="">
+                                        <i class="fas fa-address-card fa-3x blueColorT"></i> 
+                                    
+                                    </div>
+                                    <div class="p-2 text-center" >
+                                        <div class="block-sollicitation-title d-flex justify-content-center ">
+                                            <span class="text-dark   h6 align-self-center "><strong>{{d.client.name}}</strong></span>
+                                        </div>
+                                        <p class="text-dark h6"></p>
+                                        <div class="d-flex justify-content-around blueColor">
+                                            <div class="">
+                                                <a  class="tbtn text-white" style="font-size:15px; border:none;" href="javascript:void(0);" *ngIf="d.client.revoked"  onclick="alert('Application en cours d\'intégration')">BIENTÔT DISPONIBLE
+                                                        <h6 class="text-dark mt-2"></h6>
+                                                    </a>
+                                            </div>
+            
+                                        </div>
+                                    </div>
+            
+                                </div>
+            
+                            </div>
+                        </a>
+                    </div>
+                
+
+            </div>
+    </div>
+    
+</div>
+

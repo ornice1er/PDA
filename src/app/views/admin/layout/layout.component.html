@@ -2,14 +2,31 @@
     <button mat-icon-button (click)="toggleMenu()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>PDA</span>
+    <span class="fw-bold">{{title}}</span>
     <button class="btn btn-sm btn-danger" (click)="logout()">Déconnexion</button>
   </mat-toolbar>
   
   <mat-sidenav-container class="">
     <mat-sidenav #sidenav mode="side" [(opened)]="menuOpen" class="bg-white">
+      <ng-container *ngIf="isPfc">
+        <mat-nav-list>
+          <a mat-list-item routerLink="/admin/homepfc">Accueil</a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/admin/homepfc/pfc-mataccueil">Mataccueil</a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/admin/homepfc/pfc-registre">Régistre des visiteurs</a>
+        </mat-nav-list>
+        <mat-nav-list *ngIf="canUseWhatsapp">
+          <a mat-list-item routerLink="/admin/homepfc/pfc-whatsapp">WhatsApp</a>
+        </mat-nav-list>
+      </ng-container>
+      
+     
+      <hr>
       <mat-nav-list>
-        <a mat-list-item routerLink="/admin/dashboard">Accueil</a>
+        <a mat-list-item routerLink="/main">Aller au site</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content class="p-3">
