@@ -83,7 +83,7 @@ export class CheckCodeComponent implements OnInit {
                   if(res.user.active){
                     this.loading=false;
                     console.log(res.user)
-                    this.router.navigate(['/home'])
+                    this.router.navigate(['/admin/home'])
                   
                   }else{
                       AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")

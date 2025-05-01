@@ -102,7 +102,7 @@ export class RegisterComponent implements OnInit {
                     this.router.navigate(['/main']);
                 }else{
                     localStorage.setItem("is_registered","");
-                    this.router.navigate(['/register-success']);
+                    this.router.navigate(['/auth/register-success']);
                 }
                 AppSweetAlert.simpleAlert("Inscription","Inscription effectuée avec succès. Vous pouvez à présent vous connecter","success")
             },
