@@ -34,7 +34,7 @@ export class LayoutComponent {
   role:any
   title = '';
   canUseWhatsapp = true;
-  isPfc = true;
+  espace = 0;
 
 
   constructor(
@@ -61,8 +61,8 @@ export class LayoutComponent {
       this.canUseWhatsapp = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-     this.titleService.isPfc$.subscribe(newState => {
-      this.isPfc = newState;
+     this.titleService.espace$.subscribe(newState => {
+      this.espace = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
 }
@@ -72,7 +72,7 @@ toggleMenu() {
 }
 
   logout(){
-    if (this.isPfc) {
+    if (this.espace) {
       this.authService.logout().subscribe((res:any)=>{
         this.lsService.remove(GlobalName.tokenNameMat)
         this.lsService.remove(GlobalName.userNameMat)

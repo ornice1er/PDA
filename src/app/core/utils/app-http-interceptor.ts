@@ -54,7 +54,13 @@ export class AppHttpInterceptor implements HttpInterceptor {
                       this.lsService.remove(GlobalName.userName)
                       this.lsService.remove(GlobalName.exercice)
                       this.modalService.dismissAll()
-                      this.router.navigate(['/log-usager'])
+                      this.router.navigate(['/auth/logusager'])
+                    }else   if (error.url && error.url.includes(ConfigService.toMataccueilApiUrl()) &&  this.lsService.get(GlobalName.tokenNameMat)!= undefined) {
+                      this.lsService.remove(GlobalName.tokenNameMat)
+                      this.lsService.remove(GlobalName.userNameMat)
+                      this.router.navigate(['/auth/logusager'])
+
+
                     }
                  
                     break;

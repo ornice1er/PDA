@@ -24,7 +24,7 @@ export class HomepfcComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('Espace Point Focal Communal')
-    this.titleService.setPfcState(true)
+    this.titleService.setPfcState(1)
 
     if (this.localStorageService.get(GlobalName.tokenNameMat) != null) {
       this.user = this.localStorageService.get(GlobalName.userNameMat)

@@ -7,11 +7,11 @@ import { BehaviorSubject } from 'rxjs';
 export class TitleService {
   private titleSubject = new BehaviorSubject<string>('Titre par défaut');
   private hasWhatsappSubject = new BehaviorSubject<boolean>(false);
-  private isPfc = new BehaviorSubject<boolean>(false);
+  private espace = new BehaviorSubject<number>(0);
 
   public title$ = this.titleSubject.asObservable();
   public hasWhatsappSubject$ = this.hasWhatsappSubject.asObservable();
-  public isPfc$ = this.isPfc.asObservable();
+  public espace$ = this.espace.asObservable();
 
   setTitle(title: string) {
     this.titleSubject.next(title);
@@ -21,7 +21,7 @@ export class TitleService {
     this.hasWhatsappSubject.next(state);
   }
   
-  setPfcState(state: boolean) {
-    this.isPfc.next(state);
+  setPfcState(level: number) {
+    this.espace.next(level);
   }
 }

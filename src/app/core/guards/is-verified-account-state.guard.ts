@@ -21,7 +21,7 @@ export class IsVerifiedAccountStateGuard implements CanActivate {
         return true;   
        
       } else {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/main']);
         return false;
             } 
           

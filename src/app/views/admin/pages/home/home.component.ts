@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.titleService.setTitle('GUICHET UNIQUE VIRTUEL')
-    this.titleService.setPfcState(false)
+    this.titleService.setPfcState(0)
 
       this.user=this.local_service.get(GlobalName.userName)
       console.log(this.user)

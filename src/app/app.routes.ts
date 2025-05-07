@@ -15,7 +15,7 @@ import { PublicRoutes } from './views/public/public-routing.module';
 import { AuthRoutes } from './views/auth/auth-routing.module';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'main',pathMatch:'full'},
+    {path: '', redirectTo: '/main',pathMatch:'full'},
     ...AuthRoutes,
     ...AdminRoutes,
     ...PublicRoutes,

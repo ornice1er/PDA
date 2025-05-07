@@ -28,6 +28,9 @@ import { HomeComponent } from "./pages/home/home.component";
 import { PfcMataccueilComponent } from "./pages/homepfc/components/pfc-mataccueil/pfc-mataccueil.component";
 import { PfcRegistreComponent } from "./pages/homepfc/components/pfc-registre/pfc-registre.component";
 import { PfcWhatsappComponent } from "./pages/homepfc/components/pfc-whatsapp/pfc-whatsapp.component";
+import { EspaceusagerComponent } from "./pages/espaceusager/espaceusager.component";
+import { RapportRequeteComponent } from "./pages/homepfc/components/rapport-requete/rapport-requete.component";
+import { PerformanceRequeteComponent } from "./pages/homepfc/components/performance-requete/performance-requete.component";
 
 export const AdminRoutes: any = [ // ✅ Doit être un tableau
     {
@@ -150,6 +153,7 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
           path: "mentions-legales",
       },
 
+      //ROUTES POUR PFC
       {
           component: HomepfcComponent,
           path:"homepfc",
@@ -166,14 +170,32 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
           {
             component: PfcWhatsappComponent,
             path:"pfc-whatsapp",
+          },
+          {
+            component: RapportRequeteComponent,
+            path:"/admin/rapports-requetes",
+          },
+          {
+            component: PerformanceRequeteComponent,
+            path:"/admin/performances",
           }
           ]
       },
+
+      //ROUTES POUR GUV
       {
         component: HomeComponent,
         path:"home",
         canActivate: [AuthGuard]
-    },
+      },
+
+
+      //ROUTES ESPACE USAGER
+      { path: 'espace-usager', component: EspaceusagerComponent },
+      { path: 'espace-usager/:token', component: EspaceusagerComponent },
+
+
+
       {
           component: ProfilpfcComponent,
           path:"profilepfc",
