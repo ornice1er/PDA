@@ -1,1 +1,80 @@
-<h1 class="text-center">Performances</h1>
+<div class="container">
+                    <div class="p-3">
+                        <form #registreForm="ngForm" (ngSubmit)="getRegistres(registreForm.value)" class="form-horizontal " novalidate="">
+
+                        <div class="input-group">
+                            <span class="input-group-text">Filtre</span>
+                            <input type="date" placeholder="Date début" aria-label="Date début" name="start_date" ngModel class="form-control" required>
+                            <input type="date" placeholder="Date fin" aria-label="Date fin" name="end_date" ngModel class="form-control" required>
+                            <select name="sex" class="form-control" ngModel id="">
+                                <option value="Homme">Homme</option>
+                                <option value="Femme">Femme</option>
+                            </select>
+                            <button class="btn btn-outline-secondary" [disabled]="registreForm.invalid || loading2" type="submit"  id="button-addon2">Rechercher <app-loading [isVisible]="loading2"></app-loading></button>
+                          </div>
+                        </form>
+                    </div>
+                    <p>{{registres!.length}} élément(s) <app-loading [isVisible]="loading2"></app-loading></p>
+                    <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead class="">
+                            <tr>
+                                <th>Date d'enreg</th>
+                                <th>Nature de visite</th>
+                                <th>Matricule/Téléphone</th>
+                                <th>Nom et prénom(s)</th>
+                                <th>Sexe</th>
+                                <th>Sigle Ministère</th>
+                                <th>Préoccupation</th>
+                                <th>Satisfait Oui/Non</th>
+                                <th>Motif</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                             <tr *ngFor="let rg of registres 
+                             | sampleSearch:search_text:'registre' 
+                             | paginate: {
+                                    id:'ngxP1',
+                                    itemsPerPage: pg.pageSize,
+                                    currentPage: pg.p,
+                                    totalItems: pg.total }">
+                            <td>{{rg.created_at | date:'dd/MM/yyy'}} </td>
+                            <td>
+                                <span *ngIf="rg.plainte==0">Requête</span>
+                                <span *ngIf="rg.plainte==1">Plainte</span>
+                                <span *ngIf="rg.plainte==2">Demande d'information</span>
+                            </td>
+                            <td>{{rg.matri_telep}} </td>
+                            <td>{{rg.nom_prenom}} </td>
+                            <td>{{rg.sex}} </td>
+                            <td>{{rg.entite==null ? '--' : rg.entite.sigle}} </td>
+                            <td>{{rg.contenu_visite}} </td>
+                            <td class="text-center">
+                                <span  class="badge bg-success text-white" *ngIf="rg.satisfait=='oui'">Oui</span>
+                                <span class="badge bg-success text-white" *ngIf="rg.satisfait=='non'">Non</span>
+                            </td> 
+                            <td>{{rg.observ_visite}} </td>
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+
+                    </div>
+ <pagination-controls 
+                        id="ngxP1"
+                        (pageChange)="getPage($event)"
+                      [maxSize]="9"
+                      [directionLinks]="true"
+                      [autoHide]="true"
+                      [responsive]="true"
+                      [previousLabel]="'Précédent'"
+                      [nextLabel]="'Suivant'"
+                      [screenReaderPaginationLabel]="'Pagination'"
+                      [screenReaderPageLabel]="'page'"
+                      [screenReaderCurrentLabel]="'Vous êtes sur la page'">
+                     </pagination-controls>
+                </div>
+
+
+                

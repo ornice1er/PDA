@@ -25,6 +25,11 @@
                 "glob": "**/*",
                 "input": "public"
               },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "/assets/"
+              },
               "src/assets"
             ],
             "styles": [
@@ -35,7 +40,8 @@
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
-              "src/styles.css",
+                "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "src/assets/style.css",
               "src/custom-theme.scss",
               "node_modules/animate.css/animate.min.css",
               "src/styles.css"

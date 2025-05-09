@@ -173,11 +173,11 @@ export const AdminRoutes: any = [ // ✅ Doit être un tableau
           },
           {
             component: RapportRequeteComponent,
-            path:"/admin/rapports-requetes",
+            path:"rapports-requetes",
           },
           {
             component: PerformanceRequeteComponent,
-            path:"/admin/performances",
+            path:"performances",
           }
           ]
       },

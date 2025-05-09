@@ -298,7 +298,7 @@ export class AuthService {
             }
         
             logout() {
-                return this.http.post(ConfigService.toMataccueilApiUrl('logout'),{});
+                return this.http.get(ConfigService.toMataccueilApiUrl('logout'));
             }
             logout2() {
                 return this.http.post(ConfigService.toApiUrl('logout'),{});

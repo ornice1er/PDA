@@ -1,5 +1,5 @@
 import {  HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment.pprod';
+import { environment } from '../../../environments/environment.dev';
 
 export const ConfigService: any = {
   apiVersion: environment.API_VERSION,
@@ -7,6 +7,7 @@ export const ConfigService: any = {
   apiFile: environment.API_FILE,
   apiDomain: environment.API_DOMAIN,
   apiMataccueilDomain: environment.API_MATACCUEIL_DOMAIN,
+  apiMatFile: environment.API_MATACCUEIL_FILE,
   toApiUrl(path:any) {
 
     return `${this.apiScheme}://${this.apiDomain}/${path}`;
@@ -17,6 +18,9 @@ export const ConfigService: any = {
   },
   toFile(path:any) {
     return `${this.apiScheme}://${this.apiFile}/${path}`;
+  },
+  toMatFile(path:any) {
+    return `${this.apiScheme}://${this.apiMatFile}/${path}`;
   },
   getOrigin() {
     return `${this.apiScheme}://${this.apiFile}`;
