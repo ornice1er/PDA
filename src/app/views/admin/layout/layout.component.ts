@@ -5,12 +5,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
 import { GlobalName } from '../../../core/utils/global-name';
 import { LocalStorageService } from '../../../core/utils/local-stoarge-service';
 import { TitleService } from '../../../core/utils/title.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { MataccueilService } from '../../../core/services/mataccueil.service';
+import { AppSweetAlert } from '../../../core/utils/app-sweet-alert';
 
 @Component({
   selector: 'app-layout',
@@ -19,11 +25,14 @@ import { TitleService } from '../../../core/utils/title.service';
     RouterOutlet,
     RouterModule,
     CommonModule,
+    FormsModule,
     MatToolbarModule,
+    MatMenuModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css'
@@ -32,16 +41,24 @@ export class LayoutComponent {
   menuOpen = true;
   user:any
   role:any
+  userConnected:any
   title = '';
   canUseWhatsapp = true;
   espace = 0;
+  loading=false
+  selectedEntie:any=null
+  errormessage = ""
+  departements:any [] = []
+  visible = 0
+
 
 
   constructor(
-    
+    private modalService: NgbModal,
     private authService:AuthService,
     private router: Router,
     private toastr:ToastrService,
+    private matService: MataccueilService,
     private lsService:LocalStorageService,
     private titleService: TitleService,
     private cdr: ChangeDetectorRef
@@ -65,6 +82,14 @@ export class LayoutComponent {
       this.espace = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
+     this.titleService.userConnected$.subscribe(newState => {
+      this.userConnected = newState;
+      this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
+    });
+    this.departements = []
+    this.matService.getAllDepartement().subscribe((res: any) => {
+      this.departements = res
+    })
 }
 
 toggleMenu() {
@@ -76,7 +101,24 @@ toggleMenu() {
       this.authService.logout().subscribe((res:any)=>{
         this.lsService.remove(GlobalName.tokenNameMat)
         this.lsService.remove(GlobalName.userNameMat)
-        this.router.navigate(['/main'])
+        console.log(this.espace)
+        switch (this.espace) {
+          case 0:
+          this.router.navigate(['/auth/logusager'])
+            break;
+         case 1:
+          this.router.navigate(['/auth/logpfc'])
+            break;
+          
+         case 2:
+          this.router.navigate(['/admin/home'])
+            break;
+          
+          default:
+           this.router.navigate(['/main'])
+
+            break;
+        }
         this.toastr.success('Déconnexion réussie', 'Connexion');
       },
       (err:any)=>{
@@ -99,4 +141,39 @@ toggleMenu() {
     }
     
   }
+
+    openAddModal(content:any) {
+    this.loading=false
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg" })
+  }
+
+   saveUsager(value:any) {
+      var param = {
+        id: this.user.id,
+        email: value.email,
+        nom: value.nom,
+        prenoms: value.prenoms,
+        password:"", //value.password
+        confirm: "",//value.confirm
+        tel: value.tel,
+        idEntite:this.selectedEntie,
+        idDepartement: value.idDepartement,
+        interfaceRequete: "USAGER",
+        visible: this.visible
+      };
+      this.matService.updateUsager(param, this.user.id).subscribe((res: any) => {
+        this.modalService.dismissAll()
+        this.visible = 0
+        AppSweetAlert.simpleAlert('succes',"Mise à jour", "Profile mis à jour avec succès");
+      })
+      
+      /*if (value.password != value.confirm) {
+        AppSweetAlert.simpleAlert("Erreur", "Mot de passe non identique", 'error');
+      } else {
+       
+      }*/
+  
+    }
+
+
 }

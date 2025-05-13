@@ -3,7 +3,29 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span class="fw-bold">{{title}}</span>
-    <button class="btn btn-sm btn-danger" (click)="logout()">Déconnexion</button>
+    <div class="">
+      <button mat-button [matMenuTriggerFor]="userMenu">
+        <img [src]="'assets/user.jpg'" class="avatar" alt="avatar utilisateur">
+        <span class="username text-white">{{ userConnected?.full_name }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+
+      <mat-menu #userMenu="matMenu">
+        <div class="menu-header">
+          <img [src]="'assets/user.jpg'" class="avatar" alt="avatar">
+          <div>
+            <strong>{{ userConnected?.full_name }}</strong>
+            <p>{{ userConnected?.email }}</p>
+          </div>
+        </div>
+        <button mat-menu-item  (click)="openAddModal(profil)">
+          <mat-icon>edit</mat-icon>
+          <span>Modifier le profil</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button class="btn btn-sm btn-danger" (click)="logout()">Déconnexion</button>
+      </mat-menu>
+    </div>
   </mat-toolbar>
   
   <mat-sidenav-container class="">
@@ -47,3 +69,115 @@
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
+
+
+  <ng-template #profil let-modal>
+        <form #frmusager="ngForm" (ngSubmit)="saveUsager(frmusager.value)" class="form-horizontal"
+            novalidate="">
+            <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Mon profil</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    X
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="color: red;">{{errormessage}}</div>
+                <div class="form-group  row">
+
+                    <label for="nom1" class="col-sm-3 control-label"> Nom * </label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" class="form-control has-error" id="nom1" name="nom" value="{{user?.nom}}"
+                            [(ngModel)]="user.nom" required>
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row">
+
+                    <label for="prenoms" class="col-sm-3 control-label"> Prénoms * </label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" class="form-control has-error" id="prenoms" name="prenoms" value="{{user?.prenoms}}"
+                            [(ngModel)]="user.prenoms" required>
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row">
+
+                    <label for="email1" class="col-sm-3 control-label"> Email *</label>
+
+                    <div class="col-sm-9">
+
+                        <input type="email" class="form-control has-error" id="email1" name="email" value="{{user?.email}}"
+                            [(ngModel)]="user.email" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group  row">
+
+                    <label for="tel2" class="col-sm-3 control-label"> Téléphone *</label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" numbers-only="numbers-only" class="form-control has-error" id="tel2"
+                            name="tel" value="{{user?.tel}}" [(ngModel)]="user.tel" required>
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row" style="margin-bottom: 10px;">
+
+                    <label for="idDepartement1" class="col-sm-3 control-label"> Département *</label>
+
+                    <div class="col-sm-9">
+
+                        <select name="idDepartement" id="idDepartement1" class="form-control" required
+                            [(ngModel)]="user.idDepartement">
+                            <option [value]="fc.id" *ngFor="let fc of departements">{{fc.libelle}}</option>
+                        </select>
+
+
+
+                    </div>
+
+                </div>
+
+                <!--div class="form-group  row">
+                    <label for="tel" class="col-sm-3 control-label">Mot de passe *</label>
+
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control has-error" id="password" name="password"
+                            placeholder="" ngModel>
+                    </div>
+                </div>
+                <div class="form-group  row">
+                    <label for="confirm" class="col-sm-3 control-label">Confirmer le mot de passe *</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control has-error" id="confirm" name="confirm"
+                            placeholder="" ngModel>
+                    </div>
+                </div-->
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" [disabled]="frmusager.invalid"><i class="fas fa-save"></i>&nbsp;
+                    Enregistrer</button>
+
+
+            </div>
+        </form>
+
+    </ng-template>

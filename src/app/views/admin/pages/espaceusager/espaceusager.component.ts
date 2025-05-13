@@ -82,7 +82,7 @@ export class EspaceusagerComponent implements OnInit {
 
   openAddModal(content:any) {
     this.loading=false
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg" }).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg",backdrop: false ,windowClass:'modal-z1'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -165,6 +165,12 @@ export class EspaceusagerComponent implements OnInit {
   institutions:any [] = []
   rdvs:any[] = []
   detailpiece:any[] =[]
+pg={
+    pageSize:10,
+    p:0,
+    total:0
+  }
+  search_text:any=""
 
   isGeneralDirector = false
   typeRequete = "Préoccupation"
@@ -264,7 +270,7 @@ export class EspaceusagerComponent implements OnInit {
       this.descrCarr = res.descr
     })
     this.matService.getAllType(this.selected_data.service.idType).subscribe((res:any)=>{
-      this.services=res
+      this.services=res.data
     })
 
   }
@@ -287,19 +293,19 @@ export class EspaceusagerComponent implements OnInit {
   selectedEntie:any=null
 
   ngOnInit(): void {
-    this.titleService.setTitle('Espace Usager')
+    this.titleService.setTitle('Espace Usager | Vos préoccupations')
     this.titleService.setPfcState(2)
     this.token=this.route.snapshot.paramMap.get('token')
 
     if (this.token!=undefined) {
-      if (this.localService.get(GlobalName.tokenName)==null) {
+      if (this.localService.get(GlobalName.tokenNameMat)==null) {
         this.getToken()
 
       } else {
         this.init()
       }
     }else{
-      if (this.localService.get(GlobalName.tokenName)==null) {
+      if (this.localService.get(GlobalName.tokenNameMat)==null) {
         alert("Vous devez vous connecter pour accéder à cette page");
 
       } else {
@@ -316,33 +322,59 @@ export class EspaceusagerComponent implements OnInit {
     this.dataNT = []
     
     this.matService.getAllForUsagerNT(
-      this.user.id
-      , 1).subscribe((res: any) => {
-        this.dataNT = res
+      this.user.id, this.pg.pageSize,this.pg.p).subscribe((res: any) => {
+
+        if (res.isPaginate) {
+                  this.dataNT = res.data.data
+            this.pg.pageSize=10
+            this.pg.p=0
+            this.pg.total=res.data.length
+        }else{
+          this.dataNT = res.data
+        }
       })
     this.matService.getAllForUsager(
       this.user.id
-      , 1).subscribe((res: any) => {
+      ,this.pg.pageSize,this.pg.p).subscribe((res: any) => {
         this.spinner.hide();
-        this.data = res
-        this._temp = this.data
-        this.collectionSize = this.data.length
+        this.data = res.data
+
       })
       
       this.ChechEtape();
   }
+
+  loadRequest2() {
+    this._temp = []
+    this.data = []
+    this.dataNT = []
+    
+    this.matService.getAllForUsagerNT(
+      this.user.id, this.pg.pageSize,this.pg.p).subscribe((res: any) => {
+        this.dataNT = res.data
+      })
+    this.matService.getAllForUsager(
+      this.user.id, this.pg.pageSize,this.pg.p).subscribe((res: any) => {
+        this.spinner.hide();
+        this.data = res.data
+
+      })      
+  }
+
   loadRdv() {
     this.rdvs = []
     this.matService.getAllForUsagerRDV(this.user.id).subscribe((res: any) => {
-      this.rdvs = res
+      this.rdvs = res.data
     })
   }
   init() {
-    if (this.localService.get(GlobalName.userName) != null) {
-      this.user = this.localService.get(GlobalName.userName)
+    if (this.localService.get(GlobalName.userNameMat) != null) {
+      this.user = this.localService.get(GlobalName.userNameMat)
       this.user.full_name=this.user.nom+" "+this.user.prenoms
       this.selectedEntie=this.user.institu_id
-      console.log('user',this.user);
+      console.log( this.user)
+      this.titleService.setUserConnectedState(this.user)
+
       //Controle ajouter pour les premiers users qui n'ont pas renseigné leur identite
       if(this.selectedEntie == null || this.selectedEntie == "null"){
         this.selectedEntie = 1 //MTFP par défaut 
@@ -352,14 +384,14 @@ export class EspaceusagerComponent implements OnInit {
       }
       this.institutions=[]
       this.matService.getAllInsitution().subscribe((res: any) => {
-       this.institutions = res
+       this.institutions = res.data
        })
     } 
     
     this.loadRequest()
     this.departements = []
     this.matService.getAllDepartement().subscribe((res: any) => {
-      this.departements = res
+      this.departements = res.data
     })
     this.prepare(this.user.institu_id)
     this.loadRdv()
@@ -375,7 +407,7 @@ export class EspaceusagerComponent implements OnInit {
   ChechEtape(){
     this.etapes = []
     this.matService.getAllEtape(0).subscribe((res: any) => {
-      this.etapes = res
+      this.etapes = res.data
     })
   }
   prepare(idEntite:any){
@@ -385,7 +417,7 @@ export class EspaceusagerComponent implements OnInit {
     }
     this.g_services = []
     this.matService.getAllService(idEntite).subscribe((res: any) => {
-      this.g_services = res
+      this.g_services = res.data
     })
     
       // alert();
@@ -396,20 +428,20 @@ export class EspaceusagerComponent implements OnInit {
   
     this.structures = []
     this.matService.getAllStructure(1,idEntite).subscribe((res:any)=>{
-      this.structures = res
+      this.structures = res.data
     })
     this.themes = []
     this.matService.getAllThematique(idEntite).subscribe((res: any) => {
-      this.themes = res
+      this.themes = res.data
     })
     this.daterdvs = []
     this.matService.getAllActif(idEntite).subscribe((res: any) => {
-      this.daterdvs = res
+      this.daterdvs = res.data
     })
 
     this.rdvcreneaus = []
     this.matService.getAllCreneauRdv(idEntite).subscribe((res: any) => {
-      this.rdvcreneaus = res
+      this.rdvcreneaus = res.data
     })
   }
 
@@ -459,7 +491,7 @@ export class EspaceusagerComponent implements OnInit {
       }else{
         this.loading=true
         this.matService.createRequete(param).subscribe((rest: any) => {
-          this.init()
+            this.loadRequest2()
           this.visible=0
           this.modalService.dismissAll()
           this.loading=false
@@ -480,14 +512,12 @@ export class EspaceusagerComponent implements OnInit {
 
     this.detailpiece=[]
     this.matService.getServPiece(event.target.value).subscribe((res:any)=>{
-      this.detailpiece=res
+      this.detailpiece=res.data
+    
+       // this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title',windowClass:'modal-z2'});
     })
     
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  
   }
 
   saveRequeteusager(value:any) {
@@ -531,14 +561,14 @@ export class EspaceusagerComponent implements OnInit {
       }else{
         this.loading=true
         this.matService.update(param, this.selected_data.id).subscribe((rest: any) => {
-          this.init()
+            this.loadRequest2()
           this.visible = 0
           this.modalService.dismissAll()
           this.loading=false
           if(rest.status=="error"){
-            AppSweetAlert.simpleAlert("Erreur",rest.message, 'error')
+            AppSweetAlert.simpleAlert('error',"Erreur",rest.message)
           }else{
-            AppSweetAlert.simpleAlert("Modification requete", "Requête modifiée avec succès", 'success')
+            AppSweetAlert.simpleAlert('success',"Modification requete", "Requête modifiée avec succès")
           }
         })
       }
@@ -551,7 +581,7 @@ export class EspaceusagerComponent implements OnInit {
     // });
     this.services=[]
     this.matService.getAllType(event.target.value).subscribe((res:any)=>{
-      this.services=res
+      this.services=res.data
     })
       
     this.matService.getThematique(event.target.value).subscribe((res:any)=>{
@@ -724,11 +754,11 @@ export class EspaceusagerComponent implements OnInit {
 
   transmettreRequete() {
     if (this.selected_data == null) {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert('error',"Erreur", "Veuillez selectionnez un élément puis réessayer",);
       return;
     }
     if (this.selected_data.visible == 1) {
-      AppSweetAlert.simpleAlert("Erreur", "Vous avez déjà transmis cette requête.", 'error');
+      AppSweetAlert.simpleAlert('error',"Erreur", "Vous avez déjà transmis cette requête.");
       return;
     }
     var msgConfirm = "Voulez-vous transmettre la requête ?";
@@ -744,7 +774,7 @@ export class EspaceusagerComponent implements OnInit {
     this.matService.transmettreRequeteExterne(param).subscribe((res: any) => {
       this.modalService.dismissAll()
       this.loadRequest()
-      AppSweetAlert.simpleAlert("Transmission requete", "Requete transmise avec succès", 'succes');
+      AppSweetAlert.simpleAlert('succes',"Transmission requete", "Requete transmise avec succès");
     })
   }
 
@@ -814,4 +844,8 @@ export class EspaceusagerComponent implements OnInit {
     }
   )
   }
+
+    getPage(event:any){
+  this.pg.p=event
+}
 }

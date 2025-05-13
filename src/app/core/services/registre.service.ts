@@ -11,7 +11,7 @@ url=ConfigService.toMataccueilApiUrl('');
   constructor(private http: HttpClient) { }
 
   getAll(startDate:any,endDate:any,sex?:any){
-    return this.http.get<any[]>(`${this.url}/registre?startDate=${startDate}&endDate=${endDate}&sex=${sex}`);
+    return this.http.get<any[]>(`${this.url}registre?startDate=${startDate}&endDate=${endDate}&sex=${sex}`);
   }
 
 }

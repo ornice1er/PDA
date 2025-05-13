@@ -34,16 +34,16 @@
                             <td>{{rgr.customer_satisfied}} </td>
                             <td>
                                 <span *ngIf="rgr.status==0">Nouveau</span>
-                                <span *ngIf="rgr.status==1 &&  rgr?.transmission.user_down!=user.id">En attente de validation</span>
-                                <span *ngIf="rgr.status==1 && rgr?.transmission.sens!=1 && rgr?.transmission.user_down==user.id">En attente de correction</span>
+                                <span *ngIf="rgr.status==1 &&  rgr?.transmission?.user_down!=user.id">En attente de validation</span>
+                                <span *ngIf="rgr.status==1 && rgr?.transmission?.sens!=1 && rgr?.transmission?.user_down==user.id">En attente de correction</span>
                                 <span *ngIf="rgr.status==2">Validé</span>
                                 <br>
-                                <button *ngIf="rgr.status==1 && rgr?.transmission.sens!=1 && rgr?.transmission.user_down==user.id" class="btn btn-sm btn-primary mx-1" [disabled]="loading2" (click)="openReportShowModal(correctReport,rgr)"> voir le motif</button>
+                                <button *ngIf="rgr.status==1 && rgr?.transmission?.sens!=1 && rgr?.transmission?.user_down==user.id" class="btn btn-sm btn-primary mx-1" [disabled]="loading2" (click)="openReportShowModal(correctReport,rgr)"> voir le motif</button>
 
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-primary mx-1" [disabled]="loading2" (click)="openReportShowModal(showReport,rgr)"> <i class="fa fa-eye text-white"></i> </button>
-                                <ng-container *ngIf="rgr.status==0 || (rgr.status==1 && rgr?.transmission.sens!=1 && rgr?.transmission.user_down==user.id)">
+                                <ng-container *ngIf="rgr.status==0 || (rgr.status==1 && rgr?.transmission?.sens!=1 && rgr?.transmission?.user_down==user.id)">
                                     <button class="btn btn-sm btn-warning mx-1" [disabled]="loading2" (click)="openReportEditModal(editReport,rgr)"> <i class="fa fa-edit text-white"></i> </button>
                                     <button class="btn btn-sm btn-danger mx-1" [disabled]="loading2" (click)="deleteReport(rgr.id)"> <i class="fa fa-trash text-white"></i> </button>
                                     <button class="btn btn-sm btn-success  mx-1" [disabled]="loading2" (click)="transmit(rgr.id)"> <i class="fa fa-arrow-up text-white"></i> </button>
@@ -74,11 +74,9 @@
 <ng-template #addReport let-modal>
     <form #addReportForm="ngForm" (ngSubmit)="storeReport(addReportForm.value)" class="form-horizontal " novalidate="">
 
-        <div class="modal-header bg-secondary">
+        <div class="modal-header bg-secondary d-flex justify-content-between ">
             <h5 class="modal-title text-white" id="modal-basic-title">Générer un rapport</h5>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                X
-            </button>
+            <span (click)="modal.dismiss('Cross click')" class="text-danger" style="cursor:pointer"> <i class="fa fa-times fa-1x" aria-hidden="true"></i> </span>
         </div>
         <div class="modal-body">
             <div style="color:red">{{errormessage}}</div>
@@ -112,6 +110,7 @@
                 <div class="col-12 mb-3">
                     <label for="">Sexe</label>
                     <select name="sex" ngModel  class="form-control form-control-sm has-error">
+                        <option value="all">Tout</option>
                         <option value="Homme">Homme</option>
                         <option value="Femme">Femme</option>
                      </select>  

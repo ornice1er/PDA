@@ -1042,7 +1042,7 @@ getRegistres(value:any){
     this.modalService.dismissAll()
     this.loading2=false
   }, (err) => {
-    this.loading2=true
+    this.loading2=false
     AppSweetAlert.simpleAlert('error',"Visites", "Erreur, Verifiez que vous avez une bonne connexion internet")
   })
 }

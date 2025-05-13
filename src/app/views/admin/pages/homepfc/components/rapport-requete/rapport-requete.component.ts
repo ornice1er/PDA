@@ -19,6 +19,7 @@ import { ReportTransmissionService } from '../../../../../../core/services/repor
 import { ReportService } from '../../../../../../core/services/report.service';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FileService } from '../../../../../../core/services/file.service';
 
 
 @Component({
@@ -78,7 +79,7 @@ pg={
     private router:Router,
     private modalService: NgbModal,
     private localStorageService:LocalStorageService,
-    private activatedRoute: ActivatedRoute,
+    private fileService: FileService,
     private titleService: TitleService,
     private offcanvasService: NgbOffcanvas
     ) { 
@@ -195,9 +196,14 @@ deleteReport(id:any){
 }
 
   getFile(filename:any){
-    this.pdfSrc=ConfigService.toMatFile(`storage/${filename}`)
-    console.log(this.pdfSrc)
-    this.offcanvasService.open(this.contentPDF,{  panelClass: 'details-panel', position: 'end'  });
+  //  let filePath=ConfigService.toMatFile(`storage/${filename}`)
+     
+    this.fileService.getMat({
+      path:`storage/${filename}`
+    }).subscribe((res:any) => {
+      this.pdfSrc =res.data;
+          this.offcanvasService.open(this.contentPDF,{  panelClass: 'details-panel', position: 'end'  });
+    });
   }
 
   transmit(id:any){
