@@ -98,21 +98,25 @@ toggleMenu() {
 }
 
   logout(){
-    if (this.espace) {
+    if (this.espace==1 || this.espace==2) {
       this.authService.logout().subscribe((res:any)=>{
         this.lsService.remove(GlobalName.tokenNameMat)
         this.lsService.remove(GlobalName.userNameMat)
         console.log(this.espace)
         switch (this.espace) {
-          case 0:
-          this.router.navigate(['/auth/logusager'])
-            break;
          case 1:
           this.router.navigate(['/auth/logpfc'])
             break;
           
          case 2:
+          if (this.lsService.get(GlobalName.tokenName)){
           this.router.navigate(['/admin/home'])
+
+          }else{
+          this.router.navigate(['/main'])
+
+          }
+
             break;
           
           default:
