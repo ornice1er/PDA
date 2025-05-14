@@ -4,5 +4,6 @@ export const environment = {
   API_DOMAIN: 'guv.mtfp-ctd.bj/api',
   API_FILE: 'guv.mtfp-ctd.bj',
   API_MATACCUEIL_DOMAIN: 'mataccueil-api.mtfp-ctd.bj/api',
+  API_MATACCUEIL_FILE: 'mataccueil-api.mtfp-ctd.bj',
   API_VERSION: 'v1'
 };
