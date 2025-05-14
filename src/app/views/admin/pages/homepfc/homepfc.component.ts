@@ -28,6 +28,7 @@ export class HomepfcComponent implements OnInit {
 
     if (this.localStorageService.get(GlobalName.tokenNameMat) != null) {
       this.user = this.localStorageService.get(GlobalName.userNameMat)
+          this.titleService.setUserConnectedState(this.user)
       //Controle pour acceder à l'onglet WhatsApp
       if(this.user?.attribu_com != null){
         this.titleService.setWhatsappState(true)
