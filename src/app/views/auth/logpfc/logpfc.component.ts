@@ -18,6 +18,7 @@ import { LocalStorageService } from '../../../core/utils/local-stoarge-service';
 import { LoadingComponent } from '../../components/loading/loading.component';
 import { StatutComponent } from '../../components/statut/statut.component';
 import { GlobalName } from '../../../core/utils/global-name';
+import { TitleService } from '../../../core/utils/title.service';
 
 @Component({
   selector: 'app-logpfc',
@@ -33,6 +34,7 @@ export class LogpfcComponent implements OnInit {
   constructor(
     private user_auth_service:AuthService, 
     private  local_service:LocalStorageService,
+    private titleService:TitleService,
     private router:Router) { 
     
     }
@@ -59,6 +61,8 @@ export class LogpfcComponent implements OnInit {
           this.local_service.set(GlobalName.tokenNameMat,res.data);
           this.user_auth_service.getUserByToken().subscribe((res:any) => {
             this.local_service.set(GlobalName.userNameMat,res.data);
+            this.user = this.local_service.get(GlobalName.userNameMat)
+          this.titleService.setUserConnectedState(this.user)
           })
           this.router.navigateByUrl("/admin/homepfc"); 
         }
