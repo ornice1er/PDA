@@ -615,7 +615,7 @@ pg={
       "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
         if (result.value) {
           this.matService.deleteRequete(this.selected_data.id).subscribe((res: any) => {
-            this.init()
+            this.loadRequest2()
             AppSweetAlert.simpleAlert("Suppression requete", "Suppression effectuée avec succès", 'success')
           }, (err:any) => {
             AppSweetAlert.simpleAlert("Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
@@ -629,7 +629,7 @@ pg={
     this.loading=true
     this.matService.update(value,this.selected_data2.id).subscribe((res:any)=>{
       this.modalService.dismissAll()
-      this.init()
+      this.loadRequest2()
       this.loading=false
       if(res.status=="error"){
         AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
@@ -660,7 +660,7 @@ pg={
            }
            
           this.matService.saveRdvStatut(param).subscribe((res: any) => {
-            this.init()
+            this.loadRequest2()
             AppSweetAlert.simpleAlert("Transmettre rdv", "Suppression effectuée avec succès", 'success')
           }, (err:any) => {
             AppSweetAlert.simpleAlert("Transmettre rdv", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
@@ -682,7 +682,7 @@ pg={
       "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
         if (result.value) {
           this.matService.delete(this.selected_data2.id).subscribe((res: any) => {
-            this.init()
+            this.loadRequest2()
             AppSweetAlert.simpleAlert("Suppression rdv", "Suppression effectuée avec succès", 'success')
           }, (err:any) => {
             AppSweetAlert.simpleAlert("Suppression rdv", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
@@ -720,7 +720,7 @@ pg={
     this.matService.updateUsager(param, this.user.id).subscribe((res: any) => {
       this.modalService.dismissAll()
       this.visible = 0
-      this.init()
+      this.loadRequest2()
       AppSweetAlert.simpleAlert("Mise à jour", "Profile mis à jour avec succès", 'succes');
     })
     
@@ -839,7 +839,7 @@ pg={
        if(this.user){
         this.titleService.setUserConnectedState(this.user)
       }
-    //  this.init()
+      this.init()
     },
     (err:any)=>{
       console.log(err)
