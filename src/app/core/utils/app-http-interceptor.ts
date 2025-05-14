@@ -47,6 +47,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 );
                 switch (error.status) {
                   case 401:
+                    console.log(error.url)
+                    console.log(ConfigService.toApiUrl())
+                    console.log(ConfigService.toMataccueilApiUrl())
                     if (error.url && error.url.includes(ConfigService.toApiUrl())) {
                       this.lsService.remove(GlobalName.tokenName)
                       this.lsService.remove(GlobalName.refreshTokenName)
