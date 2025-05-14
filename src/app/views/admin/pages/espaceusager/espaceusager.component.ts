@@ -849,6 +849,6 @@ pg={
   }
 
     getPage(event:any){
-  this.pg.p=event
-}
+      this.pg.p=event
+    }
 }

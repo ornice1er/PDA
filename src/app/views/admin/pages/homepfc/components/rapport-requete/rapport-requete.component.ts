@@ -196,14 +196,14 @@ deleteReport(id:any){
 }
 
   getFile(filename:any){
-  //  let filePath=ConfigService.toMatFile(`storage/${filename}`)
-     
-    this.fileService.getMat({
-      path:`storage/${filename}`
-    }).subscribe((res:any) => {
-      this.pdfSrc =res.data;
-          this.offcanvasService.open(this.contentPDF,{  panelClass: 'details-panel', position: 'end'  });
-    });
+    let filePath=ConfigService.toMatFile(`storage/${filename}`)
+     window.open(filePath,'_blank')
+    // this.fileService.getMat({
+    //   path:`storage/${filename}`
+    // }).subscribe((res:any) => {
+    //   this.pdfSrc =res.data;
+    //       this.offcanvasService.open(this.contentPDF,{  panelClass: 'details-panel', position: 'end'  });
+    // });
   }
 
   transmit(id:any){
