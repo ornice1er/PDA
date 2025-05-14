@@ -6,7 +6,7 @@
     <div class="">
       <button mat-button [matMenuTriggerFor]="userMenu">
         <img [src]="'assets/user.jpg'" class="avatar" alt="avatar utilisateur">
-        <span class="username text-white">{{ userConnected?.full_name }}</span>
+        <span class="username text-white">{{ userConnected?.name }}</span>
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
 
@@ -14,7 +14,7 @@
         <div class="menu-header">
           <img [src]="'assets/user.jpg'" class="avatar" alt="avatar">
           <div>
-            <strong>{{ userConnected?.full_name }}</strong>
+            <strong>{{ userConnected?.name }}</strong>
             <p>{{ userConnected?.email }}</p>
           </div>
         </div>
