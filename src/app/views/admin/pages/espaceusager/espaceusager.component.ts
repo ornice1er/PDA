@@ -836,6 +836,9 @@ pg={
       this.localService.set(GlobalName.tokenNameMat,res.token)
       this.localService.set(GlobalName.userNameMat,res.userData)
       this.user=res.userData
+       if(this.user){
+        this.titleService.setUserConnectedState(this.user)
+      }
     //  this.init()
     },
     (err:any)=>{

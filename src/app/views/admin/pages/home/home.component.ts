@@ -56,6 +56,9 @@ export class HomeComponent implements OnInit {
     this.titleService.setPfcState(0)
 
       this.user=this.local_service.get(GlobalName.userName)
+      if(this.user){
+        this.titleService.setUserConnectedState(this.user)
+      }
       console.log(this.user)
       this.id=this.user.status_id
       this.access_token=this.local_service.get(GlobalName.tokenName)

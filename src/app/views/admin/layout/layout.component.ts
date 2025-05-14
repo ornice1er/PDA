@@ -69,7 +69,6 @@ export class LayoutComponent {
 
   ngOnInit(): void {
   
-     this.user=this.lsService.get(GlobalName.userName)
      this.titleService.title$.subscribe(newTitle => {
       this.title = newTitle;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
@@ -91,6 +90,8 @@ export class LayoutComponent {
       this.departements = res
     })
 }
+
+
 
 toggleMenu() {
   this.menuOpen = !this.menuOpen;
