@@ -48,9 +48,9 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 switch (error.status) {
                   case 401:
                     console.log(error.url)
-                    console.log(ConfigService.toApiUrl())
-                    console.log(ConfigService.toMataccueilApiUrl())
-                    if (error.url && error.url.includes(ConfigService.toApiUrl())) {
+                    console.log(ConfigService.toApiUrl(''))
+                    console.log(ConfigService.toMataccueilApiUrl(''))
+                    if (error.url && error.url.includes(ConfigService.toApiUrl(''))) {
                       this.lsService.remove(GlobalName.tokenName)
                       this.lsService.remove(GlobalName.refreshTokenName)
                       this.lsService.remove(GlobalName.expireIn)
@@ -58,7 +58,7 @@ export class AppHttpInterceptor implements HttpInterceptor {
                       this.lsService.remove(GlobalName.exercice)
                       this.modalService.dismissAll()
                       this.router.navigate(['/auth/logusager'])
-                    }else   if (error.url && error.url.includes(ConfigService.toMataccueilApiUrl()) &&  this.lsService.get(GlobalName.tokenNameMat)!= undefined) {
+                    }else   if (error.url && error.url.includes(ConfigService.toMataccueilApiUrl('')) &&  this.lsService.get(GlobalName.tokenNameMat)!= undefined) {
                       this.lsService.remove(GlobalName.tokenNameMat)
                       this.lsService.remove(GlobalName.userNameMat)
                       this.router.navigate(['/auth/logusager'])
