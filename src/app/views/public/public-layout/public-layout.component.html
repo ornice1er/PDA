@@ -1,3 +1,8 @@
-<app-public-header></app-public-header>
+<div class="header-container">
+    <app-public-header class="mb-3"></app-public-header>
+    
+  <h1 class="mb-2 meb text-white" style=" text-align: center;">PORTAIL DES DEMARCHES ADMINISTRATIVES</h1>
+    <marquee behavior="scroll" direction="horizontal">{{settings?.header_text}}</marquee>
+</div>
 <router-outlet></router-outlet>
 <app-public-footer></app-public-footer>

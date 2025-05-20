@@ -14,4 +14,8 @@ url=ConfigService.toMataccueilApiUrl('');
     return this.http.get<any[]>(`${this.url}registre?startDate=${startDate}&endDate=${endDate}&sex=${sex}`);
   }
 
+  getStats(resource:any){
+    return this.http.post<any[]>(`${this.url}registres-reports-stats`,resource);
+  }
+
 }

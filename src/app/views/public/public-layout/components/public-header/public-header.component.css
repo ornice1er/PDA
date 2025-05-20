@@ -1,0 +1,10 @@
+.active{
+    background-color: unset !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+}
+.nav-link:hover{
+    background-color: unset !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+}

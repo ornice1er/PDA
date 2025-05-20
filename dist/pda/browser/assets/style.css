@@ -45,7 +45,7 @@
     .navbar .nav-item .dropdown-menu li{ padding: 5px;}
     .navbar .nav-item .dropdown-menu a:hover{ font-family: montserrat-semi-bold;}
     .navbar .nav-item:hover .nav-link{ color: #0A3764 ; font-family: montserrat-semi-bold; }
-    .navbar .nav-item:hover{ background-color: #fff; border: unset;}
+    .navbar .nav-item:hover{ background-color: unset; border: unset; text-decoration: underline; }
 
     .s-banner .card-img-overlay .text{
         position: absolute;
@@ -94,7 +94,7 @@
     .navbar .nav-item .dropdown-menu li{ padding: 5px;}
     .navbar .nav-item .dropdown-menu a:hover{ font-family: montserrat-semi-bold;}
     .navbar .nav-item:hover .nav-link{ color: #0A3764 ; font-family: montserrat-semi-bold; }
-    .navbar .nav-item:hover{ background-color: #fff; border: unset;}
+    .navbar .nav-item:hover{ background-color: unset; border: unset; text-decoration: underline; }
     .s-banner .card-img-overlay .text{
         position: absolute;
         padding: 0.5rem;

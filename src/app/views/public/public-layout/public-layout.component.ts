@@ -23,5 +23,5 @@ import { PublicFooterComponent } from './components/public-footer/public-footer.
   styleUrl: './public-layout.component.css'
 })
 export class PublicLayoutComponent {
-
+settings:any
 }

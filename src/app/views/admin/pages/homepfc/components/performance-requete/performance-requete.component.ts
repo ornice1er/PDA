@@ -16,19 +16,23 @@ import { SampleSearchPipe } from '../../../../../../core/pipes/sample-search.pip
 import { LoadingComponent } from '../../../../../components/loading/loading.component';
 import { StatutComponent } from '../../../../../components/statut/statut.component';
 import { RegistreService } from '../../../../../../core/services/registre.service';
+import { Chart,registerables, ChartConfiguration, ChartType, ChartData } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
+import annotationPlugin from 'chartjs-plugin-annotation';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(...registerables, annotationPlugin,ChartDataLabels);
 
 @Component({
   selector: 'app-performance-requete',
   standalone: true,
-     imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent],
+     imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,BaseChartDirective],
   templateUrl: './performance-requete.component.html',
   styleUrl: './performance-requete.component.css'
 })
 export class PerformanceRequeteComponent {
-active=1
   @ViewChild('contentRetraite') contentRetraite : any;
   @ViewChild('contentCarriere') contentCarriere : any;
-
   @ViewChild('contentPDF') contentPDF:TemplateRef<any> | undefined
   pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
 pg={
@@ -36,15 +40,122 @@ pg={
     p:0,
     total:0
   }
-
-  loadFile(file:any){
-    return ConfigService.toFile(file)
-  }
   page = 1;
   pagerv = 1;
   loading2:any = false;
+  year_stats:any = [];
+  monthly_stats:any = [];
+  registres:any = [];
+    loading:any=false
+  id:any
+  data:any
+  user:any
+  access_token:any
+  error=""
+   pg2={
+    pageSize:10,
+    p:0,
+    total:0
+  }
+search_text:any=""
+  selected_data:any
+  onglet_What = false
+  mat_aff = false
+
+
+  private newLabel? = 'New label';
+  public lineChartType: ChartType = 'line';
+
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @ViewChild(BaseChartDirective) chart2?: BaseChartDirective;
   
-  subs:Subscription | undefined
+  public lineChartData: ChartConfiguration['data'] = {
+    datasets: [
+      {
+        data: [],
+        label: 'Series A',
+        backgroundColor: 'rgba(148,159,177,0.2)',
+        borderColor: 'rgba(148,159,177,1)',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+        fill: 'origin',
+      }
+    ],
+    labels: [],
+  };
+
+    public lineChartOptions: ChartConfiguration['options'] ={
+  elements: {
+    line: {
+      tension: 0.5,
+    },
+  },
+  scales: {
+    y: {
+      position: 'left',
+    },
+    y1: {
+      position: 'right',
+      grid: {
+        color: 'rgba(255,0,0,0.3)',
+      },
+      ticks: {
+        color: 'red',
+      },
+    },
+  },
+  plugins: {
+    legend: { display: true },
+    annotation: {
+      annotations: {
+        line1: {
+          type: 'line',
+          scaleID: 'x',
+          value: 'Janvier', // attention : Chart.js attend une valeur exacte du label x
+          borderColor: 'orange',
+          borderWidth: 2,
+          label: {
+            display: true,
+            position: 'center',
+            color: 'orange',
+            content: 'Janvier',
+            font: {
+              weight: 'bold',
+            },
+          },
+        },
+      },
+    },
+  }
+}
+;
+
+ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: {
+      x: {},
+      y: {
+        min: 10,
+      },
+    },
+    plugins: {
+      legend: {
+        display: true,
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+      },
+    },
+  };
+  public barChartType = 'bar' as const;
+
+  public barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [],
+  };
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -69,48 +180,7 @@ pg={
     ) { 
     if(localStorage.getItem(GlobalName.tokenNameMat)!=undefined) this.user=this.local_service.get(GlobalName.tokenNameMat);
   }
-  loading:any=false
-  id:any
-  data:any
-  user:any
-  access_token:any
-  _temp: any[]=[];
-  
-  subject = new Subject<any>();
-  pager: any = {current_page: 0,
-    data:[],
-    last_page: 0,
-    per_page: 0,
-    to: 0,
-    total: 0
-  }
-  link_to_prestation=1
-  selected_type_preoccupation=0
-  error=""
-  searchText=""
-   pg2={
-    pageSize:10,
-    p:0,
-    total:0
-  }
-search_text:any=""
-  selected_data:any
-  closeResult = '';
-  departements:any[]=[]
-  detailpiece:any[]=[]
-  structures:any[]=[]
-  natures:any[]=[]
-  dataNT: any[] = [];
-  themes:any[]=[]
-  services:any[]=[]
-  onglet_What = false
-  mat_aff = false
-  descrCarr=[]
-  selected_data_note: any
-  notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-  // Declaration 
-  matricu_rv =""
 
   ngOnInit(): void {
     this.titleService.setTitle('Espace Point Focal Communal')
@@ -125,904 +195,16 @@ search_text:any=""
       }
       
     }
-
+    this.init()
     
-      this.activatedRoute.queryParams.subscribe((x:any)=> this.init(x.page || 1));
-  
-      this.subject.subscribe((val) => {
-       this.pager=val
-       this.page=this.pager.current_page
-  
-       let pages=[]
-       if(this.pager.last_page  <= 5){
-        for (let index = 1; index <= this.pager.last_page; index++) {
-          pages.push(index)
-        } 
-       }else{
-         let start=(this.page >3 ? this.page-2 : 1 )
-         let end=(this.page+2 < this.pager.last_page ? this.page+2 : this.pager.last_page )
-        for (let index = start; index <= end; index++) {
-          pages.push(index)
-        }
-       }
-       this.pager.pages=pages
-    });
-
   }
 
-
+init(){
+  this.getStats()
+}
  
 
     
-  show_step(id:any) {
-    return this.etapes.find((e:any) => (e.id == id))
-  }
-  openNoteModal(content:any, el:any) {
-    this.selected_data_note = el
-    this.loading=false
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg" }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-  noterRequete(value:any) {
-    var param = {
-      codeRequete: this.selected_data_note.codeRequete,
-      noteDelai: value.noteDelai,
-      noteResultat: value.noteResultat,
-      idEntite:this.selectedEntie,
-      commentaireNotation: value.commentaireNotation,
-    };
-    this.loading=true
-    this.user_auth_service.noterRequetePfc(param).subscribe((res: any) => {
-      this.modalService.dismissAll()
-      this.loadRequest()
-      this.loading=false
-      if(res.status=="error"){
-        AppSweetAlert.simpleAlert("info","Erreur",res.message)
-      }else{
-        AppSweetAlert.simpleAlert("info","Appreciation", "Appreciation envoyé avec succès", 'succes');
-      }
-    })
-  }
-
-  openAddModal(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-
-  chargerPrestation(event:any){
-    this.services=[]
-    this.user_auth_service.getAllTypePrest(event.target.value).subscribe((res:any)=>{
-      this.services=res.data
-    })
-    
-    this.user_auth_service.getThema(event.target.value).subscribe((res:any)=>{
-      this.descrCarr = res.descr
-      if(res.libelle== "Formation" || res.libelle == "Carrière"){
-        this.mat_aff = true
-      }else{
-        this.mat_aff = false
-      }
-    })
-    
-  }
-  ChangerFile(file:any){
-    window.location.href="https://api.mataccueil.gouv.bj/api/downloadFile?file="+file
-    //window.location.href="https://preprodmtfp.gouv.bj/pprod-mataccueilapi/api/downloadFile?file="+file
-    // window.location.href="http://api.mataccueil.sevmtfp.test/api/downloadFile?file="+file
-    // window.location.href="http://localhost:8003/api/downloadFile?file="+file
-  }
-
-  addRequeteusager(value:any){
-
-    let service :any= null
-    if (this.link_to_prestation==1 ) {
-      service = this.services.filter((e:any) => (e.id == value.idPrestation))[0]
-    }else{
-      service=this.services.filter((e:any) => (e.hide_for_public == 1))[0]
-    }
-
-    if (this.selected_type_preoccupation == 0) {
-      AppSweetAlert.simpleAlert("info","Sélectionner le type de requête", "Champ obligatoire")
-    }else if(!value.idEntite){
-      AppSweetAlert.simpleAlert("info","Sélectionner la structure destinatrice", "Champ obligatoire")
-    }else if(!value.contactUs){
-      AppSweetAlert.simpleAlert("info","Renseigner le contact", "Champ obligatoire")
-    }else if(this.mat_aff == true && value.matricule == ''){
-      AppSweetAlert.simpleAlert("info","Renseigner le matricule", "Champ obligatoire")
-    }else if((value.idPrestation == "" || value.idPrestation == null) && this.link_to_prestation==1){
-      AppSweetAlert.simpleAlert("info","Sélectionner la prestation", "Champ obligatoire")
-    }else if(!value.objet){
-      AppSweetAlert.simpleAlert("info","Renseigner l'objet", "Champ obligatoire")
-    }else if(!value.msgrequest){
-      AppSweetAlert.simpleAlert("info","Renseigner le message", "Champ obligatoire")
-    }else{
-      let interfa = null
-      let idReg = null
-      let idEsWha = null
-      let natur = null
-        interfa = this.link_to_prestation == 1 ? "USAGER"  : "SRU"
-        idReg = ""
-        if(this.selected_data_Whats == null){
-          natur = 5 //En ligne 
-        }else{
-          natur = 12 //WhatsApp
-          idEsWha = this.selected_data_Whats.id
-        }
-      
-      var param = {
-        objet: value.objet,
-        contactUs: value.contactUs,
-        mailPfc: this.user.email,
-        link_to_prestation:this.link_to_prestation,
-        idPrestation: this.link_to_prestation==0  ? '435' : value.idPrestation, //cas d'une requete
-        nbreJours: service == null ? 0 : service.nbreJours,
-        msgrequest: value.msgrequest,
-        idregistre : idReg,
-        idEchanWhat : idEsWha,
-        email:value.mailUs,
-        matricule: this.mat_aff == true ? value.matricule : '',
-        natureRequete:natur,
-        // nom:this.user.agent_user.nomprenoms, natureRequete
-        nom:"",
-        tel:'',
-        idDepartement:'',
-        interfaceRequete: interfa,
-        idUser:this.user.id,
-        idEntite:value.idEntite,
-        plainte: value.plainte,
-        visible: this.visible
-        // visible: 1
-     };
-
-     this.user_auth_service.createrequeteusager(param).subscribe((rest:any)=>{
-      this.loadRequest()
-      this.loadRequestrv()
-      this.loadWhatsApp()
-      this.visible=0
-      this.modalService.dismissAll()
-      if(rest.status=="error"){
-        AppSweetAlert.simpleAlert("info","Erreur",rest.message)
-      }else{
-        if(param.visible==0){
-          AppSweetAlert.simpleAlert("info",'success',"Ajout requête", "Requête ajoutée avec succès")
-        }else{
-          AppSweetAlert.simpleAlert("info",'success',"Ajout requête", "Requete ajouté et transmis avec succès")
-        }
-      }
-    })     
-    this.selected_data_rvMat = ''
-    this.selected_data_Whats = ''
-    }
-  }
-  addReponse(value:any){
-
-    if (value.reponse_whats == "") {
-      AppSweetAlert.simpleAlert("info","Renseigner la réponse à cette discusion", "Champ obligatoire")
-      return;
-    }else{
-      let formData = new FormData()
-      formData.append('reponse', value.reponse_whats)
-      formData.append('fichier', this.file)
-
-      this.user_auth_service.updateWhatsReponse(formData, this.selected_data_Whats.id).subscribe((res:any)=>{
-          if(res.status=="error"){
-            AppSweetAlert.simpleAlert("info","Erreur",res.message)
-          }else{
-            this.loadWhatsApp()
-            AppSweetAlert.simpleAlert("info","Réponse d'une discussion whatsapp",  "Réponse donnée avec succès")
-          }
-          this.modalService.dismissAll()
-      })     
-      this.selected_data_rvMat = ''
-      this.selected_data_Whats = ''
-    }
-  }
-  
-  saveRequeteusager(value:any) {
-    let service:any = null
-    if (this.link_to_prestation==1 ) {
-      service = this.services.filter((e:any)=> (e.id == value.idPrestation2))[0]
-    }else{
-      service=this.services.filter((e:any) => (e.hide_for_public == 1))[0]
-    }
-    if (this.selected_type_preoccupation == 0) {
-      AppSweetAlert.simpleAlert("info","Sélectionner le type de requête", "Champ obligatoire")
-    }else if(!value.idEntite2){
-      AppSweetAlert.simpleAlert("info","Sélectionner la structure destinatrice", "Champ obligatoire")
-    }else if(!value.contactUs2){
-      AppSweetAlert.simpleAlert("info","Renseigner le contact", "Champ obligatoire")
-    }else if(this.mat_aff == true && value.matricul == ''){
-      AppSweetAlert.simpleAlert("info","Renseigner le matricule", "Champ obligatoire")
-    }else if((value.idPrestation2 == "" || value.idPrestation2 == null) && this.link_to_prestation==1){
-      AppSweetAlert.simpleAlert("info","Sélectionner la prestation", "Champ obligatoire")
-    }else if(!value.objet2){
-      AppSweetAlert.simpleAlert("info","Renseigner l'objet", "Champ obligatoire")
-    }else if(!value.msgrequest2){
-      AppSweetAlert.simpleAlert("info","Renseigner le message", "Champ obligatoire")
-    }else{
-      var param = {
-        objet: value.objet2,
-        id: this.selected_data_req.id,
-        contactUs: value.contactUs2,
-        mailPfc: this.user.email,
-        link_to_prestation:this.link_to_prestation,
-        idPrestation: this.link_to_prestation==0  ? '435' : value.idPrestation2, //cas d'une requete
-        nbreJours: service == null ? 0 : service.nbreJours,
-        msgrequest: value.msgrequest2,
-        email:value.mailUs2,
-        matricule: this.mat_aff == true ? value.matricul : '',
-        // nom:this.user.agent_user.nomprenoms,
-        nom:"",
-        tel:'',
-        idDepartement:'',
-        interfaceRequete: this.link_to_prestation==1 ? "USAGER"  : "SRU" ,
-        idUser:this.user.id,
-        idEntite:value.idEntite2,
-        plainte: value.plainte2,
-        visible: this.visible
-     };
-
-     this.user_auth_service.Updaterequeteusager(param, this.selected_data_req.id).subscribe((rest:any)=>{
-      this.loadRequest()
-      this.visible=0
-      this.modalService.dismissAll()
-      if(rest.status=="error"){
-        AppSweetAlert.simpleAlert("info","Erreur",rest.message)
-      }else{
-        if(param.visible==0){
-          AppSweetAlert.simpleAlert("info","Modification requête", "Requête modifiée avec succès")
-        }else{
-          AppSweetAlert.simpleAlert("info","Modification requête", "Requete modifiée et transmis avec succès")
-        }
-      }
-    })     
-
-    }
-  }
-  
-  transmettreRequete() {
-    if (this.selected_data_req == null) {
-      AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer");
-      return;
-    }
-    if (this.selected_data_req.visible == 1) {
-      AppSweetAlert.simpleAlert("info","Erreur", "Vous avez déjà transmis cette requête.");
-      return;
-    }
-    var msgConfirm = "Voulez-vous transmettre la requête ?";
-    var confirmResult = confirm(msgConfirm);
-    if (confirmResult === false) return;
-
-    var param = {
-      idRequete: this.selected_data_req.id,
-      idEntite:this.selectedEntie,
-      fichier_requete: this.selected_data_req.request_file_data,
-    };
-
-    this.user_auth_service.transmettreRequeteExterne(param).subscribe((res: any) => {
-      this.modalService.dismissAll()
-      this.loadRequest()
-      AppSweetAlert.simpleAlert("info","Transmission requête", "Requête transmise avec succès");
-    })
-  }
-  addRequeteRv(value:any){
-    if (value.contactMatri == "") {
-      AppSweetAlert.simpleAlert("info","Renseigner le matricule ou le contact du visiteur", "Champ obligatoire")
-    }else if(!value.plainterv){
-      AppSweetAlert.simpleAlert("info","Sélectionner le type", "Champ obligatoire")
-    }else if(value.nom_pre_rv == ""){
-      AppSweetAlert.simpleAlert("info","Renseigner le nom et prénom (s) du visiteur", "Champ obligatoire")
-    }else if(!value.idEntite){
-      AppSweetAlert.simpleAlert("info","Sélectionner la structure destinatrice", "Champ obligatoire")
-    }else if((value.preoccurv == "" || value.preoccurv == null)){
-      AppSweetAlert.simpleAlert("info","Renseigner la préoccupation du visiteur", "Champ obligatoire")
-    }else if(value.satisfaitrv == ""){
-      AppSweetAlert.simpleAlert("info","Sélectionner une appréciation", "Champ obligatoire")
-    }else if(value.satisfaitrv && value.observarv == ""){
-      AppSweetAlert.simpleAlert("info","Renseigner l'observation", "Champ obligatoire")
-    }else{
-      var param = {
-        contactMatri: value.contactMatri,
-        plainterv: value.plainterv,
-        nom_pre_rv: value.nom_pre_rv,
-        idEntite:value.idEntite,
-        preoccurv:value.preoccurv,
-        idUser:this.user.id,
-        satisfaitrv: value.satisfaitrv,
-        created_at: this.dateACloture =="" ? new Date() : new Date(this.dateACloture),
-        observarv: value.observarv,
-     };
-
-     this.user_auth_service.createrequeteVisite(param).subscribe((res:any)=>{
-      if(res.status=="error"){
-        AppSweetAlert.simpleAlert("info","Erreur",res.message)
-      }else{
-        this.loadRequestrv()
-        
-        AppSweetAlert.simpleAlert("info","Ajout requête",  "Visite ajoutée avec succès")
-      }
-      this.modalService.dismissAll()
-    })     
-    }
-  }
-
-  addWhatsApp(value:any){
-    if (value.contWhatsapp == "") {
-      AppSweetAlert.simpleAlert("info","Renseigner le contact WhatsApp", "Champ obligatoire")
-    }else if(value.discussiontxt == ""){
-      AppSweetAlert.simpleAlert("info","Renseigner la discussion", "Champ obligatoire")
-    }else{
-      var param = {
-        contWhatsapp: value.contWhatsapp,
-        discussiontxt: value.discussiontxt,
-        idUser:this.user.id,
-     };
-      this.user_auth_service.createDiscussionWhats(param).subscribe((res:any)=>{
-        if(res.status=="error"){
-          AppSweetAlert.simpleAlert("info","Erreur",res.message)
-        }else{
-          this.loadWhatsApp()
-          AppSweetAlert.simpleAlert("info","Ajout d'une discussion whatsapp",  "Discussions ajoutée avec succès")
-        }
-        this.modalService.dismissAll()
-      })     
-
-    }
-  }
-  addClotureRv(value:any){
-    
-    // if(this.file == ""){
-    //   AppSweetAlert.simpleAlert("info","Joindre le fichier", "Champ obligatoire")
-    // }else{
-    
-     let formData = new FormData()
-     formData.append('id_user', this.user.id)
-     formData.append('date_cloture', this.dateACloture)
-     formData.append('nbrvisite', value.nbrevisite)
-     formData.append('fichier', this.file)
-     this.user_auth_service.CloturerequeteVisite(formData).subscribe((res:any)=>{
-       
-      if(res.status=="error"){
-        AppSweetAlert.simpleAlert("info","Erreur",res.message)
-      }else{
-        this.loadRequestrv()
-        AppSweetAlert.simpleAlert("info","Clôture de registre", "Opération effectuée avec succès")
-      }
-      this.file = ""
-      this.dateACloture = ""
-      this.modalService.dismissAll()
-    })     
-
-    // }
-  }
-  UpdateRequeteRv(value:any){
-    
-    if (value.contactMatri == "") {
-      AppSweetAlert.simpleAlert("info","Renseigner le matricule ou le contact du visiteur", "Champ obligatoire")
-    }else if(!value.plainterv){
-      AppSweetAlert.simpleAlert("info","Sélectionner le type", "Champ obligatoire")
-    }else if(value.nom_pre_rv == ""){
-      AppSweetAlert.simpleAlert("info","Renseigner le nom et prénom (s) du visiteur", "Champ obligatoire")
-    }else if(!value.idEntite){
-      AppSweetAlert.simpleAlert("info","Sélectionner la structure destinatrice", "Champ obligatoire")
-    }else if((value.preoccurv == "" || value.preoccurv == null)){
-      AppSweetAlert.simpleAlert("info","Renseigner la préoccupation du visiteur", "Champ obligatoire")
-    }else if(value.satisfaitrv == ""){
-      AppSweetAlert.simpleAlert("info","Sélectionner une appréciation", "Champ obligatoire")
-    }else if(value.satisfaitrv && value.observarv == ""){
-      AppSweetAlert.simpleAlert("info","Renseigner l'observation", "Champ obligatoire")
-    }else{
-      var param = {
-        contactMatri: value.contactMatri,
-        plainterv: value.plainterv,
-        nom_pre_rv: value.nom_pre_rv,
-        idEntite:value.idEntite,
-        preoccurv:value.preoccurv,
-        idUser:this.user.id,
-        satisfaitrv: value.satisfaitrv,
-        observarv: value.observarv,
-     };
-
-     this.user_auth_service.updaterequeteVisite(param, this.selected_data_reqrv.id).subscribe((res:any)=>{
-        if(res.status=="error"){
-          AppSweetAlert.simpleAlert("info","Erreur",res.message)
-        }else{
-          this.loadRequestrv()
-          AppSweetAlert.simpleAlert("info","Ajout requête",  "Visite ajoutée avec succès")
-        }
-        this.modalService.dismissAll()
-    })     
-
-    }
-  }
-  UpdateRequeteWhats(value:any){
-    if (value.contWhatsapp == "") {
-      AppSweetAlert.simpleAlert("info","Renseigner le contact WhatsApp", "Champ obligatoire")
-    }else if(value.discussiontxt == ""){
-      AppSweetAlert.simpleAlert("info","Renseigner la discussion", "Champ obligatoire")
-    }else{
-      var param = {
-        contWhatsapp: value.contWhatsapp,
-        discussiontxt: value.discussiontxt,
-        idUser:this.user.id,
-     };
-     this.user_auth_service.updateWhatsapp(param, this.selected_data_Whats.id).subscribe((res:any)=>{
-          if(res.status=="error"){
-            AppSweetAlert.simpleAlert("info","Erreur",res.message)
-          }else{
-            this.loadWhatsApp()
-            AppSweetAlert.simpleAlert("info","Modification d'une discussion whatsapp",  "Discussions modifiée avec succès")
-          }
-          this.modalService.dismissAll()
-      })     
-    }
-    this.selected_data_Whats = '';
-  }
-
-  openDetailModal(event:any,content:any){
-
-    this.detailpiece=[]
-    this.user_auth_service.getServPiece(event.target.value).subscribe((res:any)=>{
-      this.detailpiece=res.data
-    })
-    
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  setNotif(){
-    this.user_auth_service.setNotif({
-    }).subscribe(
-      (res:any)=>{ },
-      (err:any)=>{
-          this.loading=false;
-          // console.log(err)
-         // AppSweetAlert.simpleAlert("info","Applications","Echec de récupération des applications","error")
-        }
-  )
-  }
-
-  init(page:any){
-    this.selected_traiteWha = 'non'
-
-    // console.log(this.user)
-    this.loadRequest()
-    this.loadRequestrv()
-    this.loadWhatsApp()
-    this._temp=[]
-    this.data=[]
-    this.user_auth_service.getAll(null,page).subscribe((res:any)=>{
-      // this.spinner.hide();
-      this.data=res.data
-      this._temp=this.data
-      this.subject.next(res);
-    })
- 
-    this.departements=[]
-    this.user_auth_service.getAllDepartement().subscribe((res:any)=>{
-      this.departements=res.data
-    })
-
-    this.institutions=[]
-    this.user_auth_service.getAllInstitu().subscribe((res: any) => {
-     this.institutions = res.data
-     })
-
-     this.prepare(this.user.idEntite)
-  }
-
-  file: string | Blob =""
-  onFileChange(event:any) {
-    if (event.target.files.length > 0) {
-      this.file = event.target.files[0];
-    }
-  }
-
-
-
-  openEditModalCloture(content:any){
-   
-    if (this.dateACloture == "") {
-      AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez la date à clôturer");
-      return;
-    }
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openEditModalVisi(content:any){
-
-    if (this.nbreDay.length != 0 && this.dateACloture == "") {
-      AppSweetAlert.simpleAlert("info","Erreur", "Veuillez clôturer les régistres des dates précédentes");
-      return;
-    }
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openEditModalWhatsApp(content:any){
-
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openEditModalAdd(content:any){
-    this.selected_data_Whats = null
-    this.selected_data_rvMat = null
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openEditModal(content:any){
-    
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openEditModalAddRv(content:any){
-    this.selected_data_Whats = null
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  openEditModalLg(content:any){
-    if (this.selected_data_req == null) {
-      AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer");
-      return;
-    }
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-// --------------------------------------------------------_______________________-------------- LISTE DES REQUETES 
-searchTextReq=""
-searchTextReqrv=""
-searchTextWhats=""
-selected_Status=""
-selected_satist=""
-selected_traiteWha=""
-
-show_actions=true;
-show_actionsrv=true;
-show_actionsWhats=true;
-selected_data_req: any
-selected_data_reqrv: any
-selected_data_Whats: any
-selected_data_rvMat: any
-selectedEntie:any=null
-visible = 0
-pageSize = 10;
-pageSizerv = 100;
-collectionSize = 0;
-collectionSizerv = 0;
-collectionSizeWhats = 0;
-dataReq:any[]=[]
-dataReqrv:any[]=[]
-dataWhats:any[] = []
-etapes:any[] = []
-_tempReq: any[]=[];
-_tempReqrv: any[]=[];
-_tempWhats: any[]=[];
-// pageReq = 1;
-institutions:any = []
-nbreDay:any = []
-dateACloture = ""
-errormessage = ""
-    registres:any[] =[]
-
-
-
-searchReq() {
-  this.dataReq = this._tempReq.filter(r => {
-    const term = this.searchTextReq.toLowerCase();
-    const stat = this.selected_Status
-    return (r.objet.toLowerCase().includes(term) || r.msgrequest.toLowerCase().includes(term)) && r.traiteOuiNon == stat
-  })
-  this.collectionSize = this.dataReq.length
-}
-
-searchReqrv() {
-  this.dataReqrv = this._tempReqrv.filter(r => {
-    const term = this.searchTextReqrv.toLowerCase();
-    const stat = this.selected_satist
-    if(this.dateACloture == ""){
-      return (r.nom_prenom.toLowerCase().includes(term) 
-              || r.matri_telep.toLowerCase().includes(term) 
-              || r.contenu_visite.toLowerCase().includes(term)) 
-              &&  r.satisfait.toLowerCase().includes(stat)
-    }else{
-      return (r.nom_prenom.toLowerCase().includes(term) 
-              || r.matri_telep.toLowerCase().includes(term) 
-              || r.contenu_visite.toLowerCase().includes(term)) 
-              &&  r.satisfait.toLowerCase().includes(stat)
-              &&  r.created_at.includes(this.dateACloture)
-    }
-  })
-  this.collectionSizerv = this.dataReqrv?.length
-}
-
-searchWhats() {
-  this.dataWhats = this._tempWhats.filter(r => {
-    const term = this.searchTextWhats.toLowerCase();
-    const trai = this.selected_traiteWha
-      return (r.numerowhatsapp.toLowerCase().includes(term) 
-              || r.discussions.toLowerCase().includes(term)) 
-  })
-  // const term = this.searchTextWhats.toLowerCase();
-  // this.user_auth_service.getAllForWhatsapp(1,term,this.selected_traiteWha).subscribe((res: any) => {
-  //   this.dataWhats = res
-  //   this._tempWhats = this.dataWhats
-  //   this.collectionSizeWhats = this.dataWhats?.length
-  // })
-  this.collectionSizeWhats = this.dataWhats?.length
-}
-
-dropRequeteusager() {
-  if (this.selected_data_req == null) {
-    AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer");
-    return;
-  }
-  if (this.selected_data_req.visible == 1) {
-    AppSweetAlert.simpleAlert("info","Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.");
-    return;
-  }
-  AppSweetAlert.confirmBox("Suppression requete",
-    "Cette action est irreversible. Voulez-vous continuer ?")
-    
-    .then((result:any) => {
-      if (result.value) {
-        this.user_auth_service.deleteReq(this.selected_data_req.id).subscribe((res: any) => {
-          this.loadRequest()
-          AppSweetAlert.simpleAlert("info","Suppression requete", "Suppression effectuée avec succès")
-        }, (err) => {
-          AppSweetAlert.simpleAlert("info","Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet")
-        })
-      }
-    })
-}
-
-loadRequest() {
-  this._tempReq = []
-  this.dataReq = []
-  // this.dataNTreq = []
-  this.user_auth_service.getAllForPfcom(this.user.id, 1).subscribe((res: any) => {
-      this.dataReq = res.data
-      this._tempReq = this.dataReq
-      this.collectionSize = this.dataReq.length
-    })
-    this.ChechEtape();
-}
-
-loadRequestrv() {
-  // console.log(this.user)
-  this._tempReqrv = []
-  this.dataReqrv = []
-  this.user_auth_service.getAllForRegistreVis(this.user.id, 1).subscribe((res: any) => {
-      this.dataReqrv = res.data
-      this._tempReqrv = this.dataReqrv
-      this.collectionSizerv = this.dataReqrv?.length
-    })
-    // this.ChechEtape();
- 
-    this.nbreDay=[]
-    this.user_auth_service.getListDay(this.user.id).subscribe((res: any) => {
-      res.forEach((element:any) => {
-        let date= new Date(element);
-        let dayOfWeek =date.getDay();
-
-        if (dayOfWeek!=6 && dayOfWeek!=0) {
-          this.nbreDay.push(element)
-        }
-      });
-     })
-    }
-    
-
-loadWhatsApp() {
-  // console.log(this.user)
-  this._tempWhats = []
-  this.dataWhats = []
-  this.user_auth_service.getAllForWhatsapp(1,this.selected_traiteWha).subscribe((res: any) => {
-      this.dataWhats = res
-      this._tempWhats = this.dataWhats
-      this.collectionSizeWhats = this.dataWhats?.length
-    })
-    this.searchTextWhats = ''
-}
-prepare(idEntite:any){
-  
-  this.structures = []
-  this.user_auth_service.getAllServ(1,idEntite).subscribe((res:any)=>{
-    this.structures = res.data
-  })
-
- this.natures=[]
-  this.user_auth_service.getAllNatu(idEntite).subscribe((res:any)=>{
-    this.natures=res.data
-  })
-
-  this.themes=[]
-  this.user_auth_service.getAllThe(idEntite).subscribe((res:any)=>{
-    this.themes=res.data
-  })
-}
-onEntiteChange(event:any){
-  this.selectedEntie=+event.target.value
-  this.prepare(this.selectedEntie)
-}
-
-ChechEtape(){
-  this.etapes = []
-  this.user_auth_service.getAllEtap(0).subscribe((res: any) => {
-    this.etapes = res.data
-  })
-}
-
-setVisible() {
-  this.visible = 1
-}
-
-checkedReq(event:any, el:any) {
-  this.selected_data_req = el
-  console.log('-----------------------')
-  console.log(el)
-  this.selected_type_preoccupation = el.plainte
-  this.link_to_prestation = el.link_to_prestation
-  if(el.visible==0){
-    this.show_actions=true
-  }else{
-    this.show_actions=false
-  }
-  this.selectedEntie = el.idEntite
-  
-  this.user_auth_service.getAllThe(this.selected_data_req.idEntite).subscribe((res: any) => {
-    this.themes = res
-  })
-  if(this.selected_data_req.service.type.libelle== "Formation" || this.selected_data_req.service.type.libelle == "Carrière"){
-    this.mat_aff = true
-  }else{
-    this.mat_aff = false
-  }
-  // this.user_auth_service.getThema(this.selected_data_req).subscribe((res:any)=>{
-  //   this.descrCarr = res.descr
-  // })
-  this.user_auth_service.getAllTypePrest(this.selected_data_req.service.idType).subscribe((res:any)=>{
-    this.services=res.data
-  })
-}
-
-checkedReqrv(event:any, el:any) {
-  this.selected_data_reqrv = el
-}
-
-checkedWhatsap(event:any, el:any) {
-  
-  this.selected_data_Whats = el
-}
-
-checkedRv_Mat(event:any, el:any) {
-  
-  this.selected_data_rvMat = el
-  this.selected_type_preoccupation = el.plainte
-}
-
-
-openEditModalrv(content:any) {
-  this.loading=false
-  if (this.selected_data_reqrv != null) {
-    // this.prepare(this.selectedEntie)
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg" }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  } else {
-    AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer")
-  }
-}
-
-openEditModalWhats(content:any) {
-  this.loading=false
-  if (this.selected_data_Whats != null) {
-
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg" }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  } else {
-    AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer")
-  }
-}
-
-dropRequeteusagerrv() {
-
-  if (this.selected_data_reqrv == null) {
-    AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer");
-    return;
-  }else if (this.selected_data_reqrv.cloture == 1) {
-    AppSweetAlert.simpleAlert("info","Erreur", "Impossible de supprimer ce régistre car il est déjà cloturé");
-    return;
-  }
-  AppSweetAlert.confirmBox("Suppression cette visite",
-    "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
-      if (result.value) {
-        this.user_auth_service.deleteRegistreVis(this.selected_data_reqrv.id).subscribe((res: any) => {
-          this.loadRequestrv()
-          AppSweetAlert.simpleAlert("info","Suppression visite", "Suppression effectuée avec succès")
-        }, (err:any) => {
-          AppSweetAlert.simpleAlert("info","Suppression visite", "Erreur, Verifiez que vous avez une bonne connexion internet")
-        })
-      }
-    })
-}
-
-dropDiscussionWhat() {
-  if (this.selected_data_Whats == null) {
-    AppSweetAlert.simpleAlert("info","Erreur", "Veuillez selectionnez un élément puis réessayer");
-    return;
-  }
-  AppSweetAlert.confirmBox("Suppression cette discussion", "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
-      if (result.value){
-        this.user_auth_service.deleteDiscWhats(this.selected_data_Whats.id).subscribe((res: any) => {
-          this.loadWhatsApp()
-          AppSweetAlert.simpleAlert("info","Suppression discussions", "Suppression effectuée avec succès")
-        }, (err:any) => {
-          AppSweetAlert.simpleAlert("info","Suppression discussions", "Erreur, Verifiez que vous avez une bonne connexion internet")
-        })
-      }
-    })
-}
-
-ConfirmerTraitement(el:any) {
-  
-  AppSweetAlert.confirmBox("Confirmer l'ajout", "Souhaitez-vous ajouter cette discussion dans mataccueil ?").then((result:any) => {
-      if (result.value){
-        this.user_auth_service.ConfirmerDiscWhats(this.user.id, el.id).subscribe((res: any) => {
-          if(res.status=="error"){
-            AppSweetAlert.simpleAlert("info","Erreur",res.message)
-          }else{
-            this.loadWhatsApp()
-            AppSweetAlert.simpleAlert("info","Confirmer l'ajout", "Confirmation effectuée avec succès")
-          }
-          
-        }, (err:any) => {
-          AppSweetAlert.simpleAlert("info","Confirmer l'ajout", "Erreur, Verifiez que vous avez une bonne connexion internet")
-        })
-      }
-    })
-}
 
 getRegistres(value:any){
 
@@ -1040,6 +222,40 @@ getRegistres(value:any){
     this.pg.p=1
     this.pg.total=res.data.length
     this.modalService.dismissAll()
+    this.loading2=false
+  }, (err) => {
+    this.loading2=false
+    AppSweetAlert.simpleAlert('error',"Visites", "Erreur, Verifiez que vous avez une bonne connexion internet")
+  })
+}
+getStats(value?:any){
+ this.lineChartData.datasets[0].data=[]
+ this.lineChartData.labels=[]
+ this.barChartData.labels=[]
+ this.barChartData.datasets=[]
+ 
+  this.loading2=true
+  this.registreService.getStats(value ?? {}).subscribe((res: any) => {
+    this.year_stats=res.data.year_stats 
+    this.monthly_stats=res.data.month_stats 
+    this.year_stats.forEach((el:any) => {
+      this.lineChartData.datasets[0].data.push(el.total)
+      this.lineChartData.labels?.push(el.mois)
+    });
+
+    this.monthly_stats.forEach((el:any) => {
+      this.barChartData.labels?.push(res.data.month)
+      this.barChartData.datasets.push({ data: [el.total], label: el.commune })
+    });
+
+    this.registres=res.data.data
+    this.pg.pageSize=10
+    this.pg.p=1
+    this.pg.total=res.data.data.length
+    this.chart?.update();
+    this.chart2?.update();
+    console.log(this.lineChartData);
+    console.log(this.barChartData);
     this.loading2=false
   }, (err) => {
     this.loading2=false
