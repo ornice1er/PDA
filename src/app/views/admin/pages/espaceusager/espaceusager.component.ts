@@ -836,6 +836,7 @@ pg={
       this.localService.set(GlobalName.tokenNameMat,res.token)
       this.localService.set(GlobalName.userNameMat,res.userData)
       this.user=res.userData
+      console.log(this.user)
        if(this.user){
         this.titleService.setUserConnectedState(this.user)
       }

@@ -85,10 +85,10 @@ export class LayoutComponent {
       this.userConnected = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-    this.departements = []
-    this.matService.getAllDepartement().subscribe((res: any) => {
-      this.departements = res
-    })
+    // this.departements = []
+    // this.matService.getAllDepartement().subscribe((res: any) => {
+    //   this.departements = res
+    // })
 }
 
 

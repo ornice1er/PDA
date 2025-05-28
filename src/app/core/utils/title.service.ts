@@ -28,6 +28,7 @@ export class TitleService {
   }
 
   setUserConnectedState(userConnected: any) {
+    console.log(userConnected)
     this.userConnected.next(userConnected);
   }
 }
