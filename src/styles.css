@@ -1,7 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
+@import "tailwindcss";
+@import "primeng/resources/themes/aura-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
 @import "@ng-select/ng-select/themes/default.theme.css";
 /* @import "~animate.css/animate.css"; */
 
+
+@theme {
+  --color-primary-dark: #162233;
+  --color-green-light: #11845A;
+  --color-primary: #023E79;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -50,7 +61,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     bottom: 12px;
     left: 12px;
   }
-  
+
   /* toast styles */
   .toast-title {
     font-weight: bold;
@@ -198,7 +209,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       width: 25em;
     }
   }
-  
+
 
 
 
