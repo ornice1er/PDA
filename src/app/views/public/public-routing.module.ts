@@ -10,6 +10,7 @@ import { EserviceComponent } from "./pages/eservice/eservice.component";
 import { RequeteComponent } from "./pages/requete/requete.component";
 import { AuthGuard } from "../../core/guards/auth.guard";
 import { HomeComponent } from "../admin/pages/home/home.component";
+import { ContactPointsComponent } from "./pages/contact-points/contact-points.component";
 
 export const PublicRoutes: any = [ // ✅ Doit être un tableau
     {
@@ -17,8 +18,7 @@ export const PublicRoutes: any = [ // ✅ Doit être un tableau
       component: PublicLayoutComponent,
       children: [
         { path: 'main', component: WelcomeComponent },
-      
-        
+        { path: 'ccsps', component: ContactPointsComponent },
         {
                   component: PrestationsParThematiqueComponent,
                     path: "prestations-par-thematique",
@@ -28,32 +28,32 @@ export const PublicRoutes: any = [ // ✅ Doit être un tableau
           component: EserviceComponent,
             path: "e-services",
             canActivate: [IsAuthGuard]
-          
-      },   
+
+      },
       {
         component: EserviceCreateComponent,
           path: "e-services/:code",
           canActivate: [IsAuthGuard]
-        
+
     },
-  
+
     {
       component: EseriveStatusComponent,
         path: "e-services/status/:code",
         canActivate: [IsAuthGuard]
-      
+
   },
     {
       component: EserviceCorrectionComponent,
         path: "e-services/correction/:code/:slug/:prestationCode",
         canActivate: [IsAuthGuard]
-      
+
   },
     {
       component: EserviceProofComponent,
         path: "e-services/request-file-proof/:token",
         canActivate: [IsAuthGuard]
-      
+
   }
       ]
     },
@@ -61,6 +61,6 @@ export const PublicRoutes: any = [ // ✅ Doit être un tableau
       component: RequeteComponent,
         path: "requetes",
         canActivate: [IsAuthGuard]
-      
+
   },
   ]

@@ -39,8 +39,8 @@
             <p class="text-gray-600 mb-6 leading-relaxed!">
               {{ service.description }}
             </p>
-            <button
-              class="group/btn text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 hover:shadow-lg transform hover:scale-105!"
+            <button (click)="goTo(service.link)"
+              class="group/btn text-white px-6 py-3 rounded-xl w-auto! font-semibold transition-all duration-300 flex items-center space-x-2 hover:shadow-lg transform hover:scale-105!"
               [style.background-color]="service.color">
               <span>Accéder</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover/btn:translate-x-1 transition-transform!"

@@ -1,10 +1,11 @@
-import { Component } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 interface MainService {
   title: string;
   description: string;
-  // icon: any;
+  link: string;
   color: string;
   image: string;
 }
@@ -17,58 +18,64 @@ interface PlatformService {
 }
 
 @Component({
-  selector: "app-services",
+  selector: 'app-services',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: "./services.component.html",
-  styleUrls: ["./services.component.css"],
+  imports: [CommonModule, RouterModule],
+  templateUrl: './services.component.html',
+  styleUrls: ['./services.component.css'],
 })
 export class ServicesComponent {
   mainServices: MainService[] = [
     {
-      title: "Points de Contact",
+      title: 'Points de Contact',
       description:
         "Trouvez vos points de contact sur toute l'étendue du territoire national",
-      // icon: MessageCircle,
-      color: "#11845A",
+      link: '/ccsps',
+      color: '#11845A',
       image:
-        "https://images.pexels.com/photos/5668772/pexels-photo-5668772.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+        'https://images.pexels.com/photos/5668772/pexels-photo-5668772.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     },
     {
-      title: "Catalogue des Prestations",
+      title: 'Catalogue des Prestations',
       description:
-        "Consultez la liste exhaustive de toutes nos prestations administratives",
-      // icon: FileText,
-      color: "#023E79",
+        'Consultez la liste exhaustive de toutes nos prestations administratives',
+      link: '/prestations-par-thematique',
+      color: '#023E79',
       image:
-        "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
+        'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     },
   ];
 
   platformServices: PlatformService[] = [
     {
-      title: "Espace Usager",
-      description: "Soumettre mes préoccupations",
+      title: 'Espace Usager',
+      description: 'Soumettre mes préoccupations',
       // icon: Eye,
-      color: "#11845A",
+      color: '#11845A',
     },
     {
-      title: "Guichet Unique Virtuel",
-      description: "Accès unifié aux plateformes",
+      title: 'Guichet Unique Virtuel',
+      description: 'Accès unifié aux plateformes',
       // icon: Globe,
-      color: "#023E79",
+      color: '#023E79',
     },
     {
-      title: "WECHE",
-      description: "Situation administrative en temps réel",
+      title: 'WECHE',
+      description: 'Situation administrative en temps réel',
       // icon: Users,
-      color: "#11845A",
+      color: '#11845A',
     },
     {
-      title: "Signalement",
-      description: "Signaler un dysfonctionnement",
+      title: 'Signalement',
+      description: 'Signaler un dysfonctionnement',
       // icon: AlertTriangle,
-      color: "#162233",
+      color: '#162233',
     },
   ];
+
+  constructor(private router: Router) {}
+
+  goTo(link: string) {
+    this.router.navigate([link]);
+  }
 }
