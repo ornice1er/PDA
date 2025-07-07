@@ -1,0 +1,25 @@
+:host,
+:host *:not(svg):not(svg *):not(a):not(a *) {
+  all: unset;
+  display: revert;
+  box-sizing: inherit;
+  font-family: inherit;
+  color: inherit;
+  /* Conserve les effets Tailwind */
+  animation: inherit !important;
+  transition: inherit !important;
+  transform: inherit !important;
+  opacity: inherit !important;
+
+  /* Désactive seulement ce que Bootstrap surcharge */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  list-style: none;
+}
+
+:host {
+  font-family: 'Montserrat', sans-serif;
+}

@@ -18,7 +18,7 @@ body {
     width:500px;
     background-color:white;
     opacity:0.9;
-    
+
 }
 
 .blueColor{
@@ -28,10 +28,12 @@ body {
     color: #0A3764;
 }
 
-.header-container{
+/* .header-container{
     background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url('../../../../assets/bg.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     height: 60vh;
-}
+} */
+
+

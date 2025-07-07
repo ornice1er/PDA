@@ -10,18 +10,34 @@ import { LoadingComponent } from '../../components/loading/loading.component';
 import { StatutComponent } from '../../components/statut/statut.component';
 import { PublicHeaderComponent } from './components/public-header/public-header.component';
 import { PublicFooterComponent } from './components/public-footer/public-footer.component';
+import { HeroComponent } from './components/hero/hero.component';
+import { PubHeaderComponent } from './components/pub-header/pub-header.component';
+import { StatisticsComponent } from "./components/statistics/statistics.component";
+import { ServicesComponent } from './components/services/services.component';
 
 @Component({
   selector: 'app-public-layout',
   standalone: true,
-    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent,    RouterModule,    RouterOutlet,
-      PublicHeaderComponent,
-      PublicFooterComponent
-
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    LoadingComponent,
+    SampleSearchPipe,
+    NgSelectModule,
+    NgxPaginationModule,
+    StatutComponent,
+    RouterModule,
+    RouterOutlet,
+    PublicFooterComponent,
+    HeroComponent,
+    PubHeaderComponent,
+    StatisticsComponent,
+    ServicesComponent
+],
   templateUrl: './public-layout.component.html',
-  styleUrl: './public-layout.component.css'
+  styleUrl: './public-layout.component.css',
 })
 export class PublicLayoutComponent {
-settings:any
+  settings: any;
 }

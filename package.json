@@ -47,6 +47,7 @@
     "node-localstorage": "^3.0.5",
     "primeng": "17",
     "rxjs": "~7.8.0",
+    "lucide-angular": "^0.344.0",
     "sweetalert2": "^11.17.2",
     "tslib": "^2.3.0",
     "wowjs": "^1.1.3",

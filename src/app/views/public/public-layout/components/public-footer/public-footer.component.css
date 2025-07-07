@@ -1,0 +1,13 @@
+
+/* clean-ui.component.scss */
+
+:host, :host *:not(svg):not(svg *) {
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+  font-family: inherit;
+  color: inherit;
+}
+:host {
+  font-family: 'Montserrat', sans-serif;
+}
