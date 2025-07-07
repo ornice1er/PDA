@@ -4,3 +4,28 @@
 .blueColorT{
     color: #0A3764;
 }
+:host,
+:host *:not(svg):not(svg *) {
+  all: unset;
+  display: revert;
+  box-sizing: inherit;
+  font-family: inherit;
+  color: inherit;
+  /* Conserve les effets Tailwind */
+  animation: inherit;
+  transition: inherit;
+  transform: inherit;
+  opacity: inherit;
+
+  /* Désactive seulement ce que Bootstrap surcharge */
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  list-style: none;
+}
+
+:host {
+  font-family: 'Montserrat', sans-serif;
+}

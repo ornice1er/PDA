@@ -1,63 +1,214 @@
-<h1 class="text-center text-white fw-bold mb-3">ESPACE POINT FOCAL COMMUNAL</h1>
+<!-- <h1 class="text-center text-white fw-bold mb-3">ESPACE POINT FOCAL COMMUNAL</h1>
 
-<div class="container my-4" >
+<div class="container my-4">
 
-<div class="row ">
+  <div class="row ">
     <div class="col-12 col-sm-12 col-md-4 offset-md-4">
-        <div id="loginBlock">
-            <!-- <form #loginFor="ngForm" (ngSubmit)="loginSend(loginFor.value)"> -->
-            <form #loginFor="ngForm" (ngSubmit)="loginSend(loginFor.value)">
-                <div class="card">
-                    <div class="card-header blueColor py-2">
-                        <div class="d-flex justify-content-center">
-                            <img src="assets/auth-person.svg" height="30" class="mx-2" alt="">
-                            <h6 class="text-center text-white mt-2">
-                            <strong class="mt-2">Se connecter</strong></h6>
-                        </div>
+      <div id="loginBlock">
+        <form #loginFor="ngForm" (ngSubmit)="loginSend(loginFor.value)">
+          <div class="card">
+            <div class="card-header blueColor py-2">
+              <div class="d-flex justify-content-center">
+                <img src="assets/auth-person.svg" height="30" class="mx-2" alt="">
+                <h6 class="text-center text-white mt-2">
+                  <strong class="mt-2">Se connecter</strong>
+                </h6>
+              </div>
 
-                    </div>      
-                    <div class="card-body">
-                        <div class="form-group mb-3">
-                            <label for="">Email </label>
-                            <input type="email" class="form-control" name="email" #login="ngModel" ngModel>
-                            <span *ngIf="login.invalid && (login.dirty || login.touched)" class="text-danger">
-                                <small *ngIf="login.errors?.['required']" id="typeLabelHelp" class="form-text">Identifiant
-                                    requis</small>
-                            </span>
-                        </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group mb-3">
+                <label for="">Email </label>
+                <input type="email" class="form-control" name="email" #login="ngModel" ngModel>
+                <span *ngIf="login.invalid && (login.dirty || login.touched)" class="text-danger">
+                  <small *ngIf="login.errors?.['required']" id="typeLabelHelp" class="form-text">Identifiant
+                    requis</small>
+                </span>
+              </div>
 
-                        <div class="form-group mb-3">
-                            <div class="d-flex justify-content-between">
-                                <label for="">Mot de passe </label>
-                                <!-- <div >
-                                    <a routerLink="/forgot-password" class="text-secondary text-right"><small>Mot
-                                            de passe oublié ?</small></a>
-                                </div> -->
-                            </div>
-                            <input type="password" class="form-control" name="password" #password="ngModel" ngModel>
-                            <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
-                                <small *ngIf="password.errors?.['required']" id="typeLabelHelp" class="form-text">Mot
-                                    de passe requis</small>
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-between">
+              <div class="form-group mb-3">
+                <div class="d-flex justify-content-between">
+                  <label for="">Mot de passe </label>
 
-                            <button class="btn btn-warning btn-block" [disabled]="loginFor.invalid || loading">Se
-                                connecter
-                                <app-loading [isVisible]="loading"></app-loading>
-                            </button>
-                        </div>
-                        <div class="text-center">
-                            <a routerLink="/main" class="text-secondary pointer"><u>Retournez à l'accueil</u></a>
-                        </div>
-
-                    </div>
                 </div>
-            </form>
-        </div>
+                <input type="password" class="form-control" name="password" #password="ngModel" ngModel>
+                <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                  <small *ngIf="password.errors?.['required']" id="typeLabelHelp" class="form-text">Mot
+                    de passe requis</small>
+                </span>
+              </div>
+              <div class="d-flex justify-content-between">
+
+                <button class="btn btn-warning btn-block" [disabled]="loginFor.invalid || loading">Se
+                  connecter
+                  <app-loading [isVisible]="loading"></app-loading>
+                </button>
+              </div>
+              <div class="text-center">
+                <a routerLink="/main" class="text-secondary pointer"><u>Retournez à l'accueil</u></a>
+              </div>
+
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="col-12 col-sm-12 col-md-4"></div> 
-</div>
+    <div class="col-12 col-sm-12 col-md-4"></div>
+  </div>
 
-</div>
+</div> -->
 
+<!-- <div class="ag-bg-danger-light " style="min-height: 100vh; width: 100%;">
+    <div class="p-1">
+        <img src="assets/images/logo-horizontal@4x.png" class="img-fluid" alt="" style="height: 60px;">
+    </div>
+
+    <div class="container d-flex flex-column justify-content-start h-100">
+        <h1 class="text-center text-black">Bon retour parmi nous ! </h1>
+
+        <div class="col-12 col-md-5 mx-auto align-self-center ">
+            <div class="card rounded-0">
+                <div class="card-body">
+                    <p class="text-center h4 mb-5">C’est un plaisir de vous revoir parmi nous !</p>
+                    <form class="" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
+                        <div class="form-row">
+                <div class="col-12 mb-3">
+                <div class="form-group">
+                <input name="email" id="exampleEmail" placeholder="Email ici..." type="email" class="form-control"  required ngModel>
+                </div>
+                </div>
+                <div class="col-12  mb-3">
+                <div class="form-group">
+                <input name="password" id="examplePassword" placeholder="Mot de passe ici..." type="password" class="form-control"  required ngModel>
+                </div>
+                </div>
+                </div>
+                <div class="divider row"></div>
+                <div class="text-center mb-5">
+                    <button class="btn btn-danger btn-lg" [disabled]="loginForm.invalid || loading">Se connecter <app-loading [isVisible]="loading"></app-loading></button>
+                </div>
+
+                <p class="text-center mb-3">
+                    <span>Avez vous oublié votre mot de passe ? </span>
+                     <span class="ag-text-danger"><a routerLink="/forget-password" class="text-decoration-none pointer ag-text-red "><b>Cliquez ici</b></a></span>
+                </p>
+
+                <p class="text-center mb-3">
+                    <a class="text-decoration-none pointer ag-text-red " routerLink="/">Retourner à l'accueil</a>
+                </p>
+                </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+    <section class="relative bg-gradient-to-br from-[#11845A] via-[#023E79] to-[#162233] text-white overflow-hidden min-h-screen">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-20 left-20 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute bottom-20 right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-3xl opacity-5"></div>
+      </div>
+
+      <div class="relative container mx-auto px-4 py-16 lg:py-16 flex items-center justify-center min-h-screen">
+        <div class="w-full max-w-md">
+
+          <!-- Header -->
+          <div class="text-center mb-8 flex flex-col space-y-3">
+            <h1 class="text-3xl lg:text-4xl font-bold flex flex-col items-center text-center justify-center space-x-2">
+             Espace Point
+              <span class="bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+                Focal Communal
+              </span>
+            </h1>
+            <p class="text-white/90 leading-relaxed">Accédez à votre espace personnel sécurisé</p>
+          </div>
+          <!-- Login Form -->
+          <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-8 shadow-2xl">
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+              <!-- Email Field -->
+              <div class="mb-6">
+                <label for="email" class="block text-sm font-medium text-white/90 mb-2">
+                  Adresse e-mail <span class="text-yellow-300">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  [class]="'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' + (isFieldInvalid('email') ? 'border-red-400' : 'border-white/30')"
+                  placeholder="votre.email@exemple.com"
+                />
+                <div *ngIf="isFieldInvalid('email')" class="text-red-300 text-xs mt-1">
+                  <span *ngIf="loginForm.get('email')?.errors?.['required']">L'email est requis</span>
+                  <span *ngIf="loginForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-white/90 mb-2">
+                  Mot de passe <span class="text-yellow-300">*</span>
+                </label>
+                <div class="relative">
+                  <input
+                    [type]="showPassword ? 'text' : 'password'"
+                    id="password"
+                    formControlName="password"
+                    [class]="'w-full px-4 py-3 pr-12 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' + (isFieldInvalid('password') ? 'border-red-400' : 'border-white/30')"
+                    placeholder="Votre mot de passe"
+                  />
+                  <button
+                    type="button"
+                    (click)="togglePasswordVisibility()"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors"
+                  >
+                    <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></g></svg>
+                    <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575a1 1 0 0 1 0 .696a10.8 10.8 0 0 1-1.444 2.49m-6.41-.679a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 4.446-5.143M2 2l20 20"/></g></svg>
+                  </button>
+                </div>
+                <div *ngIf="isFieldInvalid('password')" class="text-red-300 text-xs mt-1">
+                  <span *ngIf="loginForm.get('password')?.errors?.['required']">Le mot de passe est requis</span>
+                  <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Le mot de passe doit contenir au moins 6 caractères</span>
+                </div>
+              </div>
+
+              <!-- Forgot Password -->
+              <div class="text-right mb-6">
+                <a href="#" class="text-sm text-yellow-300 hover:text-yellow-400 transition-colors">
+                  Mot de passe oublié ?
+                </a>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                [disabled]="!loginForm.valid"
+                class="group w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-3"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Se connecter</span>
+              </button>
+            </form>
+
+            <!-- Register Link -->
+            <!-- <div class="mt-6 text-center">
+              <p class="text-white/80">
+                Vous n'avez pas de compte ?
+                <a routerLink="/auth/register" class="text-yellow-300 hover:text-yellow-400 font-medium transition-colors">
+                  Inscrivez-vous
+                </a>
+              </p>
+            </div> -->
+
+            <!-- Back to Home -->
+            <div class="mt-4 text-center">
+              <a routerLink="/main" class="inline-flex items-center space-x-2 text-white/60 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 19l-7-7l7-7m7 7H5"/></svg>
+                <span class="text-sm">Retour à l'accueil</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
