@@ -11,7 +11,7 @@
   <div class="relative container mx-auto px-4 py-16 lg:py-20">
     <div class="max-w-4xl mx-auto text-center">
       <div
-        class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6 border border-white/20">
+        class="inline-flex items-center gap-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6 border border-white/20">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300" viewBox="0 0 24 24">
           <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
             <path
@@ -55,8 +55,8 @@
             votre résidence pour bénéficier de l'appui des points focaux.
             Ces derniers vont vous assister dans :
           </p>
-          <ul class="space-y-2 text-gray-600">
-            <li class="flex items-start space-x-3">
+          <ul class="gap-y-2 text-gray-600">
+            <li class="flex items-start gap-x-3">
               <div class="bg-[#11845A] rounded-full p-1 mt-1">
                 <div class="w-2 h-2 bg-white rounded-full"></div>
               </div>
@@ -64,14 +64,14 @@
                 vous pouvez accéder à l'ensemble des prestations
                 dématérialisées de l'administration publique ;</span>
             </li>
-            <li class="flex items-start space-x-3">
+            <li class="flex items-start gap-x-3">
               <div class="bg-[#023E79] rounded-full p-1 mt-1">
                 <div class="w-2 h-2 bg-white rounded-full"></div>
               </div>
               <span>L'enregistrement d'une préoccupation à l'endroit de
                 l'administration publique ;</span>
             </li>
-            <li class="flex items-start space-x-3">
+            <li class="flex items-start gap-x-3">
               <div class="bg-[#11845A] rounded-full p-1 mt-1">
                 <div class="w-2 h-2 bg-white rounded-full"></div>
               </div>
@@ -141,7 +141,7 @@
     <div class="mb-12">
       <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
         <div class="p-6 border-b border-gray-100">
-          <h3 class="text-xl font-bold text-[#162233] flex items-center space-x-2">
+          <h3 class="text-xl font-bold text-[#162233] flex items-center gap-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#11845A]" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="m3 11l19-9l-9 19l-2-8z" />
@@ -179,7 +179,7 @@
         <!-- Header -->
         <div class="flex items-start justify-between mb-4">
           <div class="flex-1">
-            <div class="flex items-center space-x-2 mb-2">
+            <div class="flex items-center gap-x-2 mb-2">
               <span [class]="
                       'px-3 py-1 rounded-full text-xs font-semibold ' +
                       getTypeColor(point.type)
@@ -206,8 +206,8 @@
         </div>
 
         <!-- Contact Info -->
-        <div class="space-y-3 mb-4">
-          <div class="flex items-start space-x-3">
+        <div class="gap-y-3 mb-4">
+          <div class="flex items-start gap-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mt-1 flex-shrink-0"
               viewBox="0 0 24 24">
               <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
@@ -221,7 +221,7 @@
               }}</span>
           </div>
 
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center gap-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384" />
@@ -229,7 +229,7 @@
             <span class="text-gray-600 text-sm">{{ point.phone }}</span>
           </div>
 
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center gap-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
               <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
@@ -239,7 +239,7 @@
             <span class="text-gray-600 text-sm">{{ point.email }}</span>
           </div>
 
-          <div class="flex items-center space-x-3">
+          <div class="flex items-center gap-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
               <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                 <path d="M12 6v6l4 2" />

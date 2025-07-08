@@ -127,63 +127,63 @@ export class RegisterComponent implements OnInit {
   addField(event: RadioButtonClickEvent) {
     if (event.value == 1 || event.value == 6) {
       this.isAgent = true;
-      this.isInstitu = true;
+      // this.isInstitu = true;
       this.needIfu = false;
       this.needRcm = false;
     } else if (event.value == 2) {
       this.isAgent = false;
-      this.isInstitu = false;
+      // this.isInstitu = false;
       this.needIfu = true;
       this.needRcm = true;
     } else if (event.value == 3) {
       this.isAgent = false;
-      this.isInstitu = false;
+      // this.isInstitu = false;
       this.needIfu = true;
       this.needRcm = false;
     } else if (event.value == 4) {
       this.isAgent = false;
-      this.isInstitu = false;
+      // this.isInstitu = false;
       this.needIfu = false;
       this.needRcm = false;
     }
   }
 
-  registerSend(value: any) {
-    this.loading = true;
-    console.log(value);
-    value['ip'] = this.ipAddress;
-    this.user_auth_service.register(value).subscribe(
-      (res: any) => {
-        this.loading = false;
-        if (res.user.is_active) {
-          this.local_service.set(GlobalName.token, res.token);
-          this.local_service.set(GlobalName.current_user, res.user);
-          this.router.navigate(['/main']);
-        } else {
-          localStorage.setItem('is_registered', '');
-          this.router.navigate(['/auth/register-success']);
-        }
-        AppSweetAlert.simpleAlert(
-          'Inscription',
-          'Inscription effectuée avec succès. Vous pouvez à présent vous connecter',
-          'success'
-        );
-      },
-      (err: any) => {
-        this.loading = false;
-        let message = '';
-        err.error.errors.forEach((element: any) => {
-          message = message + ' ' + element;
-        });
-        console.log(message);
-        AppSweetAlert.simpleAlert(
-          'Inscription',
-          "Echec d'inscription, " + message,
-          'error'
-        );
-      }
-    );
-  }
+  // registerSend(value: any) {
+  //   this.loading = true;
+  //   console.log(value);
+  //   value['ip'] = this.ipAddress;
+  //   this.user_auth_service.register(value).subscribe(
+  //     (res: any) => {
+  //       this.loading = false;
+  //       if (res.user.is_active) {
+  //         this.local_service.set(GlobalName.token, res.token);
+  //         this.local_service.set(GlobalName.current_user, res.user);
+  //         this.router.navigate(['/main']);
+  //       } else {
+  //         localStorage.setItem('is_registered', '');
+  //         this.router.navigate(['/auth/register-success']);
+  //       }
+  //       AppSweetAlert.simpleAlert(
+  //         'Inscription',
+  //         'Inscription effectuée avec succès. Vous pouvez à présent vous connecter',
+  //         'success'
+  //       );
+  //     },
+  //     (err: any) => {
+  //       this.loading = false;
+  //       let message = '';
+  //       err.error.errors.forEach((element: any) => {
+  //         message = message + ' ' + element;
+  //       });
+  //       console.log(message);
+  //       AppSweetAlert.simpleAlert(
+  //         'Inscription',
+  //         "Echec d'inscription, " + message,
+  //         'error'
+  //       );
+  //     }
+  //   );
+  // }
 
   passwordMatchValidator(
     control: AbstractControl
@@ -249,8 +249,39 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       console.log('Registration data:', this.registerForm.value);
-      alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
-      this.router.navigate(['/connexion']);
+      let payload = this.registerForm.value;
+      payload['ip'] = this.ipAddress;
+      this.user_auth_service.register(payload).subscribe(
+        (res: any) => {
+          this.loading = false;
+          if (res.user.is_active) {
+            this.local_service.set(GlobalName.token, res.token);
+            this.local_service.set(GlobalName.current_user, res.user);
+            this.router.navigate(['/main']);
+          } else {
+            localStorage.setItem('is_registered', '');
+            this.router.navigate(['/auth/register-success']);
+          }
+          AppSweetAlert.simpleAlert(
+            'Inscription',
+            'Inscription effectuée avec succès. Vous pouvez à présent vous connecter',
+            'success'
+          );
+        },
+        (err: any) => {
+          this.loading = false;
+          let message = '';
+          err.error.errors.forEach((element: any) => {
+            message = message + ' ' + element;
+          });
+          console.log(message);
+          AppSweetAlert.simpleAlert(
+            'Inscription',
+            "Echec d'inscription, " + message,
+            'error'
+          );
+        }
+      );
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.registerForm.controls).forEach((key) => {

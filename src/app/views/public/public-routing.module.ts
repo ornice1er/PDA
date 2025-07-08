@@ -17,7 +17,7 @@ export const PublicRoutes: any = [ // ✅ Doit être un tableau
       path: '',
       component: PublicLayoutComponent,
       children: [
-        { path: 'main', component: WelcomeComponent },
+        { path: '', component: WelcomeComponent },
         { path: 'ccsps', component: ContactPointsComponent },
         {
                   component: PrestationsParThematiqueComponent,

@@ -58,7 +58,7 @@
 
                                 </div>
                                 <div class="text-center">
-                                    <a routerLink="/main" class="text-secondary pointer"><u>Retournez à l'accueil</u></a>
+                                    <a routerLink="/" class="text-secondary pointer"><u>Retournez à l'accueil</u></a>
                                 </div>
 
                             </div>
@@ -83,8 +83,8 @@
         <div class="w-full max-w-md">
 
           <!-- Header -->
-          <div class="text-center mb-8 flex flex-col space-y-3">
-            <h1 class="text-3xl lg:text-4xl font-bold flex items-center text-center justify-center space-x-2">
+          <div class="text-center mb-8 flex flex-col gap-y-3">
+            <h1 class="text-3xl lg:text-4xl font-bold flex items-center text-center justify-center gap-x-2">
              <span>Mon Espace </span>
               <span class="bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
                 Usager
@@ -152,7 +152,7 @@
               <button
                 type="submit"
                 [disabled]="!loginForm.valid"
-                class="group w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-3"
+                class="group w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-x-3"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
                 <span>Se connecter</span>
@@ -171,7 +171,7 @@
 
             <!-- Back to Home -->
             <div class="mt-4 text-center">
-              <a routerLink="/main" class="inline-flex items-center space-x-2 text-white/60 hover:text-white transition-colors">
+              <a routerLink="/" class="inline-flex items-center gap-x-2 text-white/60 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 19l-7-7l7-7m7 7H5"/></svg>
                 <span class="text-sm">Retour à l'accueil</span>
               </a>

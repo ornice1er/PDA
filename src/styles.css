@@ -1,18 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 /* Puis charger Tailwind */
 @import "tailwindcss" important;
-
 @import "primeng/resources/themes/aura-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
 @import "@ng-select/ng-select/themes/default.theme.css";
 /* @import "~animate.css/animate.css"; */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 @theme {
   --color-primary-dark: #162233;
   --color-green-light: #11845A;
   --color-primary: #023E79;
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); */
+
+
+a{
+    cursor: pointer !important;
 }
 
 html, body { height: 100%; }

@@ -15,7 +15,7 @@ import { PublicRoutes } from './views/public/public-routing.module';
 import { AuthRoutes } from './views/auth/auth-routing.module';
 
 export const routes: Routes = [
-    {path: '', redirectTo: '/main',pathMatch:'full'},
+    {path: '', redirectTo: '',pathMatch:'full'},
     ...AuthRoutes,
     ...AdminRoutes,
     ...PublicRoutes,
@@ -44,7 +44,7 @@ export const routes: Routes = [
         }
       ]
     },
-   
+
     {
       path:"user-account",
       canActivate:[AuthGuard],
@@ -55,7 +55,7 @@ export const routes: Routes = [
       canActivate:[AuthGuard],
       component:UserSettingComponent
     },
-   
+
     {path: '404', component: NotFoundComponent},
     {path: '**', redirectTo: '/404'}
 ];
