@@ -13,7 +13,7 @@ interface MainService {
 interface PlatformService {
   title: string;
   description: string;
-  // icon: any;
+  link: string;
   color: string;
 }
 
@@ -32,8 +32,7 @@ export class ServicesComponent {
         "Trouvez vos points de contact sur toute l'étendue du territoire national",
       link: '/ccsps',
       color: '#11845A',
-      image:
-        'https://images.pexels.com/photos/5668772/pexels-photo-5668772.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      image: '/assets/165463.webp',
     },
     {
       title: 'Catalogue des Prestations',
@@ -41,8 +40,7 @@ export class ServicesComponent {
         'Consultez la liste exhaustive de toutes nos prestations administratives',
       link: '/prestations-par-thematique',
       color: '#023E79',
-      image:
-        'https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+     image: '/assets/2150282045.webp',
     },
   ];
 
@@ -50,25 +48,25 @@ export class ServicesComponent {
     {
       title: 'Espace Usager',
       description: 'Soumettre mes préoccupations',
-      // icon: Eye,
+      link: '/auth/logusager',
       color: '#11845A',
     },
     {
       title: 'Guichet Unique Virtuel',
       description: 'Accès unifié aux plateformes',
-      // icon: Globe,
+      link: '/auth/logusager',
       color: '#023E79',
     },
     {
       title: 'WECHE',
       description: 'Situation administrative en temps réel',
-      // icon: Users,
+      link: 'https://weche.fpbenin.net/',
       color: '#11845A',
     },
     {
       title: 'Signalement',
       description: 'Signaler un dysfonctionnement',
-      // icon: AlertTriangle,
+      link: 'https://demarchesmtfp.gouv.bj/je-denonce',
       color: '#162233',
     },
   ];

@@ -4,7 +4,6 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -12,7 +11,6 @@ import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { SampleSearchPipe } from '../../../core/pipes/sample-search.pipe';
 import { AuthService } from '../../../core/services/auth.service';
 import { IpServiceService } from '../../../core/services/ip-service.service';
 import { StatusService } from '../../../core/services/status.service';
@@ -20,8 +18,6 @@ import { AppSweetAlert } from '../../../core/utils/app-sweet-alert';
 import { GlobalName } from '../../../core/utils/global-name';
 import { LocalStorageService } from '../../../core/utils/local-stoarge-service';
 import { WindowRef } from '../../../core/utils/window-ref.service';
-import { LoadingComponent } from '../../components/loading/loading.component';
-import { StatutComponent } from '../../components/statut/statut.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { RadioButtonClickEvent } from 'primeng/radiobutton';
 
@@ -32,11 +28,8 @@ import { RadioButtonClickEvent } from 'primeng/radiobutton';
     CommonModule,
     ReactiveFormsModule,
     NgbModule,
-    LoadingComponent,
-    SampleSearchPipe,
     NgSelectModule,
     NgxPaginationModule,
-    StatutComponent,
     SharedModule,
   ],
   templateUrl: './register.component.html',

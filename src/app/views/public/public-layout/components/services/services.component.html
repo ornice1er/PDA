@@ -106,10 +106,14 @@
             <p class="text-white/90 text-sm mb-4 leading-relaxed!">
               {{ service.description }}
             </p>
-            <button
+            <a *ngIf="service.link.startsWith('http')" [href]="service.link"
               class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 border border-white/30!">
               Accéder
-            </button>
+            </a>
+            <a *ngIf="!service.link.startsWith('http')" routerLink="{{service.link}}"
+              class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 border border-white/30!">
+              Accéder
+            </a>
           </div>
         </div>
       </div>
