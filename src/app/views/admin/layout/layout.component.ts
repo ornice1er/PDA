@@ -7,7 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Route, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
 import { GlobalName } from '../../../core/utils/global-name';
@@ -17,7 +17,30 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { MataccueilService } from '../../../core/services/mataccueil.service';
 import { AppSweetAlert } from '../../../core/utils/app-sweet-alert';
+import {
+  LucideAngularModule,
+  Bell,
+  Settings,
+  User,
+  ChevronDown,
+  Menu,
+  X,
+  ExternalLink,
+  BarChart3,
+  FileText,
+  Users,
+  AlertTriangle,
+  Home,
+  MessageCircle,
+} from 'lucide-angular';
+import { SharedModule } from '../../../shared/shared.module';
 
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: any;
+  external?: boolean;
+}
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -32,153 +55,204 @@ import { AppSweetAlert } from '../../../core/utils/app-sweet-alert';
     MatIconModule,
     MatListModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    LucideAngularModule,
+    SharedModule
   ],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css'
+  styleUrl: './layout.component.css',
 })
 export class LayoutComponent {
   menuOpen = true;
-  user:any
-  role:any
-  userConnected:any
+  user: any;
+  role: any;
+  userConnected: any;
   title = '';
   canUseWhatsapp = true;
   espace = 0;
-  loading=false
-  selectedEntie:any=null
-  errormessage = ""
-  departements:any [] = []
-  visible = 0
-
-
+  loading = false;
+  open = false;
+  selectedEntie: any = null;
+  errormessage = '';
+  departements: any[] = [];
+  visible = 0;
+  bellIcon = Bell;
+  settingsIcon = Settings;
+  userIcon = User;
+  chevronDownIcon = ChevronDown;
+  menuIcon = Menu;
+  xIcon = X;
+  externalLinkIcon = ExternalLink;
+  menuItems: MenuItem[] = [
+    { id: '/admin/homepfc', label: 'Accueil', icon: Home },
+    { id: '/admin/homepfc/pfc-mataccueil', label: 'Préoccupations', icon: AlertTriangle },
+    { id: '/admin/homepfc/pfc-registre', label: 'Visiteurs', icon: Users },
+    { id: '/admin/homepfc/pfc-whatsapp', label: 'WhatsApp', icon: MessageCircle, external: true },
+    { id: '/admin/homepfc/rapports-requetes', label: 'Rapports', icon: FileText },
+    { id: '/admin/homepfc/performances', label: 'Performances', icon: BarChart3 },
+    { id: '/', label: 'Site Web', icon: ExternalLink },
+  ];
+  activeSection = '';
+   members = [
+        { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
+        { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
+        { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
+    ];
 
   constructor(
     private modalService: NgbModal,
-    private authService:AuthService,
+    private authService: AuthService,
     private router: Router,
-    private toastr:ToastrService,
+    private toastr: ToastrService,
     private matService: MataccueilService,
-    private lsService:LocalStorageService,
+    private lsService: LocalStorageService,
     private titleService: TitleService,
     private cdr: ChangeDetectorRef
-
-  ) { 
- 
-  }
+  ) {}
 
   ngOnInit(): void {
-  
-     this.titleService.title$.subscribe(newTitle => {
+    this.titleService.title$.subscribe((newTitle) => {
       this.title = newTitle;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-     this.titleService.hasWhatsappSubject$.subscribe(newState => {
+    this.titleService.hasWhatsappSubject$.subscribe((newState) => {
       this.canUseWhatsapp = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-     this.titleService.espace$.subscribe(newState => {
+    this.titleService.espace$.subscribe((newState) => {
       this.espace = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-     this.titleService.userConnected$.subscribe(newState => {
+    this.titleService.userConnected$.subscribe((newState) => {
       this.userConnected = newState;
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
+    this.authService.getUserByToken().subscribe((res:any)=>{
+      // console.log(res);
+      this.user=res?.data
+    })
     // this.departements = []
     // this.matService.getAllDepartement().subscribe((res: any) => {
     //   this.departements = res
     // })
-}
+  }
 
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
+  logout() {
+    if (this.espace == 1 || this.espace == 2) {
+      this.authService.logout().subscribe(
+        (res: any) => {
+          this.lsService.remove(GlobalName.tokenNameMat);
+          this.lsService.remove(GlobalName.userNameMat);
+          console.log(this.espace);
+          switch (this.espace) {
+            case 1:
+              this.router.navigate(['/auth/logpfc']);
+              break;
 
-toggleMenu() {
-  this.menuOpen = !this.menuOpen;
-}
+            case 2:
+              if (this.lsService.get(GlobalName.tokenName)) {
+                this.router.navigate(['/admin/home']);
+              } else {
+                this.router.navigate(['/main']);
+              }
 
-  logout(){
-    if (this.espace==1 || this.espace==2) {
-      this.authService.logout().subscribe((res:any)=>{
-        this.lsService.remove(GlobalName.tokenNameMat)
-        this.lsService.remove(GlobalName.userNameMat)
-        console.log(this.espace)
-        switch (this.espace) {
-         case 1:
-          this.router.navigate(['/auth/logpfc'])
-            break;
-          
-         case 2:
-          if (this.lsService.get(GlobalName.tokenName)){
-          this.router.navigate(['/admin/home'])
+              break;
 
-          }else{
-          this.router.navigate(['/main'])
+            default:
+              this.router.navigate(['/main']);
 
+              break;
           }
-
-            break;
-          
-          default:
-           this.router.navigate(['/main'])
-
-            break;
+          this.toastr.success('Déconnexion réussie', 'Connexion');
+        },
+        (err: any) => {
+          console.log(err);
+          this.toastr.success('Déconnexion échouée', 'Connexion');
         }
-        this.toastr.success('Déconnexion réussie', 'Connexion');
-      },
-      (err:any)=>{
-        console.log(err)
-        this.toastr.success('Déconnexion échouée', 'Connexion');
-  
-      });
-    }else{
-      this.authService.logout2().subscribe((res:any)=>{
-        this.lsService.remove(GlobalName.tokenName)
-        this.lsService.remove(GlobalName.userName)
-        this.router.navigate(['/main'])
-        this.toastr.success('Déconnexion réussie', 'Connexion');
-      },
-      (err:any)=>{
-        console.log(err)
-        this.toastr.success('Déconnexion échouée', 'Connexion');
-  
-      });
+      );
+    } else {
+      this.authService.logout2().subscribe(
+        (res: any) => {
+          this.lsService.remove(GlobalName.tokenName);
+          this.lsService.remove(GlobalName.userName);
+          this.router.navigate(['/main']);
+          this.toastr.success('Déconnexion réussie', 'Connexion');
+        },
+        (err: any) => {
+          console.log(err);
+          this.toastr.success('Déconnexion échouée', 'Connexion');
+        }
+      );
     }
-    
   }
 
-    openAddModal(content:any) {
-    this.loading=false
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title', size: "lg" })
+  openAddModal() {
+    this.loading = false;
+    this.open=true;
   }
 
-   saveUsager(value:any) {
-      var param = {
-        id: this.user.id,
-        email: value.email,
-        nom: value.nom,
-        prenoms: value.prenoms,
-        password:"", //value.password
-        confirm: "",//value.confirm
-        tel: value.tel,
-        idEntite:this.selectedEntie,
-        idDepartement: value.idDepartement,
-        interfaceRequete: "USAGER",
-        visible: this.visible
-      };
-      this.matService.updateUsager(param, this.user.id).subscribe((res: any) => {
-        this.modalService.dismissAll()
-        this.visible = 0
-        AppSweetAlert.simpleAlert('succes',"Mise à jour", "Profile mis à jour avec succès");
-      })
-      
-      /*if (value.password != value.confirm) {
+  close(){
+    this.open=false;
+  }
+
+  saveUsager(value: any) {
+    var param = {
+      id: this.user.id,
+      email: value.email,
+      nom: value.nom,
+      prenoms: value.prenoms,
+      password: '', //value.password
+      confirm: '', //value.confirm
+      tel: value.tel,
+      idEntite: this.selectedEntie,
+      idDepartement: value.idDepartement,
+      interfaceRequete: 'USAGER',
+      visible: this.visible,
+    };
+    this.matService.updateUsager(param, this.user.id).subscribe((res: any) => {
+      this.modalService.dismissAll();
+      this.visible = 0;
+      AppSweetAlert.simpleAlert(
+        'succes',
+        'Mise à jour',
+        'Profile mis à jour avec succès'
+      );
+    });
+
+    /*if (value.password != value.confirm) {
         AppSweetAlert.simpleAlert("Erreur", "Mot de passe non identique", 'error');
       } else {
-       
+
       }*/
-  
-    }
+  }
 
+  getButtonClasses(item: MenuItem): string {
+    const isActive = this.activeSection === item.id;
+    const baseClasses =
+      'w-full flex items-center rounded-2xl transition-all duration-200 group relative';
+    const sizeClasses = this.menuOpen
+      ? 'justify-center px-3 py-4'
+      : 'space-x-4 px-5 py-4';
+    const stateClasses = isActive
+      ? 'bg-green-light text-white! shadow-lg shadow-green-light/20'
+      : 'text-gray-600 hover:bg-green-light/20 hover:text-green-light';
 
+    return `${baseClasses} ${sizeClasses} ${stateClasses}`;
+  }
+
+  getIconClasses(item: MenuItem): string {
+    const isActive = this.activeSection === item.id;
+    return isActive
+      ? 'text-white'
+      : 'text-gray-400 group-hover:text-green-light';
+  }
+
+  onSectionChange(sectionId: string) {
+    this.activeSection = sectionId;
+    this.router.navigate([sectionId]);
+  }
 }

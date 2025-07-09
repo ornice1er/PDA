@@ -18,4 +18,8 @@ url=ConfigService.toMataccueilApiUrl('');
     return this.http.post<any[]>(`${this.url}registres-reports-stats`,resource);
   }
 
+  getStats2(resource:any){
+    return this.http.post<any[]>(`${this.url}registres-reports-stats-comparaison`,resource);
+  }
+
 }

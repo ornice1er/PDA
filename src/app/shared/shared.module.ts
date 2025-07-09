@@ -27,6 +27,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { ImageModule } from 'primeng/image';
 import { ZeroTimePipe } from './zero-time.pipe';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { ZeroTimePipe } from './zero-time.pipe';
     ImageModule,
     CalendarModule,
     OverlayPanelModule,
+    SkeletonModule
   ],
   exports: [
     CommonModule,
@@ -88,6 +90,8 @@ import { ZeroTimePipe } from './zero-time.pipe';
     InputSwitchModule,
     CheckboxModule,
     CalendarModule,
+    SkeletonModule,
+    OverlayPanelModule,
     ZeroTimePipe,
   ],
   providers: [

@@ -17,9 +17,9 @@ import {
 import { provideToastr } from 'ngx-toastr';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AppHttpInterceptor } from './core/utils/app-http-interceptor';
-import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {

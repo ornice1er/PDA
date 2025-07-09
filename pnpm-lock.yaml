@@ -44,6 +44,9 @@ importers:
       '@angular/ssr':
         specifier: ^18.2.8
         version: 18.2.20(@angular/common@18.2.13(@angular/core@18.2.13(rxjs@7.8.2)(zone.js@0.14.10))(rxjs@7.8.2))(@angular/core@18.2.13(rxjs@7.8.2)(zone.js@0.14.10))
+      '@fontsource/montserrat':
+        specifier: ^5.2.6
+        version: 5.2.6
       '@fortawesome/angular-fontawesome':
         specifier: ^1.0.0
         version: 1.0.0(@angular/core@18.2.13(rxjs@7.8.2)(zone.js@0.14.10))
@@ -1210,6 +1213,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/montserrat@5.2.6':
+    resolution: {integrity: sha512-AfFxq1q5tgkOsjQfMFsh95uMXh39VbGOuBLlHLFg16/txv93lqK7Sr6jev0neuJzZy1kqRG16SH6xpUYnk4cZg==}
 
   '@fortawesome/angular-fontawesome@1.0.0':
     resolution: {integrity: sha512-EC2fYuXIuw2ld1kzJi+zysWus6OeGGfLQtbh0hW9zyyq5aBo8ZJkcJKBsVQ8E6Mg7nHyTWaXn+sdcXTPDWz+UQ==}
@@ -5844,6 +5850,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.23.0':
     optional: true
+
+  '@fontsource/montserrat@5.2.6': {}
 
   '@fortawesome/angular-fontawesome@1.0.0(@angular/core@18.2.13(rxjs@7.8.2)(zone.js@0.14.10))':
     dependencies:
