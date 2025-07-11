@@ -7,7 +7,7 @@
                     une
                     préoccupation</button>
         </div>
-        
+
                     <div class="card-toolbar d-flex justify-content-between mt-4">
                         <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
                             <li class="nav-item">
@@ -82,7 +82,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let el of data | sampleSearch:search_text:'registre' 
+                                <tr *ngFor="let el of data | sampleSearch:search_text
                              | paginate: {
                                     id:'ngxP1',
                                     itemsPerPage: pg.pageSize,
@@ -109,7 +109,7 @@
                                             <!-- <span *ngIf="i==0" style="display:none">{{i+1}}</span> -->
                                             <span *ngIf="i>=1">{{i+1}}. {{ show_step(parc.idEtape)==null ? '' : show_step(parc.idEtape).LibelleEtapeUs }}</span>
                                         </div>
-                                        
+
                                         <!--span *ngIf="el.visibl
                                             e==1 && el.traiteOuiNon==0  && el.rejete==0 && el.interrompu==0">En
                                             cours de traitement {{el.entite.sigle}} ChangerFile(el.fichier_joint) </span-->
@@ -119,10 +119,10 @@
                                     </td>
 
                                     <td>
-                                        {{el.reponseStructure}} 
+                                        {{el.reponseStructure}}
                                         <span *ngIf="el.fichier_joint">Fichier reponse : <a target="blank" (click)="ChangerFile(el.fichier_joint)" href="#">{{el.fichier_joint}}</a></span>
                                     </td>
-                                    <!--<td>{{Date.dateDiff('d',s.created_at,s.dateReponse)}} </td>--> 
+                                    <!--<td>{{Date.dateDiff('d',s.created_at,s.dateReponse)}} </td>-->
                                     <td *ngIf="el.archiver == 0">
                                         <button (click)="openNoteModal(note,el)" *ngIf="el.traiteOuiNon==1 && el.noteUsager==NULL"
                                             title="Apprécier la prestation" class="btn btn-xs btn-danger edit"><svg
@@ -130,7 +130,7 @@
                                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                             </svg> </button>
-                                         <span *ngIf="el.noteUsager!=NULL">{{el.noteUsager}}</span>   
+                                         <span *ngIf="el.noteUsager!=NULL">{{el.noteUsager}}</span>
 
                                     </td>
 
@@ -144,7 +144,7 @@
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-between p-2">
-                          <pagination-controls 
+                          <pagination-controls
                         id="ngxP1"
                         (pageChange)="getPage($event)"
                       [maxSize]="9"
@@ -253,7 +253,7 @@
                 <button type="submit" class="btn btn-primary" [disabled]="frmrdv.invalid"><i class="fas fa-save"></i>&nbsp;
                     Enregistrer</button>
                 <button type="submit" (click)="setStatut()" [disabled]="frmrdv.invalid" class="btn btn-info"><i class="fas fa-save"></i>&nbsp;
-                    Transmettre</button>  
+                    Transmettre</button>
                 <br><br>
             </div>
         </form>
@@ -424,7 +424,7 @@
             </div>
         </form>
     </ng-template>
-    
+
     <ng-template #listrdv let-modal>
         <div class="modal-header bg-mat-primary">
             <h5 class="modal-title text-white" id="modal-basic-title">Mes rdv</h5>
@@ -473,7 +473,7 @@
                                 [(ngModel)]="selected_data.usager.nom">
                         </div>
                     </div>
-                    
+
                     <!--div class="form-group row mb-3">
                         <label for="tel" class="col-sm-2 control-label">Téléphone</label>
 
@@ -543,7 +543,7 @@
                                 <option value="1">Oui</option>
                                 <option value="0">Non</option>
                             </select>
-                            
+
                         </div>
                     </div>
 
@@ -562,7 +562,7 @@
                     <!-- <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
                         <label for="msgrequest" class="col-sm-4 control-label">Description :</label>
                         <div class="col-sm-8">
-                            <textarea type="text" disabled="disabled" class="form-control" id="descr"   name="descr" placeholder="Description de la thématique" 
+                            <textarea type="text" disabled="disabled" class="form-control" id="descr"   name="descr" placeholder="Description de la thématique"
                             value="{{selected_data.descr}}" [(ngModel)]="selected_data.service.type.descr"></textarea>
                         </div>
                     </div> -->

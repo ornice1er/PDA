@@ -40,6 +40,7 @@ interface MenuItem {
   label: string;
   icon: any;
   external?: boolean;
+  espace?: number | null;
 }
 @Component({
   selector: 'app-layout',
@@ -57,7 +58,7 @@ interface MenuItem {
     MatButtonModule,
     MatDividerModule,
     LucideAngularModule,
-    SharedModule
+    SharedModule,
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
@@ -84,20 +85,69 @@ export class LayoutComponent {
   xIcon = X;
   externalLinkIcon = ExternalLink;
   menuItems: MenuItem[] = [
-    { id: '/admin/homepfc', label: 'Accueil', icon: Home },
-    { id: '/admin/homepfc/pfc-mataccueil', label: 'Préoccupations', icon: AlertTriangle },
-    { id: '/admin/homepfc/pfc-registre', label: 'Visiteurs', icon: Users },
-    { id: '/admin/homepfc/pfc-whatsapp', label: 'WhatsApp', icon: MessageCircle, external: true },
-    { id: '/admin/homepfc/rapports-requetes', label: 'Rapports', icon: FileText },
-    { id: '/admin/homepfc/performances', label: 'Performances', icon: BarChart3 },
-    { id: '/', label: 'Site Web', icon: ExternalLink },
+    { id: '/admin/home', label: 'Accueil', icon: Home, espace: 0 },
+    { id: '/admin/homepfc', label: 'Accueil', icon: Home, espace: 1 },
+    { id: '/admin/homepfc', label: 'Accueil', icon: Home, espace: 3 },
+    {
+      id: '/admin/homepfc/pfc-mataccueil',
+      label: 'Préoccupations',
+      icon: AlertTriangle,
+      espace: 1,
+    },
+    {
+      id: '/admin/homepfc/pfc-registre',
+      label: 'Visiteurs',
+      icon: Users,
+      espace: 1,
+    },
+    {
+      id: '/admin/homepfc/pfc-whatsapp',
+      label: 'WhatsApp',
+      icon: MessageCircle,
+      external: true,
+      espace: 1,
+    },
+    {
+      id: '/admin/homepfc/rapports-requetes',
+      label: 'Rapports',
+      icon: FileText,
+      espace: 1,
+    },
+    {
+      id: '/admin/homepfc/pending-rapports',
+      label: 'Rapports',
+      icon: FileText,
+      espace: 3,
+    },
+    {
+      id: '/admin/homepfc/performances',
+      label: 'Performances',
+      icon: BarChart3,
+      espace: 1,
+    },
+    { id: '/', label: 'Site Web', icon: ExternalLink, espace: null },
   ];
   activeSection = '';
-   members = [
-        { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
-        { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
-        { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
-    ];
+  members = [
+    {
+      name: 'Amy Elsner',
+      image: 'amyelsner.png',
+      email: 'amy@email.com',
+      role: 'Owner',
+    },
+    {
+      name: 'Bernardo Dominic',
+      image: 'bernardodominic.png',
+      email: 'bernardo@email.com',
+      role: 'Editor',
+    },
+    {
+      name: 'Ioni Bowcher',
+      image: 'ionibowcher.png',
+      email: 'ioni@email.com',
+      role: 'Viewer',
+    },
+  ];
 
   constructor(
     private modalService: NgbModal,
@@ -125,12 +175,13 @@ export class LayoutComponent {
     });
     this.titleService.userConnected$.subscribe((newState) => {
       this.userConnected = newState;
+      console.log(newState);
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-    this.authService.getUserByToken().subscribe((res:any)=>{
+    this.authService.getUserByToken().subscribe((res: any) => {
       // console.log(res);
-      this.user=res?.data
-    })
+      this.user = res?.data;
+    });
     // this.departements = []
     // this.matService.getAllDepartement().subscribe((res: any) => {
     //   this.departements = res
@@ -157,13 +208,13 @@ export class LayoutComponent {
               if (this.lsService.get(GlobalName.tokenName)) {
                 this.router.navigate(['/admin/home']);
               } else {
-                this.router.navigate(['/main']);
+                this.router.navigate(['/']);
               }
 
               break;
 
             default:
-              this.router.navigate(['/main']);
+              this.router.navigate(['/']);
 
               break;
           }
@@ -179,7 +230,7 @@ export class LayoutComponent {
         (res: any) => {
           this.lsService.remove(GlobalName.tokenName);
           this.lsService.remove(GlobalName.userName);
-          this.router.navigate(['/main']);
+          this.router.navigate(['/']);
           this.toastr.success('Déconnexion réussie', 'Connexion');
         },
         (err: any) => {
@@ -192,11 +243,11 @@ export class LayoutComponent {
 
   openAddModal() {
     this.loading = false;
-    this.open=true;
+    this.open = true;
   }
 
-  close(){
-    this.open=false;
+  close() {
+    this.open = false;
   }
 
   saveUsager(value: any) {

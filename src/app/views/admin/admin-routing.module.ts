@@ -32,6 +32,7 @@ import { EspaceusagerComponent } from './pages/espaceusager/espaceusager.compone
 import { RapportRequeteComponent } from './pages/homepfc/components/rapport-requete/rapport-requete.component';
 import { PerformanceRequeteComponent } from './pages/homepfc/components/performance-requete/performance-requete.component';
 import { PfcAccueilComponent } from './pages/homepfc/components/accueil/accueil.component';
+import { CspReportPendingComponent } from './pages/homepfc/components/report-pending/csp-report-pending.component';
 
 export const AdminRoutes: any = [
   // ✅ Doit être un tableau
@@ -168,6 +169,10 @@ export const AdminRoutes: any = [
           {
             component: RapportRequeteComponent,
             path: 'rapports-requetes',
+          },
+          {
+            component: CspReportPendingComponent,
+            path: 'pending-rapports',
           },
           {
             component: PerformanceRequeteComponent,

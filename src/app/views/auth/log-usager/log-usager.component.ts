@@ -94,7 +94,7 @@ export class LogUsagerComponent implements OnInit {
 
       this.email = payload['email'];
       payload['ip'] = this.ipAddress;
-      payload['username'] = payload['email'];
+      payload.username = payload['email'];
       delete payload['email'];
       this.user_auth_service.login(payload).subscribe(
         (res: any) => {

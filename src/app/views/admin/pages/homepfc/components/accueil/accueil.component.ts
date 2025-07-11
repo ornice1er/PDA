@@ -118,8 +118,8 @@ export class PfcAccueilComponent implements OnInit {
     // if(localStorage.getItem(GlobalName.tokenNameMat)!=undefined) this.user=this.local_service.get(GlobalName.tokenNameMat);
   }
   ngOnInit(): void {
-    this.titleService.setTitle('Espace Point Focal Communal');
-    this.titleService.setPfcState(1);
+    // this.titleService.setTitle('Espace Point Focal Communal');
+    // this.titleService.setPfcState(1);
 
     if (this.localStorageService.get(GlobalName.tokenNameMat) != null) {
       this.user = this.localStorageService.get(GlobalName.userNameMat);

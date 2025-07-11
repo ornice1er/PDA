@@ -110,10 +110,10 @@
             <tbody class="divide-y divide-gray-300 bg-white" *ngIf="reports.length !== 0">
               <tr *ngFor="let document of reports">
                 <td
-                  class="whitespace-nowrap py-2 pl-4 sm:pl-10 pr-3 text-sm font-medium text-start  capitalize text-gray-900">
+                  class="whitespace-wrap py-2 pl-4 sm:pl-10 pr-3 text-sm font-medium text-start  capitalize text-gray-900">
                   {{ document?.created_at | date:'longDate' }}
                 </td>
-                <td class="whitespace-nowrap py-2 pl-4 sm:pl-10 pr-3 text-sm font-medium text-start text-gray-900">
+                <td class="whitespace-wrap py-2 pl-4 sm:pl-10 pr-3 text-sm font-medium text-start text-gray-900">
                   {{ document?.title }}
                 </td>
                 <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">

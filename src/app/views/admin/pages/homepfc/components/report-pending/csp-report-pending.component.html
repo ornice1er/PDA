@@ -1,14 +1,80 @@
+<!--
+<div class="container-fluid" id="container-wrapper">
+    <div class="row d-flex">
+        <p>{{registresReports!.length}} élément(s)</p>
+        <div class="table-responsive">
+        <table class="table table-sm table-bordered">
+            <thead class="">
+                <tr>
+                    <th>#</th>
+                    <th>Titre</th>
+                    <th>Usagers reçus</th>
+                    <th>Usagers satisfaits</th>
+                    <th>Statut</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                 <tr *ngFor="let rgr of registresReports
+                 | paginate: {
+                        id:'ngxP2',
+                        itemsPerPage: pg2.pageSize,
+                        currentPage: pg2.p,
+                        totalItems: pg2.total }">
+                        <td>
+                            <input type="radio" (change)="checkedRegistreReport(rgr)">
+
+                        </td>
+                <td>{{rgr.title}} </td>
+
+                <td>{{rgr.customer_recieved}} </td>
+                <td>{{rgr.customer_satisfied}} </td>
+                <td>
+
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-primary mx-1" [disabled]="loading2" (click)="openReportShowModal(showReport,rgr)"> <i class="fa fa-eye text-white"></i> </button>
+                    <ng-container *ngIf="rgr.status==0">
+                        <button class="btn btn-sm btn-warning mx-1" [disabled]="loading2" (click)="openReportEditModal(editReport,rgr)"> <i class="fa fa-edit text-white"></i> </button>
+                        <button class="btn btn-sm btn-danger mx-1" [disabled]="loading2" (click)="deleteReport(rgr.id)"> <i class="fa fa-trash text-white"></i> </button>
+                    </ng-container>
+
+                      <button class="btn btn-sm btn-success  mx-1" [disabled]="loading2" (click)="transmit(rgr.id)"> <i class="fa fa-arrow-up text-white"></i> </button>
+                      <button class="btn btn-sm btn-warning  mx-1" [disabled]="loading2" (click)="openReportEditModal(correctReport,rgr)"> <i class="fa fa-arrow-down text-white"></i> </button>
+                     <button class="btn btn-sm btn-info  mx-1" [disabled]="loading2" (click)="getFile(rgr.filename)"> <i class="fa fa-file text-white"></i> </button>
+                </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        </div>
+    <pagination-controls
+            id="ngxP2"
+            (pageChange)="getPage2($event)"
+          [maxSize]="9"
+          [directionLinks]="true"
+          [autoHide]="true"
+          [responsive]="true"
+          [previousLabel]="'Précédent'"
+          [nextLabel]="'Suivant'"
+          [screenReaderPaginationLabel]="'Pagination'"
+          [screenReaderPageLabel]="'page'"
+          [screenReaderCurrentLabel]="'Vous êtes sur la page'">
+         </pagination-controls>
+    </div>
+</div> -->
+
 <div class="flex flex-col gap-y-8 w-full">
   <div>
-    <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Rapports</h2>
+    <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Rapports en attente de validation</h2>
   </div>
   <div class="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 animate-in">
     <div class="flex flex-row justify-between items-center">
       <h3 class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900 mb-6">
         <p>{{registresReports!.length}} élément(s)</p>
       </h3>
-      <button (click)="openReportModal(addReport)" class=" mx-1 bg-primary text-white py-2 px-4 rounded-lg">Générer un
-        Rapport</button>
     </div>
 
     <div class="space-y-4">
@@ -51,15 +117,13 @@
               <td class="py-2.5 px-4 text-xs font-medium border border-gray-200">{{rgr.customer_satisfied}} </td>
               <td class="py-2.5 px-4 text-xs font-medium border border-gray-200">
                 <span *ngIf="rgr.status==0">Nouveau</span>
-                <span *ngIf="rgr.status==1 &&  rgr?.transmission?.user_down!=user.id">En attente de validation</span>
-                <span *ngIf="rgr.status==1 && rgr?.transmission?.sens!=1 && rgr?.transmission?.user_down==user.id">En
+                <span *ngIf="rgr.status==1 && rgr?.transmission.user_down!=user.id">En attente de validation</span>
+                <span *ngIf="rgr.status==1 && rgr?.transmission.sens!=1 && rgr?.transmission.user_down==user.id">En
                   attente de correction</span>
                 <span *ngIf="rgr.status==2">Validé</span>
                 <br>
-                <button *ngIf="rgr.status==1 && rgr?.transmission?.sens!=1 && rgr?.transmission?.user_down==user.id"
-                  class="btn btn-sm btn-primary mx-1" [disabled]="loading2"
-                  (click)="openReportShowModal(correctReport,rgr)"> voir le motif</button>
-
+                <button *ngIf="rgr.status==1 && rgr?.transmission.sens!=1" class="btn btn-sm btn-primary mx-1"
+                  [disabled]="loading2" (click)="openReportShowModal(correctShowReport,rgr)"> voir le motif</button>
               </td>
               <td class="py-2.5 px-4 text-xs font-medium text-center border border-gray-200">
                 <div class="flex flex-row items-center justify-center gap-3">
@@ -77,8 +141,7 @@
                   </button>
                   <!-- <button class="btn btn-sm btn-primary mx-1" [disabled]="loading2"
                   (click)="openReportShowModal(showReport,rgr)"> <i class="fa fa-eye text-white"></i> </button> -->
-                  <ng-container
-                    *ngIf="rgr.status===0 || (rgr.status===1 && rgr?.transmission?.sens!==1 && rgr?.transmission?.user_down===user.id)">
+                  <ng-container *ngIf="rgr.status===0">
                     <button [disabled]="loading2" (click)="openReportEditModal(editReport,rgr)"
                       class="text-yellow-500 bg-yellow-500/20 flex items-center justify-center rounded-full size-8">
                       <span class="sr-only">Modifier</span>
@@ -95,17 +158,17 @@
                           d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1m6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" />
                       </svg>
                     </button>
-
-                    <button [disabled]="loading2" (click)="transmit(rgr.id)"
-                      class="text-green-light bg-green-light/20 flex items-center justify-center rounded-full size-8">
-                      <span class="sr-only">Transmettre</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zm7.318-19.539l-10.94 10.939" />
-                      </svg>
-                    </button>
                   </ng-container>
+
+                  <button [disabled]="loading2" (click)="transmit(rgr.id)"
+                    class="text-green-light bg-green-light/20 flex items-center justify-center rounded-full size-8">
+                    <span class="sr-only">Transmettre</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zm7.318-19.539l-10.94 10.939" />
+                    </svg>
+                  </button>
                   <button [disabled]="loading2" (click)="getFile(rgr.filename)"
                     class="text-sky-500 bg-sky-500/20 flex items-center justify-center rounded-full size-8">
                     <span class="sr-only">Document</span>
@@ -118,6 +181,14 @@
                     </svg>
                   </button>
 
+                  <button [disabled]="loading2" (click)="openReportEditModal(correctReport,rgr)"
+                    class="text-yellow-500 bg-yellow-500/20 flex items-center justify-center rounded-full size-8">
+                    <span class="sr-only">Modifier</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor"
+                        d="M4.5 17.207V19a.5.5 0 0 0 .5.5h1.793a.5.5 0 0 0 .353-.146l8.5-8.5l-2.5-2.5l-8.5 8.5a.5.5 0 0 0-.146.353ZM15.09 6.41l2.5 2.5l1.203-1.203a1 1 0 0 0 0-1.414l-1.086-1.086a1 1 0 0 0-1.414 0z" />
+                    </svg>
+                  </button>
                 </div>
 
               </td>
@@ -177,24 +248,21 @@
   </div>
 </div>
 
+
+
 <ng-template #addReport let-modal>
   <form #addReportForm="ngForm" (ngSubmit)="storeReport(addReportForm.value)" class="form-horizontal " novalidate="">
 
-    <div class="modal-header bg-secondary d-flex justify-content-between ">
+    <div class="modal-header bg-secondary">
       <h5 class="modal-title text-white" id="modal-basic-title">Générer un rapport</h5>
-      <span (click)="modal.dismiss('Cross click')" class="text-danger" style="cursor:pointer"> <i
-          class="fa fa-times fa-1x" aria-hidden="true"></i> </span>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        X
+      </button>
     </div>
     <div class="modal-body">
       <div style="color:red">{{errormessage}}</div>
 
       <div class="row">
-        <div class="col-12 mb-3">
-          <label for="">Année</label>
-          <select name="year" ngModel class="form-control form-control-sm has-error">
-            <option *ngFor="let y of years" [value]="y">{{y}}</option>
-          </select>
-        </div>
         <div class="col-12 mb-3">
           <div class="form-group">
             <label for="">Mois</label>
@@ -215,37 +283,12 @@
           </div>
         </div>
         <div class="col-12 mb-3">
-          <label for="">Sexe</label>
-          <select name="sex" ngModel class="form-control form-control-sm has-error">
-            <option value="all">Tout</option>
-            <option value="Homme">Homme</option>
-            <option value="Femme">Femme</option>
-          </select>
-        </div>
-        <div class="col-12 mb-3">
           <div class="form-group">
-            <label for="">Principales raisons d'insatisfaction</label>
-            <textarea name="unsatified_reason" ngModel class="form-control"></textarea>
+            <label for="">Synthèse Analytique</label>
+            <textarea name="summary" ngModel class="form-control"></textarea>
           </div>
         </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Problèmes / difficultés rencontrées par le Point Focal </label>
-            <textarea name="difficult" ngModel class="form-control"></textarea>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Approches de solutions préconisées par le Point Focal </label>
-            <textarea name="solution" ngModel class="form-control"></textarea>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Observations</label>
-            <textarea name="observation" ngModel class="form-control"></textarea>
-          </div>
-        </div>
+
       </div>
     </div>
     <div class="modal-footer">
@@ -270,41 +313,24 @@
 
         <div class="col-12 mb-3">
           <div class="form-group">
-            <label for="">Principales raisons d'insatisfaction</label>
-            <textarea name="unsatified_reason" [(ngModel)]="selected_data.unsatified_reason"
-              class="form-control"></textarea>
+            <label for="">Synthèse Analytique</label>
+            <textarea name="summary" [(ngModel)]="selected_data.summary" class="form-control"></textarea>
           </div>
         </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Problèmes / difficultés rencontrées par le Point Focal </label>
-            <textarea name="difficult" [(ngModel)]="selected_data.difficult" class="form-control"></textarea>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Approches de solutions préconisées par le Point Focal </label>
-            <textarea name="solution" [(ngModel)]="selected_data.solution" class="form-control"></textarea>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Observations</label>
-            <textarea name="observation" [(ngModel)]="selected_data.observation" class="form-control"></textarea>
-          </div>
-        </div>
+
       </div>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-secondary mx-1"><i class="fas fa-save"></i>&nbsp;Modifier</button>
+      <button type="submit" [disabled]="loading2" class="btn btn-secondary mx-1"><i
+          class="fas fa-save"></i>&nbsp;Modifier</button>
     </div>
   </form>
 </ng-template>
-<ng-template #showReport let-modal>
-  <form #editReportForm="ngForm" (ngSubmit)="updateReport(editReportForm.value)" class="form-horizontal " novalidate="">
+<ng-template #correctReport let-modal>
+  <form #correctForm="ngForm" (ngSubmit)="correct(correctForm.value)" class="form-horizontal " novalidate="">
 
     <div class="modal-header bg-secondary">
-      <h5 class="modal-title text-white" id="modal-basic-title">Détails rapport</h5>
+      <h5 class="modal-title text-white" id="modal-basic-title">Retourner pour correction</h5>
       <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
         X
       </button>
@@ -316,45 +342,82 @@
 
         <div class="col-12 mb-3">
           <div class="form-group">
-            <label for="">Usagers reçus</label>
-            <p>{{selected_data.customer_recieved}}</p>
+            <label for="">Instruction</label>
+            <textarea name="instruction" ngModel class="form-control"></textarea>
           </div>
         </div>
         <div class="col-12 mb-3">
           <div class="form-group">
-            <label for="">Usagers satisfaits</label>
-            <p>{{selected_data.customer_satisfied}}</p>
+            <label for="">Délai</label>
+            <input type="datetime-local" name="delay" ngModel class="form-control">
           </div>
         </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Principales raisons d'insatisfaction</label>
-            <p>{{selected_data.unsatified_reason}}</p>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Problèmes / difficultés rencontrées par le Point Focal </label>
-            <p>{{selected_data.difficult}}</p>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Approches de solutions préconisées par le Point Focal </label>
-            {{selected_data.solution}}
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <div class="form-group">
-            <label for="">Observations</label>
-            {{selected_data.observation}}
-          </div>
-        </div>
+
       </div>
     </div>
     <div class="modal-footer">
+      <button type="submit" [disabled]="loading2" class="btn btn-secondary mx-1"><i
+          class="fas fa-save"></i>&nbsp;Retourner pour correction</button>
     </div>
   </form>
+</ng-template>
+<ng-template #showReport let-modal>
+
+  <div class="modal-header bg-secondary">
+    <h5 class="modal-title text-white" id="modal-basic-title">Détails rapport</h5>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      X
+    </button>
+  </div>
+  <div class="modal-body">
+    <div style="color:red">{{errormessage}}</div>
+
+    <div class="row">
+
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Usagers reçus</strong></label>
+          <p>{{selected_data.customer_recieved}}</p>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Usagers satisfaits</strong></label>
+          <p>{{selected_data.customer_satisfied}}</p>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Principales raisons d'insatisfaction</strong></label>
+          <p>{{selected_data.unsatified_reason}}</p>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Problèmes / difficultés rencontrées par le Point Focal </strong></label>
+          <p>{{selected_data.difficult}}</p>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Approches de solutions préconisées par le Point Focal</strong> </label>
+          {{selected_data.solution}}
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Observations</strong></label>
+          {{selected_data.observation}}
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for=""><strong>Synthèse analytique</strong></label>
+          {{selected_data.summary}}
+        </div>
+      </div>
+    </div>
+  </div>
 </ng-template>
 <ng-template #contentPDF let-offcanvas>
   <div class="offcanvas-header">
@@ -367,7 +430,7 @@
     <ngx-extended-pdf-viewer [src]="pdfSrc" style="width: 100%; height: 100%"></ngx-extended-pdf-viewer>
   </div>
 </ng-template>
-<ng-template #correctReport let-modal>
+<ng-template #correctShowReport let-modal>
 
   <div class="modal-header bg-secondary">
     <h5 class="modal-title text-white" id="modal-basic-title">Détails instruction</h5>

@@ -1,4 +1,8 @@
 <div class="flex flex-col gap-y-8 w-full">
+  <div>
+      <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Performances</h2>
+
+    </div>
   <div class="p-3">
     <form [formGroup]="searchForm" (ngSubmit)="getStats()" class="form-horizontal mb-3" novalidate="">
 
@@ -120,7 +124,7 @@
           </thead>
           <tbody *ngIf="registres.length !== 0">
             <tr *ngFor="let rg of registres
-                             | sampleSearch:search_text:'registre'
+                             | sampleSearch:search_text
                              | paginate: {
                                     id:'ngxP1',
                                     itemsPerPage: pg.pageSize,

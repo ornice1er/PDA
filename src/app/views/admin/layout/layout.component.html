@@ -54,8 +54,9 @@
             <lucide-icon [img]="userIcon" size="20" class="text-white"></lucide-icon>
           </div>
           <div class="hidden md:block">
+            <!-- <div class="font-medium text-sm">{{userConnected?.name? userConnected?.name:userConnected?.agent_user?.nomprenoms}}</div> -->
             <div class="font-medium text-sm">{{ userConnected?.email }}</div>
-            <div class="text-dark-400 text-xs">Administrateur</div>
+            <div class="text-dark-400 text-xs">{{userConnected?.name ? userConnected?.name : userConnected?.agent_user?.nomprenoms}}</div>
           </div>
           <lucide-icon [img]="chevronDownIcon" size="16" class="text-dark-400"></lucide-icon>
         </button>
@@ -67,7 +68,7 @@
               </div>
               <div class="hidden md:block">
                 <div class="font-semibold text-sm">{{ userConnected?.email }}</div>
-                <div class="text-green-light text-xs">Administrateur</div>
+                <div class="text-green-light text-xs">{{userConnected?.name? userConnected?.name:userConnected?.agent_user?.nomprenoms}}</div>
               </div>
             </div>
             <hr>
@@ -104,7 +105,7 @@
       <nav [class]="'py-8 transition-all duration-300 ' + (menuOpen ? 'px-3' : 'px-6')">
 
         <ul class="space-y-2">
-          <li *ngFor="let item of menuItems" [hidden]="!canUseWhatsapp && item.external">
+          <li *ngFor="let item of menuItems" [hidden]="(!canUseWhatsapp && item.external) || (item.espace!==null && item.espace!==espace)">
             <a [routerLinkActiveOptions]="{exact:true}" [routerLink]="[item.id]"
               routerLinkActive="bg-green-light hover:bg-bg-green-light/70 text-white! shadow-lg shadow-green-light/20"
               [class]="getButtonClasses(item)" [title]="menuOpen ? item.label : undefined">
@@ -127,6 +128,28 @@
               </div>
             </a>
           </li>
+          <!-- <li>
+            <a [routerLinkActiveOptions]="{exact:true}" [routerLink]="[item.id]"
+              routerLinkActive="bg-green-light hover:bg-bg-green-light/70 text-white! shadow-lg shadow-green-light/20"
+              [class]="getButtonClasses(item)" >
+
+              <lucide-icon [img]="externalLinkIcon" size="20"
+                class="text-white  group-hover:text-green-light">
+              </lucide-icon>
+
+              <ng-container *ngIf="!menuOpen">
+                <span class="font-medium">{{ 'Site Web' }}</span>
+              </ng-container>
+
+              <div *ngIf="menuOpen"
+                class="absolute left-full ml-3 px-3 py-2 bg-dark-900 text-white text-sm rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-50 scale-in">
+                {{ 'Site Web' }}
+                <div
+                  class="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1 w-2 h-2 bg-dark-900 rotate-45">
+                </div>
+              </div>
+            </a>
+          </li>  -->
         </ul>
       </nav>
     </aside>

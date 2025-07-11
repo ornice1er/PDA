@@ -21,103 +21,124 @@ import { LoadingComponent } from '../../../components/loading/loading.component'
 import { StatutComponent } from '../../../components/statut/statut.component';
 import { TitleService } from '../../../../core/utils/title.service';
 
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  gradient: string;
+  stats: string;
+  isActive?: boolean;
+  priority?: 'high' | 'medium' | 'low';
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   standalone: true,
-  imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent], 
-  styleUrls: ['./home.component.css']
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    LoadingComponent,
+    SampleSearchPipe,
+    NgSelectModule,
+    NgxPaginationModule,
+    StatutComponent,
+  ],
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  currentTime = new Date();
 
-  loadFile(file:any){
-    return ConfigService.toFile(file)
+  loadFile(file: any) {
+    return ConfigService.toFile(file);
   }
 
-
-  subs:Subscription | undefined
+  subs: Subscription | undefined;
 
   constructor(
-    private user_auth_service:AuthService, 
-    private  local_service:LocalStorageService,
+    private user_auth_service: AuthService,
+    private local_service: LocalStorageService,
     private titleService: TitleService,
-    private router:Router) { 
-    if(localStorage.getItem(GlobalName.current_user)!=undefined) this.user=this.local_service.get(GlobalName.current_user);
-    
+    private router: Router
+  ) {
+    if (localStorage.getItem(GlobalName.current_user) != undefined)
+      this.user = this.local_service.get(GlobalName.current_user);
   }
-  loading:boolean=false
-  id:any
-  data:any[]=[]
-  user:any
-  access_token:any
+  loading: boolean = false;
+  id: any;
+  data: any[] = [];
+  user: any;
+  access_token: any;
 
   ngOnInit(): void {
-    this.titleService.setTitle('GUICHET UNIQUE VIRTUEL')
-    this.titleService.setPfcState(0)
+    this.titleService.setTitle('GUICHET UNIQUE VIRTUEL');
+    this.titleService.setPfcState(0);
 
-      this.user=this.local_service.get(GlobalName.userName)
-      if(this.user){
-        this.titleService.setUserConnectedState(this.user)
+    this.user = this.local_service.get(GlobalName.userName);
+    if (this.user) {
+      this.titleService.setUserConnectedState(this.user);
+    }
+    console.log(this.user);
+    this.id = this.user.status_id;
+    this.access_token = this.local_service.get(GlobalName.tokenName);
+    this.user_auth_service.getApps(this.id).subscribe(
+      (res: any) => {
+        this.loading = false;
+        this.data = res.data
+      },
+      (err: any) => {
+        this.loading = false;
+        console.log(err);
+        AppSweetAlert.simpleAlert(
+          'Applications',
+          'Echec de récupération des applications',
+          'error'
+        );
       }
-      console.log(this.user)
-      this.id=this.user.status_id
-      this.access_token=this.local_service.get(GlobalName.tokenName)
-      this.user_auth_service.getApps(this.id).subscribe(
-          (res:any)=>{
-                  this.loading=false;
-                  this.data=res.data
-          },
-          (err:any)=>{
-              this.loading=false;
-              console.log(err)
-              AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")}
-      )
-
-      
+    );
   }
 
-  goTo(id:any){
-    this.user_auth_service.goTo({
-      client_id:id
-    }).subscribe(
-      (res:any)=>{
-          window.open(res.redirect_uri, '_blank');   
-      },
-      (err:any)=>{
-          this.loading=false;
-          console.log(err)
-         // AlertNotif.finish("Applications","Echec de récupération des applications","error")
+  goTo(id: any) {
+    this.user_auth_service
+      .goTo({
+        client_id: id,
+      })
+      .subscribe(
+        (res: any) => {
+          window.open(res.redirect_uri, '_blank');
+        },
+        (err: any) => {
+          this.loading = false;
+          console.log(err);
+          // AlertNotif.finish("Applications","Echec de récupération des applications","error")
         }
-  )
+      );
   }
 
-  setNotif(){
-    this.user_auth_service.setNotif({
-
-    }).subscribe(
-      (res:any)=>{
-             
-      },
-      (err:any)=>{
-          this.loading=false;
-          console.log(err)
-         // AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")
-        }
-  )
+  setNotif() {
+    this.user_auth_service.setNotif({}).subscribe(
+      (res: any) => {},
+      (err: any) => {
+        this.loading = false;
+        console.log(err);
+        // AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")
+      }
+    );
   }
-  logout(){
+  logout() {
     localStorage.removeItem(GlobalName.token);
     localStorage.removeItem(GlobalName.current_user);
 
-    this.user_auth_service.setUserLoggedIn(false)
+    this.user_auth_service.setUserLoggedIn(false);
     this.router.navigate(['/main']);
-   /* this.user_auth_service.logout().subscribe(
+    /* this.user_auth_service.logout().subscribe(
         (res:any)=>{
 
         },
         (err)=>{
             AppSweetAlert.simpleAlert("Déconnexion","Echec de déconnexion","error")}
     )*/
-
-}
+  }
 }
