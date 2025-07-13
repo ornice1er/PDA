@@ -21,9 +21,9 @@ export class PdaService {
 
 
     constructor(private http: HttpClient, private lsService:LocalStorageService) {
-        
-    
-      
+
+
+
     }
 
 
@@ -61,7 +61,7 @@ export class PdaService {
         return this.http.get<any[]>(`${this.url}structure/getLine/${id}`, ConfigService.httpHeader());
     }
     getThematiques(): Observable<any> {
-        return this.http.get<any[]>(`${this.url}type/1`, ConfigService.httpHeader());
+        return this.http.get<any[]>(`${this.url}type/1`);
     }
     getOneThematique(id:any): Observable<any> {
         return this.http.get<any[]>(`${this.url}type/getLine/${id}`, ConfigService.httpHeader());
@@ -79,7 +79,7 @@ export class PdaService {
         return this.http.get<any[]>(`${this.url}rdvcreneau/1`, ConfigService.httpHeader());
     }
     getStat(param:any,idEntite:any){
-   
+
         return this.http.post<any[]>(`${this.url}statistiques/prestations/${idEntite}`,param, ConfigService.httpHeader(this.lsService.get("mataccueilToken"),true));
       }
 
@@ -98,7 +98,7 @@ export class PdaService {
     storeDenonciation2(ressource: object) {
         return this.http.post(`${this.url}usagers/externe/je_denonce`, ressource, ConfigService.httpHeader());
     }
-    
+
     storeQuestion(ressource: object) {
         return this.http.post(`${this.url}question`, ressource, ConfigService.httpHeader());
     }
@@ -118,5 +118,5 @@ export class PdaService {
         return this.http.get(`${this.url}${id}status`, ConfigService.httpHeader());
     }
 
-       
+
 }

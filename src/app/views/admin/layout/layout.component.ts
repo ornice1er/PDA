@@ -178,10 +178,10 @@ export class LayoutComponent {
       console.log(newState);
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
-    this.authService.getUserByToken().subscribe((res: any) => {
-      // console.log(res);
-      this.user = res?.data;
-    });
+    // this.authService.getUserByToken().subscribe((res: any) => {
+    //   // console.log(res);
+    //   this.user = res?.data;
+    // });
     // this.departements = []
     // this.matService.getAllDepartement().subscribe((res: any) => {
     //   this.departements = res
