@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
   isAgent: boolean = false;
   isInstitu: boolean = false;
   default_status: number = 4;
-  default_Institu: number | undefined;
+  company: number | undefined;
   ipAddress: string | undefined;
   currentStep = 1;
   showPassword = false;
@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
         password: ['', [Validators.required, Validators.minLength(6)]],
         password_confirmation: ['', Validators.required],
         confidfor: [false, Validators.requiredTrue],
-        default_Institu: [''],
+        company: [''],
         rccm: [''],
         ifu: [''],
         matricule: [''],
@@ -247,19 +247,20 @@ export class RegisterComponent implements OnInit {
       this.user_auth_service.register(payload).subscribe(
         (res: any) => {
           this.loading = false;
-          if (res.user.is_active) {
-            this.local_service.set(GlobalName.token, res.token);
-            this.local_service.set(GlobalName.current_user, res.user);
-            this.router.navigate(['/main']);
-          } else {
-            localStorage.setItem('is_registered', '');
-            this.router.navigate(['/auth/register-success']);
-          }
+          // if (res.user.is_active) {
+          //   this.local_service.set(GlobalName.token, res.token);
+          //   this.local_service.set(GlobalName.current_user, res.user);
+          //   this.router.navigate(['/main']);
+          // } else {
+          //   localStorage.setItem('is_registered', '');
+          //   this.router.navigate(['/auth/register-success']);
+          // }
           AppSweetAlert.simpleAlert(
             'Inscription',
             'Inscription effectuée avec succès. Vous pouvez à présent vous connecter',
             'success'
           );
+          this.router.navigate(['/auth/logusager']);
         },
         (err: any) => {
           this.loading = false;

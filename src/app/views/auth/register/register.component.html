@@ -124,7 +124,7 @@
                                     <div class="form-group">
                                         <label class="text-info" for="">Ma structure </label>
                                         <select class="form-control border-info" name="institu_id" #instituAgent="ngModel"
-                                            [(ngModel)]="default_Institu" required>
+                                            [(ngModel)]="company" required>
                                             <option *ngFor="let s of struct" value="{{s.id}}">{{s.libelle}}</option>
                                         </select>
                                         <span *ngIf="instituAgent.invalid && (instituAgent.dirty || instituAgent.touched)"
@@ -374,16 +374,16 @@
               </div>
 
               <div>
-                <label for="default_Institu" class="block text-sm font-medium text-white/90 mb-2">
+                <label for="company" class="block text-sm font-medium text-white/90 mb-2">
                   Ma structure <span class="text-yellow-300">*</span>
                 </label>
-                <input type="text" id="default_Institu" formControlName="default_Institu" [class]="
+                <input type="text" id="company" formControlName="company" [class]="
                         'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
-                        (isFieldInvalid('default_Institu')
+                        (isFieldInvalid('company')
                           ? 'border-red-400'
                           : 'border-white/30')
                       " placeholder="Votre structure" />
-                <div *ngIf="isFieldInvalid('default_Institu')" class="text-red-300 text-xs mt-1">
+                <div *ngIf="isFieldInvalid('company')" class="text-red-300 text-xs mt-1">
                   La structure sont requise
                 </div>
               </div>
@@ -518,7 +518,7 @@
                 </label>
                 <div class="relative">
                   <input [type]="showConfirmPassword ? 'text' : 'password'" id="password_confirmation"
-                    formControlName="confirmPassword" [class]="
+                    formControlName="password_confirmation" [class]="
                           'w-full px-4 py-3 pr-12 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
                           (isFieldInvalid('password_confirmation')
                             ? 'border-red-400'
@@ -560,7 +560,7 @@
             <div>
               <label
                 class="flex items-start gap-x-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <input type="checkbox" formControlName="consent" [class]="
+                <input type="checkbox" formControlName="confidfor" [class]="
                         'h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-white/30 rounded mt-1 ' +
                         (isFieldInvalid('confidfor') ? 'border-red-400' : '')
                       " />

@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div class="relative container mx-auto px-4 py-16 lg:py-16 flex items-center justify-center">
+  <div class="relative container mx-auto px-4 py-16 lg:py-16 flex flex-col items-center justify-center">
     <div class="w-full max-w-md">
 
       <!-- Header -->
@@ -48,16 +48,8 @@
           digitale moderne, sécurisée et accessible 24h/24</p>
       </div>
     </div>
-  </div>
-</section>
-<!-- Main Content -->
-<section class="py-16 bg-gray-50">
-  <div class="container mx-auto px-4">
-
-
-    <!-- Search and Filter Section -->
-    <div class="mb-8">
-      <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+    <div class="w-full max-w-xl 2xl:max-w-2xl">
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-5 shadow-2xl">
         <div class="flex flex-col lg:flex-row gap-4">
           <!-- Search -->
           <div class="flex-1">
@@ -69,30 +61,36 @@
                   <circle cx="11" cy="11" r="8" />
                 </g>
               </svg>
-              <input type="text" placeholder="Rechercher par ville, région ou nom..." [(ngModel)]="searchTerm"
+              <input type="text" placeholder="Rechercher vos sevices..." [(ngModel)]="searchTerm"
                 (input)="filterContactPoints()"
-                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#11845A] focus:border-transparent transition-all duration-200" />
+                class="pl-10 pr-4 py-3 w-full px-4 bg-white/20 backdrop-blur-sm border rounded-xl text-white placeholder-white/60 border-white/30 focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200" />
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+
+
+    <!-- Search and Filter Section -->
+
 
     <!-- Contact Points List -->
     <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-6">
       <div *ngFor="let point of filteredContactPoints"
-        class="group bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-        <!-- Header -->
-        <div class="flex items-start justify-between gap-2 mb-4">
-          <div class="bg-gradient-to-br from-green-light to-primary p-2 rounded-lg ">
-            <lucide-icon
-              [img]="point.icon"
-              size="16"
-              class="h-7 w-7 text-white"
-            ></lucide-icon>
-          </div>
-          <div class="flex-1">
-            <!-- <div class="flex items-center gap-x-2 mb-2">
+        class="group flex flex-col justify-between bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 min-h-[360px] max-h-[360px]">
+        <div class="flex flex-col items-start justify-between gap-2">
+          <!-- Header -->
+          <div class="flex items-start justify-between gap-2">
+            <div class="bg-gradient-to-br from-green-light to-primary p-2 rounded-lg ">
+              <lucide-icon [img]="textFileIcon" size="16" class="h-7 w-7 text-white"></lucide-icon>
+            </div>
+            <div class="flex-1">
+              <!-- <div class="flex items-center gap-x-2 mb-2">
               <span [class]="
                       'px-3 py-1 rounded-full text-xs font-semibold ' +
                       getTypeColor(point.type)
@@ -103,16 +101,18 @@
                 {{ point.region }}
               </span>
             </div> -->
-            <h3 class="text-base font-bold text-[#162233] group-hover:text-[#11845A] transition-colors">
-              {{ point.title }}
-            </h3>
+              <h3 class="text-base font-bold text-[#162233] group-hover:text-[#11845A] transition-colors">
+                {{ point?.name }}
+              </h3>
+            </div>
+
           </div>
 
+          <div>
+            <p [innerHTML]="truncatedText(point?.desc)" class="text-gray-600 text-sm leading-relaxed text-start"></p>
+          </div>
         </div>
 
-        <div>
-          <p class="text-gray-600 text-sm leading-relaxed text-start">{{ point.description }}</p>
-        </div>
 
 
 

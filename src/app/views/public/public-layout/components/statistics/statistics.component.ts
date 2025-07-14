@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PdaService } from '../../../../../core/services/pda.servic';
 
 interface Statistic {
   value: string;
@@ -17,7 +18,7 @@ interface Statistic {
   templateUrl: './statistics.component.html',
   styleUrls: ['./statistics.component.css']
 })
-export class StatisticsComponent {
+export class StatisticsComponent implements OnInit {
   stats: Statistic[] = [
     {
       value: '0',
@@ -48,4 +49,13 @@ export class StatisticsComponent {
       borderColor: 'border-slate-200!',
     }
   ];
+
+  constructor(private pdaService: PdaService){
+  }
+  ngOnInit(): void {
+    this.pdaService.getPrestationsStat().subscribe((res)=>{
+      console.log(res);
+    })
+  }
+
 }

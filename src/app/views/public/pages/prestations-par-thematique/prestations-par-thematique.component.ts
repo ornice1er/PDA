@@ -52,7 +52,7 @@ export class PrestationsParThematiqueComponent implements OnInit {
   constructor(private pdaService: PdaService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    window.scroll(0, 0);
+    // window.scroll(0, 0);
     this.thematiques = [{ id: 0, libelle: 'Toutes' }];
     this.pdaService.getThematiques().subscribe((res: any) => {
       this.thematiques = [...this.thematiques, ...res?.data];
@@ -90,6 +90,6 @@ export class PrestationsParThematiqueComponent implements OnInit {
   }
 
   onActivate() {
-    window.scroll(0, 0);
+    // window.scroll(0, 0);
   }
 }

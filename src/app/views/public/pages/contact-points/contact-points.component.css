@@ -23,3 +23,8 @@
 :host {
   font-family: 'Montserrat', sans-serif;
 }
+
+/* :host mgl-map {
+  height: 100%;
+  width: 100%;
+} */
