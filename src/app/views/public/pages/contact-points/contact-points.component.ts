@@ -11,7 +11,6 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PdaService } from '../../../../core/services/pda.servic';
-import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { environment } from '../../../../../environments/environment.prod';
 
 interface ContactPoint {
@@ -29,7 +28,7 @@ interface ContactPoint {
 @Component({
   selector: 'app-contact-points',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgxMapboxGLModule],
+  imports: [CommonModule, FormsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './contact-points.component.html',
   styleUrls: ['./contact-points.component.scss'],
@@ -40,7 +39,7 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
   selectedType = '';
   filteredContactPoints: any[] = [];
   @ViewChild('mapContainer') mapContainer!: ElementRef;
-  map:any;
+  map: any;
   private isBrowser: boolean;
   query: string = '';
   searchResults: any[] = [];
@@ -140,7 +139,8 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
 
   async ngAfterViewInit(): Promise<void> {
     if (!this.isBrowser) return;
-    const mapboxgl = await import('mapbox-gl');
+    const mapboxglModule = await import('mapbox-gl');
+    const mapboxgl = mapboxglModule.default;
     this.map = new mapboxgl.Map({
       container: this.mapContainer.nativeElement,
       style: 'mapbox://styles/schadrac-sode/cl6v4rrem000m14osw4s29xnr',
@@ -151,20 +151,18 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
 
     this.pdaService.getPDC().subscribe((res) => {
       console.log(res);
-
       this.contactPoints = res?.data;
       this.filteredContactPoints = [...this.contactPoints];
-      if(this.filteredContactPoints.length > 0){
-      this.filteredContactPoints.forEach((point) => {
-        console.log(this.convertToArray(point?.geolocalisation as string));
+      if (this.filteredContactPoints.length > 0) {
+        this.filteredContactPoints.forEach((point) => {
+          console.log(this.convertToArray(point?.geolocalisation as string));
 
-        const marker = new mapboxgl.Marker({ color: '#ff0000' })
-          .setLngLat(this.convertToArray(point?.geolocalisation as string))
-          .addTo(this.map);
-      });
-    }
+          const marker = new mapboxgl.Marker({ color: '#ff0000' })
+            .setLngLat(this.convertToArray(point?.geolocalisation as string))
+            .addTo(this.map);
+        });
+      }
     });
-
 
     // // Exemple de marker
     // new mapboxgl.Marker({ color: '#ff0000' })
@@ -172,19 +170,19 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
     //   .addTo(map);
   }
 
-   zoomTo(id: number) {
+  zoomTo(id: number) {
     const target = this.filteredContactPoints.find((l) => l.id === id);
     if (target && this.map) {
       this.map.flyTo({
         center: this.convertToArray(target?.geolocalisation as string),
         zoom: 12,
         speed: 1.6,
-        curve: 1.2
+        curve: 1.2,
       });
     }
   }
 
-  convertToArray(text:string): [number, number]{
+  convertToArray(text: string): [number, number] {
     const numbers = text.split(';');
     return [parseFloat(numbers[1]), parseFloat(numbers[0])];
   }
@@ -195,7 +193,7 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
         !this.searchTerm ||
         point.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         point.address.toLowerCase().includes(this.searchTerm.toLowerCase());
-        // point.region.toLowerCase().includes(this.searchTerm.toLowerCase());
+      // point.region.toLowerCase().includes(this.searchTerm.toLowerCase());
 
       // const matchesRegion =
       //   !this.selectedRegion || point.region === this.selectedRegion;
