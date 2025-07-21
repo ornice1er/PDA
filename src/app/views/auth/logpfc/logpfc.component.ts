@@ -99,8 +99,8 @@ export class LogpfcComponent implements OnInit {
               this.local_service.set(GlobalName.userNameMat, res.data);
               this.user = this.local_service.get(GlobalName.userNameMat);
               this.titleService.setUserConnectedState(this.user);
+              this.router.navigateByUrl('/admin/homepfc');
             });
-            this.router.navigateByUrl('/admin/homepfc');
           }
         },
         (err: any) => {

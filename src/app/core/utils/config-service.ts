@@ -38,7 +38,10 @@ export const ConfigService: any = {
       };
     }
     return {
-      headers: new HttpHeaders({}),
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
+      }),
     };
   },
   addAction(action: string) {

@@ -1,540 +1,645 @@
-<div class="row m-3">
-    <div class="col-md-12 mx-auto">
-        <p class="text-center"> <strong>Enregistrement des visites</strong> </p>
-        <div class="col-md-12 ml-2 mr-2">
-            <div class="card my-2">
-                <div class="card-header border-0">
-                    <div class="card-toolbar d-flex justify-content-between mt-4">
-                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
-                            <li class="nav-item">
-                                <span class="mr-2">{{dataReqrv.length}} élement(s) </span>
-                            </li>
-                            <li class="nav-item mr-2">
-                                <form>
-                                    <div class="form-group form-inline">
-                                        <input class="form-control form-control-sm form-control-sm-sm "
-                                            placeholder="Rechercher...." type="text" [(ngModel)]="searchTextReqrv"
-                                            name="searchTextReqrv" (keyup)="searchReqrv()" />
-                                    </div>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <span class="mr-2">Etat des visites satisfait : </span>
-                            </li>
-                            <li class="nav-item">
-                                <div class="form-group form-inline mr-2">
-                                    <div>
-                                        <select class="form-control form-control-sm form-control-sm-sm " name="selected_Status" (change)="searchReqrv()" [(ngModel)]="selected_satist" >
-                                            <option value="">Tout</option>
-                                            <option value="oui">Oui</option>
-                                            <option value="non">Non</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <span class="mr-2">Les dates non clôturées : </span>
-                            </li>
-                            <li class="nav-item">
-                                <div class="form-group form-inline">
-                                    <div class="col-sm-6">
-                                        <select name="jourclotu" id="jourclotu" [(ngModel)]="dateACloture" class="form-control form-control-sm" (change)="searchReqrv()" required>
-                                            <option value="" selected>Sélectionner une date </option>
-                                            <option [value]="le" *ngFor="let le of nbreDay">{{le | date:'dd/MM/yyy'}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div>
-                            <button *ngIf="nbreDay.length != 0" (click)="openEditModalCloture(addCloture)"  class=" mx-1 btn btn-sm btn-danger">Clôturer</button>
-                            <button (click)="openEditModalVisi(addrv)"  class=" mx-1 btn btn-sm btn-info">Ajouter une visite </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body pt-3 pb-0">
-                    <!--begin::Table-->
-                    <div class="table-responsive">
-                       <p> <strong> Liste des visites non clôturées</strong> </p>
-                    <table class="table table-bordered table-striped datatable  table-head-custom table-vertical-center"
-                        id="kt_datatable">
-                        <thead>
-                            <tr>
-                                <td class="left text-left" colspan="10">
-        
-                                    <button *ngIf="show_actionsrv" (click)="openEditModalrv(editrv)" title="Modifier la visite" class="btn mx-1 btn-xs btn-warning edit">Modifier
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil"
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                                        </svg>
-                                    </button>
-                                    <button *ngIf="show_actionsrv" title="Supprimer la visite" (click)="dropRequeteusagerrv()" class="btn mx-1 btn-xs btn-danger edit"> Supprimer
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
-                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th width="7%">Date Enreg.</th>
-                                <th width="15%">Nature visite</th>
-                                <th width="15%">Matricule / Téléphone</th>
-                                <th width="15%">Nom et prénom(s)</th>
-                                <th width="5%">Sigle Ministère</th>
-                                <th width="5%">Préoccupation</th>
-                                <th width="15%">Satisfait (Oui / Non)</th>
-                                <th width="15%">Motif</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let elrv of dataReqrv ; index as i">
-                                <td>
-                                    <span *ngIf="elrv.requete == null ">
-                                        <input type="radio" [value]="elrv" ngModel name="getrv" (change)="checkedReqrv($event,elrv)">
-                                    </span>
-                                </td>
-                                <td>{{elrv.created_at | date:'dd/MM/yyy'}} </td>
-                                <td>
-                                    <span *ngIf="elrv.plainte==0">Requête</span>
-                                    <span *ngIf="elrv.plainte==1">Plainte</span>
-                                    <span *ngIf="elrv.plainte==2">Demande d'information</span>
-                                </td>
-                                <td>{{elrv.matri_telep}} </td>
-                                <td>{{elrv.nom_prenom}} </td>
-                                <td>{{elrv.entite==null ? '--' : elrv.entite.sigle}} </td>
-                                <td>{{elrv.contenu_visite}} </td>
-                                <td class="text-center">
-                                    <span  class="badge badge-success" *ngIf="elrv.satisfait=='oui'">Oui</span>
-                                    <span class="badge badge-danger" *ngIf="elrv.satisfait=='non'">Non</span>
-                                    <button  *ngIf="elrv.satisfait=='non' && elrv.requete ==null" (click)="openEditModalAddRv(addRequete)"  (click)="checkedRv_Mat($event,elrv)" class="mx-1 btn btn-sm btn-info">Transferer vers mataccueil</button>
-                                    <span *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==0 && elrv.requete.reponseStructure == ''"> <br>1. En attente de transmission</span>
-                                    <span *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==1  && elrv.requete.reponseStructure == ''"> <br>1. En cours de traitement au {{elrv.requete.entite==null ? '--' : elrv.requete.entite.sigle}}</span>
-                                    <span *ngIf="elrv.requete != null && elrv.requete.reponseStructure != '' "><br>Réponse : {{elrv.requete.reponseStructure}} <span *ngIf="elrv.requete.fichier_joint">Fichier réponse : <a target="_blank" (click)="ChangerFile(elrv.requete.fichier_joint)" href="#">{{elrv.requete.fichier_joint}}</a></span></span>
-                                </td> 
-                                <td>{{elrv.observ_visite}} </td>
-                            </tr>
-                            <tr *ngIf="dataReqrv?.length==0">
-                                <td colspan="10" class="text-center bg-gray-100">Aucun élément</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-between p-2">
-                      
-                    </div>
-                </div>
-                <!--end::Table-->
-                </div>
-            </div>
+<div class="flex flex-col gap-8 w-full">
+  <div>
+    <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Enregistrement des visites</h2>
+
+  </div>
+  <div class="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 animate-in">
+    <div class="flex flex-row justify-between items-center">
+      <div class="flex flex-row justify-center items-center gap-4">
+        <span class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900">
+          {{dataReqrv.length}} élément(s)
+        </span>
+        <input class="px-3 py-2 border border-gray-300 outline-none rounded-md min-w-xs" placeholder="Rechercher...."
+          type="text" [(ngModel)]="searchTextReqrv" name="searchTextReqrv" (keyup)="searchReqrv()" />
+        <div class="flex flex-row justify-center items-center gap-2">
+          <label for="selected_Status" class="mr-2">Etat des visites satisfait : </label>
+          <div class="mt-2 grid grid-cols-1">
+            <select id="selected_Status"
+              class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              name="selected_Status" (change)="searchReqrv()" [(ngModel)]="selected_satist">
+              <option value="">Tout</option>
+              <option value="oui">Oui</option>
+              <option value="non">Non</option>
+            </select>
+            <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true"
+              class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
+              <path
+                d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                clip-rule="evenodd" fill-rule="evenodd" />
+            </svg>
+          </div>
         </div>
+      </div>
+
+      <button (click)="openEditModalVisi(addrv)" class=" mx-1 bg-primary text-white py-2 px-4 rounded-lg">Ajouter une
+        visite</button>
     </div>
+    <div class="space-y-4 mt-8">
+      <p> <strong> Liste des visites non clôturées</strong> </p>
+      <!--begin::Table-->
+      <div class="table-responsive">
+
+        <table class="w-full rounded-t-lg border-separate border-spacing-0" id="kt_datatable">
+          <thead class="bg-primary">
+            <!-- <tr>
+              <td class="left text-left" colspan="10">
+
+                <button *ngIf="show_actionsrv" (click)="openEditModalrv(editrv)" title="Modifier la visite"
+                  class="btn mx-1 btn-xs btn-warning edit">Modifier
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                      d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                  </svg>
+                </button>
+                <button *ngIf="show_actionsrv" title="Supprimer la visite" (click)="dropRequeteusagerrv()"
+                  class="btn mx-1 btn-xs btn-danger edit"> Supprimer
+                  <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                    <path fill-rule="evenodd"
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                  </svg>
+                </button>
+              </td>
+            </tr> -->
+            <tr>
+              <!-- <th></th> -->
+              <th width="7%"
+                class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary rounded-tl-lg">
+                Date Enreg.</th>
+              <th width="15%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Nature visite</th>
+              <th width="15%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Matricule / Téléphone</th>
+              <th width="15%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Nom et prénom(s)</th>
+              <th width="5%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Sigle Ministère</th>
+              <th width="5%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Préoccupation</th>
+              <th width="15%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Satisfait (Oui / Non)</th>
+              <th width="15%" class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Motif</th>
+              <th class="rounded-tr-lg py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="dataReqrv.length !== 0">
+            <tr *ngFor="let elrv of dataReqrv ; index as i">
+              <!-- <td>
+                <span *ngIf="elrv.requete == null ">
+                  <input type="radio" [value]="elrv" ngModel name="getrv" (change)="checkedReqrv($event,elrv)">
+                </span>
+              </td> -->
+              <td>{{elrv.created_at | date:'dd/MM/yyy'}} </td>
+              <td>
+                <span *ngIf="elrv.plainte==0">Requête</span>
+                <span *ngIf="elrv.plainte==1">Plainte</span>
+                <span *ngIf="elrv.plainte==2">Demande d'information</span>
+              </td>
+              <td>{{elrv.matri_telep}} </td>
+              <td>{{elrv.nom_prenom}} </td>
+              <td>{{elrv.entite==null ? '--' : elrv.entite.sigle}} </td>
+              <td>{{elrv.contenu_visite}} </td>
+              <td class="text-center">
+                <span class="badge badge-success" *ngIf="elrv.satisfait=='oui'">Oui</span>
+                <span class="badge badge-danger" *ngIf="elrv.satisfait=='non'">Non</span>
+                <button *ngIf="elrv.satisfait=='non' && elrv.requete ==null" (click)="openEditModalAddRv(addRequete)"
+                  (click)="checkedRv_Mat($event,elrv)" class="mx-1 btn btn-sm btn-info">Transferer vers
+                  mataccueil</button>
+                <span
+                  *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==0 && elrv.requete.reponseStructure == ''">
+                  <br>1. En attente de transmission</span>
+                <span
+                  *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==1  && elrv.requete.reponseStructure == ''">
+                  <br>1. En cours de traitement au {{elrv.requete.entite==null ? '--' :
+                  elrv.requete.entite.sigle}}</span>
+                <span *ngIf="elrv.requete != null && elrv.requete.reponseStructure != '' "><br>Réponse :
+                  {{elrv.requete.reponseStructure}} <span *ngIf="elrv.requete.fichier_joint">Fichier réponse : <a
+                      target="_blank" (click)="ChangerFile(elrv.requete.fichier_joint)"
+                      href="#">{{elrv.requete.fichier_joint}}</a></span></span>
+              </td>
+              <td>{{elrv.observ_visite}} </td>
+              <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
+                <div class="flex flex-row items-center justify-center space-x-4">
+                  <button (click)="openEditModalrv(editrv, elrv)" class="text-primary bg-primary/20 flex items-center justify-center rounded-full size-8">
+                    <span class="sr-only">Modifier</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+                      <path fill="none" stroke="currentColor"
+                        d="M4.5 17.207V19a.5.5 0 0 0 .5.5h1.793a.5.5 0 0 0 .353-.146l8.5-8.5l-2.5-2.5l-8.5 8.5a.5.5 0 0 0-.146.353ZM15.09 6.41l2.5 2.5l1.203-1.203a1 1 0 0 0 0-1.414l-1.086-1.086a1 1 0 0 0-1.414 0z" />
+                    </svg>
+                  </button>
+                  <button (click)="dropRequeteusagerrv(elrv)" class="text-red-500 bg-red-500/20 flex items-center justify-center rounded-full size-8">
+                    <span class="sr-only">Supprimer</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+                      <path fill="currentColor"
+                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2zM9 9h6c.55 0 1 .45 1 1v8c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1m6.5-5l-.71-.71c-.18-.18-.44-.29-.7-.29H9.91c-.26 0-.52.11-.7.29L8.5 4H6c-.55 0-1 .45-1 1s.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1z" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="dataReqrv.length === 0" class="divide-y divide-gray-300 bg-white">
+            <tr>
+              <td colspan="10" class="p-4 w-full whitespace-nowrap">
+                <div class="flex justify-center w-full items-center text-gray-800 text-center">
+                  <div *ngIf="!loading"
+                    class="flex flex-col justify-center w-full items-center text-gray-800 text-center space-y-3"><svg
+                      xmlns="http://www.w3.org/2000/svg" class="size-12 text-primary" viewBox="0 0 24 24">
+                      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1.5" color="currentColor">
+                        <path
+                          d="M18 15v7m3.5-3.5h-7M7 16h4m-4-5h8M6.5 3.5c-1.556.047-2.483.22-3.125.862c-.879.88-.879 2.295-.879 5.126v6.506c0 2.832 0 4.247.879 5.127C4.253 22 5.668 22 8.496 22H11.5m3.992-18.5c1.556.047 2.484.22 3.125.862c.88.88.88 2.295.88 5.126V12" />
+                        <path
+                          d="M6.496 3.75c0-.966.784-1.75 1.75-1.75h5.5a1.75 1.75 0 1 1 0 3.5h-5.5a1.75 1.75 0 0 1-1.75-1.75" />
+                      </g>
+                    </svg>
+                    <p class="font-avenirMedium text-sm">Aucune donnée</p>
+
+                  </div>
+                  <div *ngIf="loading"
+                    class="flex flex-col justify-center w-full items-center text-gray-800 text-center space-y-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-12 text-primary" viewBox="0 0 24 24">
+                      <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="1.2">
+                        <path stroke-dasharray="16" stroke-dashoffset="16" d="M12 3c4.97 0 9 4.03 9 9">
+                          <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="16;0" />
+                          <animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate"
+                            values="0 12 12;360 12 12" />
+                        </path>
+                        <path stroke-dasharray="64" stroke-dashoffset="64" stroke-opacity="0.2"
+                          d="M12 3c4.97 0 9 4.03 9 9c0 4.97 -4.03 9 -9 9c-4.97 0 -9 -4.03 -9 -9c0 -4.97 4.03 -9 9 -9Z">
+                          <animate fill="freeze" attributeName="stroke-dashoffset" dur="1.2s" values="64;0" />
+                        </path>
+                      </g>
+                    </svg>
+                    <p class="font-avenirMedium text-sm">Chargement en cours ...</p>
+
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+
+        </div>
+      </div>
+      <!--end::Table-->
+    </div>
+  </div>
 </div>
 
 <ng-template #addrv let-modal>
-    <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteRv(frmrequeteusager.value)" class="form-horizontal " novalidate="">
+  <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteRv(frmrequeteusager.value)" class="form-horizontal "
+    novalidate="">
 
-        <div class="modal-header bg-info">
-            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une visite à la date {{dateACloture == "" ? ' de ce jour' : dateACloture | date:'dd/MM/yyy' }}</h5>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                X
-            </button>
+    <div class="modal-header bg-primary flex justify-between items-center">
+      <h5 class="modal-title text-white" id="modal-basic-title">
+        Ajouter une visite à la date {{dateACloture == "" ? ' dece jour' : dateACloture | date:'dd/MM/yyy' }}</h5>
+      <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+
+
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation
+        </h4>
+        <div class="form-group row">
+          <label for="contactMatri" class="col-sm-2 control-label">Matricule / Contact </label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm has-error" id="contactMatri" name="contactMatri"
+              placeholder="" ngModel required>
+          </div>
+          <label for="plainterv" class="col-sm-2 control-label">Type :</label>
+          <div class="col-sm-4">
+            <select name="plainterv" id="plainterv" class="form-control form-control-sm" required ngModel>
+              <option disabled selected>Choisir</option>
+              <option value="0">Requête</option>
+              <option value="1">Plainte</option>
+              <option value="2">Demande d'information</option>
+            </select>
+          </div>
         </div>
-        <div class="modal-body">
-            <div style="color:red">{{errormessage}}</div>
-
-
-
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation</h4>
-                <div class="form-group row">
-                    <label for="contactMatri" class="col-sm-2 control-label">Matricule / Contact </label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control form-control-sm has-error" id="contactMatri"
-                            name="contactMatri" placeholder="" ngModel required>
-                    </div>
-                    <label for="plainterv" class="col-sm-2 control-label">Type :</label>
-                    <div class="col-sm-4">
-                        <select name="plainterv" id="plainterv" class="form-control form-control-sm" required ngModel>
-                            <option disabled selected>Choisir</option>
-                            <option value="0">Requête</option>
-                            <option value="1">Plainte</option>
-                            <option value="2">Demande d'information</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="nom_pre_rv" class="col-sm-2 control-label">Nom & prénom (s) :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm has-error" id="nom_pre_rv"
-                            name="nom_pre_rv" placeholder="" ngModel required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
-                    <div class="col-sm-10">
-                        <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                            ngModel={{user?.idEntite}}>
-                            <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-                        </select>
-                    </div>
-                </div> 
-                <div class="form-group row">
-                    <label for="preoccurv" class="col-sm-2 control-label">Préoccupation :</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm has-error" id="preoccurv"
-                            name="preoccurv" placeholder="" ngModel required>
-                    </div>
-                </div>
-
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Appréciation</h4>
-
-                <div class="form-group row">
-                    <label for="satisfaitrv" class="col-sm-2 control-label">Satisfait ? </label>
-                    <div class="col-sm-4">
-                        <select name="satisfaitrv" id="satisfaitrv" class="form-control form-control-sm" required ngModel>
-                            <option value="" selected>Choisir</option>
-                            <option value="oui">Oui</option>
-                            <option value="non">Non</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="observarv" class="col-sm-2 control-label">Observation :</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control form-control-sm has-error" id="observarv" name="observarv"
-                            placeholder="Noter les observations" ngModel required></textarea>
-                    </div>
-                </div>
-                
-            </fieldset>
+        <div class="form-group row">
+          <label for="nom_pre_rv" class="col-sm-2 control-label">Nom & prénom (s) :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm has-error" id="nom_pre_rv" name="nom_pre_rv"
+              placeholder="" ngModel required>
+          </div>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-info mx-1" id="btn-saverv"><i class="fas fa-save"></i>&nbsp;
-                Enregistrer</button>
+        <div class="form-group row">
+          <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
+          <div class="col-sm-10">
+            <select name="idEntite" id="idEntite" class="form-control form-control-sm" ngModel={{user?.idEntite}}>
+              <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+            </select>
+          </div>
         </div>
-    </form>
+        <div class="form-group row">
+          <label for="preoccurv" class="col-sm-2 control-label">Préoccupation :</label>
+
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm has-error" id="preoccurv" name="preoccurv"
+              placeholder="" ngModel required>
+          </div>
+        </div>
+
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Appréciation
+        </h4>
+
+        <div class="form-group row">
+          <label for="satisfaitrv" class="col-sm-2 control-label">Satisfait ? </label>
+          <div class="col-sm-4">
+            <select name="satisfaitrv" id="satisfaitrv" class="form-control form-control-sm" required ngModel>
+              <option value="" selected>Choisir</option>
+              <option value="oui">Oui</option>
+              <option value="non">Non</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="observarv" class="col-sm-2 control-label">Observation :</label>
+          <div class="col-sm-10">
+            <textarea class="form-control form-control-sm has-error" id="observarv" name="observarv"
+              placeholder="Noter les observations" ngModel required></textarea>
+          </div>
+        </div>
+
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn bg-primary mx-1 text-white" id="btn-saverv">
+        Enregistrer</button>
+    </div>
+  </form>
 </ng-template>
 
 <ng-template #addCloture let-modal>
-    <form #frmrequeteusager="ngForm" (ngSubmit)="addClotureRv(frmrequeteusager.value)" class="form-horizontal " novalidate="">
+  <form #frmrequeteusager="ngForm" (ngSubmit)="addClotureRv(frmrequeteusager.value)" class="form-horizontal "
+    novalidate="">
 
-        <div class="modal-header bg-info">
-            <h5 class="modal-title text-white" id="modal-basic-title">Clôturer les régistres du {{dateACloture | date:'dd/MM/yyy' }} </h5>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">X </button>
+    <div class="modal-header bg-primary flex justify-between items-center">
+      <h5 class="modal-title text-white" id="modal-basic-title">Clôturer les régistres du {{dateACloture |
+        date:'dd/MM/yyy' }} </h5>
+     <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Renseignez le
+          nombre de visite sur votre régistre physique</h4>
+        <div class="form-group row">
+          <label for="nbrevisite" class="col-sm-6 control-label">Nombre de visite :</label>
+          <div class="col-sm-6">
+            <input type="number" class="form-control form-control-sm has-error" id="nbrevisite" name="nbrevisite"
+              placeholder="" ngModel required>
+          </div>
         </div>
-        <div class="modal-body">
-            <div style="color:red">{{errormessage}}</div>
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Renseignez le nombre de visite sur votre régistre physique</h4>
-                <div class="form-group row">
-                    <label for="nbrevisite" class="col-sm-6 control-label">Nombre de visite :</label>
-                    <div class="col-sm-6">
-                        <input type="number" class="form-control form-control-sm has-error" id="nbrevisite"
-                            name="nbrevisite" placeholder="" ngModel required>
-                    </div>
-                </div>
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Prendre une photo de votre régistre physique et joindre</h4>
-                <div class="row form-group">
-                    <label for="message" class="col-md-2 ">Photo Jointe</label>
-                    <div class="col-md-10">
-                      <input type="file" class="form-control" (change)="onFileChange($event)" #file="ngModel" name="fichier" ngModel required>
-                    </div>
-                  </div>
-                
-            </fieldset>
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Prendre une
+          photo de votre régistre physique et joindre</h4>
+        <div class="row form-group">
+          <label for="message" class="col-md-2 ">Photo Jointe</label>
+          <div class="col-md-10">
+            <input type="file" class="form-control" (change)="onFileChange($event)" #file="ngModel" name="fichier"
+              ngModel required>
+          </div>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-danger mx-1" id="btn-saverv"><i class="fas fa-save"></i>&nbsp;Clôturer</button>
-        </div>
-    </form>
+
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger mx-1" id="btn-saverv"><i
+          class="fas fa-save"></i>&nbsp;Clôturer</button>
+    </div>
+  </form>
 </ng-template>
 
 <ng-template #editrv let-modal>
-    <form #frmrequeteusager="ngForm" (ngSubmit)="UpdateRequeteRv(frmrequeteusager.value)" class="form-horizontal"
-        novalidate="">
+  <form #frmrequeteusager="ngForm" (ngSubmit)="UpdateRequeteRv(frmrequeteusager.value)" class="form-horizontal"
+    novalidate="">
 
-        <div class="modal-header bg-info">
-            <h5 class="modal-title text-white" id="modal-basic-title">Modifier une visite</h5>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                X
-            </button>
+    <div class="modal-header bg-primary flex justify-between items-center">
+      <h5 class="modal-title text-white" id="modal-basic-title">Modifier une visite</h5>
+      <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation
+        </h4>
+        <div class="form-group row">
+          <label for="contactMatri" class="col-sm-2 control-label">Matricule / Contact </label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm has-error" id="contactMatri" name="contactMatri"
+              placeholder="" ngModel required value="{{selected_data_reqrv.matri_telep}}"
+              [(ngModel)]="selected_data_reqrv.matri_telep">
+          </div>
+          <label for="plainterv" class="col-sm-2 control-label">Type :</label>
+          <div class="col-sm-4">
+            <select name="plainterv" id="plainterv" class="form-control form-control-sm" required
+              [(ngModel)]="selected_data_reqrv.plainte">
+              <option disabled selected>Choisir</option>
+              <option value="0">Requête</option>
+              <option value="1">Plainte</option>
+              <option value="2">Demande d'information</option>
+            </select>
+          </div>
         </div>
-        <div class="modal-body">
-            <div style="color:red">{{errormessage}}</div>
-
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation</h4>
-                <div class="form-group row">
-                    <label for="contactMatri" class="col-sm-2 control-label">Matricule / Contact </label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control form-control-sm has-error" id="contactMatri"
-                            name="contactMatri" placeholder="" ngModel required value="{{selected_data_reqrv.matri_telep}}" [(ngModel)]="selected_data_reqrv.matri_telep">
-                    </div>
-                    <label for="plainterv" class="col-sm-2 control-label">Type :</label>
-                    <div class="col-sm-4">
-                        <select name="plainterv" id="plainterv" class="form-control form-control-sm" required [(ngModel)]="selected_data_reqrv.plainte">
-                            <option disabled selected>Choisir</option>
-                            <option value="0">Requête</option>
-                            <option value="1">Plainte</option>
-                            <option value="2">Demande d'information</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="nom_pre_rv" class="col-sm-2 control-label">Nom & prénom (s) :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm has-error" id="nom_pre_rv"
-                            name="nom_pre_rv" placeholder="" ngModel required value="{{selected_data_reqrv.nom_prenom}}"  [(ngModel)]="selected_data_reqrv.nom_prenom">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
-                    <div class="col-sm-10">
-                        <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                            [(ngModel)]="selected_data_reqrv.idEntite">
-                            <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-                        </select>
-                    </div>
-                </div> 
-                <div class="form-group row">
-                    <label for="preoccurv" class="col-sm-2 control-label">Préoccupation :</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm has-error" id="preoccurv"
-                            name="preoccurv" placeholder="" ngModel required value="{{selected_data_reqrv.contenu_visite}}"  [(ngModel)]="selected_data_reqrv.contenu_visite">
-                    </div>
-                </div>
-
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Appréciation</h4>
-
-                <div class="form-group row">
-                    <label for="satisfaitrv" class="col-sm-2 control-label">Satisfait ? </label>
-                    <div class="col-sm-4">
-                        <select name="satisfaitrv" id="satisfaitrv" class="form-control form-control-sm" required ngModel [(ngModel)]="selected_data_reqrv.satisfait">
-                            <option value="" selected>Choisir</option>
-                            <option value="oui">Oui</option>
-                            <option value="non">Non</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="observarv" class="col-sm-2 control-label">Observation :</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control form-control-sm has-error" id="observarv" name="observarv"
-                            placeholder="Noter les observations" ngModel required value="{{selected_data_reqrv.observ_visite}}"  [(ngModel)]="selected_data_reqrv.observ_visite"></textarea>
-                    </div>
-                </div>
-            </fieldset>
+        <div class="form-group row">
+          <label for="nom_pre_rv" class="col-sm-2 control-label">Nom & prénom (s) :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm has-error" id="nom_pre_rv" name="nom_pre_rv"
+              placeholder="" ngModel required value="{{selected_data_reqrv.nom_prenom}}"
+              [(ngModel)]="selected_data_reqrv.nom_prenom">
+          </div>
         </div>
-        <div class="modal-footer">
-
-            <button type="submit" class="btn btn-warning mx-1"><i class="bi bi-pencil"></i>&nbsp;
-                Modifier</button>
+        <div class="form-group row">
+          <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
+          <div class="col-sm-10">
+            <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+              [(ngModel)]="selected_data_reqrv.idEntite">
+              <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+            </select>
+          </div>
         </div>
-    </form>
+        <div class="form-group row">
+          <label for="preoccurv" class="col-sm-2 control-label">Préoccupation :</label>
+
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm has-error" id="preoccurv" name="preoccurv"
+              placeholder="" ngModel required value="{{selected_data_reqrv.contenu_visite}}"
+              [(ngModel)]="selected_data_reqrv.contenu_visite">
+          </div>
+        </div>
+
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Appréciation
+        </h4>
+
+        <div class="form-group row">
+          <label for="satisfaitrv" class="col-sm-2 control-label">Satisfait ? </label>
+          <div class="col-sm-4">
+            <select name="satisfaitrv" id="satisfaitrv" class="form-control form-control-sm" required ngModel
+              [(ngModel)]="selected_data_reqrv.satisfait">
+              <option value="" selected>Choisir</option>
+              <option value="oui">Oui</option>
+              <option value="non">Non</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="observarv" class="col-sm-2 control-label">Observation :</label>
+          <div class="col-sm-10">
+            <textarea class="form-control form-control-sm has-error" id="observarv" name="observarv"
+              placeholder="Noter les observations" ngModel required value="{{selected_data_reqrv.observ_visite}}"
+              [(ngModel)]="selected_data_reqrv.observ_visite"></textarea>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+
+      <button type="submit" class="btn btn-warning mx-1"><i class="bi bi-pencil"></i>&nbsp;
+        Modifier</button>
+    </div>
+  </form>
 
 </ng-template>
 
 <ng-template #addRequete let-modal>
-    <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value)" class="form-horizontal " novalidate="">
+  <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value)" class="form-horizontal "
+    novalidate="">
 
-        <div class="modal-header bg-info">
-            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une Préoccupation</h5>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                X
-            </button>
+    <div class="modal-header bg-primary flex justify-between items-center">
+      <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une Préoccupation</h5>
+      <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal
+          communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4>
+
+      </fieldset>
+
+      <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Discussions
+          WhatsApp</h4>
+        <div>N° WhatsApp : {{selected_data_Whats.numerowhatsapp}}</div>
+        <div>Discussions : {{selected_data_Whats.discussions}}</div>
+      </fieldset>
+
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation
+        </h4>
+        <div class="form-group row">
+          <label for="contactUs" class="col-sm-2 control-label">Contact :</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm has-error" id="contactUs" name="contactUs"
+              placeholder="" ngModel required value="{{selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep}}"
+              [(ngModel)]="selected_data_rvMat">
+          </div>
+          <label for="mailUs" class="col-sm-2 control-label">E-mail :</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm has-error" id="mailUs" name="mailUs" placeholder=""
+              ngModel required>
+          </div>
         </div>
-        <div class="modal-body">
-            <div style="color:red">{{errormessage}}</div>
+        <div class="form-group row">
+          <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
+          <div class="col-sm-10">
+            <select name="idEntite" id="idEntite" class="form-control form-control-sm" ngModel={{user?.idEntite}}
+              [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
+              <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="plainte" class="col-sm-2 control-label">Type :</label>
+          <div class="col-sm-4">
+            <select name="plainte" id="plainte" class="form-control form-control-sm" required
+              [(ngModel)]="selected_type_preoccupation">
+              <option disabled selected>Choisir</option>
+              <!-- <option value="0">Requete</option>agent_user -->
+              <option value="1">Plainte</option>
+              <option value="2">Demande d'information</option>
+            </select>
+          </div>
+        </div>
 
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4> 
+        <div class="form-group row" *ngIf="selected_type_preoccupation!=0">
+          <label for="plainte" class="col-sm-6 control-label">Préoccupation liée à une prestation :</label>
+          <div class="col-sm-2">
+            <label for=""> Oui <input type="radio" value="1" [(ngModel)]="link_to_prestation" name="link_to_prestation">
+            </label>
+          </div>
+          <div class="col-sm-2">
+            <label for=""> Non <input type="radio" value="0" [(ngModel)]="link_to_prestation" name="link_to_prestation">
+            </label>
+          </div>
+        </div>
 
-            </fieldset>
+        <div class="form-group row" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
 
-            <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Discussions WhatsApp</h4> 
-                <div>N° WhatsApp : {{selected_data_Whats.numerowhatsapp}}</div>
-                <div>Discussions : {{selected_data_Whats.discussions}}</div>
-            </fieldset>
+          <label for="idType" class="col-sm-2 control-label">Thématique :</label>
+          <div class="col-sm-4">
+            <select name="idType" id="idType" required class="form-control form-control-sm" required ngModel
+              (change)="chargerPrestation($event)">
+              <option disabled selected>Choisir</option>
+              <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+            </select>
+          </div>
 
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation</h4>
-                <div class="form-group row">
-                    <label for="contactUs" class="col-sm-2 control-label">Contact :</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control form-control-sm has-error" id="contactUs"
-                            name="contactUs" placeholder="" ngModel required value="{{selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep}}" [(ngModel)]="selected_data_rvMat">
-                    </div>
-                    <label for="mailUs" class="col-sm-2 control-label">E-mail :</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control form-control-sm has-error" id="mailUs"
-                            name="mailUs" placeholder="" ngModel required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
-                    <div class="col-sm-10">
-                        <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                            ngModel={{user?.idEntite}} [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
-                            <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-                        </select>
-                    </div>
-                </div> 
-                <div class="form-group row">
-                    <label for="plainte" class="col-sm-2 control-label">Type :</label>
-                    <div class="col-sm-4">
-                        <select name="plainte" id="plainte" class="form-control form-control-sm"
-                            required [(ngModel)]="selected_type_preoccupation">
-                            <option disabled selected>Choisir</option>
-                            <!-- <option value="0">Requete</option>agent_user -->
-                            <option value="1">Plainte</option>
-                            <option value="2">Demande d'information</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group row" *ngIf="selected_type_preoccupation!=0">
-                    <label for="plainte" class="col-sm-6 control-label">Préoccupation liée à une prestation  :</label>
-                    <div class="col-sm-2">
-                    <label for=""> Oui  <input type="radio" value="1" [(ngModel)]="link_to_prestation" name="link_to_prestation"> </label>
-                    </div>
-                    <div class="col-sm-2">
-                        <label for=""> Non <input type="radio" value="0" [(ngModel)]="link_to_prestation" name="link_to_prestation"> </label>
-                    </div>
-                </div>
-                
-                <div class="form-group row"  *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
-                    
-                    <label for="idType" class="col-sm-2 control-label">Thématique :</label>
-                    <div class="col-sm-4">
-                        <select name="idType" id="idType" required class="form-control form-control-sm" required
-                            ngModel (change)="chargerPrestation($event)">
-                            <option disabled selected>Choisir</option>
-                            <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
-                        </select>
-                    </div>
-                
-                    <label for="objet" class="col-sm-2 control-label" *ngIf="mat_aff">Matricule : </label>
-                    <div class="col-sm-4" *ngIf="mat_aff">
-                        <input type="text" class="form-control form-control-sm has-error" id="matricule" name="matricule" ngModel>
-                    </div>
-                    <!-- <label for="objet" class="col-sm-2 control-label">Description : </label>
+          <label for="objet" class="col-sm-2 control-label" *ngIf="mat_aff">Matricule : </label>
+          <div class="col-sm-4" *ngIf="mat_aff">
+            <input type="text" class="form-control form-control-sm has-error" id="matricule" name="matricule" ngModel>
+          </div>
+          <!-- <label for="objet" class="col-sm-2 control-label">Description : </label>
                     <div class="col-sm-4">
                         <textarea type="text" disabled="disabled" class="form-control" id="descr"   name="descr" placeholder="Description de la thématique" ngModel  value="{{descrCarr}}"></textarea>
                     </div> -->
-                </div>
-                <div class="form-group row"  *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
-                    <label for="idPrestation" required class="col-sm-2 control-label">Prestation :</label>
-                    <div class="col-sm-10">
-                        <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm"
-                            ngModel (change)="openDetailModal($event, detailPresta)">
-                            <option disabled selected>Choisir</option>
-                            <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="objet" class="col-sm-2 control-label">Objet :</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control form-control-sm has-error" id="objet"
-                            name="objet" placeholder="" ngModel required [(ngModel)]="selected_data_rvMat">
-                    </div>
-                </div>
-
-
-                <div class="form-group row">
-                    <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
-                            placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
-                    </div>
-                </div>
-            </fieldset>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-info mx-1" id="btn-save"><i class="fas fa-save"></i>&nbsp;
-                Enregistrer</button>
-                <button type="submit" (click)="setVisible()" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;
-                    Transmettre</button>
+        <div class="form-group row" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+          <label for="idPrestation" required class="col-sm-2 control-label">Prestation :</label>
+          <div class="col-sm-10">
+            <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm" ngModel
+              (change)="openDetailModal($event, detailPresta)">
+              <option disabled selected>Choisir</option>
+              <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+            </select>
+          </div>
         </div>
-    </form>
+
+        <div class="form-group row">
+          <label for="objet" class="col-sm-2 control-label">Objet :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm has-error" id="objet" name="objet" placeholder=""
+              ngModel required [(ngModel)]="selected_data_rvMat">
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
+          <div class="col-sm-10">
+            <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
+              placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-info mx-1" id="btn-save"><i class="fas fa-save"></i>&nbsp;
+        Enregistrer</button>
+      <button type="submit" (click)="setVisible()" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;
+        Transmettre</button>
+    </div>
+  </form>
 </ng-template>
 
 <ng-template #addAnswer let-modal>
-    <form #frmReponse="ngForm" (ngSubmit)="addReponse(frmReponse.value)" class="form-horizontal " novalidate="">
+  <form #frmReponse="ngForm" (ngSubmit)="addReponse(frmReponse.value)" class="form-horizontal " novalidate="">
 
-        <div class="modal-header bg-secondary">
-            <h5 class="modal-title text-white" id="modal-basic-title">Donner une réponse à cette discussion</h5>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                X
-            </button>
+    <div class="modal-header bg-primary flex justify-between items-center">
+      <h5 class="modal-title text-white" id="modal-basic-title">Donner une réponse à cette discussion</h5>
+      <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal
+          communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4>
+      </fieldset>
+
+      <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Discussions
+          WhatsApp</h4>
+        <div>N° WhatsApp : {{selected_data_Whats.numerowhatsapp}}</div>
+        <div>Discussions : {{selected_data_Whats.discussions}}</div>
+      </fieldset>
+
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Projet de
+          réponse </h4>
+        <div class="form-group row">
+          <label for="objet" class="col-sm-3 control-label">Votre réponse : (*)</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control form-control-sm has-error" id="reponse_whats" name="reponse_whats"
+              placeholder="" ngModel required>
+          </div>
         </div>
-        <div class="modal-body">
-            <div style="color:red">{{errormessage}}</div>
-
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4> 
-            </fieldset>
-
-            <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Discussions WhatsApp</h4> 
-                <div>N° WhatsApp : {{selected_data_Whats.numerowhatsapp}}</div>
-                <div>Discussions : {{selected_data_Whats.discussions}}</div>
-            </fieldset>
-
-            <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Projet de réponse </h4>
-                <div class="form-group row">
-                    <label for="objet" class="col-sm-3 control-label">Votre réponse : (*)</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control form-control-sm has-error" id="reponse_whats" name="reponse_whats" placeholder="" ngModel required>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <label for="message" class="col-md-3 ">Pièce Jointe</label>
-                    <div class="col-md-9">
-                      <input type="file" class="form-control" (change)="onFileChange($event)" #file="ngModel" name="fichier" ngModel>
-                    </div>
-                </div>
-            </fieldset>
+        <div class="row form-group">
+          <label for="message" class="col-md-3 ">Pièce Jointe</label>
+          <div class="col-md-9">
+            <input type="file" class="form-control" (change)="onFileChange($event)" #file="ngModel" name="fichier"
+              ngModel>
+          </div>
         </div>
-        <div class="modal-footer">
-            <button type="submit" class="btn btn-secondary mx-1" id="btn-save"><i class="fas fa-save"></i>&nbsp;Répondre</button>
-        </div>
-    </form>
+      </fieldset>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-secondary mx-1" id="btn-save"><i
+          class="fas fa-save"></i>&nbsp;Répondre</button>
+    </div>
+  </form>
 </ng-template>
 
 <ng-template #detailPresta let-modal>
-    <form #frmrdv="ngForm"  class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
-        <div class="modal-header bg-info">
-            <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+  <form #frmrdv="ngForm" class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
+    <div class="modal-header bg-primary flex justify-between items-center">
+      <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
+      <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <label> Prestation : </label>
+      <div class="form-group row">
+        <label class="col-sm-10" style="padding-right:0px;"> {{ depi.libelle }} </label>
+      </div><br />
+      <div class="form-group row">
+        <label class="col-sm-3"> Structure : </label>
+        <div class="col-sm-9">{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}
         </div>
-        <div class="modal-body">
-            <label > Prestation : </label>
-            <div class="form-group row" >
-                <label class="col-sm-10" style="padding-right:0px;" > {{ depi.libelle }} </label>
-            </div><br/>
-            <div class="form-group row" >
-                <label class="col-sm-3" > Structure : </label>
-                <div class="col-sm-9" >{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}</div>
-            </div><br/>
-            <div class="form-group row" >
-                <label for="objet" class="col-sm-2">Délai : </label>
-                <div class="col-sm-10" >{{ depi.delai }}</div>
-            </div><br/>
-            <label for="objet" class="col-sm-12">Liste des pièces : </label>
-            <ul class="col-sm-12">
-            <li *ngFor="let piece of depi.listepieces ; index as y " style="margin-bottom: 10px; list-style: none;">{{ y+1}}. {{ piece.libellePiece }} </li>
-            </ul>
-        </div>
-    </form>
+      </div><br />
+      <div class="form-group row">
+        <label for="objet" class="col-sm-2">Délai : </label>
+        <div class="col-sm-10">{{ depi.delai }}</div>
+      </div><br />
+      <label for="objet" class="col-sm-12">Liste des pièces : </label>
+      <ul class="col-sm-12">
+        <li *ngFor="let piece of depi.listepieces ; index as y " style="margin-bottom: 10px; list-style: none;">{{y+1}}.
+          {{ piece.libellePiece }} </li>
+      </ul>
+    </div>
+  </form>
 </ng-template>

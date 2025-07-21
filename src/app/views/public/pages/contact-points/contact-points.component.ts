@@ -39,6 +39,7 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
   selectedType = '';
   filteredContactPoints: any[] = [];
   @ViewChild('mapContainer') mapContainer!: ElementRef;
+  @ViewChild('mapSection') mapSection!: ElementRef;
   map: any;
   private isBrowser: boolean;
   query: string = '';
@@ -171,6 +172,7 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
   }
 
   zoomTo(id: number) {
+    this.mapSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
     const target = this.filteredContactPoints.find((l) => l.id === id);
     if (target && this.map) {
       this.map.flyTo({

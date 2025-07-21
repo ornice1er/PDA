@@ -22,6 +22,7 @@ export class HomepfcComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Espace Point Focal Communal');
     this.user = this.local_service.get(GlobalName.userNameMat);
+    console.log(this.user);
     if (this.user) {
       this.titleService.setUserConnectedState(this.user);
       if (this.user?.agent_user?.categorie_acteur === 'Mairie') {

@@ -1,181 +1,481 @@
-
-<div class="bg-body-tertiary p-5">
-    <h1 class="mb-3 meb blueColorT text-center" >SOUMETTRE UNE PREOCCUPATION INSTANTANNEE</h1>
-
-    <div class="container bg-white py-5">    
-        <div class="row mb-3 no-gutters">
-            <div class="col-8 mx-auto shadow p-3 mb-5 bg-white rounded">
-                <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value,frmrequeteusager)" class="form-horizontal " novalidate="">
-        
-                        <div style="color:red">{{errormessage}}</div>
-                        <div class="form-group row mb-3">
-                            <label for="plainte" class="col-sm-6 control-label">Etes vous agent de l'état ? :</label>
-                            <div class="col-sm-2">
-                            <label for=""> Oui  <input type="radio" [value]="1" [(ngModel)]="is_administrative_officer" name="is_administrative_officer"> </label>
-                            </div>
-                            <div class="col-sm-2">
-                                <label for=""> Non <input type="radio" [value]="0" [(ngModel)]="is_administrative_officer" name="is_administrative_officer"> </label>
-                            </div>
-                        </div>
-            
-                        <fieldset>
-                         <div class="row mb-3">
-                            <div *ngIf="is_administrative_officer==1" class="form-group col-12 col-md-6 mb-3">
-                                <label  for="mailUs" class=" control-label">Matricule :</label>
-                                <div class="">
-                                    <input   type="text" class="form-control form-control-sm has-error" id="mailUs"
-                                        name="matricule" placeholder="" ngModel required>
-                                </div>
-                            </div>
-                            <div class="form-group col-12 col-md-6 mb-3">
-                                <label for="contactUs" class=" control-label">Nom :</label>
-                                <div class="">
-                                    <input type="text" class="form-control form-control-sm has-error" id="contactUs"
-                                        name="lastname" placeholder="" ngModel required>
-                                </div>
-                            </div>
-                            <div class="form-group col-12 col-md-6 mb-3">
-                                <label for="contactUs" class=" control-label">Prénom(s) :</label>
-                                <div class="">
-                                    <input type="text" class="form-control form-control-sm has-error" id="contactUs"
-                                        name="firstname" placeholder="" ngModel required>
-                                </div>
-                            </div>
-                            <div class="form-group col-12 col-md-6 mb-3">
-                                <label for="contactUs" class="control-label">Contact :</label>
-                                <div class="">
-                                    <input type="text" class="form-control form-control-sm has-error" id="contactUs"
-                                        name="phone" placeholder="" ngModel required >
-                                </div>
-                            </div>
-                            <div class="form-group col-12 col-md-6 mb-3">
-                                <label for="mailUs" class="control-label">E-mail :</label>
-                                <div class="">
-                                    <input type="email" class="form-control form-control-sm has-error" id="mailUs"
-                                        name="email" placeholder="" ngModel required>
-                                        <span class="text-muted helper-text text-danger"><small>Important pour recevoir la réponse à votre préoccupation</small></span>
-                                </div>
-                            </div>
-                         </div>
-                          
-                           
-                        </fieldset>
-                        <fieldset class="divusager">
-            
-                            
-                            <div class="form-group mb-3">
-                                <label for="idEntite" class="">A quelle entité (Ministère ou Institution) s'adresse votre préoccupation ?</label>
-                                <div class="">
-                                    <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                                       [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
-                                        <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-                                    </select>
-                                </div>
-                            </div> 
-                            <div class="form-group mb-3">
-                                <label for="plainte" class=" control-label">Type de préoccupation:</label>
-                                <div class="">
-                                    <select name="plainte" id="plainte" class="form-control form-control-sm"
-                                        required [(ngModel)]="selected_type_preoccupation">
-                                        <option disabled selected>Choisir</option>
-                                        <!-- <option value="0">Requete</option>agent_user -->
-                                        <option value="1">Plainte</option>
-                                        <option value="2">Demande d'information</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row mb-3" *ngIf="selected_type_preoccupation!=0">
-                                <label for="plainte" class="col-sm-6 control-label">Préoccupation liée à une prestation  :</label>
-                                <div class="col-sm-2">
-                                <label for=""> Oui  <input type="radio" value="1" [(ngModel)]="link_to_prestation" name="link_to_prestation"> </label>
-                                </div>
-                                <div class="col-sm-2">
-                                    <label for=""> Non <input type="radio" value="0" [(ngModel)]="link_to_prestation" name="link_to_prestation"> </label>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-3">
-                                <div class="form-group col-6"  *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
-                                
-                                    <label for="idType" class=" control-label">Catégorie de la prestation :</label>
-                                    <div class="">
-                                        <select name="idType" id="idType" required class="form-control form-control-sm" required
-                                            ngModel (change)="chargerPrestation($event)">
-                                            <option disabled selected>Choisir</option>
-                                            <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group col-6"  *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
-                                    <label for="idPrestation" required class=" control-label">Prestation :</label>
-                                    <div class="">
-                                        <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm"
-                                            ngModel (change)="openDetailModal($event, detailPresta)">
-                                            <option disabled selected>Choisir</option>
-                                            <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="form-group mb-3">
-                                <label for="objet" class="control-label">Objet de la préoccupation:</label>
-                                <div class="">
-                                    <input type="text" class="form-control form-control-sm has-error" id="objet"
-                                        name="objet" placeholder="" ngModel required [(ngModel)]="selected_data_rvMat">
-                                </div>
-                            </div>
-            
-            
-                            <div class="form-group mb-3">
-                                <label for="msgrequest" class="control-label">Préoccupation :</label>
-                                <div class="">
-                                    <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
-                                        placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" ngModel [value]="1" name="has_consent" id="flexRadioCheckedDisabled">
-                            <label class="form-check-label" for="flexRadioCheckedDisabled">
-                            Je donne librement mon consentement pour la collecte et le traitement de mes données personnelles dans le cadre de l’enregistrement et le traitement de ma préoccupation
-                            </label>
-                            </div>
-                           <button type="submit" [disabled]="loading" class="btn blueColor text-white btn-sm mx-1 mb-3" id="btn-save"><i class="fas fa-save"></i>&nbsp;
-                            Soumettre</button>
-        
-                            <p><b>NB:</b> Pour le suivi de vos préoccupations, veuillez vous inscrire pour disposer d'un espace personnalisé. <a routerLink="/register">Cliquez ici</a></p>
-                </form>
-            </div>
-        </div>
+<section
+  class="relative bg-gradient-to-br from-[#11845A] via-[#023E79] to-[#162233] text-white overflow-hidden min-h-sm">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-20 left-20 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-3xl opacity-5">
     </div>
-</div>
+  </div>
+
+  <div class="relative container mx-auto px-4 py-16 lg:py-16 flex items-center justify-center">
+    <div class="w-full max-w-xl">
+      <!-- Header -->
+      <div class="text-center mb-8 flex flex-col gap-y-3 w-full">
+        <h1 class="text-3xl lg:text-3xl font-bold  gap-x-2 w-full">
+          SOUMETTRE UNE
+          <span class="bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+            PREOCCUPATION INSTANTANNEE
+          </span>
+        </h1>
+        <!-- <p class="text-white/90 leading-relaxed">Prestations par thématiques</p> -->
+      </div>
+
+      <!-- Stepper -->
+      <div class="mb-8">
+        <div class="flex items-center justify-center gap-x-4">
+          <div class="flex items-center">
+            <div [class]="
+                    'w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ' +
+                    (currentStep === 1
+                      ? 'bg-yellow-400 text-[#162233]'
+                      : 'bg-white/20 text-white')
+                  ">
+              1
+            </div>
+            <span [class]="
+                    'ml-2 text-sm font-medium ' +
+                    (currentStep === 1 ? 'text-yellow-300' : 'text-white/60')
+                  ">
+              Informations personnelles
+            </span>
+          </div>
+          <div class="w-12 h-0.5 bg-white/30"></div>
+          <div class="flex items-center">
+            <div [class]="
+                    'w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ' +
+                    (currentStep === 2
+                      ? 'bg-yellow-400 text-[#162233]'
+                      : 'bg-white/20 text-white')
+                  ">
+              2
+            </div>
+            <span [class]="
+                    'ml-2 text-sm font-medium ' +
+                    (currentStep === 2 ? 'text-yellow-300' : 'text-white/60')
+                  ">
+              Informations de la preoccupation
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration Form -->
+      <div class="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-8 shadow-2xl">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <!-- Step 1: Personal Information -->
+          <div *ngIf="currentStep === 1" class="flex flex-col gap-y-6">
+            <h3 class="text-lg font-semibold text-yellow-300 mb-6 flex items-center gap-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </g>
+              </svg>
+              <span>Informations personnelles</span>
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <!-- Nom -->
+              <div>
+                <label for="nom" class="block text-sm font-medium text-white/90 mb-2">
+                  Noms et Prénoms <span class="text-yellow-300">*</span>
+                </label>
+                <input type="text" id="nom" formControlName="nom" [class]="
+                        'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                        (isFieldInvalid('nom')
+                          ? 'border-red-400'
+                          : 'border-white/30')
+                      " placeholder="Votre nom" />
+                <div *ngIf="isFieldInvalid('nom')" class="text-red-300 text-xs mt-1">
+                  Le nom est requis
+                </div>
+              </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Date de naissance -->
+              <div>
+                <label for="email" class="block text-sm font-medium text-white/90 mb-2">
+                  Email <span class="text-yellow-300">*</span>
+                </label>
+                <input type="email" id="email" formControlName="email" [class]="
+                      'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                      (isFieldInvalid('email')
+                        ? 'border-red-400'
+                        : 'border-white/30')
+                    " placeholder="votre.email@exemple.com" />
+                <div *ngIf="isFieldInvalid('email')" class="text-red-300 text-xs mt-1">
+                  <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis</span>
+                  <span *ngIf="registerForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+                </div>
+              </div>
+
+              <!-- Téléphone -->
+              <div>
+                <label for="tel" class="block text-sm font-medium text-white/90 mb-2">
+                  Téléphone <span class="text-yellow-300">*</span>
+                </label>
+                <input type="tel" id="tel" formControlName="tel" [class]="
+                        'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                        (isFieldInvalid('tel')
+                          ? 'border-red-400'
+                          : 'border-white/30')
+                      " placeholder="+22901XXXXXXXX" />
+                <div *ngIf="isFieldInvalid('phone')" class="text-red-300 text-xs mt-1">
+                  <span *ngIf="registerForm.get('tel')?.errors?.['required']">Le téléphone est requis</span>
+                  <span *ngIf="registerForm.get('tel')?.errors?.['pattern']">Format de téléphone invalide</span>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Type d'utilisateur -->
+              <div>
+                <label class="block text-sm font-medium text-white/90 mb-3">Etes vous agent de l'état ? <span
+                    class="text-yellow-300">*</span></label>
+                <div class="flex flex-wrap gap-3">
+                  <label *ngFor="let type of status"
+                    class="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20 hover:bg-white/20 transition-all cursor-pointer">
+                    <p-radioButton [inputId]="type.id" [value]="type.id" formControlName="is_administrative_officer" />
+                    <span class="ml-2 text-white">{{type?.name}}</span>
+                  </label>
+                </div>
+                <div *ngIf="isFieldInvalid('is_administrative_officer')" class="text-red-300 text-xs mt-1">
+                  Veuillez sélectionner si vous etes agent
+                </div>
+              </div>
+
+              <div *ngIf="registerForm.get('is_administrative_officer')?.value === 1">
+                <label for="matricule" class="block text-sm font-medium text-white/90 mb-2">
+                  Matricule<span class="text-yellow-300">*</span>
+                </label>
+                <input type="text" id="matricule" formControlName="matricule" [class]="
+                        'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                        (isFieldInvalid('matricule')
+                          ? 'border-red-400'
+                          : 'border-white/30')
+                      " placeholder="Votre matricule" />
+                <div *ngIf="isFieldInvalid('matricule')" class="text-red-300 text-xs mt-1">
+                  Le Matricule Agent est requis
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <!-- Next Button -->
+            <div class="flex justify-end">
+              <button type="button" (click)="nextStep()" [disabled]="!isStep1Valid()"
+                class="group bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center gap-x-3">
+                <span>Suivant</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform"
+                  viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 2: Account Information -->
+          <div *ngIf="currentStep === 2" class="flex flex-col gap-y-6">
+            <h3 class="text-lg font-semibold text-yellow-300 mb-6 flex items-center gap-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </g>
+              </svg>
+              <span>Informations de la preoccupation</span>
+            </h3>
+
+            <!-- Email -->
+            <!-- <div>
+              <label for="email" class="block text-sm font-medium text-white/90 mb-2">
+                Email <span class="text-yellow-300">*</span>
+              </label>
+              <input type="email" id="email" formControlName="email" [class]="
+                      'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                      (isFieldInvalid('email')
+                        ? 'border-red-400'
+                        : 'border-white/30')
+                    " placeholder="votre.email@exemple.com" />
+              <div *ngIf="isFieldInvalid('email')" class="text-red-300 text-xs mt-1">
+                <span *ngIf="registerForm.get('email')?.errors?.['required']">L'email est requis</span>
+                <span *ngIf="registerForm.get('email')?.errors?.['email']">Format d'email invalide</span>
+              </div>
+            </div> -->
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <div>
+                <label for="email" class="block text-sm font-medium text-white/90 mb-2">À quel ministère ou institution s'adresse votre demande ?<span class="text-yellow-300">*</span>
+                </label>
+                <select name="idEntite" id="idEntite" [class]="
+                      'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                      (isFieldInvalid('email')
+                        ? 'border-red-400'
+                        : 'border-white/30')
+                    " formControlName="idEntite" (change)="onEntiteChange($event)">
+                  <option class="text-black" [value]="fc.id" *ngFor="let fc of institutions">{{fc?.libelle}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="selected_type_preoccupation" class="block text-sm font-medium text-white/90 mb-2">Type de préoccupation<span class="text-yellow-300">*</span>
+                </label>
+                <select name="selected_type_preoccupation" id="selected_type_preoccupation" [class]="
+                      'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                      (isFieldInvalid('selected_type_preoccupation')
+                        ? 'border-red-400'
+                        : 'border-white/30')
+                    " formControlName="selected_type_preoccupation" (change)="onTypeChange($event)">
+                   <option disabled selected>Choisir</option>
+                <option value="1">Plainte</option>
+                <option value="2">Demande d'information</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Consent Checkbox -->
+            <div>
+              <label
+                class="flex items-start gap-x-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                <input type="checkbox" formControlName="confidfor" [class]="
+                        'h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-white/30 rounded mt-1 ' +
+                        (isFieldInvalid('confidfor') ? 'border-red-400' : '')
+                      " />
+                <span class="text-sm text-white/90 leading-relaxed">
+                  Je donne librement mon consentement pour la collecte de
+                  mes données personnelles
+                  <span class="text-yellow-300">*</span>
+                </span>
+              </label>
+              <div *ngIf="isFieldInvalid('confidfor')" class="text-red-300 text-xs mt-1">
+                Vous devez accepter les conditions
+              </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between">
+              <button type="button" (click)="previousStep()"
+                class="group bg-white/20 backdrop-blur-sm border border-white/30 text-white py-3 px-6 rounded-xl font-semibold hover:bg-white/30 transition-all duration-300 flex items-center gap-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:-translate-x-1 transition-transform"
+                  viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="m15 18l-6-6l6-6" />
+                </svg>
+                <span>Précédent</span>
+              </button>
+
+              <button type="submit" [disabled]="!registerForm.valid"
+                class="group bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center gap-x-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M20 6L9 17l-5-5" />
+                </svg>
+                <span>Soumettre</span>
+              </button>
+            </div>
+          </div>
+        </form>
+             </div>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="container bg-white py-5">
+  <div class="row mb-3 no-gutters">
+    <div class="col-8 mx-auto shadow p-3 mb-5 bg-white rounded">
+      <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value,frmrequeteusager)"
+        class="form-horizontal " novalidate="">
+
+        <div style="color:red">{{errormessage}}</div>
+        <div class="form-group row mb-3">
+          <label for="plainte" class="col-sm-6 control-label">Etes vous agent de l'état ? :</label>
+          <div class="col-sm-2">
+            <label for=""> Oui <input type="radio" [value]="1" [(ngModel)]="is_administrative_officer"
+                name="is_administrative_officer"> </label>
+          </div>
+          <div class="col-sm-2">
+            <label for=""> Non <input type="radio" [value]="0" [(ngModel)]="is_administrative_officer"
+                name="is_administrative_officer"> </label>
+          </div>
+        </div>
+
+        <fieldset>
+          <div class="row mb-3">
+            <div *ngIf="is_administrative_officer==1" class="form-group col-12 col-md-6 mb-3">
+              <label for="mailUs" class=" control-label">Matricule :</label>
+              <div class="">
+                <input type="text" class="form-control form-control-sm has-error" id="mailUs" name="matricule"
+                  placeholder="" ngModel required>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-6 mb-3">
+              <label for="contactUs" class=" control-label">Nom :</label>
+              <div class="">
+                <input type="text" class="form-control form-control-sm has-error" id="contactUs" name="lastname"
+                  placeholder="" ngModel required>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-6 mb-3">
+              <label for="contactUs" class=" control-label">Prénom(s) :</label>
+              <div class="">
+                <input type="text" class="form-control form-control-sm has-error" id="contactUs" name="firstname"
+                  placeholder="" ngModel required>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-6 mb-3">
+              <label for="contactUs" class="control-label">Contact :</label>
+              <div class="">
+                <input type="text" class="form-control form-control-sm has-error" id="contactUs" name="phone"
+                  placeholder="" ngModel required>
+              </div>
+            </div>
+            <div class="form-group col-12 col-md-6 mb-3">
+              <label for="mailUs" class="control-label">E-mail :</label>
+              <div class="">
+                <input type="email" class="form-control form-control-sm has-error" id="mailUs" name="email"
+                  placeholder="" ngModel required>
+                <span class="text-muted helper-text text-danger"><small>Important pour recevoir la réponse à votre
+                    préoccupation</small></span>
+              </div>
+            </div>
+          </div>
+
+
+        </fieldset>
+        <fieldset class="divusager">
+
+
+          <div class="form-group mb-3">
+            <label for="idEntite" class="">A quelle entité (Ministère ou Institution) s'adresse votre préoccupation
+              ?</label>
+            <div class="">
+              <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+                [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
+                <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="plainte" class=" control-label">Type de préoccupation:</label>
+            <div class="">
+              <select name="plainte" id="plainte" class="form-control form-control-sm" required
+                [(ngModel)]="selected_type_preoccupation">
+                <option disabled selected>Choisir</option>
+                <option value="1">Plainte</option>
+                <option value="2">Demande d'information</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row mb-3" *ngIf="selected_type_preoccupation!=0">
+            <label for="plainte" class="col-sm-6 control-label">Préoccupation liée à une prestation :</label>
+            <div class="col-sm-2">
+              <label for=""> Oui <input type="radio" value="1" [(ngModel)]="link_to_prestation"
+                  name="link_to_prestation"> </label>
+            </div>
+            <div class="col-sm-2">
+              <label for=""> Non <input type="radio" value="0" [(ngModel)]="link_to_prestation"
+                  name="link_to_prestation"> </label>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="form-group col-6" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+
+              <label for="idType" class=" control-label">Catégorie de la prestation :</label>
+              <div class="">
+                <select name="idType" id="idType" required class="form-control form-control-sm" required ngModel
+                  (change)="chargerPrestation($event)">
+                  <option disabled selected>Choisir</option>
+                  <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group col-6" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+              <label for="idPrestation" required class=" control-label">Prestation :</label>
+              <div class="">
+                <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm"
+                  ngModel (change)="openDetailModal($event, detailPresta)">
+                  <option disabled selected>Choisir</option>
+                  <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="objet" class="control-label">Objet de la préoccupation:</label>
+            <div class="">
+              <input type="text" class="form-control form-control-sm has-error" id="objet" name="objet" placeholder=""
+                ngModel required [(ngModel)]="selected_data_rvMat">
+            </div>
+          </div>
+
+
+          <div class="form-group mb-3">
+            <label for="msgrequest" class="control-label">Préoccupation :</label>
+            <div class="">
+              <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
+                placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="radio" ngModel [value]="1" name="has_consent"
+            id="flexRadioCheckedDisabled">
+          <label class="form-check-label" for="flexRadioCheckedDisabled">
+            Je donne librement mon consentement pour la collecte et le traitement de mes données personnelles dans le
+            cadre de l’enregistrement et le traitement de ma préoccupation
+          </label>
+        </div>
+        <button type="submit" [disabled]="loading" class="btn blueColor text-white btn-sm mx-1 mb-3" id="btn-save"><i
+            class="fas fa-save"></i>&nbsp;
+          Soumettre</button>
+
+        <p><b>NB:</b> Pour le suivi de vos préoccupations, veuillez vous inscrire pour disposer d'un espace
+          personnalisé. <a routerLink="/register">Cliquez ici</a></p>
+      </form>
+    </div>
+  </div>
+</div> -->
 
 
 <ng-template #detailPresta let-modal>
-    <form #frmrdv="ngForm"  class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
-        <div class="modal-header bg-info">
-            <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
-            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+  <form #frmrdv="ngForm" class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
+    <div class="modal-header bg-info">
+      <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
+      <button type="button" class="close text-white" aria-label="Close"
+        (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+      <label> Prestation : </label>
+      <div class="form-group row mb-3">
+        <label class="col-sm-10" style="padding-right:0px;"> {{ depi.libelle }} </label>
+      </div><br />
+      <div class="form-group row mb-3">
+        <label class="col-sm-3"> Structure : </label>
+        <div class="col-sm-9">{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}
         </div>
-        <div class="modal-body">
-            <label > Prestation : </label>
-            <div class="form-group row mb-3" >
-                <label class="col-sm-10" style="padding-right:0px;" > {{ depi.libelle }} </label>
-            </div><br/>
-            <div class="form-group row mb-3" >
-                <label class="col-sm-3" > Structure : </label>
-                <div class="col-sm-9" >{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}</div>
-            </div><br/>
-            <div class="form-group row mb-3" >
-                <label for="objet" class="col-sm-2">Délai : </label>
-                <div class="col-sm-10" >{{ depi.delai }}</div>
-            </div><br/>
-            <label for="objet" class="col-sm-12">Liste des pièces : </label>
-            <ul class="col-sm-12">
-            <li *ngFor="let piece of depi.listepieces ; index as y " style="margin-bottom: 10px; list-style: none;">{{ y+1}}. {{ piece.libellePiece }} </li>
-            </ul>
-        </div>
-    </form>
+      </div><br />
+      <div class="form-group row mb-3">
+        <label for="objet" class="col-sm-2">Délai : </label>
+        <div class="col-sm-10">{{ depi.delai }}</div>
+      </div><br />
+      <label for="objet" class="col-sm-12">Liste des pièces : </label>
+      <ul class="col-sm-12">
+        <li *ngFor="let piece of depi.listepieces ; index as y " style="margin-bottom: 10px; list-style: none;">{{
+          y+1}}. {{ piece.libellePiece }} </li>
+      </ul>
+    </div>
+  </form>
 </ng-template>

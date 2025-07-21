@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PdaService } from '../../../../../core/services/pda.servic';
 
 interface Statistic {
-  value: string;
+  value: number | string;
   label: string;
   color: string;
   bgColor: string;
@@ -54,7 +54,12 @@ export class StatisticsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.pdaService.getPrestationsStat().subscribe((res)=>{
-      console.log(res);
+      // console.log(res);
+      const data = res?.data;
+      this.stats[0].value = data.nb_preoccupations;
+      this.stats[1].value = data.nb_prestations;
+      this.stats[2].value = data.nb_usagers;
+      this.stats[3].value = data.temps_moyen_traitement;
     })
   }
 

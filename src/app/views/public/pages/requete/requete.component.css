@@ -1,0 +1,22 @@
+:host {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+
+::ng-deep .p-radiobutton-checked .p-radiobutton-box {
+  border-color: #fcc800 !important;
+  background: #FFF !important;
+}
+
+::ng-deep .p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
+  background: #fcc800 !important;
+}
+
+.p-radiobutton-checked .p-radiobutton-box {
+  border-color: #fcc800 !important;
+  background: #FFF !important;
+}
+
+.p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
+  background: #fcc800 !important;
+}

@@ -30,7 +30,7 @@
 <div class="min-h-screen bg-gray-50">
   <header class="bg-primary-dark text-white shadow-xl border-b border-primary/30">
     <div class="flex items-center justify-between px-8 py-2">
-      <div class="flex items-center space-x-6">
+      <div class="flex items-center gap-x-6">
         <button (click)="menuOpen = !menuOpen" class="p-2 rounded-xl hover:bg-dark-700/50 transition-all duration-300">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600!" *ngIf="!menuOpen" viewBox="0 0 24 24">
             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -46,29 +46,29 @@
         </h1>
       </div>
 
-      <div class="flex items-center space-x-6">
+      <div class="flex items-center gap-x-6">
 
         <button (click)="op.toggle($event)"
-          class="flex items-center space-x-4 bg-gradient-to-r from-green-light from-0%  to-primary rounded-2xl p-4  transition-all duration-200 cursor-pointer">
+          class="flex items-center gap-x-4 bg-gradient-to-r from-green-light from-0%  to-primary rounded-2xl p-4  transition-all duration-200 cursor-pointer">
           <div class="w-9 h-9 bg-primary-dark/50 rounded-xl flex items-center justify-center">
             <lucide-icon [img]="userIcon" size="20" class="text-white"></lucide-icon>
           </div>
           <div class="hidden md:block">
             <!-- <div class="font-medium text-sm">{{userConnected?.name? userConnected?.name:userConnected?.agent_user?.nomprenoms}}</div> -->
             <div class="font-medium text-sm">{{ userConnected?.email }}</div>
-            <div class="text-dark-400 text-xs">{{userConnected?.name ? userConnected?.name : userConnected?.agent_user?.nomprenoms}}</div>
+            <div class="text-dark-400 text-xs">{{(userConnected?.name && userConnected?.name !== ' ') ? userConnected?.name : userConnected?.agent_user?.nomprenoms}}</div>
           </div>
           <lucide-icon [img]="chevronDownIcon" size="16" class="text-dark-400"></lucide-icon>
         </button>
         <p-overlayPanel #op>
           <div class="flex flex-col gap-0.5 w-full max-w-[25rem] bg-white rounded-xl divide divide-gray-500">
-            <div class="flex items-center space-x-4  rounded-2xl transition-all duration-200 cursor-pointer">
+            <div class="flex items-center gap-x-4  rounded-2xl transition-all duration-200 cursor-pointer">
               <div class="w-9 h-9 bg-primary-dark/70 rounded-xl flex items-center justify-center">
                 <lucide-icon [img]="userIcon" size="20" class="text-white"></lucide-icon>
               </div>
               <div class="hidden md:block">
                 <div class="font-semibold text-sm">{{ userConnected?.email }}</div>
-                <div class="text-green-light text-xs">{{userConnected?.name? userConnected?.name:userConnected?.agent_user?.nomprenoms}}</div>
+                <div class="text-green-light text-xs">{{(userConnected?.name && userConnected?.name !== ' ')? userConnected?.name:userConnected?.agent_user?.nomprenoms}}</div>
               </div>
             </div>
             <hr>
@@ -104,7 +104,7 @@
       [class]="'bg-white shadow-sm h-screen left-0 top-0 pt-0 z-40 border-r border-gray-100 transition-all duration-300 animate-in ' + (menuOpen ? 'w-20' : 'w-72')">
       <nav [class]="'py-8 transition-all duration-300 ' + (menuOpen ? 'px-3' : 'px-6')">
 
-        <ul class="space-y-2">
+        <ul class="gap-y-2">
           <li *ngFor="let item of menuItems" [hidden]="(!canUseWhatsapp && item.external) || (item.espace!==null && item.espace!==espace)">
             <a [routerLinkActiveOptions]="{exact:true}" [routerLink]="[item.id]"
               routerLinkActive="bg-green-light hover:bg-bg-green-light/70 text-white! shadow-lg shadow-green-light/20"

@@ -138,7 +138,7 @@
     </div>
 
     <!-- Map Section -->
-    <div class="mb-12">
+    <div #mapSection class="mb-12">
       <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
         <div class="p-6 border-b border-gray-100">
           <h3 class="text-xl font-bold text-[#162233] flex items-center gap-x-2">
@@ -153,7 +153,7 @@
           </p>
         </div>
         <div  class="h-96 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
-          <div #mapContainer class="w-full h-full absolute inset-0">
+          <div #mapContainer id="map" class="w-full h-full absolute inset-0">
 
           </div>
           <!-- <mgl-map [accessToken]="'pk.eyJ1Ijoic2NoYWRyYWMtc29kZSIsImEiOiJjbWQzNzdubzQwMXdiMmtzZG45NG16cTdzIn0.IdIFjYGQKRv7DBD1c9qfLw'" [style]="'mapbox://styles/schadrac-sode/cl6v4rrem000m14osw4s29xnr'" [zoom]="[12]"

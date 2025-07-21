@@ -10,7 +10,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Route, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
-import { GlobalName } from '../../../core/utils/global-name';
 import { LocalStorageService } from '../../../core/utils/local-stoarge-service';
 import { TitleService } from '../../../core/utils/title.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -34,6 +33,7 @@ import {
   MessageCircle,
 } from 'lucide-angular';
 import { SharedModule } from '../../../shared/shared.module';
+import { GlobalName } from '../../../core/utils/global-name';
 
 interface MenuItem {
   id: string;
@@ -171,6 +171,7 @@ export class LayoutComponent {
     });
     this.titleService.espace$.subscribe((newState) => {
       this.espace = newState;
+      console.log('Espace=====> ', newState);
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
     this.titleService.userConnected$.subscribe((newState) => {
@@ -203,19 +204,16 @@ export class LayoutComponent {
             case 1:
               this.router.navigate(['/auth/logpfc']);
               break;
-
             case 2:
               if (this.lsService.get(GlobalName.tokenName)) {
                 this.router.navigate(['/admin/home']);
               } else {
                 this.router.navigate(['/']);
               }
-
               break;
 
             default:
               this.router.navigate(['/']);
-
               break;
           }
           this.toastr.success('Déconnexion réussie', 'Connexion');
