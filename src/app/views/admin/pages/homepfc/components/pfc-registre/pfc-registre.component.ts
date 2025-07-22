@@ -211,7 +211,7 @@ export class PfcRegistreComponent {
     this.user_auth_service
       .getAllTypePrest(event.target.value)
       .subscribe((res: any) => {
-        this.services = res;
+        this.services = res?.data;
       });
 
     this.user_auth_service
@@ -796,16 +796,16 @@ export class PfcRegistreComponent {
         this.detailpiece = res;
       });
 
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    // this.modalService
+    //   .open(content, { ariaLabelledBy: 'modal-basic-title' })
+    //   .result.then(
+    //     (result) => {
+    //       this.closeResult = `Closed with: ${result}`;
+    //     },
+    //     (reason) => {
+    //       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    //     }
+    //   );
   }
 
   setNotif() {
@@ -938,8 +938,12 @@ export class PfcRegistreComponent {
       );
   }
 
-  openEditModalAddRv(content: any) {
+  openEditModalAddRv(content: any, el: any) {
     this.selected_data_Whats = null;
+    this.selected_data_rvMat = el;
+    this.selected_type_preoccupation = el.plainte;
+    console.log(el);
+
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
@@ -1083,8 +1087,7 @@ export class PfcRegistreComponent {
     AppSweetAlert.confirmBox(
       'Suppression requete',
       'Cette action est irreversible. Voulez-vous continuer ?'
-    )
-    .then((result: any) => {
+    ).then((result: any) => {
       if (result.value) {
         this.user_auth_service.deleteReq(this.selected_data_req.id).subscribe(
           (res: any) => {
@@ -1182,17 +1185,17 @@ export class PfcRegistreComponent {
   prepare(idEntite: any) {
     this.structures = [];
     this.user_auth_service.getAllServ(1, idEntite).subscribe((res: any) => {
-      this.structures = res;
+      this.structures = res?.data;
     });
 
     this.natures = [];
     this.user_auth_service.getAllNatu(idEntite).subscribe((res: any) => {
-      this.natures = res;
+      this.natures = res?.data;
     });
 
     this.themes = [];
     this.user_auth_service.getAllThe(idEntite).subscribe((res: any) => {
-      this.themes = res;
+      this.themes = res?.data;
     });
   }
   onEntiteChange(event: any) {
@@ -1306,8 +1309,8 @@ export class PfcRegistreComponent {
     }
   }
 
-  dropRequeteusagerrv(el:any) {
-    this.selected_data_reqrv = el
+  dropRequeteusagerrv(el: any) {
+    this.selected_data_reqrv = el;
     if (this.selected_data_reqrv == null) {
       AppSweetAlert.simpleAlert(
         'Erreur',

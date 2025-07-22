@@ -10,7 +10,7 @@
   </div>
 
   <div class="relative container mx-auto px-4 py-16 lg:py-16 flex items-center justify-center">
-    <div class="w-full max-w-xl">
+    <div class="w-full max-w-2xl">
       <!-- Header -->
       <div class="text-center mb-8 flex flex-col gap-y-3 w-full">
         <h1 class="text-3xl lg:text-3xl font-bold  gap-x-2 w-full">
@@ -214,7 +214,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
               <div>
-                <label for="email" class="block text-sm font-medium text-white/90 mb-2">À quel ministère ou institution s'adresse votre demande ?<span class="text-yellow-300">*</span>
+                <label for="email" class="block text-sm font-medium text-white/90 mb-2">À quel ministère ou institution
+                  s'adresse votre demande ?<span class="text-yellow-300">*</span>
                 </label>
                 <select name="idEntite" id="idEntite" [class]="
                       'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
@@ -228,18 +229,88 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label for="selected_type_preoccupation" class="block text-sm font-medium text-white/90 mb-2">Type de préoccupation<span class="text-yellow-300">*</span>
+                <label for="plainte" class="block text-sm font-medium text-white/90 mb-2">Type de
+                  préoccupation<span class="text-yellow-300">*</span>
                 </label>
-                <select name="selected_type_preoccupation" id="selected_type_preoccupation" [class]="
+                <select name="plainte" id="plainte" [class]="
                       'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
-                      (isFieldInvalid('selected_type_preoccupation')
+                      (isFieldInvalid('plainte')
                         ? 'border-red-400'
                         : 'border-white/30')
-                    " formControlName="selected_type_preoccupation" (change)="onTypeChange($event)">
-                   <option disabled selected>Choisir</option>
-                <option value="1">Plainte</option>
-                <option value="2">Demande d'information</option>
+                    " formControlName="plainte" (change)="onTypeChange($event)">
+                  <option class="text-black" disabled selected>Choisir</option>
+                  <option class="text-black" value="1">Plainte</option>
+                  <option class="text-black" value="2">Demande d'information</option>
                 </select>
+              </div>
+              <div *ngIf="selected_type_preoccupation !== 0">
+                <label class="block text-sm font-medium text-white/90 mb-3">Préoccupation liée à une prestation ? <span
+                    class="text-yellow-300">*</span></label>
+                <div class="flex flex-wrap gap-3">
+                  <label *ngFor="let type of status"
+                    class="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20 hover:bg-white/20 transition-all cursor-pointer">
+                    <p-radioButton [inputId]="type.id" (onClick)="showPrestation($event)" [value]="type.id" formControlName="link_to_prestation" />
+                    <span class="ml-2 text-white">{{type?.name}}</span>
+                  </label>
+                </div>
+
+              </div>
+
+              <div *ngIf="link_to_prestation===1">
+                <label for="idType" class="block text-sm font-medium text-white/90 mb-2">Catégorie de la prestation :
+                </label>
+                <select name="idType" id="idType" [class]="
+                      'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                      (isFieldInvalid('idType')
+                        ? 'border-red-400'
+                        : 'border-white/30')
+                    " formControlName="idType" (change)="chargerPrestation($event)">
+                  <option class="text-black" disabled selected>Choisir</option>
+                  <option [value]="fc.id" class="text-black" *ngFor="let fc of themes">{{fc.libelle}}</option>
+                </select>
+              </div>
+
+              <div *ngIf="link_to_prestation===1">
+                <label for="idPrestation" class="block text-sm font-medium text-white/90 mb-2">Prestation :
+                </label>
+                <select name="idPrestation" id="idPrestation" [class]="
+                      'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                      (isFieldInvalid('idType')
+                        ? 'border-red-400'
+                        : 'border-white/30')
+                    " formControlName="idPrestation" (change)="openDetailModal($event, detailPresta)">
+                  <option class="text-black" disabled selected>Choisir</option>
+                  <option class="text-black" [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              <div>
+                <label for="objet" class="block text-sm font-medium text-white/90 mb-2">Objet de la
+                  préoccupation:</label>
+                <div class="">
+                  <input type="text" id="objet" name="objet" [class]="
+                        'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                        (isFieldInvalid('objet')
+                          ? 'border-red-400'
+                          : 'border-white/30')
+                      " placeholder="" formControlName="objet">
+                </div>
+              </div>
+
+
+              <div>
+                <label for="msgrequest" class="block text-sm font-medium text-white/90 mb-2">Préoccupation :</label>
+                <div class="">
+                  <textarea id="msgrequest" name="msgrequest" [class]="
+                        'w-full px-4 py-3 bg-white/20 backdrop-blur-sm border rounded-xl focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all duration-200 text-white placeholder-white/60 ' +
+                        (isFieldInvalid('msgrequest')
+                          ? 'border-red-400'
+                          : 'border-white/30')
+                      " placeholder="Message de la requête" formControlName="msgrequest"></textarea>
+                </div>
               </div>
             </div>
 
@@ -247,17 +318,17 @@
             <div>
               <label
                 class="flex items-start gap-x-3 bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <input type="checkbox" formControlName="confidfor" [class]="
+                <input type="checkbox" formControlName="has_consent" [class]="
                         'h-4 w-4 text-yellow-400 focus:ring-yellow-400 border-white/30 rounded mt-1 ' +
-                        (isFieldInvalid('confidfor') ? 'border-red-400' : '')
+                        (isFieldInvalid('has_consent') ? 'border-red-400' : '')
                       " />
                 <span class="text-sm text-white/90 leading-relaxed">
-                  Je donne librement mon consentement pour la collecte de
-                  mes données personnelles
+                  Je donne librement mon consentement pour la collecte et le traitement de mes données personnelles dans
+                  le cadre de l’enregistrement et le traitement de ma préoccupation
                   <span class="text-yellow-300">*</span>
                 </span>
               </label>
-              <div *ngIf="isFieldInvalid('confidfor')" class="text-red-300 text-xs mt-1">
+              <div *ngIf="isFieldInvalid('has_consent')" class="text-red-300 text-xs mt-1">
                 Vous devez accepter les conditions
               </div>
             </div>
@@ -285,7 +356,7 @@
             </div>
           </div>
         </form>
-             </div>
+      </div>
     </div>
   </div>
 </section>

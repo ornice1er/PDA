@@ -43,7 +43,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 })
 export class RequeteComponent implements OnInit {
   loading: boolean = false;
-  link_to_prestation = 1;
+  link_to_prestation = 0;
   selected_type_preoccupation = 0;
   themes: any[] = [];
   services: any[] = [];
@@ -105,6 +105,8 @@ export class RequeteComponent implements OnInit {
       plainte: [''],
       is_administrative_officer: [0, [Validators.required]],
       visible: [1],
+      idType: [],
+      has_consent: [true],
     });
   }
 
@@ -118,6 +120,9 @@ export class RequeteComponent implements OnInit {
   onTypeChange(event: any) {
     this.selected_type_preoccupation = +event.target.value;
   }
+  showPrestation(event: RadioButtonClickEvent) {
+    this.link_to_prestation = event.value;
+  }
   onEntiteChange(event: any) {
     this.selectedEntie = +event.target.value;
     this.prepare(this.selectedEntie);
@@ -126,27 +131,32 @@ export class RequeteComponent implements OnInit {
   prepare(idEntite: any) {
     this.structures = [];
     this.user_auth_service.getAllServ(1, idEntite).subscribe((res: any) => {
-      this.structures = res;
+      this.structures = res?.data;
     });
 
     this.natures = [];
     this.user_auth_service.getAllNatu(idEntite).subscribe((res: any) => {
-      this.natures = res;
+      this.natures = res?.data;
     });
 
     this.themes = [];
     this.user_auth_service.getAllThe(idEntite).subscribe((res: any) => {
-      this.themes = res;
+      this.themes = res?.data;
     });
   }
 
   addRequeteusager(value: any, form: NgForm) {
     let service = null;
-    if (this.link_to_prestation === 1 || this.selected_type_preoccupation === 0) {
+    if (
+      this.link_to_prestation === 1 ||
+      this.selected_type_preoccupation === 0
+    ) {
       console.log(this.services);
-      service = this.services.filter((e: any) => e.id == value.idPrestation)[0];
+      service = this.services.filter(
+        (e: any) => e.id === value.idPrestation
+      )[0];
     } else {
-      service = this.services.filter((e: any) => e.hide_for_public == 1)[0];
+      service = this.services.filter((e: any) => e.hide_for_public === 1)[0];
     }
     // if(service == null){
     //   AppSweetAlert.simpleAlert("Erreur","Aucune prestation (Service Usager) par défaut n'est lié à cet entité", 'error')
@@ -154,7 +164,7 @@ export class RequeteComponent implements OnInit {
     // }
     var param: any = {
       objet: value.objet,
-      idPrestation: this.link_to_prestation == 0 ? 0 : value.idPrestation,
+      idPrestation: this.link_to_prestation === 0 ? 0 : value.idPrestation,
       // idPrestation: this.link_to_prestation==0  ? service.id : value.idPrestation,
       nbreJours: service == null ? 0 : service.nbreJours,
       msgrequest: value.msgrequest,
@@ -176,13 +186,13 @@ export class RequeteComponent implements OnInit {
         'Veuillez choisir une structure destrinatrice.',
         'error'
       );
-    } else if (param.plainte == null || param.plainte == '0') {
+    } else if (param.plainte === null || param.plainte === '0') {
       AppSweetAlert.simpleAlert(
         'Erreur',
         'Veuillez choisir un type de préoccupation.',
         'error'
       );
-    } else if (this.mat_aff == true && param.matricule.trim() == '') {
+    } else if (this.mat_aff === true && param.matricule.trim() === '') {
       AppSweetAlert.simpleAlert(
         'Renseigner le matricule',
         'Champ obligatoire',
@@ -243,7 +253,7 @@ export class RequeteComponent implements OnInit {
     this.user_auth_service
       .getAllTypePrest(event.target.value)
       .subscribe((res: any) => {
-        this.services = res;
+        this.services = res?.data;
       });
 
     this.user_auth_service
@@ -263,19 +273,19 @@ export class RequeteComponent implements OnInit {
     this.user_auth_service
       .getServPiece(event.target.value)
       .subscribe((res: any) => {
-        this.detailpiece = res;
+        this.detailpiece = res?.data;
       });
 
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    // this.modalService
+    //   .open(content, { ariaLabelledBy: 'modal-basic-title' })
+    //   .result.then(
+    //     (result) => {
+    //       this.closeResult = `Closed with: ${result}`;
+    //     },
+    //     (reason) => {
+    //       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    //     }
+    //   );
   }
 
   // addField(event: RadioButtonClickEvent) {
@@ -402,41 +412,97 @@ export class RequeteComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      console.log('Registration data:', this.registerForm.value);
-      let payload = this.registerForm.value;
-      payload['ip'] = this.ipAddress;
-      this.user_auth_service.register(payload).subscribe(
-        (res: any) => {
+      const value = this.registerForm.getRawValue();
+      let service = null;
+      if (
+        this.link_to_prestation === 1 ||
+        this.selected_type_preoccupation === 0
+      ) {
+        console.log(this.services);
+        service = this.services.filter(
+          (e: any) => e.id === value.idPrestation
+        )[0];
+      } else {
+        service = this.services.filter((e: any) => e.hide_for_public === 1)[0];
+      }
+      // if(service == null){
+      //   AppSweetAlert.simpleAlert("Erreur","Aucune prestation (Service Usager) par défaut n'est lié à cet entité", 'error')
+      //   return;
+      // }
+      var param: any = {
+        objet: value.objet,
+        idPrestation: value.link_to_prestation === 0 ? 0 : value.idPrestation,
+        // idPrestation: this.link_to_prestation==0  ? service.id : value.idPrestation,
+        nbreJours: service == null ? 0 : service.nbreJours,
+        msgrequest: value.msgrequest,
+        email: value.email,
+        idEntite: value.idEntite,
+        nom: value.nom,
+        tel: value.tel,
+        link_to_prestation: value.link_to_prestation,
+        interfaceRequete: value.link_to_prestation === 1 ? 'USAGER' : 'SRU',
+        plainte: value.plainte,
+        matricule: value.is_administrative_officer === 1 ? value.matricule : '',
+        visible: 1,
+      };
+      // fichierJoint
+      console.log('has_consent', param);
+      if (param.idEntite == null || param.idEntite == '') {
+        AppSweetAlert.simpleAlert(
+          'Erreur',
+          'Veuillez choisir une structure destrinatrice.',
+          'error'
+        );
+      } else if (param.plainte === null || param.plainte === '0') {
+        AppSweetAlert.simpleAlert(
+          'Erreur',
+          'Veuillez choisir un type de préoccupation.',
+          'error'
+        );
+      } else if (this.mat_aff === true && param.matricule.trim() === '') {
+        AppSweetAlert.simpleAlert(
+          'Renseigner le matricule',
+          'Champ obligatoire',
+          'error'
+        );
+      } else if (!param.objet) {
+        /* else if(param.idPrestation == null || param.idPrestation == ""){
+        AppSweetAlert.simpleAlert("Erreur","Veuillez choisir une prestation.", 'error')
+      }*/
+        AppSweetAlert.simpleAlert(
+          "Renseigner l'objet",
+          'Champ obligatoire',
+          'error'
+        );
+      } else if (!param.msgrequest) {
+        AppSweetAlert.simpleAlert(
+          'Renseigner le message',
+          'Champ obligatoire',
+          'error'
+        );
+      } else if (!value.has_consent) {
+        AppSweetAlert.simpleAlert(
+          'Consentement',
+          'Veuillez donner votre consentement',
+          'error'
+        );
+      } else {
+        this.loading = true;
+        console.log(param);
+        this.pdaService.createrequeteusager(param).subscribe((rest: any) => {
+          this.registerForm.reset();
           this.loading = false;
-          // if (res.user.is_active) {
-          //   this.local_service.set(GlobalName.token, res.token);
-          //   this.local_service.set(GlobalName.current_user, res.user);
-          //   this.router.navigate(['/main']);
-          // } else {
-          //   localStorage.setItem('is_registered', '');
-          //   this.router.navigate(['/auth/register-success']);
-          // }
-          AppSweetAlert.simpleAlert(
-            'Inscription',
-            'Inscription effectuée avec succès. Vous pouvez à présent vous connecter',
-            'success'
-          );
-          // this.router.navigate(['/auth/logusager']);
-        },
-        (err: any) => {
-          this.loading = false;
-          let message = '';
-          err.error.errors.forEach((element: any) => {
-            message = message + ' ' + element;
-          });
-          console.log(message);
-          AppSweetAlert.simpleAlert(
-            'Inscription',
-            "Echec d'inscription, " + message,
-            'error'
-          );
-        }
-      );
+          if (rest.status == 'error') {
+            AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
+          } else {
+            AppSweetAlert.simpleAlert(
+              'Soumission de préoccupation',
+              'Votre préoccupation a été bien transmise aux autorités compétentes',
+              'success'
+            );
+          }
+        });
+      }
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.registerForm.controls).forEach((key) => {

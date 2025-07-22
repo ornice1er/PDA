@@ -106,34 +106,41 @@
               <td>{{elrv.entite==null ? '--' : elrv.entite.sigle}} </td>
               <td>{{elrv.contenu_visite}} </td>
               <td class="text-center">
-                <span class="badge badge-success" *ngIf="elrv.satisfait=='oui'">Oui</span>
-                <span class="badge badge-danger" *ngIf="elrv.satisfait=='non'">Non</span>
-                <button *ngIf="elrv.satisfait=='non' && elrv.requete ==null" (click)="openEditModalAddRv(addRequete)"
-                  (click)="checkedRv_Mat($event,elrv)" class="mx-1 btn btn-sm btn-info">Transferer vers
-                  mataccueil</button>
-                <span
-                  *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==0 && elrv.requete.reponseStructure == ''">
-                  <br>1. En attente de transmission</span>
-                <span
-                  *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==1  && elrv.requete.reponseStructure == ''">
-                  <br>1. En cours de traitement au {{elrv.requete.entite==null ? '--' :
-                  elrv.requete.entite.sigle}}</span>
-                <span *ngIf="elrv.requete != null && elrv.requete.reponseStructure != '' "><br>Réponse :
-                  {{elrv.requete.reponseStructure}} <span *ngIf="elrv.requete.fichier_joint">Fichier réponse : <a
-                      target="_blank" (click)="ChangerFile(elrv.requete.fichier_joint)"
-                      href="#">{{elrv.requete.fichier_joint}}</a></span></span>
+                <div class="flex flex-wrap gap-3 justify-center items-center">
+                  <span class="bg-green-400 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+                    *ngIf="elrv.satisfait=='oui'">Oui</span>
+                  <span class="bg-red-400 text-white text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
+                    *ngIf="elrv.satisfait=='non'">Non</span>
+                  <button *ngIf="elrv.satisfait=='non' && elrv.requete ==null" (click)="openEditModalAddRv(addRequete, elrv)"
+                    class="mx-1 btn btn-sm btn-info">Transferer vers
+                    mataccueil</button>
+                  <span
+                    *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==0 && elrv.requete.reponseStructure == ''">
+                    <br>1. En attente de transmission</span>
+                  <span
+                    *ngIf="elrv.satisfait=='non' && elrv.requete != null && elrv.requete.visible==1  && elrv.requete.reponseStructure == ''">
+                    <br>1. En cours de traitement au {{elrv.requete.entite==null ? '--' :
+                    elrv.requete.entite.sigle}}</span>
+                  <span *ngIf="elrv.requete != null && elrv.requete.reponseStructure != '' "><br>Réponse :
+                    {{elrv.requete.reponseStructure}} <span *ngIf="elrv.requete.fichier_joint">Fichier réponse : <a
+                        target="_blank" (click)="ChangerFile(elrv.requete.fichier_joint)"
+                        href="#">{{elrv.requete.fichier_joint}}</a></span></span>
+                </div>
+
               </td>
               <td>{{elrv.observ_visite}} </td>
               <td class="relative whitespace-nowrap py-2 pl-3 pr-4 text-center text-sm font-medium sm:pr-6">
                 <div class="flex flex-row items-center justify-center space-x-4">
-                  <button (click)="openEditModalrv(editrv, elrv)" class="text-primary bg-primary/20 flex items-center justify-center rounded-full size-8">
+                  <button (click)="openEditModalrv(editrv, elrv)"
+                    class="text-primary bg-primary/20 flex items-center justify-center rounded-full size-8">
                     <span class="sr-only">Modifier</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
                       <path fill="none" stroke="currentColor"
                         d="M4.5 17.207V19a.5.5 0 0 0 .5.5h1.793a.5.5 0 0 0 .353-.146l8.5-8.5l-2.5-2.5l-8.5 8.5a.5.5 0 0 0-.146.353ZM15.09 6.41l2.5 2.5l1.203-1.203a1 1 0 0 0 0-1.414l-1.086-1.086a1 1 0 0 0-1.414 0z" />
                     </svg>
                   </button>
-                  <button (click)="dropRequeteusagerrv(elrv)" class="text-red-500 bg-red-500/20 flex items-center justify-center rounded-full size-8">
+                  <button (click)="dropRequeteusagerrv(elrv)"
+                    class="text-red-500 bg-red-500/20 flex items-center justify-center rounded-full size-8">
                     <span class="sr-only">Supprimer</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
                       <path fill="currentColor"
@@ -202,9 +209,13 @@
     <div class="modal-header bg-primary flex justify-between items-center">
       <h5 class="modal-title text-white" id="modal-basic-title">
         Ajouter une visite à la date {{dateACloture == "" ? ' dece jour' : dateACloture | date:'dd/MM/yyy' }}</h5>
-      <button type="button" class="close text-white" aria-label="Close"
-        (click)="modal.dismiss('Cross click')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" />
+            <path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" />
+          </g>
+        </svg>
       </button>
     </div>
     <div class="modal-body">
@@ -293,9 +304,13 @@
     <div class="modal-header bg-primary flex justify-between items-center">
       <h5 class="modal-title text-white" id="modal-basic-title">Clôturer les régistres du {{dateACloture |
         date:'dd/MM/yyy' }} </h5>
-     <button type="button" class="close text-white" aria-label="Close"
-        (click)="modal.dismiss('Cross click')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" />
+            <path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" />
+          </g>
+        </svg>
       </button>
     </div>
     <div class="modal-body">
@@ -335,9 +350,13 @@
 
     <div class="modal-header bg-primary flex justify-between items-center">
       <h5 class="modal-title text-white" id="modal-basic-title">Modifier une visite</h5>
-      <button type="button" class="close text-white" aria-label="Close"
-        (click)="modal.dismiss('Cross click')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" />
+            <path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" />
+          </g>
+        </svg>
       </button>
     </div>
     <div class="modal-body">
@@ -431,9 +450,13 @@
 
     <div class="modal-header bg-primary flex justify-between items-center">
       <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une Préoccupation</h5>
-      <button type="button" class="close text-white" aria-label="Close"
-        (click)="modal.dismiss('Cross click')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" />
+            <path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" />
+          </g>
+        </svg>
       </button>
     </div>
     <div class="modal-body">
@@ -445,7 +468,7 @@
 
       </fieldset>
 
-      <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">
+      <fieldset *ngIf="selected_data_Whats !== null" class="divusager" style="border:1px solid #ddd;padding:10px;">
         <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Discussions
           WhatsApp</h4>
         <div>N° WhatsApp : {{selected_data_Whats.numerowhatsapp}}</div>
@@ -461,7 +484,7 @@
           <div class="col-sm-4">
             <input type="text" class="form-control form-control-sm has-error" id="contactUs" name="contactUs"
               placeholder="" ngModel required value="{{selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep}}"
-              [(ngModel)]="selected_data_rvMat">
+              [(ngModel)]="selected_data_rvMat.matri_telep">
           </div>
           <label for="mailUs" class="col-sm-2 control-label">E-mail :</label>
           <div class="col-sm-4">
@@ -473,7 +496,7 @@
           <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
           <div class="col-sm-10">
             <select name="idEntite" id="idEntite" class="form-control form-control-sm" ngModel={{user?.idEntite}}
-              [(ngModel)]="selected_data_rvMat" (change)="onEntiteChange($event)">
+               (change)="onEntiteChange($event)">
               <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
             </select>
           </div>
@@ -538,7 +561,7 @@
           <label for="objet" class="col-sm-2 control-label">Objet :</label>
           <div class="col-sm-10">
             <input type="text" class="form-control form-control-sm has-error" id="objet" name="objet" placeholder=""
-              ngModel required [(ngModel)]="selected_data_rvMat">
+              ngModel required >
           </div>
         </div>
 
@@ -547,15 +570,15 @@
           <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
           <div class="col-sm-10">
             <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
-              placeholder="Message de la requête" ngModel required [(ngModel)]="selected_data_rvMat"></textarea>
+              placeholder="Message de la requête" ngModel required ></textarea>
           </div>
         </div>
       </fieldset>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-info mx-1" id="btn-save"><i class="fas fa-save"></i>&nbsp;
+      <button type="submit" class="btn btn-info mx-1" id="btn-save">
         Enregistrer</button>
-      <button type="submit" (click)="setVisible()" class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;
+      <button type="submit" (click)="setVisible()" class="btn btn-primary">
         Transmettre</button>
     </div>
   </form>
@@ -566,9 +589,13 @@
 
     <div class="modal-header bg-primary flex justify-between items-center">
       <h5 class="modal-title text-white" id="modal-basic-title">Donner une réponse à cette discussion</h5>
-      <button type="button" class="close text-white" aria-label="Close"
-        (click)="modal.dismiss('Cross click')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" />
+            <path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" />
+          </g>
+        </svg>
       </button>
     </div>
     <div class="modal-body">
@@ -616,9 +643,13 @@
   <form #frmrdv="ngForm" class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
     <div class="modal-header bg-primary flex justify-between items-center">
       <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
-      <button type="button" class="close text-white" aria-label="Close"
-        (click)="modal.dismiss('Cross click')">
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06"/><path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0"/></g></svg>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+          <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+            <path d="M5.47 5.47a.75.75 0 0 1 1.06 0l12 12a.75.75 0 1 1-1.06 1.06l-12-12a.75.75 0 0 1 0-1.06" />
+            <path d="M18.53 5.47a.75.75 0 0 1 0 1.06l-12 12a.75.75 0 0 1-1.06-1.06l12-12a.75.75 0 0 1 1.06 0" />
+          </g>
+        </svg>
       </button>
     </div>
     <div class="modal-body">

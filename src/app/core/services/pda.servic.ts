@@ -40,7 +40,7 @@ export class PdaService {
 
   createrequeteusager(ressource: any) {
     return this.http.post<any>(
-      `${this.url + '/requeteusager'}`,
+      `${this.url}requeteusager`,
       ressource,
       ConfigService.httpHeader(null, true)
     );
