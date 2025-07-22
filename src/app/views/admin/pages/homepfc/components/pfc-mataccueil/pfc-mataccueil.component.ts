@@ -213,7 +213,7 @@ export class PfcMataccueilComponent {
     this.user_auth_service
       .getAllTypePrest(event.target.value)
       .subscribe((res: any) => {
-        this.services = res.data;
+        this.services = res?.data;
       });
 
     this.user_auth_service
@@ -793,19 +793,19 @@ export class PfcMataccueilComponent {
     this.user_auth_service
       .getServPiece(event.target.value)
       .subscribe((res: any) => {
-        this.detailpiece = res.data;
+        this.detailpiece = res?.data;
       });
 
-    this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title' })
-      .result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    // this.modalService
+    //   .open(content, { ariaLabelledBy: 'modal-basic-title' })
+    //   .result.then(
+    //     (result) => {
+    //       this.closeResult = `Closed with: ${result}`;
+    //     },
+    //     (reason) => {
+    //       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    //     }
+    //   );
   }
 
   setNotif() {
@@ -1163,17 +1163,17 @@ export class PfcMataccueilComponent {
   prepare(idEntite: any) {
     this.structures = [];
     this.user_auth_service.getAllServ(1, idEntite).subscribe((res: any) => {
-      this.structures = res.data;
+      this.structures = res?.data;
     });
 
     this.natures = [];
     this.user_auth_service.getAllNatu(idEntite).subscribe((res: any) => {
-      this.natures = res.data;
+      this.natures = res?.data;
     });
 
     this.themes = [];
     this.user_auth_service.getAllThe(idEntite).subscribe((res: any) => {
-      this.themes = res.data;
+      this.themes = res?.data;
     });
   }
   onEntiteChange(event: any) {
