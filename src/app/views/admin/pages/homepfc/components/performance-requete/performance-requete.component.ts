@@ -171,7 +171,6 @@ export class PerformanceRequeteComponent {
     }
   }
   constructor(
-    private user_auth_service: AuthService,
     private local_service: LocalStorageService,
     private router: Router,
     private registreService: RegistreService,

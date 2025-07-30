@@ -414,6 +414,7 @@ export class RequeteComponent implements OnInit {
     if (this.registerForm.valid) {
       const value = this.registerForm.getRawValue();
       let service = null;
+      this.loading = true;
       if (
         this.link_to_prestation === 1 ||
         this.selected_type_preoccupation === 0
@@ -453,18 +454,21 @@ export class RequeteComponent implements OnInit {
           'Veuillez choisir une structure destrinatrice.',
           'error'
         );
+        this.loading = false;
       } else if (param.plainte === null || param.plainte === '0') {
         AppSweetAlert.simpleAlert(
           'Erreur',
           'Veuillez choisir un type de préoccupation.',
           'error'
         );
+        this.loading = false;
       } else if (this.mat_aff === true && param.matricule.trim() === '') {
         AppSweetAlert.simpleAlert(
           'Renseigner le matricule',
           'Champ obligatoire',
           'error'
         );
+        this.loading = false;
       } else if (!param.objet) {
         /* else if(param.idPrestation == null || param.idPrestation == ""){
         AppSweetAlert.simpleAlert("Erreur","Veuillez choisir une prestation.", 'error')
@@ -474,20 +478,22 @@ export class RequeteComponent implements OnInit {
           'Champ obligatoire',
           'error'
         );
+        this.loading = false;
       } else if (!param.msgrequest) {
         AppSweetAlert.simpleAlert(
           'Renseigner le message',
           'Champ obligatoire',
           'error'
         );
+        this.loading = false;
       } else if (!value.has_consent) {
         AppSweetAlert.simpleAlert(
           'Consentement',
           'Veuillez donner votre consentement',
           'error'
         );
+        this.loading = false;
       } else {
-        this.loading = true;
         console.log(param);
         this.pdaService.createrequeteusager(param).subscribe((rest: any) => {
           this.registerForm.reset();
