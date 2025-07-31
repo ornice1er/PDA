@@ -108,12 +108,12 @@ export class LogUsagerComponent implements OnInit {
             this.user_auth_service.setUserLoggedIn(true);
 
             if (res.user.active) {
-              this.loading = false;
               this.router.navigate(['/admin/home']);
             } else {
               this.router.navigate(['/main']);
             }
           }
+          this.loading = false;
         },
         (err) => {
           this.loading = false;

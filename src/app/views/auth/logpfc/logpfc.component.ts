@@ -92,7 +92,6 @@ export class LogpfcComponent implements OnInit {
       this.loading = true;
       this.user_auth_service.loginpfc(payload).subscribe(
         (res: any) => {
-          this.loading = false;
           if (res) {
             this.local_service.set(GlobalName.tokenNameMat, res.data);
             this.user_auth_service.getUserByToken().subscribe((res: any) => {
@@ -102,6 +101,7 @@ export class LogpfcComponent implements OnInit {
               this.router.navigateByUrl('/admin/homepfc');
             });
           }
+          this.loading = false;
         },
         (err: any) => {
           this.loading = false;

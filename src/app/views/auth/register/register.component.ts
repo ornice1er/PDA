@@ -242,6 +242,7 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     if (this.registerForm.valid) {
       console.log('Registration data:', this.registerForm.value);
+      this.loading =true;
       let payload = this.registerForm.value;
       payload['ip'] = this.ipAddress;
       this.user_auth_service.register(payload).subscribe(
