@@ -1,0 +1,47 @@
+/*
+
+
+:host,
+:host *:not(svg):not(svg *):not(input[type="radio"]):not(input[type="radio"] *) :not(input[type="checkbox"]):not(input[type="checkbox"] *) {
+  all: unset;
+  display: revert;
+  box-sizing: inherit;
+  font-family: inherit;
+  color: inherit;
+
+  animation: inherit;
+  transition: inherit;
+  transform: inherit;
+  opacity: inherit;
+
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  list-style: none;
+} */
+
+:host {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+
+::ng-deep .p-radiobutton-checked .p-radiobutton-box {
+  border-color: #fcc800 !important;
+  background: #FFF !important;
+}
+
+::ng-deep .p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
+  background: #fcc800 !important;
+}
+
+.p-radiobutton-checked .p-radiobutton-box {
+  border-color: #fcc800 !important;
+  background: #FFF !important;
+}
+
+.p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
+  background: #fcc800 !important;
+}

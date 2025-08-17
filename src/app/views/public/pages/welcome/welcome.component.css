@@ -1,3 +1,4 @@
+
 .owl-dots.ng-star-inserted{
     display: none !important;
 }
@@ -108,5 +109,13 @@ section.services-container .service-card-title-icon {
     box-sizing: border-box;
     align-items: center;
     cursor: pointer;
+}
+
+.card-stats{
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 20vh;
+    width: 250px !important;
+    background-color: white;
 }
 

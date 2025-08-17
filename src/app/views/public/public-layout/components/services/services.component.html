@@ -1,0 +1,122 @@
+<section class="py-20 bg-gray-50!">
+  <div class="container mx-auto px-4!">
+    <!-- Main Services -->
+    <div class="mb-20!">
+      <div class="text-center mb-16!">
+        <h2 class="text-4xl lg:text-5xl font-bold text-[#162233] mb-6!">
+          Nos Services Principaux
+        </h2>
+        <div class="w-24 h-1 bg-gradient-to-r from-[#11845A] to-[#023E79] rounded-full mx-auto!"></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12!">
+        <div *ngFor="let service of mainServices; let i = index"
+          class="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2!">
+          <div class="h-48 overflow-hidden relative!">
+            <img [src]="service.image" [alt]="service.title"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105!" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent!"></div>
+          </div>
+          <div class="p-6!">
+            <div class="rounded-xl p-3 w-12 h-12 mb-4 flex items-center justify-center!"
+              [style.background-color]="service.color + '20'">
+              <svg *ngIf="i === 0" class="h-6 w-6!" [style.color]="service.color" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+              </svg>
+              <svg *ngIf="i === 1" class="h-6 w-6!" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                  <path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8m8 4H8m8 4H8" />
+                </g>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-[#162233] mb-3!">
+              {{ service.title }}
+            </h3>
+            <p class="text-gray-600 mb-6 leading-relaxed!">
+              {{ service.description }}
+            </p>
+            <button (click)="goTo(service.link)"
+              class="group/btn text-white px-6 py-3 rounded-xl w-auto! font-semibold transition-all duration-300 flex items-center gap-x-2 hover:shadow-lg transform hover:scale-105!"
+              [style.background-color]="service.color">
+              <span>Accéder</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover/btn:translate-x-1 transition-transform!"
+                viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 12h14m-7-7l7 7l-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platform Services -->
+    <div>
+      <div class="text-center mb-12!">
+        <h2 class="text-3xl font-bold text-[#162233] mb-4!">
+          Autres Plateformes
+        </h2>
+        <div class="w-20 h-0.5 bg-gradient-to-r from-[#11845A] to-[#023E79] rounded-full mx-auto!"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6!">
+        <div *ngFor="let service of platformServices; let i = index"
+          class="group text-white rounded-xl p-6 text-center transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg relative overflow-hidden!"
+          [style.background-color]="service.color">
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity!">
+          </div>
+          <div class="relative z-10!">
+            <div
+              class="bg-white/20 backdrop-blur-sm rounded-xl p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform!">
+              <svg *ngIf="i === 0" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6!" width="24" height="24"
+                viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path
+                    d="M2.062 12.348a1 1 0 0 1 0-.696a10.75 10.75 0 0 1 19.876 0a1 1 0 0 1 0 .696a10.75 10.75 0 0 1-19.876 0" />
+                  <circle cx="12" cy="12" r="3" />
+                </g>
+              </svg>
+              <svg *ngIf="i === 1" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6!" width="24" height="24"
+                viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 2a14.5 14.5 0 0 0 0 20a14.5 14.5 0 0 0 0-20M2 12h20" />
+                </g>
+              </svg>
+              <svg *ngIf="i === 2" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6!" width="24" height="24"
+                viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path
+                    d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.128a4 4 0 0 1 0 7.744M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <circle cx="9" cy="7" r="4" />
+                </g>
+              </svg>
+              <svg *ngIf="i === 3" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6!" width="24" height="24"
+                viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="m21.73 18l-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3M12 9v4m0 4h.01" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold mb-2!">{{ service.title }}</h3>
+            <p class="text-white/90 text-sm mb-4 leading-relaxed!">
+              {{ service.description }}
+            </p>
+            <a *ngIf="service.link.startsWith('http')" [href]="service.link"
+              class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 border border-white/30!">
+              Accéder
+            </a>
+            <a *ngIf="!service.link.startsWith('http')" routerLink="{{service.link}}"
+              class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 border border-white/30!">
+              Accéder
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

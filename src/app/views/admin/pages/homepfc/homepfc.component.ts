@@ -1,105 +1,26 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
-// import {AuthService} from '../../core/_services/auth.service';
-// import {AlertNotif} from '../../alert';
-// import { Usager } from '../../core/_models/usager.model';
-import {NgbModal, ModalDismissReasons, NgbModule, NgbPaginationModule} from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subject } from 'rxjs';
-// import {clientData, GlobalName} from '../../core/_utils/utils';
-// import {LocalStorageService} from '../../core/_services/storage_services/local.service';
-import { Subscription } from 'rxjs';
-// import { Config } from '../../app.config';
-import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2'
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { SampleSearchPipe } from '../../../../core/pipes/sample-search.pipe';
-import { AuthService } from '../../../../core/services/auth.service';
-import { LoadingComponent } from '../../../components/loading/loading.component';
-import { StatutComponent } from '../../../components/statut/statut.component';
-import { AppSweetAlert } from '../../../../core/utils/app-sweet-alert';
-import { ConfigService } from '../../../../core/utils/config-service';
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { TitleService } from '../../../../core/utils/title.service';
 import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
+import { GlobalName } from '../../../../core/utils/global-name';
 
 @Component({
   selector: 'app-homepfc',
   standalone: true,
-    imports:[CommonModule,FormsModule,NgbModule,LoadingComponent,SampleSearchPipe,NgSelectModule,NgxPaginationModule,StatutComponent],
+  imports: [RouterOutlet],
   templateUrl: './homepfc.component.html',
-  styleUrls: ['./homepfc.component.css']
+  styleUrls: ['./homepfc.component.css'],
 })
 export class HomepfcComponent implements OnInit {
-  active=1
-  @ViewChild('contentRetraite') contentRetraite : any;
-  @ViewChild('contentCarriere') contentCarriere : any;
-
-  loadFile(file:any){
-    return ConfigService.toFile(file)
-  }
-  page = 1;
-  pagerv = 1;
-  
-  subs:Subscription | undefined
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+  user: any;
   constructor(
-    private user_auth_service:AuthService, 
-    private  local_service:LocalStorageService,
-    private router:Router,
-    private modalService: NgbModal,
-    private localStorageService:LocalStorageService,
-    private activatedRoute: ActivatedRoute,
-    ) { 
-    if(localStorage.getItem('matUserData')!=undefined) this.user=this.local_service.get('matUserData');
+    private titleService: TitleService,
+    private local_service: LocalStorageService
+  ) {
+    // if(localStorage.getItem(GlobalName.tokenNameMat)!=undefined) this.user=this.local_service.get(GlobalName.tokenNameMat);
   }
-  loading:boolean=false
-  id:any
-  data:any
-  user:any
-  access_token:any
-  _temp: any[]=[];
-  
-  subject = new Subject<any>();
-  pager: any = {current_page: 0,
-    data:[],
-    last_page: 0,
-    per_page: 0,
-    to: 0,
-    total: 0
-  }
-  link_to_prestation=1
-  selected_type_preoccupation=0
-  error=""
-  searchText=""
-  
-  selected_data:any
-  closeResult = '';
-  departements:any[]=[]
-  detailpiece:any[]=[]
-  structures:any[]=[]
-  natures:any[]=[]
-  dataNT: any[] = [];
-  themes:any[]=[]
-  services:any[]=[]
-  onglet_What = false
-  mat_aff = false
-  descrCarr=[]
-  selected_data_note: any
-  notes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-  // Declaration 
-  matricu_rv =""
-
   ngOnInit(): void {
+<<<<<<< HEAD
     if (localStorage.getItem('matUserData') != null) {
       this.user = this.localStorageService.get("matUserData")
       //Controle pour acceder à l'onglet WhatsApp
@@ -1021,3 +942,18 @@ ConfirmerTraitement(el:any) {
 
 
 }
+=======
+    this.titleService.setTitle('Espace Point Focal Communal');
+    this.user = this.local_service.get(GlobalName.userNameMat);
+    console.log(this.user);
+    if (this.user) {
+      this.titleService.setUserConnectedState(this.user);
+      if (this.user?.agent_user?.categorie_acteur === 'Mairie') {
+        this.titleService.setPfcState(3);
+      } else {
+        this.titleService.setPfcState(1);
+      }
+    }
+  }
+}
+>>>>>>> feba544608f4688135d3c3a0bc9baaa7d70c94aa

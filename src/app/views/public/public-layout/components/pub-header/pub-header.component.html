@@ -1,0 +1,86 @@
+<header class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100!">
+  <div class="container mx-auto px-4!">
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between py-3 text-sm border-b border-gray-100!">
+      <div class="flex items-center gap-x-4 text-gray-600!">
+        <span class="font-medium!">République du Bénin</span>
+        <span class="text-gray-300!">|</span>
+        <span>Ministère du Travail et de la Fonction Publique</span>
+      </div>
+      <div class="hidden md:flex items-center gap-x-6!">
+        <button class="flex items-center gap-x-2 text-gray-600 hover:text-[#11845A] transition-colors!">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4!" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M10.268 21a2 2 0 0 0 3.464 0m-10.47-5.674A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+          </svg>
+          <span>Notifications</span>
+        </button>
+        <a routerLink="/auth/logusager"
+          class="flex items-center gap-x-2 bg-[#11845A] text-white px-4 py-2 rounded-full hover:bg-[#0f7550] transition-colors!">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4!" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </g>
+          </svg>
+          <span>Mon Espace</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <div class="flex items-center justify-between py-4!">
+      <div>
+        <img src="assets/logo-mtfp.png" alt="mtfp-logo" class="h-12!">
+        <!-- <h1 class="text-2xl font-bold text-[#162233]!">Portail des Démarches Administratives</h1>
+        <p class="text-sm text-gray-500!">République du Bénin</p> -->
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-x-8!">
+        <a routerLink="/" class="text-gray-700  hover:text-[#11845A] transition-colors font-semibold relative group">
+          Accueil
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#11845A] transition-all group-hover:w-full!"></span>
+        </a>
+        <a routerLink="/prestations-par-thematique" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold relative group">
+          Prestations
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#11845A] transition-all group-hover:w-full!"></span>
+        </a>
+        <a routerLink="/e-services" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold relative group">
+          E-Services
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#11845A] transition-all group-hover:w-full!"></span>
+        </a>
+        <a target="_blank" href="https://travail.gouv.bj/contact" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold relative group">
+          Contact
+          <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#11845A] transition-all group-hover:w-full!"></span>
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center!">
+        <button class="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors!" (click)="toggleMobileMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600!" *ngIf="!isMenuOpen"
+            viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 12h16M4 18h16M4 6h16" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600!" *ngIf="isMenuOpen"
+            viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 12h14m-7-7v14" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div *ngIf="isMenuOpen" class="lg:hidden py-4 border-t border-gray-100!">
+      <nav class="flex flex-col gap-y-4!">
+        <a routerLink="/" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold py-2!">Accueil</a>
+        <a routerLink="/prestations-par-thematique" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold py-2!">Prestations</a>
+        <a routerLink="/e-services" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold py-2!">E-Services</a>
+        <a target="_blank" href="https://travail.gouv.bj/contact" class="text-gray-700 hover:text-[#11845A] transition-colors font-semibold py-2!">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>

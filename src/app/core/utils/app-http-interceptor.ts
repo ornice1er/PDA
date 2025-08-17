@@ -20,7 +20,14 @@ export class AppHttpInterceptor implements HttpInterceptor {
     ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.authService.getJWTToken();
+    var token:any=""
+    if (req.url && req.url.includes(ConfigService.toApiUrl(''))) {
+       token = this.lsService.get(GlobalName.tokenName);
+
+    } else {
+      token = this.lsService.get(GlobalName.tokenNameMat);
+
+    }
     req = req.clone({
       url:  req.url,
       setHeaders: {
@@ -40,14 +47,23 @@ export class AppHttpInterceptor implements HttpInterceptor {
                 );
                 switch (error.status) {
                   case 401:
-                    if (error.url && error.url.includes(ConfigService.toApiUrl())) {
+                    console.log(error.url)
+                    console.log(ConfigService.toApiUrl(''))
+                    console.log(ConfigService.toMataccueilApiUrl(''))
+                    if (error.url && error.url.includes(ConfigService.toApiUrl(''))) {
                       this.lsService.remove(GlobalName.tokenName)
                       this.lsService.remove(GlobalName.refreshTokenName)
                       this.lsService.remove(GlobalName.expireIn)
                       this.lsService.remove(GlobalName.userName)
                       this.lsService.remove(GlobalName.exercice)
                       this.modalService.dismissAll()
-                      this.router.navigate(['/log-usager'])
+                      this.router.navigate(['/auth/logusager'])
+                    }else   if (error.url && error.url.includes(ConfigService.toMataccueilApiUrl('')) &&  this.lsService.get(GlobalName.tokenNameMat)!= undefined) {
+                      this.lsService.remove(GlobalName.tokenNameMat)
+                      this.lsService.remove(GlobalName.userNameMat)
+                      this.router.navigate(['/auth/logusager'])
+
+
                     }
                  
                     break;

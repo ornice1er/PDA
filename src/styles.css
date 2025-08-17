@@ -1,11 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+/* Puis charger Tailwind */
+@import "tailwindcss" important;
+@import "primeng/resources/themes/aura-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import 'mapbox-gl/dist/mapbox-gl.css';
+@import '@fontsource/montserrat';
+
 @import "@ng-select/ng-select/themes/default.theme.css";
 /* @import "~animate.css/animate.css"; */
 
+@theme {
+  --color-primary-dark: #162233;
+  --color-green-light: #11845A;
+  --color-primary: #023E79;
+}
+
+
+a{
+    cursor: pointer !important;
+}
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+body { margin: 0; font-family: "Montserrat",  sans-serif !important; }
+body, html, * {
+  font-family: 'Montserrat', sans-serif !important;
+}
 
 /* position */
 
@@ -50,7 +69,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     bottom: 12px;
     left: 12px;
   }
-  
+
   /* toast styles */
   .toast-title {
     font-weight: bold;
@@ -198,7 +217,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       width: 25em;
     }
   }
-  
+
 
 
 
@@ -218,25 +237,25 @@ input[type=checkbox]{
 
 @font-face {
   font-family: MEB;
-  src: url('assets/Montserrat/static/Montserrat-ExtraBold.ttf');
+  /* src: url('assets/Montserrat/static/Montserrat-ExtraBold.ttf'); */
 }
 @font-face {
   font-family: MB;
-  src: url('assets/Montserrat/static/Montserrat-Bold.ttf');
+  /* src: url('assets/Montserrat/static/Montserrat-Bold.ttf'); */
 }
 @font-face {
   font-family: MSB;
-  src: url('assets/Montserrat/static/Montserrat-SemiBold.ttf');
+  /* src: url('assets/Montserrat/static/Montserrat-SemiBold.ttf'); */
 }
 
 @font-face {
 font-family: MR;
-src: url('assets/Montserrat/static/Montserrat-Regular.ttf');
+/* src: url('assets/Montserrat/static/Montserrat-Regular.ttf'); */
 }
 
 @font-face {
 font-family: MM;
-src: url('assets/Montserrat/static/Montserrat-Medium.ttf');
+/* src: url('assets/Montserrat/static/Montserrat-Medium.ttf'); */
 }
 
 .meb{

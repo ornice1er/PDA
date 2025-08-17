@@ -1,0 +1,297 @@
+<section class="relative bg-gradient-to-br from-[#11845A] via-[#023E79] to-[#162233] text-white overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-20 left-20 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-3xl opacity-5">
+    </div>
+  </div>
+
+  <div class="relative container mx-auto px-4 py-16 lg:py-20">
+    <div class="max-w-4xl mx-auto text-center">
+      <div
+        class="inline-flex items-center gap-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6 border border-white/20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-300" viewBox="0 0 24 24">
+          <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+            <path
+              d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+            <circle cx="12" cy="10" r="3" />
+          </g>
+        </svg>
+        <span class="text-sm font-medium">Localisation des Services</span>
+      </div>
+
+      <h1 class="text-3xl lg:text-5xl font-bold mb-6 leading-tight">
+        Points de
+        <span class="block bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+          Contact
+        </span>
+      </h1>
+
+      <p class="text-lg lg:text-xl mb-8 text-white/90 leading-relaxed max-w-2xl mx-auto">
+        Trouvez facilement nos centres de service sur l'ensemble du
+        territoire national
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <!-- Introduction -->
+    <div class="max-w-4xl mx-auto mb-12">
+      <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <h2 class="text-2xl font-bold text-[#162233] mb-6">
+          Emplacement de nos centres communaux
+        </h2>
+        <div class="prose prose-lg text-gray-700 leading-relaxed">
+          <p class="mb-4">
+            Vous ne disposez pas de connexion chez vous ou vous n'avez pas
+            de terminal pour accéder aux services de l'administration,
+            rapprochez-vous du centre communal de service public ou du
+            guichet de service des relations avec les usagers proche de
+            votre résidence pour bénéficier de l'appui des points focaux.
+            Ces derniers vont vous assister dans :
+          </p>
+          <ul class="gap-y-2 text-gray-600">
+            <li class="flex items-start gap-x-3">
+              <div class="bg-[#11845A] rounded-full p-1 mt-1">
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+              <span>L'utilisation de la borne tactile connectée sur laquelle
+                vous pouvez accéder à l'ensemble des prestations
+                dématérialisées de l'administration publique ;</span>
+            </li>
+            <li class="flex items-start gap-x-3">
+              <div class="bg-[#023E79] rounded-full p-1 mt-1">
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+              <span>L'enregistrement d'une préoccupation à l'endroit de
+                l'administration publique ;</span>
+            </li>
+            <li class="flex items-start gap-x-3">
+              <div class="bg-[#11845A] rounded-full p-1 mt-1">
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+              <span>La recherche d'information sur les services dématérialisés
+                ou sur une prestation de l'administration publique
+                béninoise.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="mb-8">
+      <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+        <div class="flex flex-col lg:flex-row gap-4">
+          <!-- Search -->
+          <div class="flex-1">
+            <div class="relative">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" viewBox="0 0 24 24">
+                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                  <path d="m21 21l-4.34-4.34" />
+                  <circle cx="11" cy="11" r="8" />
+                </g>
+              </svg>
+              <input type="text" placeholder="Rechercher par ville, région ou nom..." [(ngModel)]="searchTerm"
+                (input)="filterContactPoints()"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#11845A] focus:border-transparent transition-all duration-200" />
+            </div>
+          </div>
+
+          <!-- Region Filter -->
+          <div class="lg:w-64">
+            <select [(ngModel)]="selectedRegion" (change)="filterContactPoints()"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#11845A] focus:border-transparent transition-all duration-200">
+              <option value="">Toutes les régions</option>
+              <option value="Littoral">Littoral</option>
+              <option value="Atlantique">Atlantique</option>
+              <option value="Ouémé">Ouémé</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Mono">Mono</option>
+              <option value="Couffo">Couffo</option>
+              <option value="Zou">Zou</option>
+              <option value="Collines">Collines</option>
+              <option value="Borgou">Borgou</option>
+              <option value="Alibori">Alibori</option>
+              <option value="Atacora">Atacora</option>
+              <option value="Donga">Donga</option>
+            </select>
+          </div>
+
+          <!-- Type Filter -->
+          <div class="lg:w-64">
+            <select [(ngModel)]="selectedType" (change)="filterContactPoints()"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#11845A] focus:border-transparent transition-all duration-200">
+              <option value="">Tous les types</option>
+              <option value="centre">Centre communal</option>
+              <option value="guichet">Guichet de service</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Section -->
+    <div #mapSection class="mb-12">
+      <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+        <div class="p-6 border-b border-gray-100">
+          <h3 class="text-xl font-bold text-[#162233] flex items-center gap-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#11845A]" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m3 11l19-9l-9 19l-2-8z" />
+            </svg>
+            <span>Carte interactive</span>
+          </h3>
+          <p class="text-gray-600 mt-2">
+            Localisez nos points de contact sur la carte
+          </p>
+        </div>
+        <div  class="h-96 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
+          <div #mapContainer id="map" class="w-full h-full absolute inset-0">
+
+          </div>
+          <!-- <mgl-map [accessToken]="'pk.eyJ1Ijoic2NoYWRyYWMtc29kZSIsImEiOiJjbWQzNzdubzQwMXdiMmtzZG45NG16cTdzIn0.IdIFjYGQKRv7DBD1c9qfLw'" [style]="'mapbox://styles/schadrac-sode/cl6v4rrem000m14osw4s29xnr'" [zoom]="[12]"
+            [center]="[-74.5, 40]" /> -->
+          <!-- <div class="text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 mx-auto mb-4" viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path
+                  d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                <circle cx="12" cy="10" r="3" />
+              </g>
+            </svg>
+            <p class="text-gray-500 text-lg font-medium">
+              Carte interactive
+            </p>
+            <p class="text-gray-400">
+              Intégration avec service de cartographie
+            </p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Points List -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div *ngFor="let point of filteredContactPoints"
+        class="group bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+        <!-- Header -->
+        <div class="flex items-start justify-between mb-4">
+          <div class="flex-1">
+            <!-- <div class="flex items-center gap-x-2 mb-2">
+              <span [class]="
+                      'px-3 py-1 rounded-full text-xs font-semibold ' +
+                      getTypeColor(point?.type)
+                    ">
+                {{ getTypeLabel(point?.type) }}
+              </span>
+              <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
+                {{ point?.region }}
+              </span>
+            </div> -->
+            <h3 class="text-lg font-bold text-[#162233] group-hover:text-[#11845A] transition-colors">
+              {{ point?.title }}
+            </h3>
+          </div>
+          <div class="bg-[#11845A]/10 p-2 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#11845A]" viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path
+                  d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                <circle cx="12" cy="10" r="3" />
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="gap-y-3 mb-4">
+          <div class="flex items-start gap-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 mt-1 flex-shrink-0"
+              viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path
+                  d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                <circle cx="12" cy="10" r="3" />
+              </g>
+            </svg>
+            <span class="text-gray-600 text-sm leading-relaxed">{{
+              point?.address
+              }}</span>
+          </div>
+
+          <div class="flex items-center gap-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384" />
+            </svg>
+            <span class="text-gray-600 text-sm">{{ point?.phone }}</span>
+          </div>
+
+          <div class="flex items-center gap-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="m22 7l-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                <rect width="20" height="16" x="2" y="4" rx="2" />
+              </g>
+            </svg>
+            <span class="text-gray-600 text-sm">{{ point?.email }}</span>
+          </div>
+
+          <div class="flex items-center gap-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <path d="M12 6v6l4 2" />
+                <circle cx="12" cy="12" r="10" />
+              </g>
+            </svg>
+            <span class="text-gray-600 text-sm">{{ point?.horaire }}</span>
+          </div>
+        </div>
+
+        <!-- Services -->
+        <div class="border-t border-gray-100 pt-4">
+          <h4 class="text-sm font-semibold text-gray-700 mb-2">
+            Services disponibles :
+          </h4>
+          <div class="flex flex-wrap gap-1">
+            <span *ngFor="let service of point?.services"
+              class="px-2 py-1 bg-[#11845A]/10 text-[#11845A] rounded text-xs font-medium">
+              {{ service }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="mt-4 pt-4 border-t border-gray-100">
+          <button (click)="zoomTo(point?.id)"
+            class="w-full bg-gradient-to-r from-[#11845A] to-[#023E79] text-white py-2 px-4 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 text-sm">
+            Voir sur la carte
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results -->
+    <div *ngIf="filteredContactPoints.length === 0" class="text-center py-12">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-300 mx-auto mb-4" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+          <path d="m21 21l-4.34-4.34" />
+          <circle cx="11" cy="11" r="8" />
+        </g>
+      </svg>
+      <h3 class="text-xl font-semibold text-gray-500 mb-2">
+        Aucun résultat trouvé
+      </h3>
+      <p class="text-gray-400">
+        Essayez de modifier vos critères de recherche
+      </p>
+    </div>
+  </div>
+</section>

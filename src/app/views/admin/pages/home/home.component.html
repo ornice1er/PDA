@@ -1,0 +1,161 @@
+<!-- <h2 class="text-center">Bienvenue cher {{user?.name}}</h2> -->
+<!-- <div class="min-h-screenw-full bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+
+</div> -->
+<div class="max-w-7xl mx-auto px-6 py-8">
+  <!-- Section d'accueil dynamique -->
+  <div class="mb-12">
+    <div class="glass-card rounded-3xl p-8 shadow-xl">
+      <div class="flex flex-col lg:flex-row items-center justify-between">
+        <div class="flex-1 mb-6 lg:mb-0">
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-2 h-2 bg-green-light rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-slate-600">
+              {{ currentTime | date:'HH:mm' }}
+            </span>
+          </div>
+          <h2 class="text-4xl font-bold text-primary-dark mb-3">
+            Bonjour {{ user?.name }} 👋
+          </h2>
+          <p class="text-xl text-primary-dark mb-6">
+            Votre tableau de bord personnel vous attend
+          </p>
+          <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-green-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                </path>
+              </svg>
+              <span class="text-sm font-medium text-primary-dark">Système opérationnel</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+              </svg>
+              <span class="text-sm font-medium text-primary-dark">Performance optimale</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-shrink-0">
+          <div class="relative">
+            <div
+              class="w-32 h-32 bg-gradient-to-r from-green-light to-primary rounded-3xl flex items-center justify-center shadow-2xl">
+              <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div class="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                </path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Services Grid -->
+  <div class="mb-12">
+    <div class="flex items-center justify-between mb-8">
+      <h3 class="text-2xl font-bold text-slate-800">Services Disponibles</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div *ngFor="let d of data"
+        [class]="'relative glass-card rounded-3xl p-8 shadow-lg border-l-4 border-primary-dark  border hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer group overflow-hidden'"
+        (click)="goTo(d.client?.client_id)">
+
+        <div
+          [class]="'absolute inset-0 bg-gradient-to-br from-green-light to-primary opacity-0 group-hover:opacity-5 transition-opacity duration-500'">
+        </div>
+
+        <div class="relative z-10">
+          <div
+            [class]="'w-16 h-16 bg-gradient-to-r from-green-light to-primary  rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg'">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-white" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M8.75 13A2.25 2.25 0 0 1 11 15.25v3.5A2.25 2.25 0 0 1 8.75 21h-3.5A2.25 2.25 0 0 1 3 18.75v-3.5A2.25 2.25 0 0 1 5.25 13zm10-10A2.25 2.25 0 0 1 21 5.25v3.5A2.25 2.25 0 0 1 18.75 11h-3.5A2.25 2.25 0 0 1 13 8.75v-3.5A2.25 2.25 0 0 1 15.25 3z"
+                class="duoicon-secondary-layer" opacity="0.3" />
+              <path fill="currentColor"
+                d="M8.75 3A2.25 2.25 0 0 1 11 5.25v3.5A2.25 2.25 0 0 1 8.75 11h-3.5A2.25 2.25 0 0 1 3 8.75v-3.5A2.25 2.25 0 0 1 5.25 3z"
+                class="duoicon-primary-layer" />
+              <path fill="currentColor"
+                d="M18.75 13A2.25 2.25 0 0 1 21 15.25v3.5A2.25 2.25 0 0 1 18.75 21h-3.5A2.25 2.25 0 0 1 13 18.75v-3.5A2.25 2.25 0 0 1 15.25 13z"
+                class="duoicon-secondary-layer" opacity="0.3" />
+            </svg>
+          </div>
+
+          <h4 class="text-xl font-bold text-primary-dark mb-3 group-hover:text-primary-dark">
+            {{d.client.name}}
+          </h4>
+
+          <!-- <p class="text-slate-600 mb-6 leading-relaxed">
+              {{ service.description }}
+            </p> -->
+
+          <div class="flex items-center justify-end">
+            <div class="flex items-center text-emerald-600 group-hover:text-emerald-700">
+              <span class="text-sm font-semibold mr-2">Accéder</span>
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3">
+                </path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- <div class="container p-5 bg-light" >
+    <h4 class="text-center mx-1 mb-3"><u>Accédez aux différents services</u></h4>
+
+    <div class="row ">
+            <div class="col-12 col-md-4" *ngFor="let d of data">
+
+                    <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation" *ngIf="d.client.name!=''">
+                        <a  class="tbtn text-decoration-none" type="button"  *ngIf="!d.client.revoked" (click)="goTo(d.client?.client_id)">
+
+                            <div class="card-body">
+                                <div class="d-flex flex-column justify-content-around">
+                                    <div class="align-self-center text-center text-sm-start mb-3">
+                                        <img src="assets/images/default_app.jpg" height="50px" alt="" srcset="">
+                                    </div>
+                                    <div class="p-2 text-center" >
+                                        <div class="block-sollicitation-title d-flex justify-content-center ">
+                                            <span class="text-dark   h6 align-self-center "><strong>{{d.client.name}}</strong></span>
+                                        </div>
+                                        <p class="text-dark h6"></p>
+                                        <div class="d-flex justify-content-around blueColor">
+                                            <div class="">
+                                                <a  class="tbtn text-white" style="font-size:15px; border:none;" href="javascript:void(0);" *ngIf="d.client.revoked"  onclick="alert('Application en cours d\'intégration')">BIENTÔT DISPONIBLE
+                                                        <h6 class="text-dark mt-2"></h6>
+                                                    </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+
+
+            </div>
+    </div>
+
+</div> -->

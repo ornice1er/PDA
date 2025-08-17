@@ -11,8 +11,16 @@ export class FileService {
   constructor(private http:HttpClient) { }
 
   
+  getBlob(filePath:any){
+    return this.http.get(filePath, { responseType: 'blob' });
+  }
   get(ressource:any){
     return this.http.post<any>(`${ConfigService.toApiUrl("get-file")}`, ressource,
+     ConfigService.addAction('list'));
+  }
+
+   getMat(ressource:any){
+    return this.http.post<any>(`${ConfigService.toMataccueilApiUrl("get-file")}`, ressource,
      ConfigService.addAction('list'));
   }
   get2(ressource:any){

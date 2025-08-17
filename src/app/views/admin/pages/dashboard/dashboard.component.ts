@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from 'express';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../../../core/services/auth.service';
 import { GlobalName } from '../../../../core/utils/global-name';
 import { LocalStorageService } from '../../../../core/utils/local-stoarge-service';
 import { CommonModule } from '@angular/common';

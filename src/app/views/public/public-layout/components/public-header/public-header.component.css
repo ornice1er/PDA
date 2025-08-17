@@ -1,0 +1,21 @@
+/* .active{
+    background-color: unset !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+}
+.nav-link:hover{
+    background-color: unset !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
+} */
+
+:host, :host *:not(svg):not(svg *) {
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+  font-family: inherit;
+  color: inherit;
+}
+:host {
+  font-family: 'Montserrat', sans-serif;
+}

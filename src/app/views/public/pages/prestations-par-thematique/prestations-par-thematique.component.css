@@ -1,0 +1,40 @@
+
+/* Styles pour le conteneur du dropdown */
+::ng-deep .p-dropdown > .p-inputwrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: start;
+}
+
+/* Styles de base du dropdown */
+::ng-deep .p-dropdown {
+  border: 1px solid #d1d5db; /* gray-300 */
+  width: 100%;
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+::ng-deep .p-dropdown:focus {
+  border-color: #d1d5db; /* focus:border-gray-300 */
+}
+
+/* Styles pour l'item sélectionné */
+::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: #3b82f6; /* text-primary (blue-500) */
+  background-color: rgba(59, 130, 246, 0.1); /* bg-primary/10 */
+  font-family: 'Avenir Medium', sans-serif; /* font-avenirMedium */
+  font-weight: 300; /* font-light */
+}
+
+/* Styles pour tous les items */
+::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  text-align: start;
+}
+
+/* Styles pour le placeholder et les labels */
+::ng-deep .p-placeholder,
+::ng-deep .p-dropdown-item,
+::ng-deep .p-dropdown-label {
+  text-align: start;
+}

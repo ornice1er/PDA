@@ -1,0 +1,11 @@
+.bg-mat-primary{
+    background-color: #2f3364 !important
+  }
+
+.modal-z1 .modal-dialog {
+  z-index: 1050; /* z-index par défaut */
+}
+
+.modal-z2 .modal-dialog {
+  z-index: 1060; /* au-dessus de la première */
+}

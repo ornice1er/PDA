@@ -21,7 +21,7 @@ export class StatusService {
     }
 
     getNbreServ(): Observable<any> {
-        return this.http.get<any[]>(`${this.urlI}e-services`, ConfigService.httpHeader());
+        return this.http.get<any[]>(`${this.urlI}eservices`, ConfigService.httpHeader());
     }
 
     store(ressource: object) {

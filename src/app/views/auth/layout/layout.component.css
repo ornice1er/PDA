@@ -1,3 +1,19 @@
+.blueColor{
+    background-color: #0A3764 !important;
+}
+.blueColorT{
+    color: #0A3764;
+}
+
 .main{
+<<<<<<< HEAD
     background-color: orange;
     }
+=======
+    /* background-color: #f2f5f9; */
+    min-height: 100vh;
+    background-image: url('../../../../assets/bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+>>>>>>> feba544608f4688135d3c3a0bc9baaa7d70c94aa

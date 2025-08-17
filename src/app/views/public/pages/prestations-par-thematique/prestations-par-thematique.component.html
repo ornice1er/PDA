@@ -1,86 +1,142 @@
-<section class="o-banner">
-        <div class="card text-white ">
-    
-            <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
-            <div class="card-img-overlay">
-    
-                <div class="text container">
-                    <h2 class="card-title text-center"> CATALOGUE DES PRESTATIONS</h2>
-                    <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
-                    <p class="text-center">Prestations par thématiques</p>
-                </div>
-    
-    
-            </div>
-        </div>
-    
-    </section>
-    <div class="container my-5">
-        <div class="row">
-                <div class="col-md-12 my-2">
-                        <div class="row">
-                             <div class="col-md-2">
-                                <span>Thématiques : </span>
-                             </div>
-                             <div class="col-md-6">
-                                <select [(ngModel)]="selected_key" name="thematique" id="" (change)="filter($event)" class="form-control">
-                                    <option value="" selected disabled>Choisir une thématique</option>                                    
-                                    <option value="0">Toutes</option>
-                                    <option [value]="el.id" *ngFor="let el of thematiques">{{el.libelle}}</option>
-                
-                                 </select>
-                             </div>
-                             <div class="col-md-4">
-                                <input [(ngModel)]="searchText" name="searchText"  (keyup)="search()" placeholder="Rechercher...." id="" class="form-control">
-                             </div>
-                        </div>
-                </div>
-            <div class="col-md-12 col-12 col-sm-12">
-    
-                <table class="table  table-striped">
-                    <thead>
-                        <tr class="blueColor text-white ">
-                            <th>Libellé</th>
-                            <th>Description</th>
-                            <th>Sollicitation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-                            <td>{{el.libelle}}</td>
-                            
-                            <td class="text-center">
-                                <a *ngIf="el.access_online"  target="_blank" title="Cliquer" class="btn btn-sm btn-light" [href]="el.view_url">Consulter</a>
-                                <span *ngIf="!el.access_online"> - </span>
-                            </td>
-                            <td>
-                                <a *ngIf="el.access_online" target="_blank" title="Cliquer" class="btn btn-sm text-white blueColor" [href]="el.access_url">Solliciter</a>
-                                <span *ngIf="!el.access_online"> - </span>
-                            </td>
-                        </tr>
-                        <tr *ngIf="!loading && data.length==0">
-                            <td class="text-center" colspan="10" >Aucun élément</td>
-                        </tr>
-                        <tr *ngIf="loading && data.length==0">
-                            <td class="text-center" colspan="10" >Chargement en cours...</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-between p-2">
-                    <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
-                    </ngb-pagination>
-                  
-                    <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize" >
-                      <option selected disabled>Filtrer</option>
-                      <option [ngValue]="10">10 elements par page</option>
-                      <option [ngValue]="15">15 elements par par page</option>
-                      <option [ngValue]="20">20 elements par par page</option>
-                      <option [ngValue]="50">50 elements par par page</option>
-                    </select>
-                  </div>
-            </div>
-    
-        </div>
-    
-    
+<!-- <div class="ag-bg-danger-light " style="min-height: 100vh; width: 100%;">
+    <div class="p-1">
+        <img src="assets/images/logo-horizontal@4x.png" class="img-fluid" alt="" style="height: 60px;">
     </div>
+
+    <div class="container d-flex flex-column justify-content-start h-100">
+        <h1 class="text-center text-black">Bon retour parmi nous ! </h1>
+
+        <div class="col-12 col-md-5 mx-auto align-self-center ">
+            <div class="card rounded-0">
+                <div class="card-body">
+                    <p class="text-center h4 mb-5">C’est un plaisir de vous revoir parmi nous !</p>
+                    <form class="" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
+                        <div class="form-row">
+                <div class="col-12 mb-3">
+                <div class="form-group">
+                <input name="email" id="exampleEmail" placeholder="Email ici..." type="email" class="form-control"  required ngModel>
+                </div>
+                </div>
+                <div class="col-12  mb-3">
+                <div class="form-group">
+                <input name="password" id="examplePassword" placeholder="Mot de passe ici..." type="password" class="form-control"  required ngModel>
+                </div>
+                </div>
+                </div>
+                <div class="divider row"></div>
+                <div class="text-center mb-5">
+                    <button class="btn btn-danger btn-lg" [disabled]="loginForm.invalid || loading">Se connecter <app-loading [isVisible]="loading"></app-loading></button>
+                </div>
+
+                <p class="text-center mb-3">
+                    <span>Avez vous oublié votre mot de passe ? </span>
+                     <span class="ag-text-danger"><a routerLink="/forget-password" class="text-decoration-none pointer ag-text-red "><b>Cliquez ici</b></a></span>
+                </p>
+
+                <p class="text-center mb-3">
+                    <a class="text-decoration-none pointer ag-text-red " routerLink="/">Retourner à l'accueil</a>
+                </p>
+                </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+<section
+  class="relative bg-gradient-to-br from-[#11845A] via-[#023E79] to-[#162233] text-white overflow-hidden min-h-sm">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-20 left-20 w-32 h-32 bg-white rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white rounded-full blur-3xl opacity-5">
+    </div>
+  </div>
+
+  <div class="relative container mx-auto px-4 py-16 lg:py-16 flex items-center justify-center">
+    <div class="w-full max-w-md">
+
+      <!-- Header -->
+      <div class="text-center mb-8 flex flex-col gap-y-3">
+        <h1 class="text-3xl lg:text-4xl font-bold  gap-x-2">
+          CATALOGUE DES
+          <span class="bg-gradient-to-r from-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+            PRESTATIONS
+          </span>
+        </h1>
+        <p class="text-white/90 leading-relaxed">Prestations par thématiques</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container my-5">
+  <div class="flex flex-col gap-y-3">
+    <div class="flex flex-row gap-3 w-4/5 2xl:w-3/5">
+      <p-dropdown class="" [options]="thematiques" [(ngModel)]="selected_key" (onChange)="filter($event)"
+        optionLabel="libelle" optionValue="id" placeholder="Choisir une thématique">
+        <ng-template pTemplate="dropdownicon">
+          <div class="flex items-center justify-center text-black py-[0.6rem]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m7 10l5 5m0 0l5-5" />
+            </svg>
+          </div>
+        </ng-template>
+      </p-dropdown>
+      <input [(ngModel)]="searchText" name="searchText" (keyup)="search()" placeholder="Rechercher...." id=""
+        class="form-control">
+    </div>
+    <div class="col-md-12 col-12 col-sm-12">
+
+      <table class="table  table-striped">
+        <thead>
+          <tr class="blueColor text-white ">
+            <th>Libellé</th>
+            <th>Description</th>
+            <th>Sollicitation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let el of data  index as i">
+            <td>{{el.libelle}}</td>
+
+            <td class="text-center">
+              <a *ngIf="el.access_online" target="_blank" title="Cliquer" class="btn btn-sm btn-light"
+                [href]="el.view_url">Consulter</a>
+              <span *ngIf="!el.access_online"> - </span>
+            </td>
+            <td>
+              <a *ngIf="el.access_online" target="_blank" title="Cliquer" class="btn btn-sm text-white blueColor"
+                [href]="el.access_url">Solliciter</a>
+              <span *ngIf="!el.access_online"> - </span>
+            </td>
+          </tr>
+          <tr *ngIf="!loading && data.length==0">
+            <td class="text-center" colspan="10">Aucun élément</td>
+          </tr>
+          <tr *ngIf="loading && data.length==0">
+            <td class="text-center" colspan="10">Chargement en cours...</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+          [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+        </ngb-pagination>
+
+        <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+          <option selected disabled>Filtrer</option>
+          <option [ngValue]="10">10 elements par page</option>
+          <option [ngValue]="15">15 elements par par page</option>
+          <option [ngValue]="20">20 elements par par page</option>
+          <option [ngValue]="50">50 elements par par page</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>

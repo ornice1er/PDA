@@ -1,19 +1,4 @@
-@font-face {
-    font-family: montserrat-medium;
-    src: url("fonts/Montserrat/Montserrat-Medium.ttf");
-  }
-@font-face {
-    font-family: montserrat-light;
-    src: url("fonts/Montserrat/Montserrat-light.ttf");
-  }
-@font-face {
-    font-family: montserrat-regular;
-    src: url("fonts/Montserrat/Montserrat-Regular.ttf");
-  }
-@font-face {
-    font-family: montserrat-semi-bold;
-    src: url("fonts/Montserrat/Montserrat-SemiBold.ttf");
-  }
+
 
 
   a {
@@ -60,7 +45,7 @@
     .navbar .nav-item .dropdown-menu li{ padding: 5px;}
     .navbar .nav-item .dropdown-menu a:hover{ font-family: montserrat-semi-bold;}
     .navbar .nav-item:hover .nav-link{ color: #0A3764 ; font-family: montserrat-semi-bold; }
-    .navbar .nav-item:hover{ background-color: #fff; border: unset;}
+    .navbar .nav-item:hover{ background-color: unset; border: unset; text-decoration: underline; }
 
     .s-banner .card-img-overlay .text{
         position: absolute;
@@ -109,7 +94,7 @@
     .navbar .nav-item .dropdown-menu li{ padding: 5px;}
     .navbar .nav-item .dropdown-menu a:hover{ font-family: montserrat-semi-bold;}
     .navbar .nav-item:hover .nav-link{ color: #0A3764 ; font-family: montserrat-semi-bold; }
-    .navbar .nav-item:hover{ background-color: #fff; border: unset;}
+    .navbar .nav-item:hover{ background-color: unset; border: unset; text-decoration: underline; }
     .s-banner .card-img-overlay .text{
         position: absolute;
         padding: 0.5rem;

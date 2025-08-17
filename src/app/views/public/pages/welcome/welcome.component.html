@@ -1,28 +1,26 @@
 
-<section class="bg-body-tertiary">
-    <div class="container p-5">
-        <div class="mb-5">
-            <h1 class="mb-2 meb blueColorT" style=" text-align: center;">PORTAIL DES DEMARCHES ADMINISTRATIVES</h1>
-            <marquee behavior="scroll" direction="horizontal">{{settings?.header_text}}</marquee>
-           </div>
+
+<app-hero></app-hero>
+<app-statistics></app-statistics>
+<app-services></app-services>
+
+<!-- <section class="bg-body-tertiary p-5">
            <div class="row">
-               <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
-                   <p class="text-center h2 pda-text-success meb">{{totalInfo + totalPlainte}}</p>  
-                   <h6 class="text-center blueColorT msb">Préoccupations adressées au MTFP</h6>
-               </div>
-               <!-- <div class="col-12 col-md-4 d-flex flex-column justify-content-between">
-                   <p class="text-center h2 pda-text-yellow meb">{{totalPrestation}}</p>  
-                   <h6 class="text-center blueColorT msb">Prestations dématérialisées</h6>
-               </div> -->
-               <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
-                   <p class="text-center h2 pda-text-danger meb">{{totalPrestation}}</p>  
+               <div class="col-12 col-md-3 offset-3 text-center">
+                    <div class="d-flex flex-column justify-content-between card-stats shadow p-3 mb-5 bg-body rounded">
+                    <p class="text-center h2 pda-text-success meb">{{totalInfo + totalPlainte}}</p>
+                    <h6 class="text-center blueColorT msb">Préoccupations adressées au MTFP</h6>
+                    </div>
+               <div class="col-12 col-md-3 text-center">
+                    <div class="d-flex flex-column justify-content-between card-stats shadow p-3 mb-5 bg-body rounded">
+
+                   <p class="text-center h2 pda-text-danger meb">{{totalPrestation}}</p>
                    <h6 class="text-center blueColorT msb">Prestations du MTFP disponibles</h6>
+                    </div>
                </div>
            </div>
-    </div>
-     
-</section>
-<section class="bg-white container p-3 mb-5">
+</section> -->
+<!-- <section class="bg-white container p-3 mb-5">
     <div class="mb-5">
         <h2 class="text-left blueColorT msb">Nos services en ligne</h2>
         <div class="pda-bg-yellow mb-2" style="height: 10px; width: 15%;"></div>
@@ -32,24 +30,8 @@
             <owl-carousel-o [options]="customOptions">
                 <ng-template carouselSlide *ngFor="let d of eservices" >
                     <app-prestation-item [data]="d"></app-prestation-item>
-                    <!-- <div class="card shadow mb-5 p-1 rounded card_eservices">
-                        <div class="card-body">
-                            <div class="d-flex ">
-                                <div class="align-self-center text-center text-sm-start">
-                                    <i class="fas fa-address-card fa-3x blueColorT"></i> 
-                                </div>
-                                <div class="p-2 ">
-                                    <h6 class=""> <strong><small>{{d.title}}</small></strong></h6>
-                                    <div class="block-sollicitation-title d-flex ">
-                                        <a *ngIf="d.is_external_service" type="button" target="_blank" href="{{d.link}}" class="blueColorT ">Faire une demande</a>
-                                        <a *ngIf="!d.is_external_service" type="button" routerLink="/e-services/{{d.code}}" class="blueColorT ">Faire une demande</a>
-                                    </div>
-                                </div>
-                            </div>
-    
-                        </div>
-                    </div> -->
-    
+
+
                 </ng-template>
             </owl-carousel-o>
     </div>
@@ -62,7 +44,7 @@
               <a routerLink="/ccsps" class="btn btn-primary btn-sm blueColor text-white">Accéder</a>
             </div>
           </div>
-       
+
     </div>
     <div class="col-12 col-md-3">
         <div class="card h-100">
@@ -93,7 +75,7 @@
                       <p class="card-text text-center text-white">Soumettre mes préoccupations à l'administration.</p>
                     </div>
                   </div>
-             
+
             </div>
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="card py-3 " style="height: 15rem; background-color: orange;">
@@ -105,7 +87,7 @@
                       <p class="card-text text-center text-white">Accédez à l'ensemble de nos plateformes usagers à partir d'un seul compte.</p>
                     </div>
                   </div>
-               
+
             </div>
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="card py-3 bg-primary" style="height: 15rem;">
@@ -117,7 +99,7 @@
                       <p class="card-text text-center text-white">Connaître ma situation administrative.</p>
                     </div>
                   </div>
-            
+
             </div>
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="card py-3" style="height: 15rem; background-color: orangered; ">
@@ -129,13 +111,13 @@
                       <p class="card-text text-center text-white">Signaler la dérive d'un agent.</p>
                     </div>
                   </div>
-               
+
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
-<section class="bg-white">
+<!-- <section class="bg-white">
     <div class="container">
         <div class="mb-5">
             <h2 class="text-left blueColorT msb">Liens utiles</h2>
@@ -155,7 +137,7 @@
                             <h6 class="text-center">MINISTERE DU TRAVAIL ET DE LA FONCTION PUBLIQUE</h6>
 
                         </div>
-    
+
                     </div>
                 </div>
             </div>
@@ -171,13 +153,13 @@
                             </div>
                             <h6 class="text-center">CAISSE NATIONALE DE SECURITE SOCIALE</h6>
                         </div>
-    
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</section> -->
 
 
 

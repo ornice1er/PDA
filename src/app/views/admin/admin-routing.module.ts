@@ -1,184 +1,202 @@
-import { AuthGuard } from "../../core/guards/auth.guard";
-import { AuthGuardm } from "../../core/guards/authm.guard";
-import { IsAuthGuard } from "../../core/guards/is-auth.guard";
-import { RegisterguardGuard } from "../../core/guards/registerguard.guard";
-import { MentionsLegalesComponent } from "../public/pages/mentions-legales/mentions-legales.component";
-import { WelcomeComponent } from "../public/pages/welcome/welcome.component";
-import { LayoutComponent } from "./layout/layout.component";
-import { AboutComponent } from "./pages/about/about.component";
-import { AlloRetraiteComponent } from "./pages/allo-retraite/allo-retraite.component";
-import { BaseConnaissanceComponent } from "./pages/base-connaissance/base-connaissance.component";
-import { CheckCodeComponent } from "../public/pages/check-code/check-code.component";
-import { DashboardComponent } from "./pages/dashboard/dashboard.component";
-import { DemandeInformationComponent } from "./pages/demande-information/demande-information.component";
-import { EvenementDeclencheurComponent } from "./pages/evenement-declencheur/evenement-declencheur.component";
-import { FaqComponent } from "./pages/faq/faq.component";
-import { ForgotPasswordComponent } from "./pages/forgot-password/forgot-password.component";
-import { HomepfcComponent } from "./pages/homepfc/homepfc.component";
-import { JeDenonceComponent } from "./pages/je-denonce/je-denonce.component";
-import { LogoutComponent } from "./pages/logout/logout.component";
-import { LogpfcComponent } from "./pages/logpfc/logpfc.component";
-import { PlanComponent } from "./pages/plan/plan.component";
-import { PrendreRendezvousComponent } from "./pages/prendre-rendezvous/prendre-rendezvous.component";
-import { PrestationsParStructureComponent } from "./pages/prestations-par-structure/prestations-par-structure.component";
-import { PrestationsParThematiqueComponent } from "../public/pages/prestations-par-thematique/prestations-par-thematique.component";
-import { ProfileComponent } from "./pages/profile/profile.component";
-import { ProfilpfcComponent } from "./pages/profilpfc/profilpfc.component";
-import { QuestionComponent } from "./pages/question/question.component";
-import { ReclammationComponent } from "./pages/reclammation/reclammation.component";
-import { RegisterSuccessComponent } from "../public/pages/register-success/register-success.component";
-import { RegisterComponent } from "../public/pages/register/register.component";
+import { AuthGuard } from '../../core/guards/auth.guard';
+import { AuthGuardm } from '../../core/guards/authm.guard';
+import { IsAuthGuard } from '../../core/guards/is-auth.guard';
+import { RegisterguardGuard } from '../../core/guards/registerguard.guard';
+import { MentionsLegalesComponent } from '../public/pages/mentions-legales/mentions-legales.component';
+import { WelcomeComponent } from '../public/pages/welcome/welcome.component';
+import { LayoutComponent } from './layout/layout.component';
+import { AboutComponent } from './pages/about/about.component';
+import { AlloRetraiteComponent } from './pages/allo-retraite/allo-retraite.component';
+import { BaseConnaissanceComponent } from './pages/base-connaissance/base-connaissance.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DemandeInformationComponent } from './pages/demande-information/demande-information.component';
+import { EvenementDeclencheurComponent } from './pages/evenement-declencheur/evenement-declencheur.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { HomepfcComponent } from './pages/homepfc/homepfc.component';
+import { JeDenonceComponent } from './pages/je-denonce/je-denonce.component';
+import { LogoutComponent } from './pages/logout/logout.component';
+import { PlanComponent } from './pages/plan/plan.component';
+import { PrendreRendezvousComponent } from './pages/prendre-rendezvous/prendre-rendezvous.component';
+import { PrestationsParStructureComponent } from './pages/prestations-par-structure/prestations-par-structure.component';
+import { PrestationsParThematiqueComponent } from '../public/pages/prestations-par-thematique/prestations-par-thematique.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ProfilpfcComponent } from './pages/profilpfc/profilpfc.component';
+import { QuestionComponent } from './pages/question/question.component';
+import { ReclammationComponent } from './pages/reclammation/reclammation.component';
+import { HomeComponent } from './pages/home/home.component';
+import { PfcMataccueilComponent } from './pages/homepfc/components/pfc-mataccueil/pfc-mataccueil.component';
+import { PfcRegistreComponent } from './pages/homepfc/components/pfc-registre/pfc-registre.component';
+import { PfcWhatsappComponent } from './pages/homepfc/components/pfc-whatsapp/pfc-whatsapp.component';
+import { EspaceusagerComponent } from './pages/espaceusager/espaceusager.component';
+import { RapportRequeteComponent } from './pages/homepfc/components/rapport-requete/rapport-requete.component';
+import { PerformanceRequeteComponent } from './pages/homepfc/components/performance-requete/performance-requete.component';
+import { PfcAccueilComponent } from './pages/homepfc/components/accueil/accueil.component';
+import { CspReportPendingComponent } from './pages/homepfc/components/report-pending/csp-report-pending.component';
 
+export const AdminRoutes: any = [
+  // ✅ Doit être un tableau
+  {
+    path: 'admin',
+    component: LayoutComponent,
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      {
+        component: WelcomeComponent,
+        path: 'main',
+        canActivate: [IsAuthGuard],
+      },
 
-export const AdminRoutes: any = [ // ✅ Doit être un tableau
-    {
-      path: 'admin',
-      component: LayoutComponent,
-      children: [
-        { path: 'dashboard', component: DashboardComponent },
-        {
-          component: WelcomeComponent,
-            path: "main",
-            canActivate: [IsAuthGuard]
-          
-      },
-    
       {
-          component: PrestationsParStructureComponent,
-            path: "prestations-par-structure",
-            canActivate: [IsAuthGuard]
-          
+        component: PrestationsParStructureComponent,
+        path: 'prestations-par-structure',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: EvenementDeclencheurComponent,
-            path: "evenements-declencheur",
-            canActivate: [IsAuthGuard]
-          
+        component: EvenementDeclencheurComponent,
+        path: 'evenements-declencheur',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: FaqComponent,
-            path: "faq",
-            canActivate: [IsAuthGuard]
-          
+        component: FaqComponent,
+        path: 'faq',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: QuestionComponent,
-            path: "question",
-            canActivate: [IsAuthGuard]
-          
+        component: QuestionComponent,
+        path: 'question',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: PrendreRendezvousComponent,
-            path: "prendre-rendezvous",
-            canActivate: [IsAuthGuard]
-          
+        component: PrendreRendezvousComponent,
+        path: 'prendre-rendezvous',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: AlloRetraiteComponent,
-            path: "allo-retraite",
-            canActivate: [IsAuthGuard]
-          
+        component: AlloRetraiteComponent,
+        path: 'allo-retraite',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: PlanComponent,
-            path: "plan",
-            canActivate: [IsAuthGuard]
-          
+        component: PlanComponent,
+        path: 'plan',
+        canActivate: [IsAuthGuard],
       },
-     /* {
+      /* {
           component: ThematiquesComponent,
             path: "thematiques"
-          
+
       },
       {
           component: StructuresComponent,
             path: "structures"
-          
+
       },*/
       {
-          component: ReclammationComponent,
-            path: "reclammation",
-            canActivate: [IsAuthGuard]
-          
+        component: ReclammationComponent,
+        path: 'reclammation',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: DemandeInformationComponent,
-            path: "demande-info",
-            canActivate: [IsAuthGuard]
-          
+        component: DemandeInformationComponent,
+        path: 'demande-info',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: JeDenonceComponent,
-            path: "je-denonce",
-            canActivate: [IsAuthGuard]
-          
+        component: JeDenonceComponent,
+        path: 'je-denonce',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: AboutComponent,
-            path: "about",
-            canActivate: [IsAuthGuard]
-          
+        component: AboutComponent,
+        path: 'about',
+        canActivate: [IsAuthGuard],
       },
       {
-          component: BaseConnaissanceComponent,
-            path: "base-connaissance"
-          
+        component: BaseConnaissanceComponent,
+        path: 'base-connaissance',
       },
-     /* {
+      /* {
           component: InfoCarriereComponent,
             path: "info-carriere"
-          
+
       },
       {
           component: InfoPensionComponent,
             path: "info-pension"
-          
+
       },*/
       {
-          component: ForgotPasswordComponent,
-          path: "forgot-password",
-      }, {
-          component: ProfileComponent,
-          path: "profile",
-          canActivate: [AuthGuard]
-      },{
-          component: CheckCodeComponent,
-          path: "check-code",
+        component: ForgotPasswordComponent,
+        path: 'forgot-password',
       },
       {
-          component: LogoutComponent,
-          path: "logout",
+        component: ProfileComponent,
+        path: 'profile',
+        canActivate: [AuthGuard],
       },
       {
-          component: MentionsLegalesComponent,
-          path: "mentions-legales",
+        component: LogoutComponent,
+        path: 'logout',
+      },
+      {
+        component: MentionsLegalesComponent,
+        path: 'mentions-legales',
       },
 
+      //ROUTES POUR PFC
       {
-          component: HomepfcComponent,
-          path:"homepfc",
-          canActivate: [AuthGuardm]
+        component: HomepfcComponent,
+        path: 'homepfc',
+        canActivate: [AuthGuardm],
+        children: [
+          {
+            component: PfcAccueilComponent,
+            path: '',
+          },
+          {
+            component: PfcMataccueilComponent,
+            path: 'pfc-mataccueil',
+          },
+          {
+            component: PfcRegistreComponent,
+            path: 'pfc-registre',
+          },
+          {
+            component: PfcWhatsappComponent,
+            path: 'pfc-whatsapp',
+          },
+          {
+            component: RapportRequeteComponent,
+            path: 'rapports-requetes',
+          },
+          {
+            component: CspReportPendingComponent,
+            path: 'pending-rapports',
+          },
+          {
+            component: PerformanceRequeteComponent,
+            path: 'performances',
+          },
+        ],
       },
+
+      //ROUTES POUR GUV
       {
-          component: LogpfcComponent,
-          path:"logpfc",
-          // canActivate: [AuthGuard]
+        component: HomeComponent,
+        path: 'home',
+        canActivate: [AuthGuard],
       },
+
+      //ROUTES ESPACE USAGER
+      { path: 'espace-usager', component: EspaceusagerComponent },
+      { path: 'espace-usager/:token', component: EspaceusagerComponent },
+
       {
-          component: ProfilpfcComponent,
-          path:"profilepfc",
-          // canActivate: [AuthGuard]
+        component: ProfilpfcComponent,
+        path: 'profilepfc',
+        // canActivate: [AuthGuard]
       },
-      {
-          component: RegisterSuccessComponent,
-          path:"register-success",
-          canActivate:[RegisterguardGuard]
-      },
-      {
-          component: RegisterSuccessComponent,
-          path:"mail-check-code-resent",
-          canActivate:[RegisterguardGuard]
-      },
-      ]
-    }
-  ]
+    ],
+  },
+];
