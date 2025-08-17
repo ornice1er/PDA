@@ -43,16 +43,16 @@ export class ForgotPasswordComponent implements OnInit {
             (res:any)=>{
                 this.loading=false;
                 this.router.navigate(['/main']);
-                AppSweetAlert.simpleAlert("Mot de passe oublié","Un mail vous a été envoyé. Veuillez consulter votre boîte mail","success")
+                AppSweetAlert.simpleAlert("success","Mot de passe oublié","Un mail vous a été envoyé. Veuillez consulter votre boîte mail")
             },
             (err)=>{
             this.loading=false;
             console.log(err)
             if(err.error.message=="Reset password failed.")
             {
-                AppSweetAlert.simpleAlert("Mot de passe oublié","Le mail renseigné n'existe pas. Veuillez vérifier le mail puis réessayer","error")
+                AppSweetAlert.simpleAlert("error","Mot de passe oublié","Le mail renseigné n'existe pas. Veuillez vérifier le mail puis réessayer")
             }else{
-                AppSweetAlert.simpleAlert("Mot de passe oublié","Echec de réinitialisation du mot de passe","error")
+                AppSweetAlert.simpleAlert("error","Mot de passe oublié","Echec de réinitialisation du mot de passe")
             }
         }
     )

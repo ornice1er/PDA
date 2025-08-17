@@ -148,21 +148,21 @@ export class HomepfcComponent implements OnInit {
   createUsager(value:any){
     if(value.idDepartement == ""){
       // this.error="Les deux mot de passe doivent être identique"
-      AppSweetAlert.simpleAlert("Nouvel ajout", "Sélectionner le département", 'error')
+      AppSweetAlert.simpleAlert("error","Nouvel ajout", "Sélectionner le département")
     }else if(value.password!=value.conf_password && value.password != ""){
-      AppSweetAlert.simpleAlert("Nouvel ajout", "Les deux mot de passe doivent être identique", 'error')
+      AppSweetAlert.simpleAlert("error","Nouvel ajout", "Les deux mot de passe doivent être identique")
     }else{
       this.user_auth_service.createUsager(value).subscribe((res:any)=>{
       
         this.modalService.dismissAll()
-        AppSweetAlert.simpleAlert("Nouvel ajout","Ajout effectué avec succès" , 'success')
+        AppSweetAlert.simpleAlert("success","Nouvel ajout","Ajout effectué avec succès" )
          this.init(this.page) 
        },(err:any)=>{
          
          if(err.error.detail!=null){    
-           AppSweetAlert.simpleAlert("Nouvel ajout", err.error.detail, 'error')
+           AppSweetAlert.simpleAlert("error","Nouvel ajout", err.error.detail)
          }else{
-           AppSweetAlert.simpleAlert("Nouvel ajout", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+           AppSweetAlert.simpleAlert("error","Nouvel ajout", "Erreur, Verifiez que vous avez une bonne connexion internet")
          }
        })
     }
@@ -180,9 +180,9 @@ export class HomepfcComponent implements OnInit {
       this.user_auth_service.updateUsager(value,this.selected_data.id).subscribe((res)=>{
         this.modalService.dismissAll()
         this.init(this.page)
-        AppSweetAlert.simpleAlert("Nouvelle modification",  "Motification effectué avec succès", 'success')
+        AppSweetAlert.simpleAlert("success","Nouvelle modification",  "Motification effectué avec succès")
       }, (err:any)=>{
-        AppSweetAlert.simpleAlert("Nouvelle modification", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+        AppSweetAlert.simpleAlert("error","Nouvelle modification", "Erreur, Verifiez que vous avez une bonne connexion internet")
       })
     }
     
@@ -209,9 +209,9 @@ export class HomepfcComponent implements OnInit {
       service=this.services.filter((e:any)  => (e.hide_for_public == 1))[0]
     }
     if(!value.objet){
-      AppSweetAlert.simpleAlert("Renseigner l'objet", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner l'objet", "Champ obligatoire")
     }else if(!value.msgrequest){
-      AppSweetAlert.simpleAlert("Renseigner le message", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le message", "Champ obligatoire")
     }else{
       var param = {
         objet: value.objet,
@@ -231,7 +231,7 @@ export class HomepfcComponent implements OnInit {
 
      this.user_auth_service.createrequeteusager(param).subscribe((rest:any)=>{
       this.modalService.dismissAll()
-      AppSweetAlert.simpleAlert("Ajout requête",  "Requête ajoutée avec succès", 'success')
+      AppSweetAlert.simpleAlert("success","Ajout requête",  "Requête ajoutée avec succès")
     })     
 
     }
@@ -302,7 +302,7 @@ export class HomepfcComponent implements OnInit {
   
   openEditModal(content:any){
     if (this.selected_data == null) {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -314,7 +314,7 @@ export class HomepfcComponent implements OnInit {
   
   openEditModalLg(content:any){
     if (this.selected_data == null) {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
@@ -345,11 +345,11 @@ searchReq() {
 }
 dropRequeteusager() {
   if (this.selected_data_req == null) {
-    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
     return;
   }
   if (this.selected_data_req.visible == 1) {
-    AppSweetAlert.simpleAlert("Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.");
     return;
   }
   AppSweetAlert.confirmBox("Suppression requete",
@@ -357,9 +357,9 @@ dropRequeteusager() {
       if (result.value) {
         this.user_auth_service.deleteReq(this.selected_data_req.id).subscribe((res: any) => {
           this.loadRequest()
-          AppSweetAlert.simpleAlert("Suppression requete", "Suppression effectuée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Suppression requete", "Suppression effectuée avec succès")
         }, (err:any) => {
-          AppSweetAlert.simpleAlert("Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+          AppSweetAlert.simpleAlert("error","Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet")
         })
       }
     })

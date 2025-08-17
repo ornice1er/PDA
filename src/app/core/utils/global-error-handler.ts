@@ -14,8 +14,7 @@ export class GlobalErrorHandler implements ErrorHandler {
       error = error.rejection; // get the error object
     }
     this.zone.run(() =>
-    AppSweetAlert.simpleAlert(`${error?.status} - ${error?.message}`)
-      
+    AppSweetAlert.simpleAlert('error','Erreur',`${error?.status} - ${error?.message}`)
     );
 
     console.error('Error from global error handler', error);

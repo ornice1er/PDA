@@ -158,9 +158,9 @@ export class HomepfcComponent implements OnInit {
       this.loadRequest()
       this.loading=false
       if(res.status=="error"){
-        AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+        AppSweetAlert.simpleAlert("error","Erreur",res.message)
       }else{
-        AppSweetAlert.simpleAlert("Appreciation", "Appreciation envoyé avec succès", 'succes');
+        AppSweetAlert.simpleAlert("success","Appreciation", "Appreciation envoyé avec succès");
       }
     })
   }
@@ -207,19 +207,19 @@ export class HomepfcComponent implements OnInit {
     }
 
     if (this.selected_type_preoccupation == 0) {
-      AppSweetAlert.simpleAlert("Sélectionner le type de requête", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Sélectionner le type de requête", "Champ obligatoire")
     }else if(!value.idEntite){
-      AppSweetAlert.simpleAlert("Sélectionner la structure destinatrice", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Sélectionner la structure destinatrice", "Champ obligatoire")
     }else if(!value.contactUs){
-      AppSweetAlert.simpleAlert("Renseigner le contact", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Renseigner le contact", "Champ obligatoire")
     }else if(this.mat_aff == true && value.matricule == ''){
-      AppSweetAlert.simpleAlert("Renseigner le matricule", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Renseigner le matricule", "Champ obligatoire")
     }else if((value.idPrestation == "" || value.idPrestation == null) && this.link_to_prestation==1){
-      AppSweetAlert.simpleAlert("Sélectionner la prestation", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Sélectionner la prestation", "Champ obligatoire")
     }else if(!value.objet){
-      AppSweetAlert.simpleAlert("Renseigner l'objet", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Renseigner l'objet", "Champ obligatoire")
     }else if(!value.msgrequest){
-      AppSweetAlert.simpleAlert("Renseigner le message", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Renseigner le message", "Champ obligatoire")
     }else{
       let interfa = null
       let idReg = null
@@ -270,12 +270,12 @@ export class HomepfcComponent implements OnInit {
       this.visible=0
       this.modalService.dismissAll()
       if(rest.status=="error"){
-        AppSweetAlert.simpleAlert("Erreur",rest.message, 'error')
+        AppSweetAlert.simpleAlert("error","Erreur",rest.message)
       }else{
         if(param.visible==0){
-          AppSweetAlert.simpleAlert("Ajout requête", "Requête ajoutée avec succès", 'success')
+          AppSweetAlert.simpleAlert('success',"Ajout requête", "Requête ajoutée avec succès")
         }else{
-          AppSweetAlert.simpleAlert("Ajout requête", "Requete ajouté et transmis avec succès", 'success')
+          AppSweetAlert.simpleAlert('success',"Ajout requête", "Requete ajouté et transmis avec succès")
         }
       }
     })     
@@ -286,7 +286,7 @@ export class HomepfcComponent implements OnInit {
   addReponse(value:any){
 
     if (value.reponse_whats == "") {
-      AppSweetAlert.simpleAlert("Renseigner la réponse à cette discusion", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","error","Renseigner la réponse à cette discusion", "Champ obligatoire")
       return;
     }else{
       let formData = new FormData()
@@ -295,10 +295,10 @@ export class HomepfcComponent implements OnInit {
 
       this.user_auth_service.updateWhatsReponse(formData, this.selected_data_Whats.id).subscribe((res:any)=>{
           if(res.status=="error"){
-            AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+            AppSweetAlert.simpleAlert("error","Erreur",res.message)
           }else{
             this.loadWhatsApp()
-            AppSweetAlert.simpleAlert("Réponse d'une discussion whatsapp",  "Réponse donnée avec succès", 'success')
+            AppSweetAlert.simpleAlert('success',"Réponse d'une discussion whatsapp",  "Réponse donnée avec succès")
           }
           this.modalService.dismissAll()
       })     
@@ -315,19 +315,19 @@ export class HomepfcComponent implements OnInit {
       service=this.services.filter((e:any) => (e.hide_for_public == 1))[0]
     }
     if (this.selected_type_preoccupation == 0) {
-      AppSweetAlert.simpleAlert("Sélectionner le type de requête", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner le type de requête", "Champ obligatoire")
     }else if(!value.idEntite2){
-      AppSweetAlert.simpleAlert("Sélectionner la structure destinatrice", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner la structure destinatrice", "Champ obligatoire")
     }else if(!value.contactUs2){
-      AppSweetAlert.simpleAlert("Renseigner le contact", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le contact", "Champ obligatoire")
     }else if(this.mat_aff == true && value.matricul == ''){
-      AppSweetAlert.simpleAlert("Renseigner le matricule", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le matricule", "Champ obligatoire")
     }else if((value.idPrestation2 == "" || value.idPrestation2 == null) && this.link_to_prestation==1){
-      AppSweetAlert.simpleAlert("Sélectionner la prestation", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner la prestation", "Champ obligatoire")
     }else if(!value.objet2){
-      AppSweetAlert.simpleAlert("Renseigner l'objet", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner l'objet", "Champ obligatoire")
     }else if(!value.msgrequest2){
-      AppSweetAlert.simpleAlert("Renseigner le message", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le message", "Champ obligatoire")
     }else{
       var param = {
         objet: value.objet2,
@@ -356,12 +356,12 @@ export class HomepfcComponent implements OnInit {
       this.visible=0
       this.modalService.dismissAll()
       if(rest.status=="error"){
-        AppSweetAlert.simpleAlert("Erreur",rest.message, 'error')
+        AppSweetAlert.simpleAlert("error","Erreur",rest.message)
       }else{
         if(param.visible==0){
-          AppSweetAlert.simpleAlert("Modification requête", "Requête modifiée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Modification requête", "Requête modifiée avec succès")
         }else{
-          AppSweetAlert.simpleAlert("Modification requête", "Requete modifiée et transmis avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Modification requête", "Requete modifiée et transmis avec succès")
         }
       }
     })     
@@ -371,11 +371,11 @@ export class HomepfcComponent implements OnInit {
   
   transmettreRequete() {
     if (this.selected_data_req == null) {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
       return;
     }
     if (this.selected_data_req.visible == 1) {
-      AppSweetAlert.simpleAlert("Erreur", "Vous avez déjà transmis cette requête.", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Vous avez déjà transmis cette requête.");
       return;
     }
     var msgConfirm = "Voulez-vous transmettre la requête ?";
@@ -391,24 +391,24 @@ export class HomepfcComponent implements OnInit {
     this.user_auth_service.transmettreRequeteExterne(param).subscribe((res: any) => {
       this.modalService.dismissAll()
       this.loadRequest()
-      AppSweetAlert.simpleAlert("Transmission requête", "Requête transmise avec succès", 'success');
+      AppSweetAlert.simpleAlert("success","Transmission requête", "Requête transmise avec succès");
     })
   }
   addRequeteRv(value:any){
     if (value.contactMatri == "") {
-      AppSweetAlert.simpleAlert("Renseigner le matricule ou le contact du visiteur", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le matricule ou le contact du visiteur", "Champ obligatoire")
     }else if(!value.plainterv){
-      AppSweetAlert.simpleAlert("Sélectionner le type", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("success","error","Sélectionner le type", "Champ obligatoire")
     }else if(value.nom_pre_rv == ""){
-      AppSweetAlert.simpleAlert("Renseigner le nom et prénom (s) du visiteur", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le nom et prénom (s) du visiteur", "Champ obligatoire")
     }else if(!value.idEntite){
-      AppSweetAlert.simpleAlert("Sélectionner la structure destinatrice", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("success","error","Sélectionner la structure destinatrice", "Champ obligatoire")
     }else if((value.preoccurv == "" || value.preoccurv == null)){
-      AppSweetAlert.simpleAlert("Renseigner la préoccupation du visiteur", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner la préoccupation du visiteur", "Champ obligatoire")
     }else if(value.satisfaitrv == ""){
-      AppSweetAlert.simpleAlert("Sélectionner une appréciation", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner une appréciation", "Champ obligatoire")
     }else if(value.satisfaitrv && value.observarv == ""){
-      AppSweetAlert.simpleAlert("Renseigner l'observation", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner l'observation", "Champ obligatoire")
     }else{
       var param = {
         contactMatri: value.contactMatri,
@@ -424,11 +424,11 @@ export class HomepfcComponent implements OnInit {
 
      this.user_auth_service.createrequeteVisite(param).subscribe((res:any)=>{
       if(res.status=="error"){
-        AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+        AppSweetAlert.simpleAlert("error","Erreur",res.message)
       }else{
         this.loadRequestrv()
         
-        AppSweetAlert.simpleAlert("Ajout requête",  "Visite ajoutée avec succès", 'success')
+        AppSweetAlert.simpleAlert("success","Ajout requête",  "Visite ajoutée avec succès")
       }
       this.modalService.dismissAll()
     })     
@@ -437,9 +437,9 @@ export class HomepfcComponent implements OnInit {
 
   addWhatsApp(value:any){
     if (value.contWhatsapp == "") {
-      AppSweetAlert.simpleAlert("Renseigner le contact WhatsApp", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le contact WhatsApp", "Champ obligatoire")
     }else if(value.discussiontxt == ""){
-      AppSweetAlert.simpleAlert("Renseigner la discussion", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner la discussion", "Champ obligatoire")
     }else{
       var param = {
         contWhatsapp: value.contWhatsapp,
@@ -448,10 +448,10 @@ export class HomepfcComponent implements OnInit {
      };
       this.user_auth_service.createDiscussionWhats(param).subscribe((res:any)=>{
         if(res.status=="error"){
-          AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+          AppSweetAlert.simpleAlert("error","Erreur",res.message)
         }else{
           this.loadWhatsApp()
-          AppSweetAlert.simpleAlert("Ajout d'une discussion whatsapp",  "Discussions ajoutée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Ajout d'une discussion whatsapp",  "Discussions ajoutée avec succès")
         }
         this.modalService.dismissAll()
       })     
@@ -461,7 +461,7 @@ export class HomepfcComponent implements OnInit {
   addClotureRv(value:any){
     
     // if(this.file == ""){
-    //   AppSweetAlert.simpleAlert("Joindre le fichier", "Champ obligatoire", 'error')
+    //   AppSweetAlert.simpleAlert("Joindre le fichier", "Champ obligatoire")
     // }else{
     
      let formData = new FormData()
@@ -472,10 +472,10 @@ export class HomepfcComponent implements OnInit {
      this.user_auth_service.CloturerequeteVisite(formData).subscribe((res:any)=>{
        
       if(res.status=="error"){
-        AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+        AppSweetAlert.simpleAlert("error","Erreur",res.message)
       }else{
         this.loadRequestrv()
-        AppSweetAlert.simpleAlert("Clôture de registre", "Opération effectuée avec succès", 'success')
+        AppSweetAlert.simpleAlert("success","Clôture de registre", "Opération effectuée avec succès")
       }
       this.file = ""
       this.dateACloture = ""
@@ -487,19 +487,19 @@ export class HomepfcComponent implements OnInit {
   UpdateRequeteRv(value:any){
     
     if (value.contactMatri == "") {
-      AppSweetAlert.simpleAlert("Renseigner le matricule ou le contact du visiteur", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le matricule ou le contact du visiteur", "Champ obligatoire")
     }else if(!value.plainterv){
-      AppSweetAlert.simpleAlert("Sélectionner le type", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner le type", "Champ obligatoire")
     }else if(value.nom_pre_rv == ""){
-      AppSweetAlert.simpleAlert("Renseigner le nom et prénom (s) du visiteur", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le nom et prénom (s) du visiteur", "Champ obligatoire")
     }else if(!value.idEntite){
-      AppSweetAlert.simpleAlert("Sélectionner la structure destinatrice", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner la structure destinatrice", "Champ obligatoire")
     }else if((value.preoccurv == "" || value.preoccurv == null)){
-      AppSweetAlert.simpleAlert("Renseigner la préoccupation du visiteur", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner la préoccupation du visiteur", "Champ obligatoire")
     }else if(value.satisfaitrv == ""){
-      AppSweetAlert.simpleAlert("Sélectionner une appréciation", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Sélectionner une appréciation", "Champ obligatoire")
     }else if(value.satisfaitrv && value.observarv == ""){
-      AppSweetAlert.simpleAlert("Renseigner l'observation", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner l'observation", "Champ obligatoire")
     }else{
       var param = {
         contactMatri: value.contactMatri,
@@ -514,10 +514,10 @@ export class HomepfcComponent implements OnInit {
 
      this.user_auth_service.updaterequeteVisite(param, this.selected_data_reqrv.id).subscribe((res:any)=>{
         if(res.status=="error"){
-          AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+          AppSweetAlert.simpleAlert("error","Erreur",res.message)
         }else{
           this.loadRequestrv()
-          AppSweetAlert.simpleAlert("Ajout requête",  "Visite ajoutée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Ajout requête",  "Visite ajoutée avec succès")
         }
         this.modalService.dismissAll()
     })     
@@ -526,9 +526,9 @@ export class HomepfcComponent implements OnInit {
   }
   UpdateRequeteWhats(value:any){
     if (value.contWhatsapp == "") {
-      AppSweetAlert.simpleAlert("Renseigner le contact WhatsApp", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner le contact WhatsApp", "Champ obligatoire")
     }else if(value.discussiontxt == ""){
-      AppSweetAlert.simpleAlert("Renseigner la discussion", "Champ obligatoire", 'error')
+      AppSweetAlert.simpleAlert("error","Renseigner la discussion", "Champ obligatoire")
     }else{
       var param = {
         contWhatsapp: value.contWhatsapp,
@@ -537,10 +537,10 @@ export class HomepfcComponent implements OnInit {
      };
      this.user_auth_service.updateWhatsapp(param, this.selected_data_Whats.id).subscribe((res:any)=>{
           if(res.status=="error"){
-            AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+            AppSweetAlert.simpleAlert("error","Erreur",res.message)
           }else{
             this.loadWhatsApp()
-            AppSweetAlert.simpleAlert("Modification d'une discussion whatsapp",  "Discussions modifiée avec succès", 'success')
+            AppSweetAlert.simpleAlert("success","Modification d'une discussion whatsapp",  "Discussions modifiée avec succès")
           }
           this.modalService.dismissAll()
       })     
@@ -615,7 +615,7 @@ export class HomepfcComponent implements OnInit {
   openEditModalCloture(content:any){
    
     if (this.dateACloture == "") {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez la date à clôturer", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez la date à clôturer");
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
@@ -628,7 +628,7 @@ export class HomepfcComponent implements OnInit {
   openEditModalVisi(content:any){
 
     if (this.nbreDay.length != 0 && this.dateACloture == "") {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez clôturer les régistres des dates précédentes", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Veuillez clôturer les régistres des dates précédentes");
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
@@ -677,7 +677,7 @@ export class HomepfcComponent implements OnInit {
 
   openEditModalLg(content:any){
     if (this.selected_data_req == null) {
-      AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
       return;
     }
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
@@ -771,11 +771,11 @@ searchWhats() {
 
 dropRequeteusager() {
   if (this.selected_data_req == null) {
-    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
     return;
   }
   if (this.selected_data_req.visible == 1) {
-    AppSweetAlert.simpleAlert("Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.");
     return;
   }
   AppSweetAlert.confirmBox("Suppression requete",
@@ -785,9 +785,9 @@ dropRequeteusager() {
       if (result.value) {
         this.user_auth_service.deleteReq(this.selected_data_req.id).subscribe((res: any) => {
           this.loadRequest()
-          AppSweetAlert.simpleAlert("Suppression requete", "Suppression effectuée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Suppression requete", "Suppression effectuée avec succès")
         }, (err) => {
-          AppSweetAlert.simpleAlert("Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+          AppSweetAlert.simpleAlert("error","Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet")
         })
       }
     })
@@ -833,7 +833,7 @@ loadRequestrv() {
     gotoHashtag(fragment: string) {
       
       if(this.nbreDay.length != 0){
-        AppSweetAlert.simpleAlert('info',"Vous aviez '+this.nbreDay.length+' date(s) non cloturée(s).")
+        AppSweetAlert.simpleAlert('info',"Date non clôturée","Vous aviez '+this.nbreDay.length+' date(s) non cloturée(s).")
         setTimeout(function () {
             const element: any = document.querySelector("." + fragment);
             if (element) {
@@ -943,7 +943,7 @@ openEditModalrv(content:any) {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   } else {
-    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error')
+    AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer")
   }
 }
 
@@ -957,17 +957,17 @@ openEditModalWhats(content:any) {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   } else {
-    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error')
+    AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer")
   }
 }
 
 dropRequeteusagerrv() {
 
   if (this.selected_data_reqrv == null) {
-    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
     return;
   }else if (this.selected_data_reqrv.cloture == 1) {
-    AppSweetAlert.simpleAlert("Erreur", "Impossible de supprimer ce régistre car il est déjà cloturé", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Impossible de supprimer ce régistre car il est déjà cloturé");
     return;
   }
   AppSweetAlert.confirmBox("Suppression cette visite",
@@ -975,9 +975,9 @@ dropRequeteusagerrv() {
       if (result.value) {
         this.user_auth_service.deleteRegistreVis(this.selected_data_reqrv.id).subscribe((res: any) => {
           this.loadRequestrv()
-          AppSweetAlert.simpleAlert("Suppression visite", "Suppression effectuée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Suppression visite", "Suppression effectuée avec succès")
         }, (err:any) => {
-          AppSweetAlert.simpleAlert("Suppression visite", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+          AppSweetAlert.simpleAlert("error","Suppression visite", "Erreur, Verifiez que vous avez une bonne connexion internet")
         })
       }
     })
@@ -985,16 +985,16 @@ dropRequeteusagerrv() {
 
 dropDiscussionWhat() {
   if (this.selected_data_Whats == null) {
-    AppSweetAlert.simpleAlert("Erreur", "Veuillez selectionnez un élément puis réessayer", 'error');
+    AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
     return;
   }
   AppSweetAlert.confirmBox("Suppression cette discussion", "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
       if (result.value){
         this.user_auth_service.deleteDiscWhats(this.selected_data_Whats.id).subscribe((res: any) => {
           this.loadWhatsApp()
-          AppSweetAlert.simpleAlert("Suppression discussions", "Suppression effectuée avec succès", 'success')
+          AppSweetAlert.simpleAlert("success","Suppression discussions", "Suppression effectuée avec succès")
         }, (err:any) => {
-          AppSweetAlert.simpleAlert("Suppression discussions", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+          AppSweetAlert.simpleAlert("error","Suppression discussions", "Erreur, Verifiez que vous avez une bonne connexion internet")
         })
       }
     })
@@ -1006,14 +1006,14 @@ ConfirmerTraitement(el:any) {
       if (result.value){
         this.user_auth_service.ConfirmerDiscWhats(this.user.id, el.id).subscribe((res: any) => {
           if(res.status=="error"){
-            AppSweetAlert.simpleAlert("Erreur",res.message, 'error')
+            AppSweetAlert.simpleAlert("error","Erreur",res.message)
           }else{
             this.loadWhatsApp()
-            AppSweetAlert.simpleAlert("Confirmer l'ajout", "Confirmation effectuée avec succès", 'success')
+            AppSweetAlert.simpleAlert("success","Confirmer l'ajout", "Confirmation effectuée avec succès")
           }
           
         }, (err:any) => {
-          AppSweetAlert.simpleAlert("Confirmer l'ajout", "Erreur, Verifiez que vous avez une bonne connexion internet", 'error')
+          AppSweetAlert.simpleAlert("error","Confirmer l'ajout", "Erreur, Verifiez que vous avez une bonne connexion internet")
         })
       }
     })

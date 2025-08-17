@@ -37,12 +37,12 @@ export class QuestionComponent implements OnInit {
      this.pdaService.storeQuestion(value).subscribe((res:any)=>{
       this.loading=false
       if(res.success){
-        AppSweetAlert.simpleAlert("Question","Votre question a été envoyée avec succès","success")
+        AppSweetAlert.simpleAlert("success","Question","Votre question a été envoyée avec succès")
         this.router.navigateByUrl('/main')
       }
      }, (err)=>{
       this.loading=false;
-        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("error","Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")}
       )
   }
 }

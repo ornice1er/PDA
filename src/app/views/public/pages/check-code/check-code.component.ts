@@ -50,16 +50,16 @@ export class CheckCodeComponent implements OnInit {
         (res:any)=>{
             this.loading=false;
           if(res.send_code){
-            AppSweetAlert.simpleAlert("Code de verification","Code envoyé avec succès. Consulter votre boite mail.","success")
+            AppSweetAlert.simpleAlert("success","Code de verification","Code envoyé avec succès. Consulter votre boite mail.")
           }else{
-            AppSweetAlert.simpleAlert("Code de verification",res.message+" ","error")
+            AppSweetAlert.simpleAlert("error","Code de verification",res.message+" ")
           }
           //  this.router.navigate(['/main']);
           //  AppSweetAlert.simpleAlert("Mot de passe oublié","Email envoyé","success")
         },
         (err)=>{
             this.loading=false;
-            AppSweetAlert.simpleAlert("Code de verification","Echec d'envoi du code","error")}
+            AppSweetAlert.simpleAlert("error","Code de verification","Echec d'envoi du code")}
     )
     // setTimeout(this.resendCode, 5000);
   }
@@ -74,7 +74,7 @@ export class CheckCodeComponent implements OnInit {
             (res:any)=>{
 
                 if(res.message){
-                  AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
+                  AppSweetAlert.simpleAlert("error","Vérification de code",res.message)
                 }else{
 
                   this.local_service.set(GlobalName.tokenName,res.access_token)
@@ -86,14 +86,14 @@ export class CheckCodeComponent implements OnInit {
                     this.router.navigate(['/home'])
                   
                   }else{
-                      AppSweetAlert.simpleAlert("Vérification de code",res.message,"error")
+                      AppSweetAlert.simpleAlert("error","Vérification de code",res.message)
                   }
               }
             },
             (err)=>{
                 this.loading=false;
                 console.log(err)
-                AppSweetAlert.simpleAlert("Vérification de code","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("error","Vérification de code","Echec de connexion")}
         )
     }
 

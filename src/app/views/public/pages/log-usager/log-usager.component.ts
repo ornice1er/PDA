@@ -76,9 +76,9 @@ export class LogUsagerComponent implements OnInit {
         },
         (err) => {
             this.loading = false;
-          
-                AppSweetAlert.simpleAlert("Connexion", "Echec de connexion", "error")
-            
+
+                AppSweetAlert.simpleAlert("error","Connexion", "Echec de connexion")
+
         }
     )
 

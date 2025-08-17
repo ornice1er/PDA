@@ -65,12 +65,12 @@ export class EserviceProofComponent {
 
     this.eserviceService.setProof(formData).subscribe((res:any)=>{
       this.loading=false
-     AppSweetAlert.simpleAlert('Ajout de preuve de demande',res.message,'info')
+     AppSweetAlert.simpleAlert('info','Ajout de preuve de demande',res.message)
       this.router.navigate(['/'])
     },
     
     (err:any)=>{
-     AppSweetAlert.simpleAlert('Ajout de preuve de demande',err.error.message,'error')
+     AppSweetAlert.simpleAlert('error','Ajout de preuve de demande',err.error.message)
       this.router.navigate(['/'])
       this.loading=false
     })

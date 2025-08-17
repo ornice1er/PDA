@@ -41,7 +41,7 @@ export class EseriveStatusComponent {
     this.loading=true
     this.eserviceService.getStatus(this.code).subscribe((res:any)=>{
       this.loading=false
-     AppSweetAlert.simpleAlert('Statut de demande',res.message,'info')
+     AppSweetAlert.simpleAlert("info",'Statut de demande',res.message)
 
     },
     

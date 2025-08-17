@@ -420,9 +420,9 @@ eservices:any[]=[]
                 this.loading = false;
                 console.log(err)
                 if (err.error.error == "invalid_grant") {
-                    AppSweetAlert.simpleAlert("Connexion", "Identifiant ou mot de passe incorrect", "error")
+                    AppSweetAlert.simpleAlert('error',"Connexion", "Identifiant ou mot de passe incorrect")
                 } else {
-                    AppSweetAlert.simpleAlert("Connexion", "Echec de connexion", "error")
+                    AppSweetAlert.simpleAlert('error',"Connexion", "Echec de connexion")
                 }
             }
         )
@@ -430,7 +430,7 @@ eservices:any[]=[]
     }
 
     e_services_info() {
-        AppSweetAlert.simpleAlert("E-services", "Bientôt disponible", "info")
+        AppSweetAlert.simpleAlert("info","E-services", "Bientôt disponible")
     }
 
     refreshTokenAndRedirect() {
@@ -471,7 +471,7 @@ eservices:any[]=[]
             (err) => {
                 this.loading = false;
                 console.log(err)
-                AppSweetAlert.simpleAlert("Connexion", "Echec de connexion", "error")
+                AppSweetAlert.simpleAlert("error","Connexion", "Echec de connexion" )
             }
         )
     }
@@ -488,7 +488,7 @@ eservices:any[]=[]
             (err) => {
                 this.loading = false;
                 console.log(err)
-                AppSweetAlert.simpleAlert("Connexion", "Echec de connexion", "error")
+                AppSweetAlert.simpleAlert("error","Connexion", "Echec de connexion" )
             }
         )
     }
@@ -540,7 +540,7 @@ eservices:any[]=[]
               service=this.services.filter((e:any) => (e.hide_for_public == 1))[0]
             }
             if(service == null){
-              AppSweetAlert.simpleAlert("Erreur","Aucune prestation (Service Usager) par défaut n'est lié à cet entité", 'error')
+              AppSweetAlert.simpleAlert('error',"Erreur","Aucune prestation (Service Usager) par défaut n'est lié à cet entité")
               return;
             }
               var param = {
@@ -561,29 +561,29 @@ eservices:any[]=[]
               // fichierJoint
               
               if(param.idEntite == null || param.idEntite == ""){
-                AppSweetAlert.simpleAlert("Erreur","Veuillez choisir une structure destrinatrice.", 'error')
+                AppSweetAlert.simpleAlert('error',"Erreur","Veuillez choisir une structure destrinatrice.")
               }else if(param.plainte == null || param.plainte == "0"){
-                AppSweetAlert.simpleAlert("Erreur","Veuillez choisir un type de préoccupation.", 'error')
+                AppSweetAlert.simpleAlert('error',"Erreur","Veuillez choisir un type de préoccupation.")
               }else if(this.mat_aff == true && param.matricule.trim() == ''){
-                AppSweetAlert.simpleAlert("Renseigner le matricule", "Champ obligatoire", 'error')
+                AppSweetAlert.simpleAlert('error',"Renseigner le matricule", "Champ obligatoire")
               }else if(param.idPrestation == null || param.idPrestation == ""){
-                AppSweetAlert.simpleAlert("Erreur","Veuillez choisir une prestation.", 'error')
+                AppSweetAlert.simpleAlert('error',"Erreur","Veuillez choisir une prestation.")
               }else if(!param.objet){
-                AppSweetAlert.simpleAlert("Renseigner l'objet", "Champ obligatoire", 'error')
+                AppSweetAlert.simpleAlert('error',"Renseigner l'objet", "Champ obligatoire")
               }else if(!param.msgrequest){
-                AppSweetAlert.simpleAlert("Renseigner le message", "Champ obligatoire", 'error')
+                AppSweetAlert.simpleAlert('error',"Renseigner le message", "Champ obligatoire")
               }else if(!value.has_consent){
-                AppSweetAlert.simpleAlert("Consentement", "Veuillez donner votre consentement", 'error')
+                AppSweetAlert.simpleAlert('error',"Consentement", "Veuillez donner votre consentement")
               } else{
                 this.loading=true
                 console.log(param)
                 this.pdaService.createrequeteusager(param).subscribe((rest: any) => {
                     form.resetForm()
                   this.loading=false
-                  if(rest.status=="error"){
-                    AppSweetAlert.simpleAlert("Erreur",rest.message, 'error')
+                  if(rest.status==){
+                    AppSweetAlert.simpleAlert('error',"Erreur",rest.message)
                   }else{
-                    AppSweetAlert.simpleAlert("Soumission de préoccupation", "Votre préoccupation a été bien transmise aux autorités compétentes", 'success')
+                    AppSweetAlert.simpleAlert('success',"Soumission de préoccupation", "Votre préoccupation a été bien transmise aux autorités compétentes")
                   }
                 })
               }

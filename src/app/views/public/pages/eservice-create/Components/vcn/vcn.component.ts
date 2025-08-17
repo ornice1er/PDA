@@ -544,7 +544,7 @@ getEntrepriseDetails(){
     let contract= this.myRequestForm[4].contracts.find((el:any)=>el.npi==form.value.npi)
     console.log(contract);
     if (contract!=undefined) {
-      AppSweetAlert.simpleAlert("Ajout d'employé","Un contrat avec ce NPI est déjà ajouté",'error')
+      AppSweetAlert.simpleAlert('error',"Ajout d'employé","Un contrat avec ce NPI est déjà ajouté")
       return ;
     }
     this.myRequestForm[4].contracts.push({

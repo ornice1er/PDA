@@ -29,11 +29,12 @@ token:string="";
             (res:any)=>{
 
                 this.router.navigate(['/main']);
-                AppSweetAlert.simpleAlert("Mail","Mail confirmé","success")
+                AppSweetAlert.simpleAlert("success","Mail","Mail confirmé")
             },
             (err:any)=>{
                 this.router.navigate(['/main']);
-                AppSweetAlert.simpleAlert("Mail","Mail non confirmé","success")}
+                AppSweetAlert.simpleAlert("error","Mail","Mail non confirmé")
+            }
         )
 
     }

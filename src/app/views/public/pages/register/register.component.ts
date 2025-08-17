@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
                     localStorage.setItem("is_registered","");
                     this.router.navigate(['/register-success']);
                 }
-                AppSweetAlert.simpleAlert("Inscription","Inscription effectuée avec succès. Vous pouvez à présent vous connecter","success")
+                AppSweetAlert.simpleAlert("success","Inscription","Inscription effectuée avec succès. Vous pouvez à présent vous connecter")
             },
             (err:any)=>{
                 this.loading=false;
@@ -113,7 +113,7 @@ export class RegisterComponent implements OnInit {
                     message=message+" "+element
                 });
                 console.log(message);
-                AppSweetAlert.simpleAlert("Inscription","Echec d'inscription, "+message,"error")}
+                AppSweetAlert.simpleAlert("error","Inscription","Echec d'inscription, "+message)}
         )
 
     }

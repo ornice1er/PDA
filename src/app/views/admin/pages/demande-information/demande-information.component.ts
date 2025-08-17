@@ -107,12 +107,12 @@ export class DemandeInformationComponent implements OnInit {
       this.loading=false
       this.modalService.dismissAll()
       if(res.success){
-        AppSweetAlert.simpleAlert("Demande d'information pension","Demande envoyée avec succès","success")
+        AppSweetAlert.simpleAlert("success","Demande d'information pension","Demande envoyée avec succès")
         this.router.navigateByUrl('/main')
       }
      }, (err)=>{
       this.loading=false;
-        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("error","Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")}
       )
   }
   validateCarriere(){
@@ -135,12 +135,12 @@ export class DemandeInformationComponent implements OnInit {
       this.loading2=false
       this.modalService.dismissAll()
         if(res.success){
-          AppSweetAlert.simpleAlert("Demande d'information carrère","Demande envoyée avec succès","success")
+          AppSweetAlert.simpleAlert("success","Demande d'information carrère","Demande envoyée avec succès")
           this.router.navigateByUrl('/main')
         }
      }, (err)=>{
       this.loading2=false;
-        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("error","Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")}
       )
   }
   validateFormation(){
@@ -159,12 +159,12 @@ export class DemandeInformationComponent implements OnInit {
       this.loading3=false
       this.modalService.dismissAll()
         if(res.success){
-          AppSweetAlert.simpleAlert("Demande d'information formation","Demande envoyée avec succès","success")
+          AppSweetAlert.simpleAlert("success","Demande d'information formation","Demande envoyée avec succès")
           this.router.navigateByUrl('/main')
         }
      }, (err)=>{
       this.loading3=false;
-        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("error","Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")}
       )
   }
 

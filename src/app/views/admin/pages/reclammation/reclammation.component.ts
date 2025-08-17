@@ -92,12 +92,12 @@ export class ReclammationComponent implements OnInit {
       this.loading = false
       this.modalService.dismissAll()
       if (res.success) {
-        AppSweetAlert.simpleAlert("Demande de reclamation", "Reclamation envoyée avec succès", "success")
+        AppSweetAlert.simpleAlert("success","Demande de reclamation", "Reclamation envoyée avec succès")
         this.router.navigateByUrl('/main')
       }
     }, (err) => {
       this.loading = false;
-      AppSweetAlert.simpleAlert("Erreur", "Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard", "error")
+      AppSweetAlert.simpleAlert("error","Erreur", "Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")
     })
   }
 }

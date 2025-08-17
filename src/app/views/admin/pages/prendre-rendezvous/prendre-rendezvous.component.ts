@@ -88,14 +88,14 @@ export class PrendreRendezvousComponent implements OnInit {
       this.loading=false
       this.modalService.dismissAll()
       if(res.status=="success"){
-        AppSweetAlert.simpleAlert("Rendez-vous","Demande de rendez-vous envoyée avec succès","success")
+        AppSweetAlert.simpleAlert("success","Rendez-vous","Demande de rendez-vous envoyée avec succès")
         this.router.navigateByUrl('/main')
       }else{
-        AppSweetAlert.simpleAlert("Rendez-vous",res.msg,"error")
+        AppSweetAlert.simpleAlert("error","Rendez-vous",res.msg)
       }
      }, (err)=>{
       this.loading=false;
-        AppSweetAlert.simpleAlert("Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard","error")}
+        AppSweetAlert.simpleAlert("error","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")}
       )
   }
 }

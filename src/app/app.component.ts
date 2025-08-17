@@ -29,7 +29,7 @@ export class AppComponent {
       if(localStorage.getItem(GlobalName.current_user)!=undefined) {
         this.router.navigateByUrl('/home')
       }else{
-        AppSweetAlert.simpleAlert('info',"Entrez vos identifiants et Connectez-vous")
+        AppSweetAlert.simpleAlert('info','Connexion',"Entrez vos identifiants et Connectez-vous")
           setTimeout(function(){
               const element:any = document.querySelector("#" + fragment);
               if (element) element.scrollIntoView();

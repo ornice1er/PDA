@@ -60,12 +60,12 @@ export class ProfileComponent implements OnInit {
           (res:any)=>{
               this.loading=false;
               this.router.navigate(['/home']);
-              AppSweetAlert.simpleAlert("Mise à jour profil","Mise à jour effectuée avec succès","success")
+              AppSweetAlert.simpleAlert("success","Mise à jour profil","Mise à jour effectuée avec succès")
           },
           (err)=>{
               this.loading=false;
 
-              AppSweetAlert.simpleAlert("Mise à jour profil","Mise à jour effectuée avec succès","error")}
+              AppSweetAlert.simpleAlert("error","Mise à jour profil","Mise à jour effectuée avec succès")}
       )
     }
 
@@ -78,12 +78,12 @@ export class ProfileComponent implements OnInit {
             (res:any)=>{
                 this.loading=false;
                 this.router.navigate(['/home']);
-                AppSweetAlert.simpleAlert("Modification du mot de passe","Nouveau mot de passe pris en compte","success")
+                AppSweetAlert.simpleAlert("success","Modification du mot de passe","Nouveau mot de passe pris en compte")
             },
             (err:any)=>{
                 this.loading=false;
 
-                AppSweetAlert.simpleAlert("Modification du mot de passe","Echec de réinitialisation","error")}
+                AppSweetAlert.simpleAlert("error","Modification du mot de passe","Echec de réinitialisation")}
         )
 
     }

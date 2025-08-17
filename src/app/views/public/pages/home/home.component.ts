@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
           (err:any)=>{
               this.loading=false;
               console.log(err)
-              AppSweetAlert.simpleAlert("Applications","Echec de récupération des applications","error")}
+              AppSweetAlert.simpleAlert("error","Applications","Echec de récupération des applications")}
       )
 
       

@@ -52,13 +52,13 @@ export class ProfilpfcComponent implements OnInit {
   UpdatePassWord(value:any){
     
     if (!value.last_password) {
-      AppSweetAlert.simpleAlert("Erreur", "Renseigner l'ancien mot de passe", 'error');
+      AppSweetAlert.simpleAlert('error',"Erreur", "Renseigner l'ancien mot de passe");
     }else if(!value.new_password){
-      AppSweetAlert.simpleAlert("Erreur", "Renseigner le nouveau mot de passe", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Renseigner le nouveau mot de passe");
     }else if(!value.confirm_password){
-      AppSweetAlert.simpleAlert("Erreur", "Confirmer le nouveau mot de passe", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "Confirmer le nouveau mot de passe");
     }else if(value.confirm_password !== value.new_password){
-      AppSweetAlert.simpleAlert("Erreur", "La confirmation n'est pas correcte", 'error');
+      AppSweetAlert.simpleAlert("error","Erreur", "La confirmation n'est pas correcte");
     }else{
       this.loading=true;
       value['id']=this.user.id;
@@ -67,14 +67,14 @@ export class ProfilpfcComponent implements OnInit {
             this.loading=false;
             if(res.success == true){
               this.router.navigate(['/homepfc']);
-              AppSweetAlert.simpleAlert("Modification du mot de passe","Nouveau mot de passe pris en compte","success")
+              AppSweetAlert.simpleAlert("success","Modification du mot de passe","Nouveau mot de passe pris en compte")
             }else{
-              AppSweetAlert.simpleAlert("Modification du mot de passe",res.message,"success")
+              AppSweetAlert.simpleAlert("success","Modification du mot de passe",res.message)
             }
           },
           (err:any)=>{
               this.loading=false;
-              AppSweetAlert.simpleAlert("Modification du mot de passe",err.error.message,"error")}
+              AppSweetAlert.simpleAlert("error","Modification du mot de passe",err.error.message)}
       )
     }
 

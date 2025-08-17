@@ -186,7 +186,7 @@ export class LoginComponent implements OnInit {
             (err)=>{
                 this.loading=false;
                 console.log(err)
-                AppSweetAlert.simpleAlert("Connexion","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("error","Connexion","Echec de connexion")}
         )
 
     }
@@ -229,7 +229,7 @@ export class LoginComponent implements OnInit {
             (err)=>{
                 this.loading=false;
                 console.log(err)
-                AppSweetAlert.simpleAlert("Connexion","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("error","Connexion","Echec de connexion")}
         )
     }
 
@@ -245,7 +245,7 @@ export class LoginComponent implements OnInit {
             (err:any)=>{
                 this.loading=false;
                 console.log(err)
-                AppSweetAlert.simpleAlert("Connexion","Echec de connexion","error")}
+                AppSweetAlert.simpleAlert("error","Connexion","Echec de connexion")}
         )
     }
 
