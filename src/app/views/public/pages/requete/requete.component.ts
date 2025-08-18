@@ -162,55 +162,6 @@ export class RequeteComponent implements OnInit {
     //   AppSweetAlert.simpleAlert("error","Erreur","Aucune prestation (Service Usager) par défaut n'est lié à cet entité")
     //   return;
     // }
-<<<<<<< HEAD
-      var param:any = {
-        objet: value.objet,
-        idPrestation: this.link_to_prestation==0  ? 0: value.idPrestation,
-       // idPrestation: this.link_to_prestation==0  ? service.id : value.idPrestation,
-        nbreJours: service == null ? 0 : service.nbreJours,
-        msgrequest: value.msgrequest,
-        email: value.email,
-        idEntite:this.selectedEntie,
-        nom:value.lastname+" "+value.firstname,
-        tel:value.phone,
-        link_to_prestation:this.link_to_prestation,
-        interfaceRequete: this.link_to_prestation==1 ? "USAGER"  : "SRU" ,
-        plainte: value.plainte,
-        matricule: this.is_administrative_officer == 1 ? value.matricule : '',
-        visible: 1
-      };
-      // fichierJoint
-        console.log('has_consent',param)
-      if(param.idEntite == null || param.idEntite == ""){
-        AppSweetAlert.simpleAlert("error","Erreur","Veuillez choisir une structure destrinatrice.")
-      }else if(param.plainte == null || param.plainte == "0"){
-        AppSweetAlert.simpleAlert("error","Erreur","Veuillez choisir un type de préoccupation.")
-      }else if(this.mat_aff == true && param.matricule.trim() == ''){
-        AppSweetAlert.simpleAlert("error","Renseigner le matricule", "Champ obligatoire")
-      }
-     /* else if(param.idPrestation == null || param.idPrestation == ""){
-        AppSweetAlert.simpleAlert("error","Erreur","Veuillez choisir une prestation.")
-      }*/
-      else if(!param.objet){
-        AppSweetAlert.simpleAlert("error","Renseigner l'objet", "Champ obligatoire")
-      }else if(!param.msgrequest){
-        AppSweetAlert.simpleAlert("error","Renseigner le message", "Champ obligatoire")
-      }else if(!value.has_consent){
-        AppSweetAlert.simpleAlert("Consentement", "Veuillez donner votre consentement")
-      } else{
-        this.loading=true
-        console.log(param)
-        this.pdaService.createrequeteusager(param).subscribe((rest: any) => {
-            form.resetForm()
-          this.loading=false
-          if(rest.status=="error"){
-            AppSweetAlert.simpleAlert("error","Erreur",rest.message)
-          }else{
-            AppSweetAlert.simpleAlert("success","Soumission de préoccupation", "Votre préoccupation a été bien transmise aux autorités compétentes")
-          }
-        })
-      }
-=======
     var param: any = {
       objet: value.objet,
       idPrestation: this.link_to_prestation === 0 ? 0 : value.idPrestation,
@@ -285,7 +236,6 @@ export class RequeteComponent implements OnInit {
         }
       });
     }
->>>>>>> feba544608f4688135d3c3a0bc9baaa7d70c94aa
   }
 
   private getDismissReason(reason: any): string {

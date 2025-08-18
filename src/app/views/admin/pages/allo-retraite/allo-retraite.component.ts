@@ -57,7 +57,7 @@ export class AlloRetraiteComponent implements OnInit {
       }
      },(err)=>{
       this.loading=false;
-        AppSweetAlert.simpleAlert("error","Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")
+        AppSweetAlert.simpleAlert("error","Erreur","Une erreur est survenue lors du processus. Veuillez contacter l'administrateur ou réessayer plutard")}
       )
   }
 }
