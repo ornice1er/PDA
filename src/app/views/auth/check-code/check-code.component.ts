@@ -86,15 +86,17 @@ export class CheckCodeComponent implements OnInit {
           this.loading = false;
           if (res.send_code) {
             AppSweetAlert.simpleAlert(
+              'success',
               'Code de verification',
               'Code envoyé avec succès. Consulter votre boite mail.',
-              'success'
+              
             );
           } else {
             AppSweetAlert.simpleAlert(
+              'error',
               'Code de verification',
               res.message + ' ',
-              'error'
+              
             );
           }
           //  this.router.navigate(['/main']);
@@ -103,9 +105,10 @@ export class CheckCodeComponent implements OnInit {
         (err) => {
           this.loading = false;
           AppSweetAlert.simpleAlert(
+            'error',
             'Code de verification',
-            "Echec d'envoi du code",
-            'error'
+            "Echec d'envoi du code"
+            
           );
         }
       );
@@ -127,9 +130,9 @@ export class CheckCodeComponent implements OnInit {
       (res: any) => {
         if (res.message) {
           AppSweetAlert.simpleAlert(
+            'error',
             'Vérification de code',
-            res.message,
-            'error'
+            res.message
           );
         } else {
           this.local_service.set(GlobalName.tokenName, res.access_token);
@@ -141,9 +144,9 @@ export class CheckCodeComponent implements OnInit {
             this.router.navigate(['/admin/home']);
           } else {
             AppSweetAlert.simpleAlert(
+              'error',
               'Vérification de code',
-              res.message,
-              'error'
+              res.message
             );
           }
         }
@@ -152,9 +155,9 @@ export class CheckCodeComponent implements OnInit {
         this.loading = false;
         console.log(err);
         AppSweetAlert.simpleAlert(
+          'error',
           'Vérification de code',
-          'Echec de connexion',
-          'error'
+          'Echec de connexion'
         );
       }
     );

@@ -182,42 +182,42 @@ export class RequeteComponent implements OnInit {
     console.log('has_consent', param);
     if (param.idEntite == null || param.idEntite == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez choisir une structure destrinatrice.',
-        'error'
+        'Veuillez choisir une structure destrinatrice.'
       );
     } else if (param.plainte === null || param.plainte === '0') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez choisir un type de préoccupation.',
-        'error'
+        'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff === true && param.matricule.trim() === '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le matricule',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!param.objet) {
       /* else if(param.idPrestation == null || param.idPrestation == ""){
         AppSweetAlert.simpleAlert("Erreur","Veuillez choisir une prestation.", 'error')
       }*/
       AppSweetAlert.simpleAlert(
+        'error',
         "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!param.msgrequest) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.has_consent) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Consentement',
-        'Veuillez donner votre consentement',
-        'error'
+        'Veuillez donner votre consentement'
       );
     } else {
       this.loading = true;
@@ -226,12 +226,12 @@ export class RequeteComponent implements OnInit {
         form.resetForm();
         this.loading = false;
         if (rest.status == 'error') {
-          AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
+          AppSweetAlert.simpleAlert('error','Erreur', rest.message);
         } else {
           AppSweetAlert.simpleAlert(
+            'success',
             'Soumission de préoccupation',
-            'Votre préoccupation a été bien transmise aux autorités compétentes',
-            'success'
+            'Votre préoccupation a été bien transmise aux autorités compétentes'
           );
         }
       });
@@ -450,23 +450,23 @@ export class RequeteComponent implements OnInit {
       console.log('has_consent', param);
       if (param.idEntite == null || param.idEntite == '') {
         AppSweetAlert.simpleAlert(
+          'error',
           'Erreur',
-          'Veuillez choisir une structure destrinatrice.',
-          'error'
+          'Veuillez choisir une structure destrinatrice.'
         );
         this.loading = false;
       } else if (param.plainte === null || param.plainte === '0') {
         AppSweetAlert.simpleAlert(
+          'error',
           'Erreur',
-          'Veuillez choisir un type de préoccupation.',
-          'error'
+          'Veuillez choisir un type de préoccupation.'
         );
         this.loading = false;
       } else if (this.mat_aff === true && param.matricule.trim() === '') {
         AppSweetAlert.simpleAlert(
+          'error',
           'Renseigner le matricule',
-          'Champ obligatoire',
-          'error'
+          'Champ obligatoire'
         );
         this.loading = false;
       } else if (!param.objet) {
@@ -474,23 +474,23 @@ export class RequeteComponent implements OnInit {
         AppSweetAlert.simpleAlert("Erreur","Veuillez choisir une prestation.", 'error')
       }*/
         AppSweetAlert.simpleAlert(
+          'error',
           "Renseigner l'objet",
-          'Champ obligatoire',
-          'error'
+          'Champ obligatoire'
         );
         this.loading = false;
       } else if (!param.msgrequest) {
         AppSweetAlert.simpleAlert(
+          'error',
           'Renseigner le message',
-          'Champ obligatoire',
-          'error'
+          'Champ obligatoire'
         );
         this.loading = false;
       } else if (!value.has_consent) {
         AppSweetAlert.simpleAlert(
+          'error',
           'Consentement',
-          'Veuillez donner votre consentement',
-          'error'
+          'Veuillez donner votre consentement'
         );
         this.loading = false;
       } else {
@@ -502,9 +502,9 @@ export class RequeteComponent implements OnInit {
             AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
           } else {
             AppSweetAlert.simpleAlert(
+              'error',
               'Soumission de préoccupation',
-              'Votre préoccupation a été bien transmise aux autorités compétentes',
-              'success'
+              'Votre préoccupation a été bien transmise aux autorités compétentes'
             );
           }
         });

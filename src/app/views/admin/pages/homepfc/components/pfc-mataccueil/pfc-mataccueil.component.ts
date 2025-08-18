@@ -188,8 +188,7 @@ export class PfcMataccueilComponent {
         AppSweetAlert.simpleAlert(
           'info',
           'Appreciation',
-          'Appreciation envoyé avec succès',
-          'succes'
+          'Appreciation envoyé avec succès'
         );
       }
     });
@@ -341,14 +340,12 @@ export class PfcMataccueilComponent {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
                 'info',
-                'success',
                 'Ajout requête',
                 'Requête ajoutée avec succès'
               );
             } else {
               AppSweetAlert.simpleAlert(
                 'info',
-                'success',
                 'Ajout requête',
                 'Requete ajouté et transmis avec succès'
               );

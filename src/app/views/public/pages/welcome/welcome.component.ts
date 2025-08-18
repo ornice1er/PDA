@@ -138,6 +138,7 @@ export class WelcomeComponent {
     } else {
       AppSweetAlert.simpleAlert(
         'info',
+        'Identification',
         'Entrez vos identifiants et Connectez-vous'
       );
       setTimeout(function () {
@@ -463,19 +464,19 @@ export class WelcomeComponent {
         console.log(err);
         if (err.error.error == 'invalid_grant') {
           AppSweetAlert.simpleAlert(
+            'error',
             'Connexion',
-            'Identifiant ou mot de passe incorrect',
-            'error'
+            'Identifiant ou mot de passe incorrect'
           );
         } else {
-          AppSweetAlert.simpleAlert('Connexion', 'Echec de connexion', 'error');
+          AppSweetAlert.simpleAlert('error','Connexion', 'Echec de connexion');
         }
       }
     );
   }
 
   e_services_info() {
-    AppSweetAlert.simpleAlert('E-services', 'Bientôt disponible', 'info');
+    AppSweetAlert.simpleAlert('Info','E-services', 'Bientôt disponible');
   }
 
   refreshTokenAndRedirect() {
@@ -523,7 +524,7 @@ export class WelcomeComponent {
       (err) => {
         this.loading = false;
         console.log(err);
-        AppSweetAlert.simpleAlert('Connexion', 'Echec de connexion', 'error');
+        AppSweetAlert.simpleAlert('error', 'Connexion', 'Echec de connexion');
       }
     );
   }
@@ -539,7 +540,7 @@ export class WelcomeComponent {
       (err) => {
         this.loading = false;
         console.log(err);
-        AppSweetAlert.simpleAlert('Connexion', 'Echec de connexion', 'error');
+        AppSweetAlert.simpleAlert('error', 'Connexion', 'Echec de connexion');
       }
     );
   }
@@ -585,9 +586,9 @@ export class WelcomeComponent {
     }
     if (service == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        "Aucune prestation (Service Usager) par défaut n'est lié à cet entité",
-        'error'
+        "Aucune prestation (Service Usager) par défaut n'est lié à cet entité"
       );
       return;
     }
@@ -611,45 +612,45 @@ export class WelcomeComponent {
 
     if (param.idEntite == null || param.idEntite == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez choisir une structure destrinatrice.',
-        'error'
+        'Veuillez choisir une structure destrinatrice.'
       );
     } else if (param.plainte == null || param.plainte == '0') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez choisir un type de préoccupation.',
-        'error'
+        'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff == true && param.matricule.trim() == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le matricule',
         'Champ obligatoire',
-        'error'
       );
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez choisir une prestation.',
-        'error'
+        'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
       AppSweetAlert.simpleAlert(
+        'error',
         "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!param.msgrequest) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.has_consent) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Consentement',
-        'Veuillez donner votre consentement',
-        'error'
+        'Veuillez donner votre consentement'
       );
     } else {
       this.loading = true;
@@ -661,9 +662,9 @@ export class WelcomeComponent {
           AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
         } else {
           AppSweetAlert.simpleAlert(
+            'error',
             'Soumission de préoccupation',
-            'Votre préoccupation a été bien transmise aux autorités compétentes',
-            'success'
+            'Votre préoccupation a été bien transmise aux autorités compétentes'
           );
         }
       });

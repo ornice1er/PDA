@@ -92,9 +92,10 @@ export class HomeComponent implements OnInit {
         this.loading = false;
         console.log(err);
         AppSweetAlert.simpleAlert(
+          'error',
           'Applications',
-          'Echec de récupération des applications',
-          'error'
+          'Echec de récupération des applications'
+          
         );
       }
     );

@@ -107,17 +107,17 @@ export class LogpfcComponent implements OnInit {
           this.loading = false;
           if (err.error.error == 'invalid_credentials') {
             AppSweetAlert.simpleAlert(
+              'error',
               'Erreur de connexion',
-              'Email ou mot de passe incorrect',
-              'error'
+              'Email ou mot de passe incorrect'
             );
             // this.error="Email ou mot de passe incorrect"
           } else {
             // this.error="Erreur de connexion ou paramètres incorrects"
             AppSweetAlert.simpleAlert(
+              'error',
               'Erreur de connexion',
-              'Erreur de connexion ou paramètres incorrects',
-              'error'
+              'Erreur de connexion ou paramètres incorrects'
             );
           }
         }

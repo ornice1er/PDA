@@ -311,12 +311,13 @@ export class RapportRequeteComponent {
       this.loadRequest();
       this.loading = false;
       if (res.status == 'error') {
-        AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+        AppSweetAlert.simpleAlert('error','Erreur', res.message);
       } else {
         AppSweetAlert.simpleAlert(
+          'success',
           'Appreciation',
-          'Appreciation envoyé avec succès',
-          'succes'
+          'Appreciation envoyé avec succès'
+          
         );
       }
     });
@@ -372,48 +373,50 @@ export class RapportRequeteComponent {
 
     if (this.selected_type_preoccupation == 0) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type de requête',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
+        
       );
     } else if (!value.idEntite) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.contactUs) {
       AppSweetAlert.simpleAlert(
-        'Renseigner le contact',
-        'Champ obligatoire',
-        'error'
+        'error',
+        "error",'Renseigner le contact',
+        'Champ obligatoire'
+        
       );
     } else if (this.mat_aff == true && value.matricule == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le matricule',
-        'Champ obligatoire',
-        'error'
+        'error',
+        "error",'Renseigner le matricule',
+        'Champ obligatoire'
+        
       );
     } else if (
       (value.idPrestation == '' || value.idPrestation == null) &&
       this.link_to_prestation == 1
     ) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la prestation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
+        
       );
     } else if (!value.objet) {
       AppSweetAlert.simpleAlert(
-        "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        "error","Renseigner l'objet",
+        'Champ obligatoire'
       );
     } else if (!value.msgrequest) {
       AppSweetAlert.simpleAlert(
-        'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le message',
+        'Champ obligatoire'
       );
     } else {
       let interfa = null;
@@ -467,19 +470,19 @@ export class RapportRequeteComponent {
           this.visible = 0;
           this.modalService.dismissAll();
           if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', rest.message);
           } else {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Ajout requête',
-                'Requête ajoutée avec succès',
-                'success'
+                'Requête ajoutée avec succès'
               );
             } else {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Ajout requête',
-                'Requete ajouté et transmis avec succès',
-                'success'
+                'Requete ajouté et transmis avec succès'
               );
             }
           }
@@ -491,9 +494,8 @@ export class RapportRequeteComponent {
   addReponse(value: any) {
     if (value.reponse_whats == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner la réponse à cette discusion',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner la réponse à cette discusion',
+        'Champ obligatoire'
       );
       return;
     } else {
@@ -505,13 +507,13 @@ export class RapportRequeteComponent {
         .updateWhatsReponse(formData, this.selected_data_Whats.id)
         .subscribe((res: any) => {
           if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', res.message);
           } else {
             this.loadWhatsApp();
             AppSweetAlert.simpleAlert(
+              'success',
               "Réponse d'une discussion whatsapp",
-              'Réponse donnée avec succès',
-              'success'
+              'Réponse donnée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -532,48 +534,44 @@ export class RapportRequeteComponent {
     }
     if (this.selected_type_preoccupation == 0) {
       AppSweetAlert.simpleAlert(
+        'success',
         'Sélectionner le type de requête',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.idEntite2) {
       AppSweetAlert.simpleAlert(
+        'success',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.contactUs2) {
       AppSweetAlert.simpleAlert(
-        'Renseigner le contact',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le contact',
+        'Champ obligatoire'
       );
     } else if (this.mat_aff == true && value.matricul == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le matricule',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le matricule',
+        'Champ obligatoire'
       );
     } else if (
       (value.idPrestation2 == '' || value.idPrestation2 == null) &&
       this.link_to_prestation == 1
     ) {
       AppSweetAlert.simpleAlert(
+        'success',
         'Sélectionner la prestation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.objet2) {
       AppSweetAlert.simpleAlert(
-        "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        "error","Renseigner l'objet",
+        'Champ obligatoire'
       );
     } else if (!value.msgrequest2) {
       AppSweetAlert.simpleAlert(
-        'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le message',
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -606,19 +604,19 @@ export class RapportRequeteComponent {
           this.visible = 0;
           this.modalService.dismissAll();
           if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', rest.message);
           } else {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Modification requête',
-                'Requête modifiée avec succès',
-                'success'
+                'Requête modifiée avec succès'
               );
             } else {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Modification requête',
-                'Requete modifiée et transmis avec succès',
-                'success'
+                'Requete modifiée et transmis avec succès'
               );
             }
           }
@@ -629,17 +627,15 @@ export class RapportRequeteComponent {
   transmettreRequete() {
     if (this.selected_data_req == null) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data_req.visible == 1) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Vous avez déjà transmis cette requête.',
-        'error'
+        'error','Erreur',
+        'Vous avez déjà transmis cette requête.'
       );
       return;
     }
@@ -659,54 +655,49 @@ export class RapportRequeteComponent {
         this.modalService.dismissAll();
         this.loadRequest();
         AppSweetAlert.simpleAlert(
+          'success',
           'Transmission requête',
-          'Requête transmise avec succès',
-          'success'
+          'Requête transmise avec succès'
         );
       });
   }
   addRequeteRv(value: any) {
     if (value.contactMatri == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le matricule ou le contact du visiteur',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le matricule ou le contact du visiteur',
+        'Champ obligatoire'
       );
     } else if (!value.plainterv) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.nom_pre_rv == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le nom et prénom (s) du visiteur',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le nom et prénom (s) du visiteur',
+        'Champ obligatoire'
       );
     } else if (!value.idEntite) {
       AppSweetAlert.simpleAlert(
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.preoccurv == '' || value.preoccurv == null) {
       AppSweetAlert.simpleAlert(
-        'Renseigner la préoccupation du visiteur',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner la préoccupation du visiteur',
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner une appréciation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv && value.observarv == '') {
       AppSweetAlert.simpleAlert(
-        "Renseigner l'observation",
-        'Champ obligatoire',
-        'error'
+        "error","Renseigner l'observation",
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -726,14 +717,14 @@ export class RapportRequeteComponent {
         .createrequeteVisite(param)
         .subscribe((res: any) => {
           if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', res.message);
           } else {
             this.loadRequestrv();
 
             AppSweetAlert.simpleAlert(
+              'error',
               'Ajout requête',
-              'Visite ajoutée avec succès',
-              'success'
+              'Visite ajoutée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -744,15 +735,13 @@ export class RapportRequeteComponent {
   addWhatsApp(value: any) {
     if (value.contWhatsapp == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le contact WhatsApp',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le contact WhatsApp',
+        'Champ obligatoire'
       );
     } else if (value.discussiontxt == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner la discussion',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner la discussion',
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -764,13 +753,13 @@ export class RapportRequeteComponent {
         .createDiscussionWhats(param)
         .subscribe((res: any) => {
           if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', res.message);
           } else {
             this.loadWhatsApp();
             AppSweetAlert.simpleAlert(
+              'success',
               "Ajout d'une discussion whatsapp",
-              'Discussions ajoutée avec succès',
-              'success'
+              'Discussions ajoutée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -779,7 +768,7 @@ export class RapportRequeteComponent {
   }
   addClotureRv(value: any) {
     // if(this.file == ""){
-    //   AppSweetAlert.simpleAlert("Joindre le fichier", "Champ obligatoire", 'error')
+    //   AppSweetAlert.simpleAlert("Joindre le fichier", "Champ obligatoire")
     // }else{
 
     let formData = new FormData();
@@ -791,13 +780,13 @@ export class RapportRequeteComponent {
       .CloturerequeteVisite(formData)
       .subscribe((res: any) => {
         if (res.status == 'error') {
-          AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+          AppSweetAlert.simpleAlert('error','Erreur', res.message);
         } else {
           this.loadRequestrv();
           AppSweetAlert.simpleAlert(
+            'success',
             'Clôture de registre',
-            'Opération effectuée avec succès',
-            'success'
+            'Opération effectuée avec succès'
           );
         }
         this.file = '';
@@ -810,45 +799,41 @@ export class RapportRequeteComponent {
   UpdateRequeteRv(value: any) {
     if (value.contactMatri == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le matricule ou le contact du visiteur',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le matricule ou le contact du visiteur',
+        'Champ obligatoire'
       );
     } else if (!value.plainterv) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.nom_pre_rv == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le nom et prénom (s) du visiteur',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le nom et prénom (s) du visiteur',
+        'Champ obligatoire'
       );
     } else if (!value.idEntite) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.preoccurv == '' || value.preoccurv == null) {
       AppSweetAlert.simpleAlert(
-        'Renseigner la préoccupation du visiteur',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner la préoccupation du visiteur',
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner une appréciation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv && value.observarv == '') {
       AppSweetAlert.simpleAlert(
-        "Renseigner l'observation",
-        'Champ obligatoire',
-        'error'
+        "error","Renseigner l'observation",
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -866,13 +851,13 @@ export class RapportRequeteComponent {
         .updaterequeteVisite(param, this.selected_data_reqrv.id)
         .subscribe((res: any) => {
           if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', res.message);
           } else {
             this.loadRequestrv();
             AppSweetAlert.simpleAlert(
+              'success',
               'Ajout requête',
-              'Visite ajoutée avec succès',
-              'success'
+              'Visite ajoutée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -882,15 +867,13 @@ export class RapportRequeteComponent {
   UpdateRequeteWhats(value: any) {
     if (value.contWhatsapp == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner le contact WhatsApp',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner le contact WhatsApp',
+        'Champ obligatoire'
       );
     } else if (value.discussiontxt == '') {
       AppSweetAlert.simpleAlert(
-        'Renseigner la discussion',
-        'Champ obligatoire',
-        'error'
+        "error",'Renseigner la discussion',
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -902,13 +885,13 @@ export class RapportRequeteComponent {
         .updateWhatsapp(param, this.selected_data_Whats.id)
         .subscribe((res: any) => {
           if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+            AppSweetAlert.simpleAlert('error','Erreur', res.message);
           } else {
             this.loadWhatsApp();
             AppSweetAlert.simpleAlert(
+              'success',
               "Modification d'une discussion whatsapp",
-              'Discussions modifiée avec succès',
-              'success'
+              'Discussions modifiée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -987,9 +970,8 @@ export class RapportRequeteComponent {
   openEditModalCloture(content: any) {
     if (this.dateACloture == '') {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez la date à clôturer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez la date à clôturer'
       );
       return;
     }
@@ -1008,9 +990,8 @@ export class RapportRequeteComponent {
   openEditModalVisi(content: any) {
     if (this.nbreDay.length != 0 && this.dateACloture == '') {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez clôturer les régistres des dates précédentes',
-        'error'
+        'error','Erreur',
+        'Veuillez clôturer les régistres des dates précédentes'
       );
       return;
     }
@@ -1084,9 +1065,8 @@ export class RapportRequeteComponent {
   openEditModalLg(content: any) {
     if (this.selected_data_req == null) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
@@ -1195,17 +1175,15 @@ export class RapportRequeteComponent {
   dropRequeteusager() {
     if (this.selected_data_req == null) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data_req.visible == 1) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.',
-        'error'
+        'error','Erreur',
+        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.'
       );
       return;
     }
@@ -1219,16 +1197,16 @@ export class RapportRequeteComponent {
           (res: any) => {
             this.loadRequest();
             AppSweetAlert.simpleAlert(
+              'success',
               'Suppression requete',
-              'Suppression effectuée avec succès',
-              'success'
+              'Suppression effectuée avec succès'
             );
           },
           (err: any) => {
             AppSweetAlert.simpleAlert(
+              'error',
               'Suppression requete',
-              'Erreur, Verifiez que vous avez une bonne connexion internet',
-              'error'
+              'Erreur, Verifiez que vous avez une bonne connexion internet'
             );
           }
         );
@@ -1281,6 +1259,7 @@ export class RapportRequeteComponent {
     if (this.nbreDay.length != 0) {
       AppSweetAlert.simpleAlert(
         'info',
+        'Date non clôturées',
         'Vous aviez ' + this.nbreDay.length + ' date(s) non cloturée(s).'
       );
       setTimeout(function () {
@@ -1402,9 +1381,8 @@ export class RapportRequeteComponent {
         );
     } else {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
     }
   }
@@ -1424,9 +1402,8 @@ export class RapportRequeteComponent {
         );
     } else {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
     }
   }
@@ -1434,16 +1411,14 @@ export class RapportRequeteComponent {
   dropRequeteusagerrv() {
     if (this.selected_data_reqrv == null) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     } else if (this.selected_data_reqrv.cloture == 1) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Impossible de supprimer ce régistre car il est déjà cloturé',
-        'error'
+        'error','Erreur',
+        'Impossible de supprimer ce régistre car il est déjà cloturé'
       );
       return;
     }
@@ -1458,16 +1433,18 @@ export class RapportRequeteComponent {
             (res: any) => {
               this.loadRequestrv();
               AppSweetAlert.simpleAlert(
+                'success',
                 'Suppression visite',
                 'Suppression effectuée avec succès',
-                'success'
+                
               );
             },
             (err: any) => {
               AppSweetAlert.simpleAlert(
+                'error',
                 'Suppression visite',
                 'Erreur, Verifiez que vous avez une bonne connexion internet',
-                'error'
+                
               );
             }
           );
@@ -1478,9 +1455,8 @@ export class RapportRequeteComponent {
   dropDiscussionWhat() {
     if (this.selected_data_Whats == null) {
       AppSweetAlert.simpleAlert(
-        'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'error','Erreur',
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
@@ -1495,16 +1471,18 @@ export class RapportRequeteComponent {
             (res: any) => {
               this.loadWhatsApp();
               AppSweetAlert.simpleAlert(
+                'success',
                 'Suppression discussions',
                 'Suppression effectuée avec succès',
-                'success'
+                
               );
             },
             (err: any) => {
               AppSweetAlert.simpleAlert(
+                'error',
                 'Suppression discussions',
                 'Erreur, Verifiez que vous avez une bonne connexion internet',
-                'error'
+                
               );
             }
           );
@@ -1523,21 +1501,23 @@ export class RapportRequeteComponent {
           .subscribe(
             (res: any) => {
               if (res.status == 'error') {
-                AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+                AppSweetAlert.simpleAlert('error','Erreur', res.message);
               } else {
                 this.loadWhatsApp();
                 AppSweetAlert.simpleAlert(
+                  'success',
                   "Confirmer l'ajout",
                   'Confirmation effectuée avec succès',
-                  'success'
+                  
                 );
               }
             },
             (err: any) => {
               AppSweetAlert.simpleAlert(
+                'error',
                 "Confirmer l'ajout",
                 'Erreur, Verifiez que vous avez une bonne connexion internet',
-                'error'
+                
               );
             }
           );

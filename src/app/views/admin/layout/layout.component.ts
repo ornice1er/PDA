@@ -266,7 +266,7 @@ export class LayoutComponent {
       this.modalService.dismissAll();
       this.visible = 0;
       AppSweetAlert.simpleAlert(
-        'succes',
+        'success',
         'Mise à jour',
         'Profile mis à jour avec succès'
       );

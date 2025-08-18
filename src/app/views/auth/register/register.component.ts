@@ -257,9 +257,10 @@ export class RegisterComponent implements OnInit {
           //   this.router.navigate(['/auth/register-success']);
           // }
           AppSweetAlert.simpleAlert(
+            'success',
             'Inscription',
-            'Inscription effectuée avec succès. Vous pouvez à présent vous connecter',
-            'success'
+            'Inscription effectuée avec succès. Vous pouvez à présent vous connecter'
+            
           );
           this.router.navigate(['/auth/logusager']);
         },
@@ -271,9 +272,10 @@ export class RegisterComponent implements OnInit {
           });
           console.log(message);
           AppSweetAlert.simpleAlert(
+            'error',
             'Inscription',
-            "Echec d'inscription, " + message,
-            'error'
+            "Echec d'inscription, " + message
+            
           );
         }
       );

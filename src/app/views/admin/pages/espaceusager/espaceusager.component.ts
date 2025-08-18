@@ -136,9 +136,9 @@ export class EspaceusagerComponent implements OnInit {
         );
     } else {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
     }
   }
@@ -157,9 +157,9 @@ export class EspaceusagerComponent implements OnInit {
         );
     } else {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
     }
   }
@@ -515,9 +515,9 @@ export class EspaceusagerComponent implements OnInit {
     }
     if (service == null) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        "Aucune prestation (Service Usager) par défaut n'est lié à cet entité",
-        'error'
+        "Aucune prestation (Service Usager) par défaut n'est lié à cet entité"
       );
       return;
     }
@@ -543,39 +543,36 @@ export class EspaceusagerComponent implements OnInit {
 
     if (param.idEntite == null || param.idEntite == '') {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez choisir une structure destrinatrice.',
-        'error'
+        'Veuillez choisir une structure destrinatrice.'
       );
     } else if (param.plainte == null || param.plainte == '0') {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez choisir un type de préoccupation.',
-        'error'
+        'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff == true && param.matricule.trim() == '') {
       AppSweetAlert.simpleAlert(
         'Renseigner le matricule',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez choisir une prestation.',
-        'error'
+        'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
       AppSweetAlert.simpleAlert(
         "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!param.msgrequest) {
       AppSweetAlert.simpleAlert(
         'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       this.loading = true;
@@ -585,7 +582,8 @@ export class EspaceusagerComponent implements OnInit {
         this.modalService.dismissAll();
         this.loading = false;
         if (rest.status == 'error') {
-          AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
+          AppSweetAlert.simpleAlert(        'error',
+        'Erreur', rest.message, 'error');
         } else {
           if (param.visible == 0) {
             AppSweetAlert.simpleAlert(
@@ -645,39 +643,36 @@ export class EspaceusagerComponent implements OnInit {
     //
     if (param.idEntite == null || param.idEntite == '') {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez choisir une structure destrinatrice.',
-        'error'
+        'Veuillez choisir une structure destrinatrice.'
       );
     } else if (param.plainte == null || param.plainte == '0') {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez choisir un type de préoccupation.',
-        'error'
+        'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff == true && param.matricule.trim() == '') {
       AppSweetAlert.simpleAlert(
         'Renseigner le matricule',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez choisir une prestation.',
-        'error'
+        'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
       AppSweetAlert.simpleAlert(
         "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!param.msgrequest) {
       AppSweetAlert.simpleAlert(
         'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       this.loading = true;
@@ -689,7 +684,8 @@ export class EspaceusagerComponent implements OnInit {
           this.modalService.dismissAll();
           this.loading = false;
           if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('error', 'Erreur', rest.message);
+            AppSweetAlert.simpleAlert('error',         'error',
+        'Erreur', rest.message);
           } else {
             AppSweetAlert.simpleAlert(
               'success',
@@ -731,17 +727,17 @@ export class EspaceusagerComponent implements OnInit {
   dropRequeteusager() {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data.visible == 1) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.',
-        'error'
+        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.'
       );
       return;
     }
@@ -780,7 +776,8 @@ export class EspaceusagerComponent implements OnInit {
         this.loadRequest2();
         this.loading = false;
         if (res.status == 'error') {
-          AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+          AppSweetAlert.simpleAlert(        'error',
+        'Erreur', res.message, 'error');
         } else {
           AppSweetAlert.simpleAlert(
             'Nouvelle modification',
@@ -802,17 +799,17 @@ export class EspaceusagerComponent implements OnInit {
   sendRDV() {
     if (this.selected_data2 == null) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data2.statut != 0) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Votre de demande est déjà en cours de traitement.',
-        'error'
+        'Votre de demande est déjà en cours de traitement.'
       );
       return;
     }
@@ -851,17 +848,17 @@ export class EspaceusagerComponent implements OnInit {
   dropRDV() {
     if (this.selected_data2 == null) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data2.statut != 0) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Vous ne pouvez plus supprimer cet element. Elle est déjà en cours de traitement.',
-        'error'
+        'Vous ne pouvez plus supprimer cet element. Elle est déjà en cours de traitement.'
       );
       return;
     }
@@ -893,14 +890,15 @@ export class EspaceusagerComponent implements OnInit {
   displayResource() {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
+                'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data.fichier_joint.length == 0) {
-      AppSweetAlert.simpleAlert('Erreur', 'Aucun fichier attaché.', 'error');
+      AppSweetAlert.simpleAlert(        'error',
+        'Erreur', 'Aucun fichier attaché.', 'error');
       return;
     }
     var filePath = ConfigService.toFile(this.selected_data.fichier_joint);
@@ -952,7 +950,8 @@ export class EspaceusagerComponent implements OnInit {
       this.loadRequest();
       this.loading = false;
       if (res.status == 'error') {
-        AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+        AppSweetAlert.simpleAlert(        'error',
+        'Erreur', res.message, 'error');
       } else {
         AppSweetAlert.simpleAlert(
           'Appreciation',
@@ -967,6 +966,7 @@ export class EspaceusagerComponent implements OnInit {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
         'error',
+                'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -975,6 +975,7 @@ export class EspaceusagerComponent implements OnInit {
     if (this.selected_data.visible == 1) {
       AppSweetAlert.simpleAlert(
         'error',
+                'error',
         'Erreur',
         'Vous avez déjà transmis cette requête.'
       );
@@ -1029,7 +1030,8 @@ export class EspaceusagerComponent implements OnInit {
       this.statut = 0;
       this.loading = false;
       if (res.status == 'error') {
-        AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+        AppSweetAlert.simpleAlert(        'error',
+        'Erreur', res.message, 'error');
       } else {
         if (param.statut == 0) {
           AppSweetAlert.simpleAlert(

@@ -182,12 +182,13 @@ export class PfcRegistreComponent {
       // this.loadRequest();
       this.loading = false;
       if (res.status == 'error') {
-        AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
+        AppSweetAlert.simpleAlert('error','Erreur', res.message);
       } else {
         AppSweetAlert.simpleAlert(
+          'success',
           'Appreciation',
-          'Appreciation envoyé avec succès',
-          'succes'
+          'Appreciation envoyé avec succès'
+          
         );
       }
     });
@@ -243,48 +244,49 @@ export class PfcRegistreComponent {
 
     if (this.selected_type_preoccupation == 0) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type de requête',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
+        
       );
     } else if (!value.idEntite) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.contactUs) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le contact',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (this.mat_aff == true && value.matricule == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le matricule',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (
       (value.idPrestation == '' || value.idPrestation == null) &&
       this.link_to_prestation == 1
     ) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la prestation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.objet) {
       AppSweetAlert.simpleAlert(
+        'error',
         "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.msgrequest) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       let interfa = null;
@@ -342,15 +344,16 @@ export class PfcRegistreComponent {
           } else {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Ajout requête',
                 'Requête ajoutée avec succès',
-                'success'
+                
               );
             } else {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Ajout requête',
                 'Requete ajouté et transmis avec succès',
-                'success'
               );
             }
           }
@@ -362,9 +365,9 @@ export class PfcRegistreComponent {
   addReponse(value: any) {
     if (value.reponse_whats == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner la réponse à cette discusion',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
       return;
     } else {
@@ -380,9 +383,9 @@ export class PfcRegistreComponent {
           } else {
             this.loadWhatsApp();
             AppSweetAlert.simpleAlert(
+              'success',
               "Réponse d'une discussion whatsapp",
               'Réponse donnée avec succès',
-              'success'
             );
           }
           this.modalService.dismissAll();
@@ -403,48 +406,49 @@ export class PfcRegistreComponent {
     }
     if (this.selected_type_preoccupation == 0) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type de requête',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
+        
       );
     } else if (!value.idEntite2) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.contactUs2) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le contact',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (this.mat_aff == true && value.matricul == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le matricule',
         'Champ obligatoire',
-        'error'
       );
     } else if (
       (value.idPrestation2 == '' || value.idPrestation2 == null) &&
       this.link_to_prestation == 1
     ) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la prestation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.objet2) {
       AppSweetAlert.simpleAlert(
+        'error',
         "Renseigner l'objet",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.msgrequest2) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le message',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -481,15 +485,17 @@ export class PfcRegistreComponent {
           } else {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Modification requête',
                 'Requête modifiée avec succès',
-                'success'
+                
               );
             } else {
               AppSweetAlert.simpleAlert(
+                'success',
                 'Modification requête',
                 'Requete modifiée et transmis avec succès',
-                'success'
+                
               );
             }
           }
@@ -500,17 +506,17 @@ export class PfcRegistreComponent {
   transmettreRequete() {
     if (this.selected_data_req == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data_req.visible == 1) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Vous avez déjà transmis cette requête.',
-        'error'
+        'Vous avez déjà transmis cette requête.'
       );
       return;
     }
@@ -530,54 +536,55 @@ export class PfcRegistreComponent {
         this.modalService.dismissAll();
         // this.loadRequest();
         AppSweetAlert.simpleAlert(
+          'success',
           'Transmission requête',
           'Requête transmise avec succès',
-          'success'
+          
         );
       });
   }
   addRequeteRv(value: any) {
     if (value.contactMatri == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le matricule ou le contact du visiteur',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.plainterv) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.nom_pre_rv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le nom et prénom (s) du visiteur',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.idEntite) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.preoccurv == '' || value.preoccurv == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner la préoccupation du visiteur',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner une appréciation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv && value.observarv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         "Renseigner l'observation",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -602,9 +609,10 @@ export class PfcRegistreComponent {
             this.loadRequestrv();
 
             AppSweetAlert.simpleAlert(
+              'success',
               'Ajout requête',
-              'Visite ajoutée avec succès',
-              'success'
+              'Visite ajoutée avec succès'
+              
             );
           }
           this.modalService.dismissAll();
@@ -615,15 +623,15 @@ export class PfcRegistreComponent {
   addWhatsApp(value: any) {
     if (value.contWhatsapp == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le contact WhatsApp',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.discussiontxt == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner la discussion',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -639,9 +647,9 @@ export class PfcRegistreComponent {
           } else {
             this.loadWhatsApp();
             AppSweetAlert.simpleAlert(
+              'success',
               "Ajout d'une discussion whatsapp",
-              'Discussions ajoutée avec succès',
-              'success'
+              'Discussions ajoutée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -666,9 +674,9 @@ export class PfcRegistreComponent {
         } else {
           this.loadRequestrv();
           AppSweetAlert.simpleAlert(
+            'success',
             'Clôture de registre',
-            'Opération effectuée avec succès',
-            'success'
+            'Opération effectuée avec succès'
           );
         }
         this.file = '';
@@ -681,45 +689,45 @@ export class PfcRegistreComponent {
   UpdateRequeteRv(value: any) {
     if (value.contactMatri == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le matricule ou le contact du visiteur',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.plainterv) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner le type',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.nom_pre_rv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le nom et prénom (s) du visiteur',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (!value.idEntite) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner la structure destinatrice',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.preoccurv == '' || value.preoccurv == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner la préoccupation du visiteur',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Sélectionner une appréciation',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.satisfaitrv && value.observarv == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         "Renseigner l'observation",
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -741,9 +749,10 @@ export class PfcRegistreComponent {
           } else {
             this.loadRequestrv();
             AppSweetAlert.simpleAlert(
+              'success',
               'Ajout requête',
-              'Visite ajoutée avec succès',
-              'success'
+              'Visite ajoutée avec succès'
+              
             );
           }
           this.modalService.dismissAll();
@@ -753,15 +762,15 @@ export class PfcRegistreComponent {
   UpdateRequeteWhats(value: any) {
     if (value.contWhatsapp == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner le contact WhatsApp',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else if (value.discussiontxt == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Renseigner la discussion',
-        'Champ obligatoire',
-        'error'
+        'Champ obligatoire'
       );
     } else {
       var param = {
@@ -777,9 +786,9 @@ export class PfcRegistreComponent {
           } else {
             this.loadWhatsApp();
             AppSweetAlert.simpleAlert(
+              'success',
               "Modification d'une discussion whatsapp",
-              'Discussions modifiée avec succès',
-              'success'
+              'Discussions modifiée avec succès'
             );
           }
           this.modalService.dismissAll();
@@ -858,9 +867,9 @@ export class PfcRegistreComponent {
   openEditModalCloture(content: any) {
     if (this.dateACloture == '') {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez la date à clôturer',
-        'error'
+        'Veuillez selectionnez la date à clôturer'
       );
       return;
     }
@@ -959,9 +968,9 @@ export class PfcRegistreComponent {
   openEditModalLg(content: any) {
     if (this.selected_data_req == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
@@ -1070,17 +1079,17 @@ export class PfcRegistreComponent {
   dropRequeteusager() {
     if (this.selected_data_req == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data_req.visible == 1) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.',
-        'error'
+        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.'
       );
       return;
     }
@@ -1093,16 +1102,17 @@ export class PfcRegistreComponent {
           (res: any) => {
             // this.loadRequest();
             AppSweetAlert.simpleAlert(
+              'success',
               'Suppression requete',
-              'Suppression effectuée avec succès',
-              'success'
+              'Suppression effectuée avec succès'
             );
           },
           (err) => {
             AppSweetAlert.simpleAlert(
+              'error',
               'Suppression requete',
               'Erreur, Verifiez que vous avez une bonne connexion internet',
-              'error'
+              
             );
           }
         );
@@ -1158,6 +1168,7 @@ export class PfcRegistreComponent {
     if (this.nbreDay.length != 0) {
       AppSweetAlert.simpleAlert(
         'info',
+        'Date non clôturées',
         'Vous aviez ' + this.nbreDay.length + ' date(s) non cloturée(s).'
       );
       setTimeout(function () {
@@ -1280,9 +1291,9 @@ export class PfcRegistreComponent {
         );
     } else {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
     }
   }
@@ -1302,9 +1313,9 @@ export class PfcRegistreComponent {
         );
     } else {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
     }
   }
@@ -1313,16 +1324,16 @@ export class PfcRegistreComponent {
     this.selected_data_reqrv = el;
     if (this.selected_data_reqrv == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     } else if (this.selected_data_reqrv.cloture == 1) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Impossible de supprimer ce régistre car il est déjà cloturé',
-        'error'
+        'Impossible de supprimer ce régistre car il est déjà cloturé'
       );
       return;
     }
@@ -1337,16 +1348,18 @@ export class PfcRegistreComponent {
             (res: any) => {
               this.loadRequestrv();
               AppSweetAlert.simpleAlert(
+                'success',
                 'Suppression visite',
-                'Suppression effectuée avec succès',
-                'success'
+                'Suppression effectuée avec succès'
+                
               );
             },
             (err: any) => {
               AppSweetAlert.simpleAlert(
+                'error',
                 'Suppression visite',
                 'Erreur, Verifiez que vous avez une bonne connexion internet',
-                'error'
+                
               );
             }
           );
@@ -1357,9 +1370,9 @@ export class PfcRegistreComponent {
   dropDiscussionWhat() {
     if (this.selected_data_Whats == null) {
       AppSweetAlert.simpleAlert(
+        'error',
         'Erreur',
-        'Veuillez selectionnez un élément puis réessayer',
-        'error'
+        'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
@@ -1374,16 +1387,18 @@ export class PfcRegistreComponent {
             (res: any) => {
               this.loadWhatsApp();
               AppSweetAlert.simpleAlert(
+                'success',
                 'Suppression discussions',
                 'Suppression effectuée avec succès',
-                'success'
+                
               );
             },
             (err: any) => {
               AppSweetAlert.simpleAlert(
+                'error',
                 'Suppression discussions',
                 'Erreur, Verifiez que vous avez une bonne connexion internet',
-                'error'
+                
               );
             }
           );
@@ -1406,17 +1421,17 @@ export class PfcRegistreComponent {
               } else {
                 this.loadWhatsApp();
                 AppSweetAlert.simpleAlert(
+                  'success',
                   "Confirmer l'ajout",
                   'Confirmation effectuée avec succès',
-                  'success'
                 );
               }
             },
             (err: any) => {
               AppSweetAlert.simpleAlert(
+                'error',
                 "Confirmer l'ajout",
-                'Erreur, Verifiez que vous avez une bonne connexion internet',
-                'error'
+                'Erreur, Verifiez que vous avez une bonne connexion internet'
               );
             }
           );

@@ -158,9 +158,10 @@ export class CspReportPendingComponent {
       (err: any) => {
         this.loading2 = false;
         AppSweetAlert.simpleAlert(
+          'error',
           'Visites',
           'Erreur, Verifiez que vous avez une bonne connexion internet',
-          'error'
+          
         );
       }
     );
@@ -177,9 +178,10 @@ export class CspReportPendingComponent {
       (err: any) => {
         this.loading2 = false;
         AppSweetAlert.simpleAlert(
+          'error',
           'Visites',
           'Erreur, Verifiez que vous avez une bonne connexion internet',
-          'error'
+          
         );
       }
     );
