@@ -268,6 +268,8 @@ export class LayoutComponent {
       visible: this.visible,
     };
     this.matService.updateUsager(param, this.user.id).subscribe((res: any) => {
+      this.userConnected = res?.data;
+      this.user = res?.data;
       this.modalService.dismissAll();
       this.visible = 0;
       AppSweetAlert.simpleAlert(
