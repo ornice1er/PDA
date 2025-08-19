@@ -176,6 +176,7 @@ export class LayoutComponent {
     });
     this.titleService.userConnected$.subscribe((newState) => {
       this.userConnected = newState;
+      this.user = newState;
       console.log(newState);
       this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
     });
@@ -194,7 +195,7 @@ export class LayoutComponent {
   }
 
   logout() {
-    if (this.espace == 1 || this.espace == 2) {
+    if (this.espace >= 1 && this.espace <= 3) {
       this.authService.logout().subscribe(
         (res: any) => {
           this.lsService.remove(GlobalName.tokenNameMat);
@@ -210,6 +211,9 @@ export class LayoutComponent {
               } else {
                 this.router.navigate(['/']);
               }
+              break;
+            case 3:
+              this.router.navigate(['/auth/logpfc']);
               break;
 
             default:
@@ -252,11 +256,12 @@ export class LayoutComponent {
     var param = {
       id: this.user.id,
       email: value.email,
-      nom: value.nom,
-      prenoms: value.prenoms,
-      password: '', //value.password
-      confirm: '', //value.confirm
+      lastname: value.lastname,
+      firstname: value.firstname,
+      // password: '', //value.password
+      // confirm: '', //value.confirm
       tel: value.tel,
+      phone: value.tel,
       idEntite: this.selectedEntie,
       idDepartement: value.idDepartement,
       interfaceRequete: 'USAGER',

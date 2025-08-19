@@ -220,9 +220,14 @@
       <div class="bg-white p-4 flex flex-col gap-3 w-full">
         <div style="color: red;">{{errormessage}}</div>
         <div class="flex flex-col gap-1.5 w-full">
-          <label for="name" class=""> Nom et Prénoms * </label>
-          <input type="text" class="p-2 border border-gray-300 rounded-lg w-full has-error" id="name" name="name"
-            value="{{user?.name}}" [(ngModel)]="user.name" required>
+          <label for="firstname" class=""> Prénoms * </label>
+          <input type="text" class="p-2 border border-gray-300 rounded-lg w-full has-error" id="firstname" name="firstname"
+            value="{{user?.firstname}}" [(ngModel)]="user.firstname" required>
+        </div>
+        <div class="flex flex-col gap-1.5 w-full">
+          <label for="lastname" class=""> Nom * </label>
+          <input type="text" class="p-2 border border-gray-300 rounded-lg w-full has-error" id="lastname" name="lastname"
+            value="{{user?.lastname}}" [(ngModel)]="user.lastname" required>
         </div>
 
         <div class="flex flex-col gap-1.5 w-full">

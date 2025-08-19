@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '../utils/config-service';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from '../utils/local-stoarge-service';
+import { GlobalName } from '../utils/global-name';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MataccueilService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private appLocalStorage: LocalStorageService) {}
 
   getAllForUsagerRDV(idUsager: any) {
     return this.http.get(
@@ -134,8 +136,9 @@ export class MataccueilService {
   }
   updateUsager(ressource: any, id: any) {
     return this.http.post(
-      `${ConfigService.toMataccueilApiUrl('usager')}/${id}`,
-      ressource
+      `${ConfigService.toApiUrl('user-update')}`,
+      ressource,
+      ConfigService.httpHeader(this.appLocalStorage.get(GlobalName.tokenName),true)
     );
   }
 
