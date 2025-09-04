@@ -448,218 +448,185 @@
   </ng-template>
 
 
-  <ng-template #edit let-modal>
-    <form #frmrequeteusagerU="ngForm" (ngSubmit)="saveRequeteusager(frmrequeteusagerU.value)" class="form-horizontal"
-      novalidate="">
+<ng-template #edit let-modal>
+  <form #frmrequeteusagerU="ngForm" 
+        (ngSubmit)="saveRequeteusager(frmrequeteusagerU.value)" 
+        class="form-horizontal" novalidate>
 
-      <div class="modal-header bg-mat-primary">
-        <h5 class="modal-title text-white" id="modal-basic-title">Modifier la préoccupation</h5>
-        <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          X
-        </button>
-      </div>
-      <div class="modal-body">
-        <div style="color:red">{{errormessage}}</div>
+    <div class="modal-header bg-mat-primary">
+      <h5 class="modal-title text-white">Modifier la préoccupation</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        X
+      </button>
+    </div>
 
-        <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-          <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Usager</h4>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
 
-          <div class="form-group row mb-3">
-            <!--label for="email" class="col-sm-2 control-label">Email</label>
+      <!-- USAGER -->
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
+          Usager
+        </h4>
 
-                        <div class="col-sm-4">
-                            <input type="text" class="form-control form-control-sm has-error" id="email"
-                                name="email" placeholder="" value="{{selected_data.usager.email}}"
-                                [(ngModel)]="selected_data.usager.email">
-
-                        </div-->
-
-            <label for="nom" class="col-sm-4 control-label">Nom et prénoms</label>
-            <div class="col-sm-8">
-              <input readonly="" type="text" class="form-control form-control-sm has-error" id="nom" name="nom"
-                placeholder="" value="{{selected_data.usager.nom+' '+selected_data.usager.prenoms}}"
-                [(ngModel)]="selected_data.usager.nom">
-            </div>
+        <!-- Nom complet (lecture seule) -->
+        <div class="form-group row mb-3">
+          <label for="nom" class="col-sm-4 control-label">Nom et prénoms</label>
+          <div class="col-sm-8">
+            <input readonly type="text" class="form-control form-control-sm"
+                   id="nom" name="nom" 
+                   [ngModel]="selected_data?.usager?.nom + ' ' + selected_data?.usager?.prenoms">
           </div>
+        </div>
+      </fieldset>
 
-          <!--div class="form-group row mb-3">
-                        <label for="tel" class="col-sm-2 control-label">Téléphone</label>
+      <!-- PREOCCUPATION -->
+      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
+          {{typeRequete}}
+          <small *ngIf="selected_data.visible==0">(Non transmise)</small>
+        </h4>
 
-                        <div class="col-sm-4">
-                            <input readonly="" type="text" class="form-control form-control-sm has-error"
-                                id="tel" name="tel" placeholder="" value="{{selected_data.usager.tel}}"
-                                [(ngModel)]="selected_data.usager.tel">
-                        </div>
-
-                        <label for="email" class="col-sm-2 control-label">Département</label>
-                        <div class="col-sm-4">
-                            <select name="idDepartement" readonly="" id="idDepartement" class="form-control form-control-sm form-control-sm"
-                                [(ngModel)]="selected_data.usager.idDepartement">
-                                <option [value]="fc.id" *ngFor="let fc of departements">{{fc.libelle}}</option>
-                            </select>
-                        </div>
-                    </div-->
-
-        </fieldset>
-
-
-
-
-        <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-          <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
-            {{typeRequete}}
-            <small *ngIf="selected_data.visible==0">(Non transmise)</small>
-          </h4>
-
-          <!--div class="form-group row mb-3">
-                        <label for="plainte" class="col-sm-2 control-label">Plainte <br>(oui ou non)
-                        </label>
-                        <div class="col-sm-1">
-                            <input type="checkbox" id="plainte" name="plainte" [(ngModel)]="selected_data.plainte">
-
-                        </div>
-                    </div-->
-
-          <div class="form-group row mb-3">
-
-            <label for="plainte" class="col-sm-4 control-label">Type :</label>
-            <div class="col-sm-8">
-              <select name="plainte" id="plainte" class="form-control form-control-sm" required
-                [(ngModel)]="selected_data.plainte">
-                <option disabled selected>Choisir</option>
-                <!-- <option value="0">Requete</option> -->
-                <option value="1">Plainte</option>
-                <option value="2">Demande d'information</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row mb-3" *ngIf="entite_vis">
-            <label for="idEntite" class="col-sm-4">Structure destinatrice</label>
-            <div class="col-sm-8">
-              <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                [(ngModel)]="selected_data.idEntite" (change)="onEntiteChange($event)">
-                <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-              </select>
-
-            </div>
-          </div>
-          <div class="form-group row mb-3" *ngIf="selected_data.visible==0 && selected_data.plainte!=0">
-
-            <label for="link_to_prestation" class="col-sm-4 control-label">Préoccupation liée à une
-              prestation :</label>
-            <div class="col-sm-8">
-              <select name="link_to_prestation" id="link_to_prestation" class="form-control form-control-sm" required
-                [(ngModel)]="selected_data.link_to_prestation">
-                <option value="1">Oui</option>
-                <option value="0">Non</option>
-              </select>
-
-            </div>
-          </div>
-
-
-          <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
-
-            <label for="idType" class="col-sm-4 control-label">Thématique :</label>
-            <div class="col-sm-8">
-              <select name="idType" id="idType" required class="form-control form-control-sm" required
-                [(ngModel)]="selected_data.service.idType" (change)="chargerPrestation($event)">
-                <option disabled selected>Choisir</option>
-                <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
-              </select>
-            </div>
-          </div>
-          <!-- <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
-                        <label for="msgrequest" class="col-sm-4 control-label">Description :</label>
-                        <div class="col-sm-8">
-                            <textarea type="text" disabled="disabled" class="form-control" id="descr"   name="descr" placeholder="Description de la thématique"
-                            value="{{selected_data.descr}}" [(ngModel)]="selected_data.service.type.descr"></textarea>
-                        </div>
-                    </div> -->
-          <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
-            <label for="idPrestation" class="col-sm-4 control-label">Prestation :</label>
-            <div class="col-sm-8">
-              <select name="idPrestation" required id="idPrestation"
-                class="form-control form-control-sm form-control-sm" [(ngModel)]="selected_data.service"
-                (change)="openDetailModal($event, detailPresta)">
-                <option disabled selected>Choisir</option>
-                <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row mb-3" *ngIf="mat_aff">
-            <label for="objet" class="col-sm-4 control-label">Matricule :</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control form-control-sm has-error" [(ngModel)]="selected_data.matricule"
-                id="matricul" name="matricul" require ngModel>
-            </div>
-          </div>
-          <div class="form-group row mb-3">
-            <label for="objet" class="col-sm-4 control-label">Objet :</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control form-control-sm has-error" id="objet" name="objet" placeholder=""
-                value="{{selected_data.objet}}" [(ngModel)]="selected_data.objet" required>
-            </div>
-          </div>
-          <div class="form-group row mb-3">
-            <label for="msgrequest" class="col-sm-4 control-label">Message :</label>
-            <div class="col-sm-8">
-              <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
-                placeholder="Message de la requête" value="{{selected_data.msgrequest}}"
-                [(ngModel)]="selected_data.msgrequest" required></textarea>
-            </div>
-          </div>
-
-
-          <a *ngIf="selected_data.fichier_joint!=''" target="_blank" href="{{selected_data.fichier_joint}}"
-            download="{{selected_data.fichier_joint}}">Voir fichier joint</a>
-
-
-        </fieldset>
-
-
-        <fieldset *ngIf="selected_data.traiteOuiNon==1" class="divusager" style="border:1px solid #ddd;padding:10px;">
-          <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Appréciation
-            de l'usager</h4>
-
-          <div class="form-group row mb-3">
-            <label for="noteUsager" class="col-sm-2 control-label">Note :</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control form-control-sm has-error" id="noteUsager" name="noteUsager"
-                placeholder="" value="{{selected_data.noteUsager}}" [(ngModel)]="selected_data.noteUsager" required>
-            </div>
-          </div>
-
-          <div class="form-group row mb-3">
-            <label for="commentaireNotation" class="col-sm-4 control-label">Commentaire de
-              l'usager :</label>
-            <div class="col-sm-8">
-              <textarea class="form-control form-control-sm has-error" id="commentaireNotation"
-                name="commentaireNotation" value="{{selected_data.commentaireNotation}}"
-                [(ngModel)]="selected_data.commentaireNotation" required></textarea>
-            </div>
-          </div>
-
-
-
-        </fieldset>
-        <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
-          <div class="spinner-border text-secondary" role="status">
-            <span class="sr-only">Processus en cours...</span>
+        <!-- Type -->
+        <div class="form-group row mb-3">
+          <label for="plainte" class="col-sm-4 control-label">Type :</label>
+          <div class="col-sm-8">
+            <select name="plainte" id="plainte" class="form-control form-control-sm"
+                    required [(ngModel)]="selected_data.plainte">
+              <option [ngValue]="null" disabled>Choisir</option>
+              <option [ngValue]="1">Plainte</option>
+              <option [ngValue]="2">Demande d'information</option>
+            </select>
           </div>
         </div>
 
+        <!-- Structure destinatrice -->
+        <div class="form-group row mb-3" *ngIf="entite_vis">
+          <label for="idEntite" class="col-sm-4">Structure destinatrice</label>
+          <div class="col-sm-8">
+            <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+                    [(ngModel)]="selected_data.idEntite" (change)="onEntiteChange($event)">
+              <option [ngValue]="null" disabled>Choisir</option>
+              <option [ngValue]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Lien prestation -->
+        <div class="form-group row mb-3" *ngIf="selected_data.visible==0 && selected_data.plainte!=0">
+          <label for="link_to_prestation" class="col-sm-4 control-label">Préoccupation liée à une prestation :</label>
+          <div class="col-sm-8">
+            <select name="link_to_prestation" id="link_to_prestation" class="form-control form-control-sm"
+                    [(ngModel)]="selected_data.link_to_prestation" required>
+              <option [ngValue]="1">Oui</option>
+              <option [ngValue]="0">Non</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Thématique -->
+        <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
+          <label for="idType" class="col-sm-4 control-label">Thématique :</label>
+          <div class="col-sm-8">
+            <select name="idType" id="idType" class="form-control form-control-sm"
+                    [(ngModel)]="selected_data.service.idType" (change)="chargerPrestation($event)" required>
+              <option [ngValue]="null" disabled>Choisir</option>
+              <option [ngValue]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Prestation -->
+        <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
+          <label for="idPrestation" class="col-sm-4 control-label">Prestation :</label>
+          <div class="col-sm-8">
+            <select name="idPrestation" id="idPrestation" class="form-control form-control-sm"
+                    [(ngModel)]="selected_data.service.id" (change)="openDetailModal($event, detailPresta)" required>
+              <option [ngValue]="null" disabled>Choisir</option>
+              <option [ngValue]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Matricule -->
+        <div class="form-group row mb-3" *ngIf="mat_aff">
+          <label for="matricule" class="col-sm-4 control-label">Matricule :</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control form-control-sm"
+                   id="matricule" name="matricule" [(ngModel)]="selected_data.matricule">
+          </div>
+        </div>
+
+        <!-- Objet -->
+        <div class="form-group row mb-3">
+          <label for="objet" class="col-sm-4 control-label">Objet :</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control form-control-sm"
+                   id="objet" name="objet" [(ngModel)]="selected_data.objet" required>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div class="form-group row mb-3">
+          <label for="msgrequest" class="col-sm-4 control-label">Message :</label>
+          <div class="col-sm-8">
+            <textarea class="form-control form-control-sm"
+                      id="msgrequest" name="msgrequest" [(ngModel)]="selected_data.msgrequest" required>
+            </textarea>
+          </div>
+        </div>
+
+        <!-- Fichier joint -->
+        <a *ngIf="selected_data.fichier_joint" target="_blank"
+           [href]="selected_data.fichier_joint"
+           [download]="selected_data.fichier_joint">
+          Voir fichier joint
+        </a>
+      </fieldset>
+
+      <!-- Appréciation de l'usager -->
+      <fieldset *ngIf="selected_data.traiteOuiNon==1" class="divusager" style="border:1px solid #ddd;padding:10px;">
+        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
+          Appréciation de l'usager
+        </h4>
+
+        <div class="form-group row mb-3">
+          <label for="noteUsager" class="col-sm-2 control-label">Note :</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm"
+                   id="noteUsager" name="noteUsager"
+                   [(ngModel)]="selected_data.noteUsager">
+          </div>
+        </div>
+
+        <div class="form-group row mb-3">
+          <label for="commentaireNotation" class="col-sm-4 control-label">Commentaire :</label>
+          <div class="col-sm-8">
+            <textarea class="form-control form-control-sm"
+                      id="commentaireNotation" name="commentaireNotation"
+                      [(ngModel)]="selected_data.commentaireNotation">
+            </textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Loading -->
+      <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+        <div class="spinner-border text-secondary" role="status">
+          <span class="sr-only">Processus en cours...</span>
+        </div>
       </div>
-      <div class="modal-footer">
+    </div>
 
-        <button type="submit" class="btn btn-primary mx-1"><i class="fas fa-save"></i>&nbsp;
-          Enregistrer</button>
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary mx-1" [disabled]="loading">
+        <i class="fas fa-save"></i>&nbsp; Enregistrer
+      </button>
+    </div>
+  </form>
+</ng-template>
 
-
-      </div>
-    </form>
-
-  </ng-template>
 
   <ng-template #add let-modal>
     <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value)" class="form-horizontal">

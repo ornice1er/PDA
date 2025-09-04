@@ -450,139 +450,163 @@
 </ng-template>
 
 <ng-template #addRequete let-modal>
-  <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value)" class="form-horizontal "
-    novalidate="">
-
-    <div class="modal-header bg-info">
-      <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une Préoccupation</h5>
-      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        X
-      </button>
+  <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value)" novalidate>
+    <!-- HEADER -->
+    <div class="modal-header bg-info text-white">
+      <h5 class="modal-title">
+        <i class="fas fa-plus-circle me-2"></i> Ajouter une Préoccupation
+      </h5>
+      <button type="button" class="btn-close btn-close-white" aria-label="Close"
+              (click)="modal.dismiss('Cross click')"></button>
     </div>
+
+    <!-- BODY -->
     <div class="modal-body">
-      <div style="color:red">{{errormessage}}</div>
+      <div *ngIf="errormessage" class="alert alert-danger mb-3">{{ errormessage }}</div>
 
-      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Point focal
-          communal : {{user?.agent_user?.nomprenoms}} / {{user?.email}}</h4>
-
-      </fieldset>
-
-      <fieldset *ngIf="selected_data_Whats != null" class="divusager" style="border:1px solid #ddd;padding:10px;">
-        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Discussions
-          WhatsApp</h4>
-        <div>N° WhatsApp : {{selected_data_Whats.numerowhatsapp}}</div>
-        <div>Discussions : {{selected_data_Whats.discussions}}</div>
-      </fieldset>
-
-      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-
-        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Préoccupation
-        </h4>
-        <div class="form-group row">
-          <label for="contactUs" class="col-sm-2 control-label">Contact :</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control form-control-sm has-error" id="contactUs" name="contactUs"
-              placeholder="" ngModel required value="{{selected_data_rvMat==null ? '':selected_data_rvMat.matri_telep}}"
-              [(ngModel)]="selected_data_rvMat">
-          </div>
-          <label for="mailUs" class="col-sm-2 control-label">E-mail :</label>
-          <div class="col-sm-4">
-            <input type="text" class="form-control form-control-sm has-error" id="mailUs" name="mailUs" placeholder=""
-              ngModel required>
-          </div>
+      <!-- Point focal -->
+      <div class="card border mb-3">
+        <div class="card-header bg-light fw-bold small">
+          Point focal communal
         </div>
-        <div class="form-group row">
-          <label for="idEntite" class="col-sm-2">Structure destinatrice</label>
-          <div class="col-sm-10">
-            <select name="idEntite" id="idEntite" class="form-control form-control-sm" ngModel={{user?.idEntite}}
-              (change)="onEntiteChange($event)">
-              <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-            </select>
-          </div>
+        <div class="card-body p-2">
+          <p class="mb-1">
+            <strong>{{ user?.agent_user?.nomprenoms }}</strong> <br>
+            <small>{{ user?.email }}</small>
+          </p>
         </div>
-        <div class="form-group row">
-          <label for="plainte" class="col-sm-2 control-label">Type :</label>
-          <div class="col-sm-4">
-            <select name="plainte" id="plainte" class="form-control form-control-sm" required
-              [(ngModel)]="selected_type_preoccupation">
-              <option disabled selected>Choisir</option>
-              <!-- <option value="0">Requete</option>agent_user -->
-              <option value="1">Plainte</option>
-              <option value="2">Demande d'information</option>
-            </select>
-          </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <div *ngIf="selected_data_Whats" class="card border mb-3">
+        <div class="card-header bg-light fw-bold small">
+          Discussions WhatsApp
         </div>
-
-        <div class="form-group row" *ngIf="selected_type_preoccupation!=0">
-          <label for="plainte" class="col-sm-6 control-label">Préoccupation liée à une prestation :</label>
-          <div class="col-sm-2">
-            <label for=""> Oui <input type="radio" value="1" [(ngModel)]="link_to_prestation" name="link_to_prestation">
-            </label>
-          </div>
-          <div class="col-sm-2">
-            <label for=""> Non <input type="radio" value="0" [(ngModel)]="link_to_prestation" name="link_to_prestation">
-            </label>
-          </div>
+        <div class="card-body p-2">
+          <p class="mb-1"><strong>N° WhatsApp :</strong> {{ selected_data_Whats.numerowhatsapp }}</p>
+          <p class="mb-0"><strong>Discussions :</strong> {{ selected_data_Whats.discussions }}</p>
         </div>
+      </div>
 
-        <div class="form-group row" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+      <!-- Préoccupation -->
+      <div class="card border">
+        <div class="card-header bg-light fw-bold small">
+          Préoccupation
+        </div>
+        <div class="card-body">
+          <!-- Contact et Email -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Contact</label>
+              <input type="text" class="form-control form-control-sm"
+                     name="contactUs"
+                     [(ngModel)]="selected_data_rvMat"
+                     [value]="selected_data_rvMat?.matri_telep || ''"
+                     required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">E-mail</label>
+              <input type="email" class="form-control form-control-sm"
+                     name="mailUs" ngModel required>
+            </div>
+          </div>
 
-          <label for="idType" class="col-sm-2 control-label">Thématique :</label>
-          <div class="col-sm-4">
-            <select name="idType" id="idType" required class="form-control form-control-sm" required ngModel
-              (change)="chargerPrestation($event)">
-              <option disabled selected>Choisir</option>
-              <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+          <!-- Structure -->
+          <div class="mb-3">
+            <label class="form-label">Structure destinatrice</label>
+            <select name="idEntite" class="form-select form-select-sm"
+                    ngModel="{{ user?.idEntite }}" (change)="onEntiteChange($event)">
+              <option [value]="fc.id" *ngFor="let fc of institutions">{{ fc.libelle }}</option>
             </select>
           </div>
 
-          <label for="objet" class="col-sm-2 control-label" *ngIf="mat_aff">Matricule : </label>
-          <div class="col-sm-4" *ngIf="mat_aff">
-            <input type="text" class="form-control form-control-sm has-error" id="matricule" name="matricule" ngModel>
+          <!-- Type -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Type</label>
+              <select name="plainte" class="form-select form-select-sm"
+                      [(ngModel)]="selected_type_preoccupation" required>
+                <option disabled selected>Choisir</option>
+                <option value="1">Plainte</option>
+                <option value="2">Demande d'information</option>
+              </select>
+            </div>
           </div>
-          <!-- <label for="objet" class="col-sm-2 control-label">Description : </label>
-                    <div class="col-sm-4">
-                        <textarea type="text" disabled="disabled" class="form-control" id="descr"   name="descr" placeholder="Description de la thématique" ngModel  value="{{descrCarr}}"></textarea>
-                    </div> -->
-        </div>
-        <div class="form-group row" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
-          <label for="idPrestation" required class="col-sm-2 control-label">Prestation :</label>
-          <div class="col-sm-10">
-            <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm" ngModel
-              (change)="openDetailModal($event, detailPresta)">
-              <option disabled selected>Choisir</option>
-              <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
-            </select>
-          </div>
-        </div>
 
-        <div class="form-group row">
-          <label for="objet" class="col-sm-2 control-label">Objet :</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control form-control-sm has-error" id="objet" name="objet" placeholder=""
-              ngModel required>
+          <!-- Lien prestation -->
+          <div class="mb-3" *ngIf="selected_type_preoccupation != 0">
+            <label class="form-label d-block">Préoccupation liée à une prestation</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio"
+                     [(ngModel)]="link_to_prestation"
+                     name="link_to_prestation" value="1" id="prestaOui">
+              <label class="form-check-label" for="prestaOui">Oui</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio"
+                     [(ngModel)]="link_to_prestation"
+                     name="link_to_prestation" value="0" id="prestaNon">
+              <label class="form-check-label" for="prestaNon">Non</label>
+            </div>
+          </div>
+
+          <!-- Thématique & Prestation -->
+          <div *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Thématique</label>
+                <select name="idType" class="form-select form-select-sm"
+                        (change)="chargerPrestation($event)" ngModel required>
+                  <option disabled selected>Choisir</option>
+                  <option [value]="fc.id" *ngFor="let fc of themes">{{ fc.libelle }}</option>
+                </select>
+              </div>
+              <div class="col-md-6" *ngIf="mat_aff">
+                <label class="form-label">Matricule</label>
+                <input type="text" class="form-control form-control-sm" name="matricule" ngModel>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Prestation</label>
+              <select name="idPrestation" class="form-select form-select-sm"
+                      ngModel (change)="openDetailModal($event, detailPresta)">
+                <option disabled selected>Choisir</option>
+                <option [value]="fc.id" *ngFor="let fc of services">{{ fc.libelle }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Objet -->
+          <div class="mb-3">
+            <label class="form-label">Objet</label>
+            <input type="text" class="form-control form-control-sm" name="objet" ngModel required>
+          </div>
+
+          <!-- Message -->
+          <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea class="form-control form-control-sm" rows="3"
+                      name="msgrequest" ngModel required></textarea>
           </div>
         </div>
-
-
-        <div class="form-group row">
-          <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
-          <div class="col-sm-10">
-            <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
-              placeholder="Message de la requête" ngModel required></textarea>
-          </div>
-        </div>
-      </fieldset>
+      </div>
     </div>
+
+    <!-- FOOTER -->
     <div class="modal-footer">
-      <button type="submit" class="btn btn-info mx-1" id="btn-save">
-        Enregistrer <app-loading [isVisible]="loading"></app-loading></button>
-      <button type="submit" (click)="setVisible()" class="btn btn-primary">
-        Transmettre <app-loading [isVisible]="loading"></app-loading></button>
+      <button type="submit" class="btn btn-info">
+        <i class="fas fa-save me-2"></i> Enregistrer
+        <app-loading [isVisible]="loading"></app-loading>
+      </button>
+      <button type="button" (click)="setVisible()" class="btn btn-primary">
+        <i class="fas fa-paper-plane me-2"></i> Transmettre
+        <app-loading [isVisible]="loading"></app-loading>
+      </button>
     </div>
   </form>
 </ng-template>
+
 
 <ng-template #addAnswer let-modal>
   <form #frmReponse="ngForm" (ngSubmit)="addReponse(frmReponse.value)" class="form-horizontal " novalidate="">

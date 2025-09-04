@@ -82,7 +82,7 @@ export class MataccueilService {
     );
   }
   deleteRequete(id: any) {
-    return this.http.get(
+    return this.http.delete(
       `${ConfigService.toMataccueilApiUrl('requeteusager')}/${id}`
     );
   }

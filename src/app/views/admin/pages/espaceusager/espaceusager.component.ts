@@ -331,10 +331,10 @@ export class EspaceusagerComponent implements OnInit {
     this.matService
       .getAllThematique(this.selected_data.idEntite)
       .subscribe((res: any) => {
-        this.themes = res;
+        this.themes = res.data;
       });
 
-    this.matService.getThematique(this.selected_data).subscribe((res: any) => {
+    this.matService.getThematique(this.selected_data.idEntite).subscribe((res: any) => {
       this.descrCarr = res.descr;
     });
     this.matService
@@ -578,8 +578,8 @@ export class EspaceusagerComponent implements OnInit {
         this.visible = 0;
         this.modalService.dismissAll();
         this.loading = false;
-        if (rest.status == 'error') {
-          AppSweetAlert.simpleAlert('error', 'Erreur', rest.message, 'error');
+        if (rest.data.status == 'error') {
+          AppSweetAlert.simpleAlert('error', 'Erreur', rest.data.message);
         } else {
           if (param.visible == 0) {
             AppSweetAlert.simpleAlert(
@@ -595,6 +595,9 @@ export class EspaceusagerComponent implements OnInit {
             );
           }
         }
+      },(err:any) => {
+                  AppSweetAlert.simpleAlert('error', 'Erreur', err.error.message);
+
       });
     }
   }
@@ -728,6 +731,7 @@ export class EspaceusagerComponent implements OnInit {
       return;
     }
     AppSweetAlert.confirmBox(
+      'info',
       'Suppression requete',
       'Cette action est irreversible. Voulez-vous continuer ?'
     ).then((result: any) => {
@@ -736,16 +740,18 @@ export class EspaceusagerComponent implements OnInit {
           (res: any) => {
             this.loadRequest2();
             AppSweetAlert.simpleAlert(
+              'success',
               'Suppression requete',
               'Suppression effectuée avec succès',
-              'success'
+              
             );
           },
           (err: any) => {
             AppSweetAlert.simpleAlert(
+              'error',
               'Suppression requete',
               'Erreur, Verifiez que vous avez une bonne connexion internet',
-              'error'
+              
             );
           }
         );
@@ -913,9 +919,9 @@ export class EspaceusagerComponent implements OnInit {
       this.visible = 0;
       this.loadRequest2();
       AppSweetAlert.simpleAlert(
+        'success',
         'Mise à jour',
         'Profile mis à jour avec succès',
-        'succes'
       );
     });
 
@@ -942,9 +948,10 @@ export class EspaceusagerComponent implements OnInit {
         AppSweetAlert.simpleAlert('error', 'Erreur', res.message, 'error');
       } else {
         AppSweetAlert.simpleAlert(
+          'success',
           'Appreciation',
           'Appreciation envoyé avec succès',
-          'succes'
+          
         );
       }
     });
@@ -954,7 +961,6 @@ export class EspaceusagerComponent implements OnInit {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
         'error',
-        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -962,7 +968,6 @@ export class EspaceusagerComponent implements OnInit {
     }
     if (this.selected_data.visible == 1) {
       AppSweetAlert.simpleAlert(
-        'error',
         'error',
         'Erreur',
         'Vous avez déjà transmis cette requête.'
@@ -983,7 +988,7 @@ export class EspaceusagerComponent implements OnInit {
       this.modalService.dismissAll();
       this.loadRequest();
       AppSweetAlert.simpleAlert(
-        'succes',
+        'success',
         'Transmission requete',
         'Requete transmise avec succès'
       );
@@ -1021,16 +1026,17 @@ export class EspaceusagerComponent implements OnInit {
         AppSweetAlert.simpleAlert('error', 'Erreur', res.message, 'error');
       } else {
         if (param.statut == 0) {
+          
           AppSweetAlert.simpleAlert(
+            'success',
             'Prise de rdv',
             'RDV enregistré avec succès',
-            'succes'
           );
         } else {
           AppSweetAlert.simpleAlert(
+            'success',
             'Prise de rdv',
             'RDV enregistré et transmis avec succès',
-            'succes'
           );
         }
       }
@@ -1073,4 +1079,9 @@ export class EspaceusagerComponent implements OnInit {
   getPage(event: any) {
     this.pg.p = event;
   }
+
+
+  get nomComplet() {
+  return this.selected_data?.usager?.nom + ' ' + this.selected_data?.usager?.prenoms;
+}
 }

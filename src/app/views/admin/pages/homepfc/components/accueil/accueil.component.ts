@@ -79,7 +79,7 @@ export class PfcAccueilComponent implements OnInit {
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: [2, 5, 10],
+        data: [],
         label: 'Évolution des visites au cours',
         backgroundColor: 'rgba(17, 132, 90, 0.2)',
         borderColor: '#11845A',
@@ -90,20 +90,7 @@ export class PfcAccueilComponent implements OnInit {
         fill: 'origin',
       },
     ],
-    labels: [
-      'Janvier',
-      'Février',
-      'Mars',
-      'Avril',
-      'Mai',
-      'Juin',
-      'Juillet',
-      'Août',
-      'Septembre',
-      'Octobre',
-      'Novembre',
-      'Décembre',
-    ],
+    labels: [],
   };
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   constructor(
@@ -142,6 +129,17 @@ export class PfcAccueilComponent implements OnInit {
           this.data = res.data;
           this.reports=this.data.reports;
           this.loading = false;
+
+
+           const data = res.data.countVisitByMonth;
+
+          // 🔹 Extraire labels et valeurs
+          const labels = data.map((d: any) => res.data.moisLabel[parseInt(d.month, 10)]);
+          const values = data.map((d: any) => d.total);
+
+          // 🔹 Injecter dans lineChartData
+          this.lineChartData.labels = labels;
+          this.lineChartData.datasets[0].data = values;
         }
       },
       error: () => {
