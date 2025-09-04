@@ -258,12 +258,13 @@ export class EspaceusagerComponent implements OnInit {
       let check = this.data.filter(
         (el: any) => el.traiteOuiNon == 1 && el.noteUsager == null
       );
-      console.log(check.length);
+      //console.log(check.length);
       if (check.length == 0) {
         this.canSentNew = true;
       } else {
         this.canSentNew = false;
         AppSweetAlert.confirmBox(
+          'info',
           'Important',
           ' Nous vous prions de nous laisser votre appréciation sur votre dernière préoccupation satisfait '
         ).then((res: any) => {
@@ -290,15 +291,16 @@ export class EspaceusagerComponent implements OnInit {
     if (el.archiver == 1) {
       this.canSentNew = true;
     } else {
-      let check = this.data.find(
+      let check = this.data.filter(
         (el: any) => el.traiteOuiNon == 1 && el.noteUsager == null
       );
-      console.log(check.length);
-      if (check == undefined || check == null) {
+     console.log(check);
+      if (check.length == 0) {
         this.canSentNew = true;
       } else {
         this.canSentNew = false;
         AppSweetAlert.confirmBox(
+          'info',
           'Important',
           ' Nous vous prions de nous laisser votre appréciation sur la prise en charge de votre dernière préoccupation.'
         ).then((res: any) => {
@@ -450,6 +452,8 @@ export class EspaceusagerComponent implements OnInit {
       this.matService.getAllInsitution().subscribe((res: any) => {
         this.institutions = res.data;
       });
+
+      this.loadRequest();
     }
 
     // this.loadRequest();
@@ -556,7 +560,7 @@ export class EspaceusagerComponent implements OnInit {
         'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff == true && param.matricule.trim() == '') {
-      AppSweetAlert.simpleAlert('Renseigner le matricule', 'Champ obligatoire');
+      AppSweetAlert.simpleAlert('success','Renseigner le matricule', 'Champ obligatoire');
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
         'error',
@@ -564,9 +568,9 @@ export class EspaceusagerComponent implements OnInit {
         'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
-      AppSweetAlert.simpleAlert("Renseigner l'objet", 'Champ obligatoire');
+      AppSweetAlert.simpleAlert('info',"Renseigner l'objet", 'Champ obligatoire');
     } else if (!param.msgrequest) {
-      AppSweetAlert.simpleAlert('Renseigner le message', 'Champ obligatoire');
+      AppSweetAlert.simpleAlert('info',"Renseigner le message", 'Champ obligatoire');
     } else {
       this.loading = true;
       this.matService.createRequete(param).subscribe((rest: any) => {
@@ -579,15 +583,15 @@ export class EspaceusagerComponent implements OnInit {
         } else {
           if (param.visible == 0) {
             AppSweetAlert.simpleAlert(
+              'success',
               'Ajout requête',
-              'Requête ajoutée avec succès',
-              'success'
+              'Requête ajoutée avec succès'
             );
           } else {
             AppSweetAlert.simpleAlert(
+              'success',
               'Ajout requête',
-              'Requete ajouté et transmis avec succès',
-              'success'
+              'Requete ajouté et transmis avec succès'
             );
           }
         }
