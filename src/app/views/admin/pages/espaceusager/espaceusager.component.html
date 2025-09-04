@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-y-8 w-full">
   <div>
-    <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Vos préocupqtions</h2>
+    <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Vos préocupations</h2>
   </div>
 
     <div class="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 animate-in">
@@ -258,11 +258,16 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="frmrdv.invalid"><i class="fas fa-save"></i>&nbsp;
-          Enregistrer</button>
-        <button type="submit" (click)="setStatut()" [disabled]="frmrdv.invalid" class="btn btn-info"><i
-            class="fas fa-save"></i>&nbsp;
-          Transmettre</button>
+        <button type="submit" class="btn btn-primary" [disabled]="frmrdv.invalid">
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+          </button>
+        <button type="submit" (click)="setStatut()" [disabled]="frmrdv.invalid" class="btn btn-info">  
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Transmettre</span>
+          </button>
         <br><br>
       </div>
     </form>
@@ -356,8 +361,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="frmeditrdv.invalid"><i class="fas fa-save"></i>&nbsp;
-          Enregistrer</button>
+        <button type="submit" class="btn btn-primary" [disabled]="frmeditrdv.invalid">
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+          </button>
         <br><br>
       </div>
     </form>
@@ -425,9 +433,12 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button *ngIf='selected_data_note.traiteOuiNon==1 && selected_data_note.noteUsager<1' type="submit"
-          class="btn btn-primary" [disabled]="frmnoter.invalid"><i class="fas fa-save"></i>&nbsp;
-          Enregistrer</button>
+        <button *ngIf='selected_data_note.traiteOuiNon==1 && selected_data_note.noteUsager' type="submit"
+          class="btn btn-primary" [disabled]="frmnoter.invalid">
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+          </button>
         <br><br>
       </div>
     </form>
@@ -621,7 +632,9 @@
     <!-- Footer -->
     <div class="modal-footer">
       <button type="submit" class="btn btn-primary mx-1" [disabled]="loading">
-        <i class="fas fa-save"></i>&nbsp; Enregistrer
+         <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
       </button>
     </div>
   </form>
@@ -817,10 +830,16 @@
 
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary mx-1"><i class="fas fa-save"></i>&nbsp;
-          Enregistrer</button>
-        <button type="submit" (click)="setVisible()" class="btn btn-info"><i class="fas fa-save"></i>&nbsp;
-          Transmettre</button>
+        <button type="submit" class="btn btn-primary mx-1">
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+        </button>
+        <button type="submit" (click)="setVisible()" class="btn btn-info">
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Transmettre</span>
+          </button>
 
       </div>
     </form>

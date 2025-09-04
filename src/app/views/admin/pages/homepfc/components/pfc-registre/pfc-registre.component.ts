@@ -330,17 +330,16 @@ export class PfcRegistreComponent {
         visible: this.visible,
         // visible: 1
       };
-
+      this.loading=true;
       this.user_auth_service
         .createrequeteusager(param)
         .subscribe((rest: any) => {
-          // this.loadRequest();
+                this.loading=false;
           this.loadRequestrv();
-          this.loadWhatsApp();
-          this.visible = 0;
+          this.visible = 0; 
           this.modalService.dismissAll();
-          if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
+          if (rest.data?.status == 'error') {
+            AppSweetAlert.simpleAlert('Erreur', rest.data?.message, 'error');
           } else {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
@@ -357,6 +356,13 @@ export class PfcRegistreComponent {
               );
             }
           }
+        },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
         });
       this.selected_data_rvMat = '';
       this.selected_data_Whats = '';
@@ -599,10 +605,12 @@ export class PfcRegistreComponent {
           this.dateACloture == '' ? new Date() : new Date(this.dateACloture),
         observarv: value.observarv,
       };
-
+      this.loading=true
       this.user_auth_service
         .createrequeteVisite(param)
         .subscribe((res: any) => {
+                this.loading=false
+
           if (res.status == 'error') {
             AppSweetAlert.simpleAlert('Erreur', res.message, 'error');
           } else {
@@ -616,6 +624,13 @@ export class PfcRegistreComponent {
             );
           }
           this.modalService.dismissAll();
+        },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
         });
     }
   }

@@ -271,8 +271,6 @@ active=1
      };
 
      this.user_auth_service.createrequeteusager(param).subscribe((rest:any)=>{
-      this.loadRequest()
-      this.loadRequestrv()
       this.loadWhatsApp()
       this.visible=0
       this.modalService.dismissAll()
@@ -285,7 +283,14 @@ active=1
           AppSweetAlert.simpleAlert('success',"Ajout requête", "Requete ajouté et transmis avec succès")
         }
       }
-    })     
+    },(err: any) => {
+              this.loading=false
+               AppSweetAlert.simpleAlert(
+            'error',
+            'Erreur',
+            err.error?.message
+          );
+            })     
     this.selected_data_rvMat = ''
     this.selected_data_Whats = ''
     }
@@ -461,7 +466,14 @@ active=1
           AppSweetAlert.simpleAlert('success',"Ajout d'une discussion whatsapp",  "Discussions ajoutée avec succès")
         }
         this.modalService.dismissAll()
-      })     
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        })     
 
     }
   }
@@ -585,8 +597,6 @@ active=1
     this.selected_traiteWha = 'non'
 
     // console.log(this.user)
-    this.loadRequest()
-    this.loadRequestrv()
     this.loadWhatsApp()
     this._temp=[]
     this.data=[]

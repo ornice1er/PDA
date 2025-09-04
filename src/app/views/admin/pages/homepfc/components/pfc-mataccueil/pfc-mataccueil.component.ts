@@ -191,7 +191,14 @@ export class PfcMataccueilComponent {
           'Appreciation envoyé avec succès'
         );
       }
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   openAddModal(content: any) {
@@ -213,7 +220,14 @@ export class PfcMataccueilComponent {
       .getAllTypePrest(event.target.value)
       .subscribe((res: any) => {
         this.services = res?.data;
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     this.user_auth_service
       .getThema(event.target.value)
@@ -224,7 +238,14 @@ export class PfcMataccueilComponent {
         } else {
           this.mat_aff = false;
         }
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
   ChangerFile(file: any) {
     window.location.href =
@@ -254,7 +275,7 @@ export class PfcMataccueilComponent {
         'Sélectionner la structure destinatrice',
         'Champ obligatoire'
       );
-    } else if (!value.contactUs) {
+    } else if (!value.contact) {
       AppSweetAlert.simpleAlert(
         'info',
         'Renseigner le contact',
@@ -303,7 +324,7 @@ export class PfcMataccueilComponent {
 
       var param = {
         objet: value.objet,
-        contactUs: value.contactUs,
+        contact: value.contact,
         mailPfc: this.user.email,
         link_to_prestation: this.link_to_prestation,
         idPrestation: this.link_to_prestation == 0 ? '435' : value.idPrestation, //cas d'une requete
@@ -326,16 +347,17 @@ export class PfcMataccueilComponent {
         // visible: 1
       };
 
+      this.loading=true
       this.user_auth_service
         .createrequeteusager(param)
         .subscribe((rest: any) => {
+                this.loading=false
+
           this.loadRequest();
-          this.loadRequestrv();
-          this.loadWhatsApp();
           this.visible = 0;
           this.modalService.dismissAll();
-          if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('info', 'Erreur', rest.message);
+          if (rest.data?.status == 'error') {
+            AppSweetAlert.simpleAlert('info', 'Erreur', rest.data?.message);
           } else {
             if (param.visible == 0) {
               AppSweetAlert.simpleAlert(
@@ -344,6 +366,8 @@ export class PfcMataccueilComponent {
                 'Requête ajoutée avec succès'
               );
             } else {
+                    this.loading=false
+
               AppSweetAlert.simpleAlert(
                 'info',
                 'Ajout requête',
@@ -368,10 +392,13 @@ export class PfcMataccueilComponent {
       let formData = new FormData();
       formData.append('reponse', value.reponse_whats);
       formData.append('fichier', this.file);
+      this.loading=true
 
       this.user_auth_service
         .updateWhatsReponse(formData, this.selected_data_Whats.id)
         .subscribe((res: any) => {
+                this.loading=false
+
           if (res.status == 'error') {
             AppSweetAlert.simpleAlert('info', 'Erreur', res.message);
           } else {
@@ -383,6 +410,13 @@ export class PfcMataccueilComponent {
             );
           }
           this.modalService.dismissAll();
+        },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
         });
       this.selected_data_rvMat = '';
       this.selected_data_Whats = '';
@@ -410,7 +444,7 @@ export class PfcMataccueilComponent {
         'Sélectionner la structure destinatrice',
         'Champ obligatoire'
       );
-    } else if (!value.contactUs2) {
+    } else if (!value.contact2) {
       AppSweetAlert.simpleAlert(
         'info',
         'Renseigner le contact',
@@ -447,7 +481,7 @@ export class PfcMataccueilComponent {
       var param = {
         objet: value.objet2,
         id: this.selected_data_req.id,
-        contactUs: value.contactUs2,
+        contact: value.contact2,
         mailPfc: this.user.email,
         link_to_prestation: this.link_to_prestation,
         idPrestation:
@@ -466,10 +500,13 @@ export class PfcMataccueilComponent {
         plainte: value.plainte2,
         visible: this.visible,
       };
+      this.loading=true
 
       this.user_auth_service
         .Updaterequeteusager(param, this.selected_data_req.id)
         .subscribe((rest: any) => {
+                this.loading=false
+
           this.loadRequest();
           this.visible = 0;
           this.modalService.dismissAll();
@@ -490,6 +527,13 @@ export class PfcMataccueilComponent {
               );
             }
           }
+        },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
         });
     }
   }
@@ -520,7 +564,7 @@ export class PfcMataccueilComponent {
       idEntite: this.selectedEntie,
       fichier_requete: this.selected_data_req.request_file_data,
     };
-
+ this.loading=true
     this.user_auth_service
       .transmettreRequeteExterne(param)
       .subscribe((res: any) => {
@@ -531,7 +575,14 @@ export class PfcMataccueilComponent {
           'Transmission requête',
           'Requête transmise avec succès'
         );
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
   addRequeteRv(value: any) {
     if (value.contactMatri == '') {
@@ -605,184 +656,15 @@ export class PfcMataccueilComponent {
             );
           }
           this.modalService.dismissAll();
+        },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
         });
     }
-  }
-
-  addWhatsApp(value: any) {
-    if (value.contWhatsapp == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner le contact WhatsApp',
-        'Champ obligatoire'
-      );
-    } else if (value.discussiontxt == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner la discussion',
-        'Champ obligatoire'
-      );
-    } else {
-      var param = {
-        contWhatsapp: value.contWhatsapp,
-        discussiontxt: value.discussiontxt,
-        idUser: this.user.id,
-      };
-      this.user_auth_service
-        .createDiscussionWhats(param)
-        .subscribe((res: any) => {
-          if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('info', 'Erreur', res.message);
-          } else {
-            this.loadWhatsApp();
-            AppSweetAlert.simpleAlert(
-              'info',
-              "Ajout d'une discussion whatsapp",
-              'Discussions ajoutée avec succès'
-            );
-          }
-          this.modalService.dismissAll();
-        });
-    }
-  }
-  addClotureRv(value: any) {
-    // if(this.file == ""){
-    //   AppSweetAlert.simpleAlert("info","Joindre le fichier", "Champ obligatoire")
-    // }else{
-
-    let formData = new FormData();
-    formData.append('id_user', this.user.id);
-    formData.append('date_cloture', this.dateACloture);
-    formData.append('nbrvisite', value.nbrevisite);
-    formData.append('fichier', this.file);
-    this.user_auth_service
-      .CloturerequeteVisite(formData)
-      .subscribe((res: any) => {
-        if (res.status == 'error') {
-          AppSweetAlert.simpleAlert('info', 'Erreur', res.message);
-        } else {
-          this.loadRequestrv();
-          AppSweetAlert.simpleAlert(
-            'info',
-            'Clôture de registre',
-            'Opération effectuée avec succès'
-          );
-        }
-        this.file = '';
-        this.dateACloture = '';
-        this.modalService.dismissAll();
-      });
-
-    // }
-  }
-  UpdateRequeteRv(value: any) {
-    if (value.contactMatri == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner le matricule ou le contact du visiteur',
-        'Champ obligatoire'
-      );
-    } else if (!value.plainterv) {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Sélectionner le type',
-        'Champ obligatoire'
-      );
-    } else if (value.nom_pre_rv == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner le nom et prénom (s) du visiteur',
-        'Champ obligatoire'
-      );
-    } else if (!value.idEntite) {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Sélectionner la structure destinatrice',
-        'Champ obligatoire'
-      );
-    } else if (value.preoccurv == '' || value.preoccurv == null) {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner la préoccupation du visiteur',
-        'Champ obligatoire'
-      );
-    } else if (value.satisfaitrv == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Sélectionner une appréciation',
-        'Champ obligatoire'
-      );
-    } else if (value.satisfaitrv && value.observarv == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        "Renseigner l'observation",
-        'Champ obligatoire'
-      );
-    } else {
-      var param = {
-        contactMatri: value.contactMatri,
-        plainterv: value.plainterv,
-        nom_pre_rv: value.nom_pre_rv,
-        idEntite: value.idEntite,
-        preoccurv: value.preoccurv,
-        idUser: this.user.id,
-        satisfaitrv: value.satisfaitrv,
-        observarv: value.observarv,
-      };
-
-      this.user_auth_service
-        .updaterequeteVisite(param, this.selected_data_reqrv.id)
-        .subscribe((res: any) => {
-          if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('info', 'Erreur', res.message);
-          } else {
-            this.loadRequestrv();
-            AppSweetAlert.simpleAlert(
-              'info',
-              'Ajout requête',
-              'Visite ajoutée avec succès'
-            );
-          }
-          this.modalService.dismissAll();
-        });
-    }
-  }
-  UpdateRequeteWhats(value: any) {
-    if (value.contWhatsapp == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner le contact WhatsApp',
-        'Champ obligatoire'
-      );
-    } else if (value.discussiontxt == '') {
-      AppSweetAlert.simpleAlert(
-        'info',
-        'Renseigner la discussion',
-        'Champ obligatoire'
-      );
-    } else {
-      var param = {
-        contWhatsapp: value.contWhatsapp,
-        discussiontxt: value.discussiontxt,
-        idUser: this.user.id,
-      };
-      this.user_auth_service
-        .updateWhatsapp(param, this.selected_data_Whats.id)
-        .subscribe((res: any) => {
-          if (res.status == 'error') {
-            AppSweetAlert.simpleAlert('info', 'Erreur', res.message);
-          } else {
-            this.loadWhatsApp();
-            AppSweetAlert.simpleAlert(
-              'info',
-              "Modification d'une discussion whatsapp",
-              'Discussions modifiée avec succès'
-            );
-          }
-          this.modalService.dismissAll();
-        });
-    }
-    this.selected_data_Whats = '';
   }
 
   openDetailModal(event: any, content: any) {
@@ -791,7 +673,14 @@ export class PfcMataccueilComponent {
       .getServPiece(event.target.value)
       .subscribe((res: any) => {
         this.detailpiece = res?.data;
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     // this.modalService
     //   .open(content, { ariaLabelledBy: 'modal-basic-title' })
@@ -821,8 +710,6 @@ export class PfcMataccueilComponent {
 
     // console.log(this.user)
     this.loadRequest();
-    this.loadRequestrv();
-    this.loadWhatsApp();
     this._temp = [];
     this.data = [];
     this.user_auth_service.getAll(null, page).subscribe((res: any) => {
@@ -830,17 +717,38 @@ export class PfcMataccueilComponent {
       this.data = res.data;
       this._temp = this.data;
       this.subject.next(res);
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     this.departements = [];
     this.user_auth_service.getAllDepartement().subscribe((res: any) => {
       this.departements = res.data;
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     this.institutions = [];
     this.user_auth_service.getAllInstitu().subscribe((res: any) => {
       this.institutions = res.data;
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     this.prepare(this.user.idEntite);
   }
@@ -1078,6 +986,7 @@ export class PfcMataccueilComponent {
       return;
     }
     AppSweetAlert.confirmBox(
+      'info',
       'Suppression requete',
       'Cette action est irreversible. Voulez-vous continuer ?'
     )
@@ -1101,7 +1010,14 @@ export class PfcMataccueilComponent {
           }
         );
       }
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   loadRequest() {
@@ -1128,7 +1044,14 @@ export class PfcMataccueilComponent {
         this.dataReqrv = res.data;
         this._tempReqrv = this.dataReqrv;
         this.collectionSizerv = this.dataReqrv?.length;
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
     // this.ChechEtape();
 
     this.nbreDay = [];
@@ -1141,7 +1064,14 @@ export class PfcMataccueilComponent {
           this.nbreDay.push(element);
         }
       });
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   loadWhatsApp() {
@@ -1154,24 +1084,52 @@ export class PfcMataccueilComponent {
         this.dataWhats = res;
         this._tempWhats = this.dataWhats;
         this.collectionSizeWhats = this.dataWhats?.length;
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
     this.searchTextWhats = '';
   }
   prepare(idEntite: any) {
     this.structures = [];
     this.user_auth_service.getAllServ(1, idEntite).subscribe((res: any) => {
       this.structures = res?.data;
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     this.natures = [];
     this.user_auth_service.getAllNatu(idEntite).subscribe((res: any) => {
       this.natures = res?.data;
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
 
     this.themes = [];
     this.user_auth_service.getAllThe(idEntite).subscribe((res: any) => {
       this.themes = res?.data;
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
   onEntiteChange(event: any) {
     this.selectedEntie = +event.target.value;
@@ -1182,7 +1140,14 @@ export class PfcMataccueilComponent {
     this.etapes = [];
     this.user_auth_service.getAllEtap(0).subscribe((res: any) => {
       this.etapes = res.data;
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   setVisible() {
@@ -1206,7 +1171,14 @@ export class PfcMataccueilComponent {
       .getAllThe(this.selected_data_req.idEntite)
       .subscribe((res: any) => {
         this.themes = res;
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
     if (
       this.selected_data_req.service.type.libelle == 'Formation' ||
       this.selected_data_req.service.type.libelle == 'Carrière'
@@ -1222,7 +1194,14 @@ export class PfcMataccueilComponent {
       .getAllTypePrest(this.selected_data_req.service.idType)
       .subscribe((res: any) => {
         this.services = res.data;
-      });
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   checkedReqrv(event: any, el: any) {
@@ -1324,7 +1303,14 @@ export class PfcMataccueilComponent {
             }
           );
       }
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   dropDiscussionWhat() {
@@ -1361,7 +1347,14 @@ export class PfcMataccueilComponent {
             }
           );
       }
-    });
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        });
   }
 
   ConfirmerTraitement(el: any) {

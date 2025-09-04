@@ -128,7 +128,8 @@
                   *ngIf="elr.visible==1 && elr.visible==1 && elr.traiteOuiNon==1  && elr.rejete==0 && elr.interrompu==0">Finalisé</span>
               </td>
 
-              <td>{{elr.reponseStructure}}
+              <td>
+                <span *ngIf="elr.traiteOuiNon==1">{{elr.reponseStructure}}</span>
                 <span *ngIf="elr.fichier_joint">Fichier réponse : <a target="_blank"
                     (click)="ChangerFile(elr.fichier_joint)" href="#">{{elr.fichier_joint}}</a></span>
               </td>
@@ -242,9 +243,9 @@
             <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
               Préoccupation <small *ngIf="selected_data_req.visible==0">(Non transmise)</small> </h4>
             <div class="form-group row">
-              <label for="contactUs" class="col-sm-2 control-label">Contact :</label>
+              <label for="contact" class="col-sm-2 control-label">Contact :</label>
               <div class="col-sm-4">
-                <input type="text" class="form-control form-control-sm has-error" id="contactUs2" name="contactUs2"
+                <input type="text" class="form-control form-control-sm has-error" id="contact2" name="contact2"
                   placeholder="" ngModel required value="{{selected_data_req.contact}}"
                   [(ngModel)]="selected_data_req.contact">
               </div>
@@ -342,8 +343,11 @@
           </fieldset>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-warning mx-1" id="btn-save"><i class="fas fa-edit"></i>&nbsp;
-            Enregistrer</button>
+          <button type="submit" class="btn btn-warning mx-1" id="btn-save">
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+          </button>
         </div>
       </form>
     </ng-template>
@@ -409,8 +413,11 @@
         </div>
         <div class="modal-footer">
           <button *ngIf='selected_data_note.traiteOuiNon==1 && selected_data_note.noteUsager<1' type="submit"
-            class="btn btn-primary" [disabled]="frmnoter.invalid"><i class="fas fa-save"></i>&nbsp;
-            Enregistrer</button>
+            class="btn btn-primary" [disabled]="frmnoter.invalid">
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+          </button>
           <br><br>
         </div>
       </form>
@@ -499,7 +506,7 @@
             <div class="col-md-6">
               <label class="form-label">Contact</label>
               <input type="text" class="form-control form-control-sm"
-                     name="contactUs"
+                     name="contact"
                      [(ngModel)]="selected_data_rvMat"
                      [value]="selected_data_rvMat?.matri_telep || ''"
                      required>
@@ -596,12 +603,14 @@
     <!-- FOOTER -->
     <div class="modal-footer">
       <button type="submit" class="btn btn-info">
-        <i class="fas fa-save me-2"></i> Enregistrer
-        <app-loading [isVisible]="loading"></app-loading>
+       <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
       </button>
       <button type="button" (click)="setVisible()" class="btn btn-primary">
-        <i class="fas fa-paper-plane me-2"></i> Transmettre
-        <app-loading [isVisible]="loading"></app-loading>
+       <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Transmettre</span>
       </button>
     </div>
   </form>
@@ -652,8 +661,9 @@
       </fieldset>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-secondary mx-1" id="btn-save"><i
-          class="fas fa-save"></i>&nbsp;Répondre</button>
+      <button type="submit" class="btn btn-secondary mx-1" id="btn-save"><svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Répondre</span></button>
     </div>
   </form>
 </ng-template>
