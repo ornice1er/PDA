@@ -136,7 +136,7 @@ export class EspaceusagerComponent implements OnInit {
         );
     } else {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -157,7 +157,7 @@ export class EspaceusagerComponent implements OnInit {
         );
     } else {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -364,15 +364,17 @@ export class EspaceusagerComponent implements OnInit {
     this.token = this.route.snapshot.paramMap.get('token');
     // console.log('token', this.token);
     if (this.token !== undefined) {
-      if (this.localService.get(GlobalName.tokenNameMat) == null) {
+      if (this.localService.get(GlobalName.tokenNameMat) === null) {
         this.getToken();
       } else {
+        console.log('init-----1');
         this.init();
       }
     } else {
-      if (this.localService.get(GlobalName.tokenNameMat) == null) {
+      if (this.localService.get(GlobalName.tokenNameMat) === null) {
         alert('Vous devez vous connecter pour accéder à cette page');
       } else {
+        console.log('init-----3');
         this.init();
       }
     }
@@ -430,7 +432,7 @@ export class EspaceusagerComponent implements OnInit {
     });
   }
   init() {
-    if (this.localService.get(GlobalName.userNameMat) != null) {
+    if (this.localService.get(GlobalName.userNameMat) !== null) {
       this.user = this.localService.get(GlobalName.userNameMat);
       this.user.full_name = this.user.nom + ' ' + this.user.prenoms;
       this.selectedEntie = this.user.institu_id;
@@ -438,10 +440,10 @@ export class EspaceusagerComponent implements OnInit {
       this.titleService.setUserConnectedState(this.user);
 
       //Controle ajouter pour les premiers users qui n'ont pas renseigné leur identite
-      if (this.selectedEntie == null || this.selectedEntie == 'null') {
+      if (this.selectedEntie === null || this.selectedEntie === 'null') {
         this.selectedEntie = 1; //MTFP par défaut
       }
-      if (this.selectedEntie != null && this.selectedEntie != '') {
+      if (this.selectedEntie !== null && this.selectedEntie !== '') {
         this.prepare(this.selectedEntie);
       }
       this.institutions = [];
@@ -450,13 +452,13 @@ export class EspaceusagerComponent implements OnInit {
       });
     }
 
-    this.loadRequest();
-    this.departements = [];
-    this.matService.getAllDepartement().subscribe((res: any) => {
-      this.departements = res.data;
-    });
-    this.prepare(this.user.institu_id);
-    this.loadRdv();
+    // this.loadRequest();
+    // this.departements = [];
+    // this.matService.getAllDepartement().subscribe((res: any) => {
+    //   this.departements = res.data;
+    // });
+    // this.prepare(this.user.institu_id);
+    // this.loadRdv();
   }
 
   onEntiteChange(event: any) {
@@ -515,7 +517,7 @@ export class EspaceusagerComponent implements OnInit {
     }
     if (service == null) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         "Aucune prestation (Service Usager) par défaut n'est lié à cet entité"
       );
@@ -543,37 +545,28 @@ export class EspaceusagerComponent implements OnInit {
 
     if (param.idEntite == null || param.idEntite == '') {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez choisir une structure destrinatrice.'
       );
     } else if (param.plainte == null || param.plainte == '0') {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff == true && param.matricule.trim() == '') {
-      AppSweetAlert.simpleAlert(
-        'Renseigner le matricule',
-        'Champ obligatoire'
-      );
+      AppSweetAlert.simpleAlert('Renseigner le matricule', 'Champ obligatoire');
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
-      AppSweetAlert.simpleAlert(
-        "Renseigner l'objet",
-        'Champ obligatoire'
-      );
+      AppSweetAlert.simpleAlert("Renseigner l'objet", 'Champ obligatoire');
     } else if (!param.msgrequest) {
-      AppSweetAlert.simpleAlert(
-        'Renseigner le message',
-        'Champ obligatoire'
-      );
+      AppSweetAlert.simpleAlert('Renseigner le message', 'Champ obligatoire');
     } else {
       this.loading = true;
       this.matService.createRequete(param).subscribe((rest: any) => {
@@ -582,8 +575,7 @@ export class EspaceusagerComponent implements OnInit {
         this.modalService.dismissAll();
         this.loading = false;
         if (rest.status == 'error') {
-          AppSweetAlert.simpleAlert(        'error',
-        'Erreur', rest.message, 'error');
+          AppSweetAlert.simpleAlert('error', 'Erreur', rest.message, 'error');
         } else {
           if (param.visible == 0) {
             AppSweetAlert.simpleAlert(
@@ -643,37 +635,28 @@ export class EspaceusagerComponent implements OnInit {
     //
     if (param.idEntite == null || param.idEntite == '') {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez choisir une structure destrinatrice.'
       );
     } else if (param.plainte == null || param.plainte == '0') {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez choisir un type de préoccupation.'
       );
     } else if (this.mat_aff == true && param.matricule.trim() == '') {
-      AppSweetAlert.simpleAlert(
-        'Renseigner le matricule',
-        'Champ obligatoire'
-      );
+      AppSweetAlert.simpleAlert('Renseigner le matricule', 'Champ obligatoire');
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
-      AppSweetAlert.simpleAlert(
-        "Renseigner l'objet",
-        'Champ obligatoire'
-      );
+      AppSweetAlert.simpleAlert("Renseigner l'objet", 'Champ obligatoire');
     } else if (!param.msgrequest) {
-      AppSweetAlert.simpleAlert(
-        'Renseigner le message',
-        'Champ obligatoire'
-      );
+      AppSweetAlert.simpleAlert('Renseigner le message', 'Champ obligatoire');
     } else {
       this.loading = true;
       this.matService
@@ -684,8 +667,7 @@ export class EspaceusagerComponent implements OnInit {
           this.modalService.dismissAll();
           this.loading = false;
           if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('error',         'error',
-        'Erreur', rest.message);
+            AppSweetAlert.simpleAlert('error', 'error', 'Erreur', rest.message);
           } else {
             AppSweetAlert.simpleAlert(
               'success',
@@ -727,7 +709,7 @@ export class EspaceusagerComponent implements OnInit {
   dropRequeteusager() {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -735,7 +717,7 @@ export class EspaceusagerComponent implements OnInit {
     }
     if (this.selected_data.visible == 1) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.'
       );
@@ -776,8 +758,7 @@ export class EspaceusagerComponent implements OnInit {
         this.loadRequest2();
         this.loading = false;
         if (res.status == 'error') {
-          AppSweetAlert.simpleAlert(        'error',
-        'Erreur', res.message, 'error');
+          AppSweetAlert.simpleAlert('error', 'Erreur', res.message, 'error');
         } else {
           AppSweetAlert.simpleAlert(
             'Nouvelle modification',
@@ -799,7 +780,7 @@ export class EspaceusagerComponent implements OnInit {
   sendRDV() {
     if (this.selected_data2 == null) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -807,7 +788,7 @@ export class EspaceusagerComponent implements OnInit {
     }
     if (this.selected_data2.statut != 0) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Votre de demande est déjà en cours de traitement.'
       );
@@ -848,7 +829,7 @@ export class EspaceusagerComponent implements OnInit {
   dropRDV() {
     if (this.selected_data2 == null) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -856,7 +837,7 @@ export class EspaceusagerComponent implements OnInit {
     }
     if (this.selected_data2.statut != 0) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Vous ne pouvez plus supprimer cet element. Elle est déjà en cours de traitement.'
       );
@@ -890,15 +871,19 @@ export class EspaceusagerComponent implements OnInit {
   displayResource() {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
       return;
     }
     if (this.selected_data.fichier_joint.length == 0) {
-      AppSweetAlert.simpleAlert(        'error',
-        'Erreur', 'Aucun fichier attaché.', 'error');
+      AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        'Aucun fichier attaché.',
+        'error'
+      );
       return;
     }
     var filePath = ConfigService.toFile(this.selected_data.fichier_joint);
@@ -950,8 +935,7 @@ export class EspaceusagerComponent implements OnInit {
       this.loadRequest();
       this.loading = false;
       if (res.status == 'error') {
-        AppSweetAlert.simpleAlert(        'error',
-        'Erreur', res.message, 'error');
+        AppSweetAlert.simpleAlert('error', 'Erreur', res.message, 'error');
       } else {
         AppSweetAlert.simpleAlert(
           'Appreciation',
@@ -966,7 +950,7 @@ export class EspaceusagerComponent implements OnInit {
     if (this.selected_data == null) {
       AppSweetAlert.simpleAlert(
         'error',
-                'error',
+        'error',
         'Erreur',
         'Veuillez selectionnez un élément puis réessayer'
       );
@@ -975,7 +959,7 @@ export class EspaceusagerComponent implements OnInit {
     if (this.selected_data.visible == 1) {
       AppSweetAlert.simpleAlert(
         'error',
-                'error',
+        'error',
         'Erreur',
         'Vous avez déjà transmis cette requête.'
       );
@@ -1030,8 +1014,7 @@ export class EspaceusagerComponent implements OnInit {
       this.statut = 0;
       this.loading = false;
       if (res.status == 'error') {
-        AppSweetAlert.simpleAlert(        'error',
-        'Erreur', res.message, 'error');
+        AppSweetAlert.simpleAlert('error', 'Erreur', res.message, 'error');
       } else {
         if (param.statut == 0) {
           AppSweetAlert.simpleAlert(
@@ -1074,6 +1057,7 @@ export class EspaceusagerComponent implements OnInit {
         if (this.user) {
           this.titleService.setUserConnectedState(this.user);
         }
+        console.log('init-----2');
         this.init();
       },
       (err: any) => {

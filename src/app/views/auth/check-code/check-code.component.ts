@@ -89,14 +89,14 @@ export class CheckCodeComponent implements OnInit {
               'success',
               'Code de verification',
               'Code envoyé avec succès. Consulter votre boite mail.',
-              
+
             );
           } else {
             AppSweetAlert.simpleAlert(
               'error',
               'Code de verification',
               res.message + ' ',
-              
+
             );
           }
           //  this.router.navigate(['/main']);
@@ -108,7 +108,7 @@ export class CheckCodeComponent implements OnInit {
             'error',
             'Code de verification',
             "Echec d'envoi du code"
-            
+
           );
         }
       );
@@ -123,7 +123,9 @@ export class CheckCodeComponent implements OnInit {
   codeVerification() {
     //code, user_id, ip,client_id, client_secret, username, password, authorized_always_id
     const { code, authorized_always_id } = this.codeForm.value;
-    var data = this.local_service.get(GlobalName.params);
+    let data = this.local_service.get(GlobalName.params);
+    console.log(data);
+
     data['code'] = code;
     data['authorized_always_id'] = authorized_always_id;
     this.user_auth_service.verifyCode(data).subscribe(
@@ -135,6 +137,7 @@ export class CheckCodeComponent implements OnInit {
             res.message
           );
         } else {
+          this.local_service.remove(GlobalName.params);
           this.local_service.set(GlobalName.tokenName, res.access_token);
           this.local_service.set(GlobalName.userName, res.user);
           this.user_auth_service.setUserLoggedIn(true);

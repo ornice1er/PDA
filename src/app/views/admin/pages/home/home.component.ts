@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
           'error',
           'Applications',
           'Echec de récupération des applications'
-          
+
         );
       }
     );
@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit {
       })
       .subscribe(
         (res: any) => {
-          window.open(res.redirect_uri, '_blank');
+          window.open(res.redirect_uri, '_self');
         },
         (err: any) => {
           this.loading = false;

@@ -253,6 +253,7 @@ export class LayoutComponent {
   }
 
   saveUsager(value: any) {
+    this.loading = true;
     var param = {
       id: this.user.id,
       email: value.email,
@@ -260,8 +261,8 @@ export class LayoutComponent {
       firstname: value.firstname,
       // password: '', //value.password
       // confirm: '', //value.confirm
-      tel: value.tel,
-      phone: value.tel,
+      tel: value.phone,
+      phone: value.phone,
       idEntite: this.selectedEntie,
       idDepartement: value.idDepartement,
       interfaceRequete: 'USAGER',
@@ -271,7 +272,15 @@ export class LayoutComponent {
       this.userConnected = res?.data;
       this.user = res?.data;
       this.modalService.dismissAll();
+      this.loading = false;
       this.visible = 0;
+      this.open = false;
+      this.titleService.userConnected$.subscribe((newState) => {
+        this.userConnected = newState;
+        this.user = newState;
+        console.log(newState);
+        this.cdr.detectChanges(); // Force Angular à mettre à jour le DOM correctement
+      });
       AppSweetAlert.simpleAlert(
         'success',
         'Mise à jour',

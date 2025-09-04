@@ -78,7 +78,10 @@
         </div>
 
         <div class="relative z-10">
-          <div
+          <img *ngIf="d.client.logo !== '' && d.client.logo !== null" [src]="'https://guv.mtfp-ctd.bj'+d.client.logo" alt="{{d.client.name}}"
+            class="w-16 h-16 rounded-2xl mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+
+          <div *ngIf="d.client.logo==='' || d.client.logo===null"
             [class]="'w-16 h-16 bg-gradient-to-r from-green-light to-primary  rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg'">
             <svg xmlns="http://www.w3.org/2000/svg" class="text-white" viewBox="0 0 24 24">
               <path fill="currentColor"

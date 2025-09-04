@@ -9,6 +9,7 @@ export const GlobalName: any = {
   features: 'guvFeatures',
   tokenNameMat: 'pfcMataccueilToken',
   userNameMat: 'pfcMataccueilUserConnected',
+  params: 'guvParams',
 };
 
 export enum clientData {
