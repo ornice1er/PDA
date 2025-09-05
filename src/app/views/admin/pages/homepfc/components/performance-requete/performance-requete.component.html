@@ -62,8 +62,8 @@
         <h3 class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900 mb-6">Evolution de la fréquentation de mon
           centre</h3>
         <div class="space-y-4">
-          <canvas #chart width="400" height="200" baseChart [data]="lineChartData" [options]="lineChartOptions"
-            [type]="lineChartType"></canvas>
+         <app-line-chart [lineChartData]="lineChartData" [lineChartOptions]="lineChartOptions"></app-line-chart>
+
         </div>
       </div>
 
@@ -71,9 +71,7 @@
         <h3 class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900 mb-6">Evaluation de la fréquentation par
           rapport au centre</h3>
         <div class="space-y-4">
-          <canvas #chart2 width="400" height="200" baseChart [data]="barChartData" [options]="barChartOptions"
-            [type]="barChartType">
-          </canvas>
+         <app-bar-chart [data]="barChartData" [options]="barChartOptions"></app-bar-chart>
         </div>
       </div>
     </div>

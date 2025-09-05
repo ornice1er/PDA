@@ -499,7 +499,14 @@ active=1
       this.file = ""
       this.dateACloture = ""
       this.modalService.dismissAll()
-    })     
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        })     
 
     // }
   }
@@ -530,8 +537,11 @@ active=1
         satisfaitrv: value.satisfaitrv,
         observarv: value.observarv,
      };
+     this.loading=true
 
      this.user_auth_service.updaterequeteVisite(param, this.selected_data_reqrv.id).subscribe((res:any)=>{
+           this.loading=false
+
         if(res.status=="error"){
           AppSweetAlert.simpleAlert("error","Erreur",res.message)
         }else{
@@ -539,7 +549,14 @@ active=1
           AppSweetAlert.simpleAlert('success',"Ajout requête",  "Visite ajoutée avec succès")
         }
         this.modalService.dismissAll()
-    })     
+    },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        })     
 
     }
   }
@@ -554,7 +571,10 @@ active=1
         discussiontxt: value.discussiontxt,
         idUser:this.user.id,
      };
+     this.loading=true
      this.user_auth_service.updateWhatsapp(param, this.selected_data_Whats.id).subscribe((res:any)=>{
+           this.loading=false
+
           if(res.status=="error"){
             AppSweetAlert.simpleAlert("error","Erreur",res.message)
           }else{
@@ -562,7 +582,14 @@ active=1
             AppSweetAlert.simpleAlert('success',"Modification d'une discussion whatsapp",  "Discussions modifiée avec succès")
           }
           this.modalService.dismissAll()
-      })     
+      },(err: any) => {
+          this.loading=false
+           AppSweetAlert.simpleAlert(
+        'error',
+        'Erreur',
+        err.error?.message
+      );
+        })     
     }
     this.selected_data_Whats = '';
   }
@@ -795,7 +822,9 @@ dropRequeteusager() {
     AppSweetAlert.simpleAlert("error","Erreur", "Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.");
     return;
   }
-  AppSweetAlert.confirmBox("Suppression requete",
+  AppSweetAlert.confirmBox(
+    "info",
+    "Suppression requete",
     "Cette action est irreversible. Voulez-vous continuer ?")
     
     .then((result:any) => {
@@ -853,7 +882,7 @@ loadWhatsApp() {
   this._tempWhats = []
   this.dataWhats = []
   this.user_auth_service.getAllForWhatsapp(1,this.selected_traiteWha).subscribe((res: any) => {
-      this.dataWhats = res
+      this.dataWhats = res.data
       this._tempWhats = this.dataWhats
       this.collectionSizeWhats = this.dataWhats?.length
     })
@@ -974,7 +1003,9 @@ dropRequeteusagerrv() {
     AppSweetAlert.simpleAlert("error","Erreur", "Impossible de supprimer ce régistre car il est déjà cloturé");
     return;
   }
-  AppSweetAlert.confirmBox("Suppression cette visite",
+  AppSweetAlert.confirmBox(
+    "info",
+    "Suppression cette visite",
     "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
       if (result.value) {
         this.user_auth_service.deleteRegistreVis(this.selected_data_reqrv.id).subscribe((res: any) => {
@@ -992,7 +1023,9 @@ dropDiscussionWhat() {
     AppSweetAlert.simpleAlert("error","Erreur", "Veuillez selectionnez un élément puis réessayer");
     return;
   }
-  AppSweetAlert.confirmBox("Suppression cette discussion", "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
+  AppSweetAlert.confirmBox(
+    "info",
+    "Suppression cette discussion", "Cette action est irreversible. Voulez-vous continuer ?").then((result:any) => {
       if (result.value){
         this.user_auth_service.deleteDiscWhats(this.selected_data_Whats.id).subscribe((res: any) => {
           this.loadWhatsApp()

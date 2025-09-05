@@ -104,7 +104,7 @@ export class LayoutComponent {
       id: '/admin/homepfc/pfc-whatsapp',
       label: 'WhatsApp',
       icon: MessageCircle,
-      external: true,
+    //  external: true,
       espace: 1,
     },
     {

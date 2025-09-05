@@ -38,6 +38,8 @@ import { BaseChartDirective } from 'ng2-charts';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { BarChartComponent } from '../../../../components/bar-chart/bar-chart.component';
+import { LineChartComponent } from '../../../../components/line-chart/line-chart.component';
 
 Chart.register(...registerables, annotationPlugin, ChartDataLabels);
 
@@ -55,6 +57,8 @@ Chart.register(...registerables, annotationPlugin, ChartDataLabels);
     StatutComponent,
     BaseChartDirective,
     SharedModule,
+    LineChartComponent,
+    BarChartComponent
   ],
   templateUrl: './performance-requete.component.html',
   styleUrl: './performance-requete.component.css',
@@ -98,8 +102,9 @@ export class PerformanceRequeteComponent {
   private newLabel? = 'New label';
   public lineChartType: ChartType = 'line';
 
-  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-  @ViewChild(BaseChartDirective) chart2?: BaseChartDirective;
+@ViewChild('lineChart',{ static: false }) lineChart?: BaseChartDirective;
+@ViewChild('barChart',{ static: false }) barChart?: BaseChartDirective;
+
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -141,7 +146,8 @@ export class PerformanceRequeteComponent {
     scales: {
       x: {},
       y: {
-        min: 10,
+            beginAtZero: true,
+
       },
     },
     plugins: {
@@ -204,6 +210,14 @@ export class PerformanceRequeteComponent {
     this.init();
   }
 
+  ngAfterViewInit(): void {
+  // Attendre que les chart soient initialisés
+  setTimeout(() => {
+    this.lineChart?.update();
+    this.barChart?.update();
+  }, 0);
+}
+
   init() {
     this.getStats();
   }
@@ -265,65 +279,47 @@ export class PerformanceRequeteComponent {
       )
       .subscribe(
         (res: any) => {
+              this.loading2 = false;
+
           this.year_stats = res.data.year_stats;
-          this.monthly_stats = res.data.month_stats;
-          this.year_stats.forEach((el: any) => {
-            this.lineChartData.datasets[0].data.push(el.total);
-            this.lineChartData.labels?.push(el.mois);
-          });
+        this.monthly_stats = res.data.month_stats;
 
-          this.monthly_stats.forEach((el: any) => {
-            this.barChartData.labels?.push(res.data.month);
-            this.barChartData.datasets.push({
-              data: [el.total],
-              label: el.commune,
-            });
-          });
-
-          this.registres = res.data.data;
-          this.pg.pageSize = 10;
-          this.pg.p = 1;
-          this.pg.total = res.data.data.length;
-          this.chart?.update();
-          this.chart2?.update();
-          console.log(this.lineChartData);
-          console.log(this.barChartData);
-          this.loading2 = false;
-        },
-        (err) => {
-          this.loading2 = false;
-          AppSweetAlert.simpleAlert(
-            'error',
-            'Visites',
-            'Erreur, Verifiez que vous avez une bonne connexion internet'
-          );
-        }
-      );
-
-    this.registreService
-      .getStats2(
-        dates
-          ? {
-              start_date: this.onFormatDate(dates[0]),
-              end_date: this.onFormatDate(dates[1]),
-              sex,
+        // === Line chart ===
+       this.lineChartData = {
+          labels: this.year_stats.map((el: any) => el.mois),
+          datasets: [
+            {
+              data: this.year_stats.map((el: any) => el.total),
+              label: 'Evolution de la fréquentation de mon centre',
+              backgroundColor: 'rgba(17, 132, 90, 0.2)',
+              borderColor: '#11845A',
+              pointBackgroundColor: '#11845A',
+              pointBorderColor: '#fff',
+              pointHoverBackgroundColor: '#fff',
+              pointHoverBorderColor: 'rgba(17, 132, 90, 0.8)',
             }
-          : {}
-      )
-      .subscribe(
-        (res: any) => {
-          console.log(res);
+          ]
+        };
+        // === Bar chart ===
+       this.barChartData = {
+        labels: this.monthly_stats.map((el: any) => el.pfc ?? 'Inconnu'),
+        datasets: [
+          {
+            label: 'Total par commune',
+            data: this.monthly_stats.map((el: any) => el.total ?? 0),
+            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }
+        ]
+};
+        console.log(this.barChartData)
+        // Pagination
+        this.registres = res.data.data.data;
+        this.pg.pageSize = 10;
+        this.pg.p = 1;
+        this.pg.total = res.data.data.total;
 
-          // this.monthly_stats.forEach((el: any) => {
-          //   this.barChartData.labels?.push(res.data.month);
-          //   this.barChartData.datasets.push({
-          //     data: [el.total],
-          //     label: el.commune,
-          //   });
-          // });
-          this.chart?.update();
-          this.chart2?.update();
-          this.loading2 = false;
         },
         (err) => {
           this.loading2 = false;
@@ -334,6 +330,41 @@ export class PerformanceRequeteComponent {
           );
         }
       );
+
+    // this.registreService
+    //   .getStats2(
+    //     dates
+    //       ? {
+    //           start_date: this.onFormatDate(dates[0]),
+    //           end_date: this.onFormatDate(dates[1]),
+    //           sex,
+    //         }
+    //       : {}
+    //   )
+    //   .subscribe(
+    //     (res: any) => {
+    //       console.log(res);
+
+    //       // this.monthly_stats.forEach((el: any) => {
+    //       //   this.barChartData.labels?.push(res.data.month);
+    //       //   this.barChartData.datasets.push({
+    //       //     data: [el.total],
+    //       //     label: el.commune,
+    //       //   });
+    //       // });
+    //       this.chart?.update();
+    //       this.chart2?.update();
+    //       this.loading2 = false;
+    //     },
+    //     (err) => {
+    //       this.loading2 = false;
+    //       AppSweetAlert.simpleAlert(
+    //         'error',
+    //         'Visites',
+    //         'Erreur, Verifiez que vous avez une bonne connexion internet'
+    //       );
+    //     }
+    //   );
   }
 
   getPage(event: any) {

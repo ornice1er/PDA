@@ -92,10 +92,10 @@
                                     <span *ngIf="elwh.requete != null && elwh.requete.visible==1  && elwh.requete.reponseStructure == ''">{{elwh.user_trait==null ? '--' : elwh.user_trait.agent_user?.nomprenoms}}</span>
                                 </td>
                                 <td class="text-center">
-                                    <span  class="badge badge-success" *ngIf="elwh.traite_disc=='oui' && elwh.requete != null && elwh.requete.reponseStructure != null">Traité</span>
-                                    <span  class="badge badge-success" *ngIf="elwh.traite_disc=='oui' && elwh.requete == null && elwh.reponse_agent != null">Traité</span>
-                                    <span  class="badge badge-info" *ngIf="elwh.traite_disc=='oui' && elwh.requete != null && elwh.requete.reponseStructure == null">En cours</span>
-                                    <span class="badge badge-danger" *ngIf="elwh.traite_disc=='non'">Non Traité</span>
+                                    <span  class=" bg-success text-white  rounded p-1" *ngIf="elwh.traite_disc=='oui' && elwh.requete != null && elwh.requete.reponseStructure != null">Traité</span>
+                                    <span  class=" bg-success text-white rounded p-1" *ngIf="elwh.traite_disc=='oui' && elwh.requete == null && elwh.reponse_agent != null">Traité</span>
+                                    <span  class=" bg-info  text-white rounded p-1" *ngIf="elwh.traite_disc=='oui' && elwh.requete != null && elwh.requete.reponseStructure == null">En cours</span>
+                                    <span class=" bg-danger text-white rounded p-1" *ngIf="elwh.traite_disc=='non'">Non Traité</span>
                                 </td>
                                 <td>
                                     <button  *ngIf="elwh.traite_disc=='non' && elwh.user_trait == null" (click)="ConfirmerTraitement(elwh)" class="mx-1 btn btn-sm btn-success">Confirmer le traitement </button>
@@ -160,7 +160,10 @@
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-info mx-1" id="btn-saverv"><i class="fas fa-save"></i>&nbsp;
-                Enregistrer</button>
+                 <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Enregistrer</span>
+            </button>
         </div>
     </form>
 </ng-template>
@@ -201,7 +204,10 @@
         <div class="modal-footer">
 
             <button type="submit" class="btn btn-warning mx-1"><i class="bi bi-pencil"></i>&nbsp;
-                Modifier</button>
+                 <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                <span>Modifier</span>
+            </button>
         </div>
     </form>
 </ng-template>

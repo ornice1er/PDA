@@ -129,7 +129,7 @@
               </td>
 
               <td>
-                <span *ngIf="elr.traiteOuiNon==1">{{elr.reponseStructure}}</span>
+                <span *ngIf="elr.traiteOuiNon==1  ">{{elr.reponseStructure}}</span>
                 <span *ngIf="elr.fichier_joint">Fichier réponse : <a target="_blank"
                     (click)="ChangerFile(elr.fichier_joint)" href="#">{{elr.fichier_joint}}</a></span>
               </td>

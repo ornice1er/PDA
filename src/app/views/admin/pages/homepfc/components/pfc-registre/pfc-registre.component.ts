@@ -702,49 +702,7 @@ export class PfcRegistreComponent {
     // }
   }
   UpdateRequeteRv(value: any) {
-    if (value.contactMatri == '') {
-      AppSweetAlert.simpleAlert(
-        'error',
-        'Renseigner le matricule ou le contact du visiteur',
-        'Champ obligatoire'
-      );
-    } else if (!value.plainterv) {
-      AppSweetAlert.simpleAlert(
-        'error',
-        'Sélectionner le type',
-        'Champ obligatoire'
-      );
-    } else if (value.nom_pre_rv == '') {
-      AppSweetAlert.simpleAlert(
-        'error',
-        'Renseigner le nom et prénom (s) du visiteur',
-        'Champ obligatoire'
-      );
-    } else if (!value.idEntite) {
-      AppSweetAlert.simpleAlert(
-        'error',
-        'Sélectionner la structure destinatrice',
-        'Champ obligatoire'
-      );
-    } else if (value.preoccurv == '' || value.preoccurv == null) {
-      AppSweetAlert.simpleAlert(
-        'error',
-        'Renseigner la préoccupation du visiteur',
-        'Champ obligatoire'
-      );
-    } else if (value.satisfaitrv == '') {
-      AppSweetAlert.simpleAlert(
-        'error',
-        'Sélectionner une appréciation',
-        'Champ obligatoire'
-      );
-    } else if (value.satisfaitrv && value.observarv == '') {
-      AppSweetAlert.simpleAlert(
-        'error',
-        "Renseigner l'observation",
-        'Champ obligatoire'
-      );
-    } else {
+
       var param = {
         contactMatri: value.contactMatri,
         plainterv: value.plainterv,
@@ -772,7 +730,7 @@ export class PfcRegistreComponent {
           }
           this.modalService.dismissAll();
         });
-    }
+    
   }
   UpdateRequeteWhats(value: any) {
     if (value.contWhatsapp == '') {
@@ -1109,6 +1067,7 @@ export class PfcRegistreComponent {
       return;
     }
     AppSweetAlert.confirmBox(
+      'info',
       'Suppression requete',
       'Cette action est irreversible. Voulez-vous continuer ?'
     ).then((result: any) => {
@@ -1353,6 +1312,7 @@ export class PfcRegistreComponent {
       return;
     }
     AppSweetAlert.confirmBox(
+      'info',
       'Suppression cette visite',
       'Cette action est irreversible. Voulez-vous continuer ?'
     ).then((result: any) => {
@@ -1392,6 +1352,7 @@ export class PfcRegistreComponent {
       return;
     }
     AppSweetAlert.confirmBox(
+      'info',
       'Suppression cette discussion',
       'Cette action est irreversible. Voulez-vous continuer ?'
     ).then((result: any) => {
