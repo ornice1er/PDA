@@ -3,8 +3,10 @@
     <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Vos préocupations</h2>
   </div>
 
-    <div class="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 animate-in">
-    <h3 class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900 mb-6"> <p>{{data.length}} élément(s)</p></h3>
+  <div class="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 animate-in">
+    <h3 class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900 mb-6">
+      <p>{{data.length}} élément(s)</p>
+    </h3>
     <div class="space-y-4">
       <div class="table-responsive">
 
@@ -143,7 +145,7 @@
           </td>
           <!--<td>{{Date.dateDiff('d',s.created_at,s.dateReponse)}} </td>-->
           <td *ngIf="el.archiver == 0">
-            <button (click)="openNoteModal(note,el)" *ngIf="el.traiteOuiNon==1 && el.noteUsager==NULL"
+            <button (click)="openNoteModal(note,el)" *ngIf="el.traiteOuiNon===1 && el.noteUsager===NULL"
               title="Apprécier la prestation" class="btn btn-xs btn-danger edit"><svg width="1em" height="1em"
                 viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -259,15 +261,53 @@
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" [disabled]="frmrdv.invalid">
-            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Enregistrer</span>
-          </button>
-        <button type="submit" (click)="setStatut()" [disabled]="frmrdv.invalid" class="btn btn-info">  
-          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Transmettre</span>
-          </button>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Enregistrer</span>
+        </button>
+        <button type="submit" (click)="setStatut()" [disabled]="frmrdv.invalid" class="btn btn-info">
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Transmettre</span>
+        </button>
         <br><br>
       </div>
     </form>
@@ -362,10 +402,29 @@
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary" [disabled]="frmeditrdv.invalid">
-            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Enregistrer</span>
-          </button>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Enregistrer</span>
+        </button>
         <br><br>
       </div>
     </form>
@@ -433,12 +492,31 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button *ngIf='selected_data_note.traiteOuiNon==1 && selected_data_note.noteUsager' type="submit"
+        <button *ngIf='selected_data_note.traiteOuiNon===1 && selected_data_note.noteUsager===null' type="submit"
           class="btn btn-primary" [disabled]="frmnoter.invalid">
-            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Enregistrer</span>
-          </button>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Enregistrer</span>
+        </button>
         <br><br>
       </div>
     </form>
@@ -459,186 +537,200 @@
   </ng-template>
 
 
-<ng-template #edit let-modal>
-  <form #frmrequeteusagerU="ngForm" 
-        (ngSubmit)="saveRequeteusager(frmrequeteusagerU.value)" 
-        class="form-horizontal" novalidate>
+  <ng-template #edit let-modal>
+    <form #frmrequeteusagerU="ngForm" (ngSubmit)="saveRequeteusager(frmrequeteusagerU.value)" class="form-horizontal"
+      novalidate>
 
-    <div class="modal-header bg-mat-primary">
-      <h5 class="modal-title text-white">Modifier la préoccupation</h5>
-      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        X
-      </button>
-    </div>
+      <div class="modal-header bg-mat-primary">
+        <h5 class="modal-title text-white">Modifier la préoccupation</h5>
+        <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          X
+        </button>
+      </div>
 
-    <div class="modal-body">
-      <div style="color:red">{{errormessage}}</div>
+      <div class="modal-body">
+        <div style="color:red">{{errormessage}}</div>
 
-      <!-- USAGER -->
-      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
-          Usager
-        </h4>
+        <!-- USAGER -->
+        <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+          <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
+            Usager
+          </h4>
 
-        <!-- Nom complet (lecture seule) -->
-        <div class="form-group row mb-3">
-          <label for="nom" class="col-sm-4 control-label">Nom et prénoms</label>
-          <div class="col-sm-8">
-            <input readonly type="text" class="form-control form-control-sm"
-                   id="nom" name="nom" 
-                   [ngModel]="selected_data?.usager?.nom + ' ' + selected_data?.usager?.prenoms">
+          <!-- Nom complet (lecture seule) -->
+          <div class="form-group row mb-3">
+            <label for="nom" class="col-sm-4 control-label">Nom et prénoms</label>
+            <div class="col-sm-8">
+              <input readonly type="text" class="form-control form-control-sm" id="nom" name="nom"
+                [ngModel]="selected_data?.usager?.nom + ' ' + selected_data?.usager?.prenoms">
+            </div>
           </div>
-        </div>
-      </fieldset>
+        </fieldset>
 
-      <!-- PREOCCUPATION -->
-      <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
-        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
-          {{typeRequete}}
-          <small *ngIf="selected_data.visible==0">(Non transmise)</small>
-        </h4>
+        <!-- PREOCCUPATION -->
+        <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+          <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
+            {{typeRequete}}
+            <small *ngIf="selected_data.visible==0">(Non transmise)</small>
+          </h4>
 
-        <!-- Type -->
-        <div class="form-group row mb-3">
-          <label for="plainte" class="col-sm-4 control-label">Type :</label>
-          <div class="col-sm-8">
-            <select name="plainte" id="plainte" class="form-control form-control-sm"
-                    required [(ngModel)]="selected_data.plainte">
-              <option [ngValue]="null" disabled>Choisir</option>
-              <option [ngValue]="1">Plainte</option>
-              <option [ngValue]="2">Demande d'information</option>
-            </select>
+          <!-- Type -->
+          <div class="form-group row mb-3">
+            <label for="plainte" class="col-sm-4 control-label">Type :</label>
+            <div class="col-sm-8">
+              <select name="plainte" id="plainte" class="form-control form-control-sm" required
+                [(ngModel)]="selected_data.plainte">
+                <option [ngValue]="null" disabled>Choisir</option>
+                <option [ngValue]="1">Plainte</option>
+                <option [ngValue]="2">Demande d'information</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Structure destinatrice -->
-        <div class="form-group row mb-3" *ngIf="entite_vis">
-          <label for="idEntite" class="col-sm-4">Structure destinatrice</label>
-          <div class="col-sm-8">
-            <select name="idEntite" id="idEntite" class="form-control form-control-sm"
-                    [(ngModel)]="selected_data.idEntite" (change)="onEntiteChange($event)">
-              <option [ngValue]="null" disabled>Choisir</option>
-              <option [ngValue]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
-            </select>
+          <!-- Structure destinatrice -->
+          <div class="form-group row mb-3" *ngIf="entite_vis">
+            <label for="idEntite" class="col-sm-4">Structure destinatrice</label>
+            <div class="col-sm-8">
+              <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+                [(ngModel)]="selected_data.idEntite" (change)="onEntiteChange($event)">
+                <option [ngValue]="null" disabled>Choisir</option>
+                <option [ngValue]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Lien prestation -->
-        <div class="form-group row mb-3" *ngIf="selected_data.visible==0 && selected_data.plainte!=0">
-          <label for="link_to_prestation" class="col-sm-4 control-label">Préoccupation liée à une prestation :</label>
-          <div class="col-sm-8">
-            <select name="link_to_prestation" id="link_to_prestation" class="form-control form-control-sm"
-                    [(ngModel)]="selected_data.link_to_prestation" required>
-              <option [ngValue]="1">Oui</option>
-              <option [ngValue]="0">Non</option>
-            </select>
+          <!-- Lien prestation -->
+          <div class="form-group row mb-3" *ngIf="selected_data.visible==0 && selected_data.plainte!=0">
+            <label for="link_to_prestation" class="col-sm-4 control-label">Préoccupation liée à une prestation :</label>
+            <div class="col-sm-8">
+              <select name="link_to_prestation" id="link_to_prestation" class="form-control form-control-sm"
+                [(ngModel)]="selected_data.link_to_prestation" required>
+                <option [ngValue]="1">Oui</option>
+                <option [ngValue]="0">Non</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Thématique -->
-        <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
-          <label for="idType" class="col-sm-4 control-label">Thématique :</label>
-          <div class="col-sm-8">
-            <select name="idType" id="idType" class="form-control form-control-sm"
-                    [(ngModel)]="selected_data.service.idType" (change)="chargerPrestation($event)" required>
-              <option [ngValue]="null" disabled>Choisir</option>
-              <option [ngValue]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
-            </select>
+          <!-- Thématique -->
+          <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
+            <label for="idType" class="col-sm-4 control-label">Thématique :</label>
+            <div class="col-sm-8">
+              <select name="idType" id="idType" class="form-control form-control-sm"
+                [(ngModel)]="selected_data.service.idType" (change)="chargerPrestation($event)" required>
+                <option [ngValue]="null" disabled>Choisir</option>
+                <option [ngValue]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Prestation -->
-        <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
-          <label for="idPrestation" class="col-sm-4 control-label">Prestation :</label>
-          <div class="col-sm-8">
-            <select name="idPrestation" id="idPrestation" class="form-control form-control-sm"
-                    [(ngModel)]="selected_data.service.id" (change)="openDetailModal($event, detailPresta)" required>
-              <option [ngValue]="null" disabled>Choisir</option>
-              <option [ngValue]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
-            </select>
+          <!-- Prestation -->
+          <div class="form-group row mb-3" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
+            <label for="idPrestation" class="col-sm-4 control-label">Prestation :</label>
+            <div class="col-sm-8">
+              <select name="idPrestation" id="idPrestation" class="form-control form-control-sm"
+                [(ngModel)]="selected_data.service.id" (change)="openDetailModal($event, detailPresta)" required>
+                <option [ngValue]="null" disabled>Choisir</option>
+                <option [ngValue]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+              </select>
+            </div>
           </div>
-        </div>
 
-        <!-- Matricule -->
-        <div class="form-group row mb-3" *ngIf="mat_aff">
-          <label for="matricule" class="col-sm-4 control-label">Matricule :</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control form-control-sm"
-                   id="matricule" name="matricule" [(ngModel)]="selected_data.matricule">
+          <!-- Matricule -->
+          <div class="form-group row mb-3" *ngIf="mat_aff">
+            <label for="matricule" class="col-sm-4 control-label">Matricule :</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control form-control-sm" id="matricule" name="matricule"
+                [(ngModel)]="selected_data.matricule">
+            </div>
           </div>
-        </div>
 
-        <!-- Objet -->
-        <div class="form-group row mb-3">
-          <label for="objet" class="col-sm-4 control-label">Objet :</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control form-control-sm"
-                   id="objet" name="objet" [(ngModel)]="selected_data.objet" required>
+          <!-- Objet -->
+          <div class="form-group row mb-3">
+            <label for="objet" class="col-sm-4 control-label">Objet :</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control form-control-sm" id="objet" name="objet"
+                [(ngModel)]="selected_data.objet" required>
+            </div>
           </div>
-        </div>
 
-        <!-- Message -->
-        <div class="form-group row mb-3">
-          <label for="msgrequest" class="col-sm-4 control-label">Message :</label>
-          <div class="col-sm-8">
-            <textarea class="form-control form-control-sm"
-                      id="msgrequest" name="msgrequest" [(ngModel)]="selected_data.msgrequest" required>
+          <!-- Message -->
+          <div class="form-group row mb-3">
+            <label for="msgrequest" class="col-sm-4 control-label">Message :</label>
+            <div class="col-sm-8">
+              <textarea class="form-control form-control-sm" id="msgrequest" name="msgrequest"
+                [(ngModel)]="selected_data.msgrequest" required>
             </textarea>
+            </div>
           </div>
-        </div>
 
-        <!-- Fichier joint -->
-        <a *ngIf="selected_data.fichier_joint" target="_blank"
-           [href]="selected_data.fichier_joint"
-           [download]="selected_data.fichier_joint">
-          Voir fichier joint
-        </a>
-      </fieldset>
+          <!-- Fichier joint -->
+          <a *ngIf="selected_data.fichier_joint" target="_blank" [href]="selected_data.fichier_joint"
+            [download]="selected_data.fichier_joint">
+            Voir fichier joint
+          </a>
+        </fieldset>
 
-      <!-- Appréciation de l'usager -->
-      <fieldset *ngIf="selected_data.traiteOuiNon==1" class="divusager" style="border:1px solid #ddd;padding:10px;">
-        <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
-          Appréciation de l'usager
-        </h4>
+        <!-- Appréciation de l'usager -->
+        <fieldset *ngIf="selected_data.traiteOuiNon==1" class="divusager" style="border:1px solid #ddd;padding:10px;">
+          <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">
+            Appréciation de l'usager
+          </h4>
 
-        <div class="form-group row mb-3">
-          <label for="noteUsager" class="col-sm-2 control-label">Note :</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control form-control-sm"
-                   id="noteUsager" name="noteUsager"
-                   [(ngModel)]="selected_data.noteUsager">
+          <div class="form-group row mb-3">
+            <label for="noteUsager" class="col-sm-2 control-label">Note :</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control form-control-sm" id="noteUsager" name="noteUsager"
+                [(ngModel)]="selected_data.noteUsager">
+            </div>
           </div>
-        </div>
 
-        <div class="form-group row mb-3">
-          <label for="commentaireNotation" class="col-sm-4 control-label">Commentaire :</label>
-          <div class="col-sm-8">
-            <textarea class="form-control form-control-sm"
-                      id="commentaireNotation" name="commentaireNotation"
-                      [(ngModel)]="selected_data.commentaireNotation">
+          <div class="form-group row mb-3">
+            <label for="commentaireNotation" class="col-sm-4 control-label">Commentaire :</label>
+            <div class="col-sm-8">
+              <textarea class="form-control form-control-sm" id="commentaireNotation" name="commentaireNotation"
+                [(ngModel)]="selected_data.commentaireNotation">
             </textarea>
+            </div>
           </div>
-        </div>
-      </fieldset>
+        </fieldset>
 
-      <!-- Loading -->
-      <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
-        <div class="spinner-border text-secondary" role="status">
-          <span class="sr-only">Processus en cours...</span>
+        <!-- Loading -->
+        <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+          <div class="spinner-border text-secondary" role="status">
+            <span class="sr-only">Processus en cours...</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary mx-1" [disabled]="loading">
-         <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Enregistrer</span>
-      </button>
-    </div>
-  </form>
-</ng-template>
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary mx-1" [disabled]="loading">
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Enregistrer</span>
+        </button>
+      </div>
+    </form>
+  </ng-template>
 
 
   <ng-template #add let-modal>
@@ -831,15 +923,53 @@
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary mx-1">
-            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Enregistrer</span>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Enregistrer</span>
         </button>
         <button type="submit" (click)="setVisible()" class="btn btn-info">
-            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24"><circle cx="18" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="12" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle><circle cx="6" cy="12" r="0" fill="currentColor"><animate attributeName="r" begin="0" calcMode="spline" dur="1.5s" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite" values="0;2;0;0"/></circle></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
-                <span>Transmettre</span>
-          </button>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <circle cx="18" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".67" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="12" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin=".33" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+            <circle cx="6" cy="12" r="0" fill="currentColor">
+              <animate attributeName="r" begin="0" calcMode="spline" dur="1.5s"
+                keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" repeatCount="indefinite"
+                values="0;2;0;0" />
+            </circle>
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" *ngIf="!loading" class="h-5 w-5" viewBox="0 0 24 24">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m10 17l5-5l-5-5m5 5H3m12-9h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          </svg>
+          <span>Transmettre</span>
+        </button>
 
       </div>
     </form>
@@ -906,8 +1036,7 @@
         </div><br />
         <div class="form-group row mb-3">
           <label class="col-sm-3"> Structure : </label>
-          <div class="col-sm-9">{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune
-            structure'}}</div>
+          <div class="col-sm-9">{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}</div>
         </div><br />
         <div class="form-group row mb-3">
           <label for="objet" class="col-sm-2">Délai : </label>
