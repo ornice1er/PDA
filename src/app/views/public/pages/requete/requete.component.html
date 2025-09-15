@@ -249,7 +249,8 @@
                 <div class="flex flex-wrap gap-3">
                   <label *ngFor="let type of status"
                     class="flex items-center bg-white/10 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/20 hover:bg-white/20 transition-all cursor-pointer">
-                    <p-radioButton [inputId]="type.id" (onClick)="showPrestation($event)" [value]="type.id" formControlName="link_to_prestation" />
+                    <p-radioButton [inputId]="type.id" (onClick)="showPrestation($event)" [value]="type.id"
+                      formControlName="link_to_prestation" />
                     <span class="ml-2 text-white">{{type?.name}}</span>
                   </label>
                 </div>
@@ -313,6 +314,27 @@
                 </div>
               </div>
             </div>
+            <article class=" rounded-md w-full flex flex-col justify-start items-start py-0">
+              <label>Piece jointe</label>
+              <div class="p-2 w-full mt-2">
+                <div class="grid grid-cols-1 gap-4 w-full">
+                  <ng-container>
+                    <input type="file" class="hidden" (change)="handleFileSelect($event)" #presenceFileInput />
+                    <div (click)="presenceFileInput.click()"
+                      class="cursor-pointer border border-gray-300 rounded-md py-1 px-2 w-full hover:border-gray-400 transition-colors">
+                      <div class="flex flex-col lg:flex-row gap-1 items-center justify-between">
+                        <span class="text-gray-900 text-sm  bg-yellow-500 rounded-md py-2 px-3">
+                          {{ getPresenceFileName(fileName) || "Choisir un fichier" }}
+                        </span>
+                        <span *ngIf="getPresenceFileName(fileName)" class="text-xs text-white bg-green-700">
+                                                    ✓ Téléchargé
+                                                </span>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </article>
 
             <!-- Consent Checkbox -->
             <div>
@@ -346,20 +368,21 @@
               </button>
 
               <button type="submit" [disabled]="loading || !registerForm.valid"
-    class="group bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center gap-x-3">
-    <span *ngIf="!loading">Soumettre</span>
-    <span *ngIf="loading" class="flex items-center gap-x-2">
-      <svg class="animate-spin h-5 w-5 text-[#162233]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h-8z"></path>
-      </svg>
-      <span>Envoi...</span>
-    </span>
-    <svg *ngIf="!loading" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
-      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-        stroke-width="2" d="M20 6L9 17l-5-5" />
-    </svg>
-  </button>
+                class="group bg-gradient-to-r from-yellow-400 to-yellow-500 text-[#162233] py-3 px-6 rounded-xl font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center gap-x-3">
+                <span *ngIf="!loading">Soumettre</span>
+                <span *ngIf="loading" class="flex items-center gap-x-2">
+                  <svg class="animate-spin h-5 w-5 text-[#162233]" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h-8z"></path>
+                  </svg>
+                  <span>Envoi...</span>
+                </span>
+                <svg *ngIf="!loading" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24">
+                  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M20 6L9 17l-5-5" />
+                </svg>
+              </button>
             </div>
           </div>
         </form>

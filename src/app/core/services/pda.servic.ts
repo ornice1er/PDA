@@ -198,4 +198,10 @@ export class PdaService {
   state(id: number) {
     return this.http.get(`${this.url}${id}status`, ConfigService.httpHeader());
   }
+
+   uploadFile(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return  this.http.post<any>(`${this.url}requeteusager/upload-file`, formData);
+  }
 }

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
+  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -43,6 +44,8 @@ import { SharedModule } from '../../../../shared/shared.module';
 })
 export class RequeteComponent implements OnInit {
   loading: boolean = false;
+  uploading: boolean = false;
+  fileName: string = 'Aucun fichier sélectionné';
   link_to_prestation = 0;
   selected_type_preoccupation = 0;
   themes: any[] = [];
@@ -107,6 +110,7 @@ export class RequeteComponent implements OnInit {
       visible: [1],
       idType: [],
       has_consent: [true],
+      file_path: [''],
     });
   }
 
@@ -515,5 +519,59 @@ export class RequeteComponent implements OnInit {
         this.registerForm.get(key)?.markAsTouched();
       });
     }
+  }
+
+    /**
+   * Récupère le nom d'un fichier de présence
+   */
+  getPresenceFileName(index: string): string {
+    const url = index;
+    return url && url !== 'Aucun fichier sélectionné' ? this.extractFileName(url) : '';
+  }
+
+   /**
+   * Extrait le nom du fichier depuis une URL
+   */
+  private extractFileName(url: string): string {
+    const parts = url.split('/');
+    return parts[parts.length - 1] || 'Fichier sélectionné';
+  }
+
+   /**
+   * Gère la sélection d'un fichier
+   */
+  handleFileSelect(
+    event: Event
+  ): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      return;
+    }
+
+    this.uploading = true;
+    const file = input.files[0];
+
+    this.pdaService.uploadFile(file).subscribe({
+      next: (response) => {
+        if (response.data) {
+          const uploadResponse = response.data;
+          console.log('Fichier téléchargé avec succès :', uploadResponse);
+          this.fileName = this.getPresenceFileName(`https://mataccueil-api.mtfp-ctd.bj${uploadResponse?.url}`)
+          this.registerForm.get('file_path')?.setValue(`https://mataccueil-api.mtfp-ctd.bj${uploadResponse?.url}`); // Mettre à jour le champ 'fichierJoint' avec l'URL uploadResponse?.url
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors du téléchargement :', error);
+        // this.showMessage(
+        //   'error',
+        //   'Erreur',
+        //   'Erreur lors du téléchargement du fichier.'
+        // );
+      },
+      complete: () => {
+        this.uploading = false;
+      },
+    });
+
   }
 }
