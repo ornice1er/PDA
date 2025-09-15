@@ -145,7 +145,7 @@
           </td>
           <!--<td>{{Date.dateDiff('d',s.created_at,s.dateReponse)}} </td>-->
           <td *ngIf="el.archiver == 0">
-            <button (click)="openNoteModal(note,el)" *ngIf="el.traiteOuiNon===1 && el.noteUsager===NULL"
+            <button (click)="openNoteModal(note,el)" *ngIf="el.traiteOuiNon===1 && el.noteUsager===null"
               title="Apprécier la prestation" class="btn btn-xs btn-danger edit"><svg width="1em" height="1em"
                 viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -1036,7 +1036,8 @@
         </div><br />
         <div class="form-group row mb-3">
           <label class="col-sm-3"> Structure : </label>
-          <div class="col-sm-9">{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune structure'}}</div>
+          <div class="col-sm-9">{{ depi.service_parent.libelle!=null ? depi.service_parent.libelle : 'Aucune
+            structure'}}</div>
         </div><br />
         <div class="form-group row mb-3">
           <label for="objet" class="col-sm-2">Délai : </label>
