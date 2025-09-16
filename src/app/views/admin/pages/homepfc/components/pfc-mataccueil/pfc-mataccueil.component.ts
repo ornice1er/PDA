@@ -1005,7 +1005,7 @@ export class PfcMataccueilComponent {
             AppSweetAlert.simpleAlert(
               'info',
               'Suppression requete',
-              'Erreur, Verifiez que vous avez une bonne connexion internet'
+              err.error.message
             );
           }
         );
@@ -1298,7 +1298,7 @@ export class PfcMataccueilComponent {
               AppSweetAlert.simpleAlert(
                 'info',
                 'Suppression visite',
-                'Erreur, Verifiez que vous avez une bonne connexion internet'
+                err.error.message
               );
             }
           );
@@ -1342,7 +1342,7 @@ export class PfcMataccueilComponent {
               AppSweetAlert.simpleAlert(
                 'info',
                 'Suppression discussions',
-                'Erreur, Verifiez que vous avez une bonne connexion internet'
+                err.error.message
               );
             }
           );
@@ -1382,7 +1382,7 @@ export class PfcMataccueilComponent {
               AppSweetAlert.simpleAlert(
                 'info',
                 "Confirmer l'ajout",
-                'Erreur, Verifiez que vous avez une bonne connexion internet'
+                err.error.message
               );
             }
           );

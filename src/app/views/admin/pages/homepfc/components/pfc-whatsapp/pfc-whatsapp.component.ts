@@ -833,7 +833,7 @@ dropRequeteusager() {
           this.loadRequest()
           AppSweetAlert.simpleAlert('success',"Suppression requete", "Suppression effectuée avec succès")
         }, (err) => {
-          AppSweetAlert.simpleAlert('success',"Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet")
+          AppSweetAlert.simpleAlert('success',"Suppression requete", err.error.message)
         })
       }
     })
@@ -1012,7 +1012,7 @@ dropRequeteusagerrv() {
           this.loadRequestrv()
           AppSweetAlert.simpleAlert('success',"Suppression visite", "Suppression effectuée avec succès")
         }, (err:any) => {
-          AppSweetAlert.simpleAlert('success',"Suppression visite", "Erreur, Verifiez que vous avez une bonne connexion internet")
+          AppSweetAlert.simpleAlert('success',"Suppression visite", err.error.message)
         })
       }
     })
@@ -1031,7 +1031,7 @@ dropDiscussionWhat() {
           this.loadWhatsApp()
           AppSweetAlert.simpleAlert('success',"Suppression discussions", "Suppression effectuée avec succès")
         }, (err:any) => {
-          AppSweetAlert.simpleAlert('success',"Suppression discussions", "Erreur, Verifiez que vous avez une bonne connexion internet")
+          AppSweetAlert.simpleAlert('success',"Suppression discussions", err.error.message)
         })
       }
     })
@@ -1050,7 +1050,7 @@ ConfirmerTraitement(el:any) {
           }
           
         }, (err:any) => {
-          AppSweetAlert.simpleAlert("Confirmer l'ajout", "Erreur, Verifiez que vous avez une bonne connexion internet")
+          AppSweetAlert.simpleAlert("Confirmer l'ajout", err.error.message)
         })
       }
     })

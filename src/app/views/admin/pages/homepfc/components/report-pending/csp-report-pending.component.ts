@@ -140,7 +140,7 @@ export class CspReportPendingComponent {
         AppSweetAlert.simpleAlert(
           'error',
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet'
+          err.error.message
         );
       }
     );
@@ -160,7 +160,7 @@ export class CspReportPendingComponent {
         AppSweetAlert.simpleAlert(
           'error',
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet',
+          err.error.message,
           
         );
       }
@@ -180,7 +180,7 @@ export class CspReportPendingComponent {
         AppSweetAlert.simpleAlert(
           'error',
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet',
+          err.error.message,
           
         );
       }
@@ -234,7 +234,7 @@ export class CspReportPendingComponent {
           this.loading2 = false;
           AppSweetAlert.simpleAlert(
             'Visites',
-            'Erreur, Verifiez que vous avez une bonne connexion internet',
+            err.error.message,
             'error'
           );
         }
@@ -258,7 +258,7 @@ export class CspReportPendingComponent {
           this.loading2 = false;
           AppSweetAlert.simpleAlert(
             'Visites',
-            'Erreur, Verifiez que vous avez une bonne connexion internet',
+            err.error.message,
             'error'
           );
         }
@@ -275,7 +275,7 @@ export class CspReportPendingComponent {
         this.loading2 = false;
         AppSweetAlert.simpleAlert(
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet',
+          err.error.message,
           'error'
         );
       }

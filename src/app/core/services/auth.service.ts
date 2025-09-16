@@ -162,7 +162,7 @@ export class AuthService {
   noterRequetePfc(ressource: any) {
     return this.http.post<any>(`${this.url2 + 'noter'}`, ressource);
   }
-  getUserByToken() {
+  getUserByToken(tok?:any) {
     return this.http.get(`${this.url2 + 'auth/userdatamat'}`);
   }
   getAll(search = null, page: any) {

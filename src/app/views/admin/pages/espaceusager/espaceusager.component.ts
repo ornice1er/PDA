@@ -750,7 +750,7 @@ export class EspaceusagerComponent implements OnInit {
             AppSweetAlert.simpleAlert(
               'error',
               'Suppression requete',
-              'Erreur, Verifiez que vous avez une bonne connexion internet',
+              err.error.message,
               
             );
           }
@@ -780,7 +780,7 @@ export class EspaceusagerComponent implements OnInit {
       (err: any) => {
         AppSweetAlert.simpleAlert(
           'Nouvelle modification',
-          'Erreur, Verifiez que vous avez une bonne connexion internet',
+          err.error.message,
           'error'
         );
       }
@@ -827,7 +827,7 @@ export class EspaceusagerComponent implements OnInit {
           (err: any) => {
             AppSweetAlert.simpleAlert(
               'Transmettre rdv',
-              'Erreur, Verifiez que vous avez une bonne connexion internet',
+              err.error.message,
               'error'
             );
           }
@@ -870,7 +870,7 @@ export class EspaceusagerComponent implements OnInit {
           (err: any) => {
             AppSweetAlert.simpleAlert(
               'Suppression rdv',
-              'Erreur, Verifiez que vous avez une bonne connexion internet',
+              err.error.message,
               'error'
             );
           }

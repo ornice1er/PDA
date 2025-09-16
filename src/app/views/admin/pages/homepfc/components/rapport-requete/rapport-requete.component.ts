@@ -170,7 +170,7 @@ export class RapportRequeteComponent {
         AppSweetAlert.simpleAlert(
           'error',
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet'
+          err.error.message
         );
       }
     );
@@ -191,7 +191,7 @@ export class RapportRequeteComponent {
         AppSweetAlert.simpleAlert(
           'error',
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet'
+          err.error.message
         );
       }
     );
@@ -210,7 +210,7 @@ export class RapportRequeteComponent {
         AppSweetAlert.simpleAlert(
           'error',
           'Visites',
-          'Erreur, Verifiez que vous avez une bonne connexion internet'
+          err.error.message
         );
       }
     );
@@ -267,7 +267,7 @@ export class RapportRequeteComponent {
           AppSweetAlert.simpleAlert(
             'error',
             'Visites',
-            'Erreur, Verifiez que vous avez une bonne connexion internet'
+            err.error.message
           );
         }
       );
@@ -1206,7 +1206,7 @@ export class RapportRequeteComponent {
             AppSweetAlert.simpleAlert(
               'error',
               'Suppression requete',
-              'Erreur, Verifiez que vous avez une bonne connexion internet'
+              err.error.message
             );
           }
         );
@@ -1443,7 +1443,7 @@ export class RapportRequeteComponent {
               AppSweetAlert.simpleAlert(
                 'error',
                 'Suppression visite',
-                'Erreur, Verifiez que vous avez une bonne connexion internet',
+                err.error.message,
                 
               );
             }
@@ -1481,7 +1481,7 @@ export class RapportRequeteComponent {
               AppSweetAlert.simpleAlert(
                 'error',
                 'Suppression discussions',
-                'Erreur, Verifiez que vous avez une bonne connexion internet',
+                err.error.message,
                 
               );
             }
@@ -1516,7 +1516,7 @@ export class RapportRequeteComponent {
               AppSweetAlert.simpleAlert(
                 'error',
                 "Confirmer l'ajout",
-                'Erreur, Verifiez que vous avez une bonne connexion internet',
+                err.error.message,
                 
               );
             }

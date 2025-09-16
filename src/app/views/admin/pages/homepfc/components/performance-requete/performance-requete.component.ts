@@ -251,7 +251,7 @@ export class PerformanceRequeteComponent {
           AppSweetAlert.simpleAlert(
             'error',
             'Visites',
-            'Erreur, Verifiez que vous avez une bonne connexion internet'
+            err.error.message
           );
         }
       );
@@ -326,7 +326,7 @@ export class PerformanceRequeteComponent {
           AppSweetAlert.simpleAlert(
             'error',
             'Visites',
-            'Erreur, Verifiez que vous avez une bonne connexion internet'
+            err.error.message
           );
         }
       );
@@ -361,7 +361,7 @@ export class PerformanceRequeteComponent {
     //       AppSweetAlert.simpleAlert(
     //         'error',
     //         'Visites',
-    //         'Erreur, Verifiez que vous avez une bonne connexion internet'
+    //         err.error.message
     //       );
     //     }
     //   );

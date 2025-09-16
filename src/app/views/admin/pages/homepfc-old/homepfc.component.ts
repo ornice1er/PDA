@@ -162,7 +162,7 @@ export class HomepfcComponent implements OnInit {
          if(err.error.detail!=null){    
            AppSweetAlert.simpleAlert("error","Nouvel ajout", err.error.detail)
          }else{
-           AppSweetAlert.simpleAlert("error","Nouvel ajout", "Erreur, Verifiez que vous avez une bonne connexion internet")
+           AppSweetAlert.simpleAlert("error","Nouvel ajout", err.error.message)
          }
        })
     }
@@ -182,7 +182,7 @@ export class HomepfcComponent implements OnInit {
         this.init(this.page)
         AppSweetAlert.simpleAlert("success","Nouvelle modification",  "Motification effectué avec succès")
       }, (err:any)=>{
-        AppSweetAlert.simpleAlert("error","Nouvelle modification", "Erreur, Verifiez que vous avez une bonne connexion internet")
+        AppSweetAlert.simpleAlert("error","Nouvelle modification", err.error.message)
       })
     }
     
@@ -359,7 +359,7 @@ dropRequeteusager() {
           this.loadRequest()
           AppSweetAlert.simpleAlert("success","Suppression requete", "Suppression effectuée avec succès")
         }, (err:any) => {
-          AppSweetAlert.simpleAlert("error","Suppression requete", "Erreur, Verifiez que vous avez une bonne connexion internet")
+          AppSweetAlert.simpleAlert("error","Suppression requete", err.error.message)
         })
       }
     })
