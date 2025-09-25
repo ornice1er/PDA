@@ -99,6 +99,15 @@ export class PdaService {
     );
   }
 
+
+
+  getPrestationsDashStat(): Observable<any> {
+    return this.http.get<any>(
+      `${this.url}statistique/prestation`,
+      ConfigService.httpHeader()
+    );
+  }
+
   getPrestationsStat(): Observable<any> {
     return this.http.get<any>(
       `${this.url}statistiques/prestations/1`,

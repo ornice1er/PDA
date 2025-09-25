@@ -14,6 +14,7 @@ import { HeroComponent } from './components/hero/hero.component';
 import { PubHeaderComponent } from './components/pub-header/pub-header.component';
 import { StatisticsComponent } from "./components/statistics/statistics.component";
 import { ServicesComponent } from './components/services/services.component';
+import { JeDenonceComponent } from '../pages/je-denonce/je-denonce.component';
 
 @Component({
   selector: 'app-public-layout',
@@ -33,7 +34,8 @@ import { ServicesComponent } from './components/services/services.component';
     HeroComponent,
     PubHeaderComponent,
     StatisticsComponent,
-    ServicesComponent
+    ServicesComponent,
+    JeDenonceComponent
 ],
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.css',

@@ -33,7 +33,10 @@ import { DropdownChangeEvent } from 'primeng/dropdown';
 export class PrestationsParThematiqueComponent implements OnInit {
   searchText = '';
   data: any[] = [];
-  thematiques: any[] = [{ id: 0, libelle: 'Toutes' }];
+  institutions:any[]=[]
+  thematiques: any[] = [];
+  thematiques2: any[] = [];
+
   _temp: any[] = [];
   selected_key = '';
   collectionSize = 0;
@@ -55,7 +58,7 @@ export class PrestationsParThematiqueComponent implements OnInit {
     // window.scroll(0, 0);
     this.thematiques = [{ id: 0, libelle: 'Toutes' }];
     this.pdaService.getThematiques().subscribe((res: any) => {
-      this.thematiques = [...this.thematiques, ...res?.data];
+      this.thematiques = res?.data;
     });
     this.loading = true;
     this.data = [];
@@ -69,6 +72,15 @@ export class PrestationsParThematiqueComponent implements OnInit {
           this.loading = false;
         });
     } else {
+
+       this.pdaService.getEntiteFromIGSEP().subscribe({
+      next: (res: any) => {
+        this.institutions = res.data || [];
+      },
+      error: () => {
+        this.institutions = [];
+      }
+    });
       this.pdaService.getPrestations().subscribe((res: any) => {
         this.data = res?.data;
         this._temp = this.data;
@@ -77,6 +89,23 @@ export class PrestationsParThematiqueComponent implements OnInit {
       });
     }
   }
+
+
+  filter1(event: DropdownChangeEvent) {
+    this.data = [];
+    if (event.value === 0) {
+      this.data = this._temp;
+    } else {
+      this.data = this._temp.filter((e: any) => e.idEntite == event.value);
+    }
+    this.searchText = '';
+    this.collectionSize = this.data.length;
+
+    this.thematiques2 = [...[{ id: 0, libelle: 'Toutes' }],...this.thematiques.filter((e: any) => e.idEntite == event.value)];
+
+    console.log(this.thematiques2 )
+  }
+
 
   filter(event: DropdownChangeEvent) {
     this.data = [];

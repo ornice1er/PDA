@@ -47,27 +47,27 @@ export class ServicesComponent {
   platformServices: PlatformService[] = [
     {
       title: 'Espace Usager',
-      description: 'Soumettre mes préoccupations',
-      link: '/auth/logusager',
-      color: '#11845A',
-    },
-    {
-      title: 'Guichet Unique Virtuel',
-      description: 'Accès unifié aux plateformes',
+      description: 'Je soumets mes préoccupations',
       link: '/auth/logusager',
       color: '#023E79',
     },
     {
-      title: 'WECHE',
-      description: 'Situation administrative en temps réel',
-      link: 'https://weche.fpbenin.net/',
+      title: 'Guichet Unique Virtuel',
+      description: 'J’accède à toutes mes plateformes',
+      link: '/auth/logusager',
       color: '#11845A',
     },
     {
+      title: 'WECHE',
+      description: 'Je suis ma situation administrative en temps réel',
+      link: 'https://weche.fpbenin.net/',
+      color: '#ecb009ff',
+    },
+    {
       title: 'Signalement',
-      description: 'Signaler un dysfonctionnement',
-      link: 'https://demarchesmtfp.gouv.bj/je-denonce',
-      color: '#162233',
+      description: 'Je signale une dérive ou un dysfonctionnement',
+      link: '/je-denonce',
+      color: '#8d0b0bff',
     },
   ];
 

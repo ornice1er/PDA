@@ -74,7 +74,18 @@
 <div class="container my-5">
   <div class="flex flex-col gap-y-3">
     <div class="flex flex-row gap-3 w-4/5 2xl:w-3/5">
-      <p-dropdown class="" [options]="thematiques" [(ngModel)]="selected_key" (onChange)="filter($event)"
+         <p-dropdown class="" [options]="institutions" [(ngModel)]="selected_key" (onChange)="filter1($event)"
+        optionLabel="libelle" optionValue="id" placeholder="Choisir une entité">
+        <ng-template pTemplate="dropdownicon">
+          <div class="flex items-center justify-center text-black py-[0.6rem]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24">
+              <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m7 10l5 5m0 0l5-5" />
+            </svg>
+          </div>
+        </ng-template>
+      </p-dropdown>
+      <p-dropdown class="" [options]="thematiques2" [(ngModel)]="selected_key" (onChange)="filter($event)"
         optionLabel="libelle" optionValue="id" placeholder="Choisir une thématique">
         <ng-template pTemplate="dropdownicon">
           <div class="flex items-center justify-center text-black py-[0.6rem]">

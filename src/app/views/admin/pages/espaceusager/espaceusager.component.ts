@@ -256,7 +256,7 @@ export class EspaceusagerComponent implements OnInit {
       this.canSentNew = true;
     } else {
       let check = this.data.filter(
-        (el: any) => el.traiteOuiNon == 1 && el.noteUsager == null
+        (el: any) => el.traiteOuiNon == 1 && (el.noteUsager == null || el.notes.length==0)
       );
       //console.log(check.length);
       if (check.length == 0) {
@@ -454,6 +454,7 @@ export class EspaceusagerComponent implements OnInit {
       });
 
       this.loadRequest();
+      this.loadRdv()
     }
 
     // this.loadRequest();
@@ -805,6 +806,7 @@ export class EspaceusagerComponent implements OnInit {
       return;
     }
     AppSweetAlert.confirmBox(
+      'info',
       'Transmettre rdv',
       'Cette action est irreversible. Voulez-vous continuer ?'
     ).then((result: any) => {
@@ -819,9 +821,10 @@ export class EspaceusagerComponent implements OnInit {
           (res: any) => {
             this.loadRequest2();
             AppSweetAlert.simpleAlert(
+              'success',
               'Transmettre rdv',
               'Suppression effectuée avec succès',
-              'success'
+              
             );
           },
           (err: any) => {
@@ -854,6 +857,7 @@ export class EspaceusagerComponent implements OnInit {
       return;
     }
     AppSweetAlert.confirmBox(
+      'error',
       'Suppression rdv',
       'Cette action est irreversible. Voulez-vous continuer ?'
     ).then((result: any) => {
@@ -862,9 +866,10 @@ export class EspaceusagerComponent implements OnInit {
           (res: any) => {
             this.loadRequest2();
             AppSweetAlert.simpleAlert(
+              'success',
               'Suppression rdv',
               'Suppression effectuée avec succès',
-              'success'
+              
             );
           },
           (err: any) => {
@@ -974,11 +979,18 @@ export class EspaceusagerComponent implements OnInit {
       );
       return;
     }
-    var msgConfirm = 'Voulez-vous transmettre la requête ?';
-    var confirmResult = confirm(msgConfirm);
-    if (confirmResult === false) return;
+    // var msgConfirm = 'Voulez-vous transmettre la requête ?';
+    // var confirmResult = confirm(msgConfirm);
+    // if (confirmResult === false) return;
 
-    var param = {
+
+        AppSweetAlert.confirmBox(
+      'success',
+      'Suppression rdv',
+      'Voulez-vous transmettre la requête ?'
+    ).then((result: any) => {
+      if (result.value) {
+       var param = {
       idRequete: this.selected_data.id,
       idEntite: this.selectedEntie,
       fichier_requete: this.selected_data.request_file_data,
@@ -993,6 +1005,10 @@ export class EspaceusagerComponent implements OnInit {
         'Requete transmise avec succès'
       );
     });
+      }
+    });
+
+   
   }
 
   setStatut() {

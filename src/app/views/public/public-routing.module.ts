@@ -8,9 +8,8 @@ import { EserviceCreateComponent } from './pages/eservice-create/eservice-create
 import { EserviceProofComponent } from './pages/eservice-proof/eservice-proof.component';
 import { EserviceComponent } from './pages/eservice/eservice.component';
 import { RequeteComponent } from './pages/requete/requete.component';
-import { AuthGuard } from '../../core/guards/auth.guard';
-import { HomeComponent } from '../admin/pages/home/home.component';
 import { ContactPointsComponent } from './pages/contact-points/contact-points.component';
+import { JeDenonceComponent } from './pages/je-denonce/je-denonce.component';
 
 export const PublicRoutes: any = [
   // ✅ Doit être un tableau
@@ -20,6 +19,11 @@ export const PublicRoutes: any = [
     children: [
       { path: '', component: WelcomeComponent },
       { path: 'ccsps', component: ContactPointsComponent },
+      {
+        component: JeDenonceComponent,
+        path: 'je-denonce',
+        canActivate: [IsAuthGuard],
+      },
       {
         component: RequeteComponent,
         path: 'requetes',

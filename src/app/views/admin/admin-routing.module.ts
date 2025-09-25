@@ -14,12 +14,10 @@ import { EvenementDeclencheurComponent } from './pages/evenement-declencheur/eve
 import { FaqComponent } from './pages/faq/faq.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { HomepfcComponent } from './pages/homepfc/homepfc.component';
-import { JeDenonceComponent } from './pages/je-denonce/je-denonce.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { PlanComponent } from './pages/plan/plan.component';
 import { PrendreRendezvousComponent } from './pages/prendre-rendezvous/prendre-rendezvous.component';
 import { PrestationsParStructureComponent } from './pages/prestations-par-structure/prestations-par-structure.component';
-import { PrestationsParThematiqueComponent } from '../public/pages/prestations-par-thematique/prestations-par-thematique.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfilpfcComponent } from './pages/profilpfc/profilpfc.component';
 import { QuestionComponent } from './pages/question/question.component';
@@ -102,11 +100,7 @@ export const AdminRoutes: any = [
         path: 'demande-info',
         canActivate: [IsAuthGuard],
       },
-      {
-        component: JeDenonceComponent,
-        path: 'je-denonce',
-        canActivate: [IsAuthGuard],
-      },
+
       {
         component: AboutComponent,
         path: 'about',

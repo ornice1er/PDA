@@ -32,7 +32,7 @@ export class MataccueilService {
   }
 
   delete(id: any) {
-    return this.http.get(`${ConfigService.toMataccueilApiUrl('rdv')}/${id}`);
+    return this.http.delete(`${ConfigService.toMataccueilApiUrl('rdv')}/${id}`);
   }
   create(ressource: any) {
     return this.http.post(
