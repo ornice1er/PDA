@@ -553,7 +553,7 @@
 
 <ng-template #detailPresta let-modal>
   <form #frmrdv="ngForm" class="form-horizontal" novalidate="" *ngFor="let depi of detailpiece">
-    <div class="modal-header bg-info">
+    <div class="modal-header  d-flex justify-content-between align-items-center bg-info">
       <h4 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h4>
       <button type="button" class="close text-white" aria-label="Close"
         (click)="modal.dismiss('Cross click')">X</button>

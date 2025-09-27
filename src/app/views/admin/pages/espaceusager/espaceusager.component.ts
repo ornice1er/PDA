@@ -560,7 +560,7 @@ export class EspaceusagerComponent implements OnInit {
         'Erreur',
         'Veuillez choisir un type de préoccupation.'
       );
-    } else if (this.mat_aff == true && param.matricule.trim() == '') {
+    } else if (this.mat_aff == true && (param.matricule?.trim() ?? '')  == '') {
       AppSweetAlert.simpleAlert('success','Renseigner le matricule', 'Champ obligatoire');
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
@@ -637,7 +637,7 @@ export class EspaceusagerComponent implements OnInit {
       interfaceRequete: 'USAGER',
       natureRequete: value.natureRequete,
       idUser: this.selected_data.usager.id,
-      matricule: this.mat_aff == true ? value.matricul : '',
+      matricule: this.mat_aff == true ? value.matricule : '',
       plainte: value.plainte,
     };
     //
@@ -653,8 +653,8 @@ export class EspaceusagerComponent implements OnInit {
         'Erreur',
         'Veuillez choisir un type de préoccupation.'
       );
-    } else if (this.mat_aff == true && param.matricule.trim() == '') {
-      AppSweetAlert.simpleAlert('Renseigner le matricule', 'Champ obligatoire');
+    } else if (this.mat_aff == true && (param.matricule?.trim() ?? '')  == '') {
+      AppSweetAlert.simpleAlert('info','Renseigner le matricule', 'Champ obligatoire');
     } else if (param.idPrestation == null || param.idPrestation == '') {
       AppSweetAlert.simpleAlert(
         'error',
@@ -662,9 +662,9 @@ export class EspaceusagerComponent implements OnInit {
         'Veuillez choisir une prestation.'
       );
     } else if (!param.objet) {
-      AppSweetAlert.simpleAlert("Renseigner l'objet", 'Champ obligatoire');
+      AppSweetAlert.simpleAlert('info',"Renseigner l'objet", 'Champ obligatoire');
     } else if (!param.msgrequest) {
-      AppSweetAlert.simpleAlert('Renseigner le message', 'Champ obligatoire');
+      AppSweetAlert.simpleAlert('info','Renseigner le message', 'Champ obligatoire');
     } else {
       this.loading = true;
       this.matService
@@ -675,7 +675,7 @@ export class EspaceusagerComponent implements OnInit {
           this.modalService.dismissAll();
           this.loading = false;
           if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('error', 'error', 'Erreur', rest.message);
+            AppSweetAlert.simpleAlert('error','Modification requête',rest.message);
           } else {
             AppSweetAlert.simpleAlert(
               'success',
