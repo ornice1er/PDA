@@ -355,7 +355,7 @@ export class WelcomeComponent {
   chargerPrestation(event: any) {
     this.services = [];
     this.user_auth_service
-      .getAllTypePrest(event.target.value)
+      .getAllTypePrest(event.target.value,this.selectedEntie)
       .subscribe((res: any) => {
         this.services = res;
       });

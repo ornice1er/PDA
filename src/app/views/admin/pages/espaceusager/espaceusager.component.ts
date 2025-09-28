@@ -213,6 +213,7 @@ export class EspaceusagerComponent implements OnInit {
   departements: any[] = [];
   structureservices: any[] = [];
   themes: any[] = [];
+  themes2: any[] = [];
   natures: any[] = [];
   institutions: any[] = [];
   rdvs: any[] = [];
@@ -248,38 +249,48 @@ export class EspaceusagerComponent implements OnInit {
 
   show_actions2 = true;
   checked2(event: any, el: any) {
-    this.selected_data2 = el;
-    this.selected_data2.full_name =
-      this.selected_data2.nom + ' ' + this.selected_data2.prenoms;
 
-    if (el.archiver == 1) {
-      this.canSentNew = true;
-    } else {
-      let check = this.data.filter(
-        (el: any) => el.traiteOuiNon == 1 && (el.noteUsager == null || el.notes.length==0)
-      );
-      //console.log(check.length);
-      if (check.length == 0) {
-        this.canSentNew = true;
-      } else {
-        this.canSentNew = false;
-        AppSweetAlert.confirmBox(
-          'info',
-          'Important',
-          ' Nous vous prions de nous laisser votre appréciation sur votre dernière préoccupation satisfait '
-        ).then((res: any) => {
-          if (res.isConfirmed) {
-            this.openNoteModal(this.note, el);
-          }
-        });
-      }
-      this.canSentNew = check.length == 0 ? true : false;
-    }
-    if (el.statut == 0 && this.canSentNew) {
+
+    this.selected_data2 = el;
+
+    if (el.statut == 0) {
       this.show_actions2 = true;
     } else {
       this.show_actions2 = false;
     }
+
+
+    // this.selected_data2.full_name =
+    //   this.selected_data2.nom + ' ' + this.selected_data2.prenoms;
+
+    // if (el.archiver == 1) {
+    //   this.canSentNew = true;
+    // } else {
+    //   let check = this.data.filter(
+    //     (el: any) => el.traiteOuiNon == 1 && (el.noteUsager == null || el.notes.length==0)
+    //   );
+    //   //console.log(check.length);
+    //   if (check.length == 0) {
+    //     this.canSentNew = true;
+    //   } else {
+    //     this.canSentNew = false;
+    //     AppSweetAlert.confirmBox(
+    //       'info',
+    //       'Important',
+    //       ' Nous vous prions de nous laisser votre appréciation sur votre dernière préoccupation satisfait '
+    //     ).then((res: any) => {
+    //       if (res.isConfirmed) {
+    //         this.openNoteModal(this.note, el);
+    //       }
+    //     });
+    //   }
+    //   this.canSentNew = check.length == 0 ? true : false;
+    // }
+    // if (el.statut == 0 && this.canSentNew) {
+    //   this.show_actions2 = true;
+    // } else {
+    //   this.show_actions2 = false;
+    // }
   }
 
   show_actions = true;
@@ -338,7 +349,7 @@ export class EspaceusagerComponent implements OnInit {
       this.descrCarr = res.descr;
     });
     this.matService
-      .getAllType(this.selected_data.service.idType)
+      .getAllType(this.selected_data.service.idType,this.selected_data.idEntite)
       .subscribe((res: any) => {
         this.services = res.data;
       });
@@ -388,7 +399,7 @@ export class EspaceusagerComponent implements OnInit {
     this.dataNT = [];
 
     this.matService
-      .getAllForUsagerNT(this.user.id, this.pg.pageSize, this.pg.p)
+      .getAllForUsagerNT(this.user.id)
       .subscribe((res: any) => {
         if (res.isPaginate) {
           this.dataNT = res.data.data;
@@ -442,12 +453,12 @@ export class EspaceusagerComponent implements OnInit {
       this.titleService.setUserConnectedState(this.user);
 
       //Controle ajouter pour les premiers users qui n'ont pas renseigné leur identite
-      if (this.selectedEntie === null || this.selectedEntie === 'null') {
-        this.selectedEntie = 1; //MTFP par défaut
-      }
-      if (this.selectedEntie !== null && this.selectedEntie !== '') {
-        this.prepare(this.selectedEntie);
-      }
+      // if (this.selectedEntie === null || this.selectedEntie === 'null') {
+      //   this.selectedEntie = 1; //MTFP par défaut
+      // }
+      // if (this.selectedEntie !== null && this.selectedEntie !== '') {
+      //   this.prepare(this.selectedEntie);
+      // }
       this.institutions = [];
       this.matService.getAllInsitution().subscribe((res: any) => {
         this.institutions = res.data;
@@ -468,7 +479,8 @@ export class EspaceusagerComponent implements OnInit {
 
   onEntiteChange(event: any) {
     console.log(event.target.value);
-    this.selectedEntie = +event.target.value;
+    this.selectedEntie =event.target.value;
+    this.idEntite=this.selectedIdEntite
     this.prepare(this.selectedEntie);
   }
 
@@ -480,20 +492,10 @@ export class EspaceusagerComponent implements OnInit {
   }
   prepare(idEntite: any) {
     //COntrole ajouter pour les premiers users qui n'ont pas renseigné leur identite
-    if (idEntite == null || idEntite == 'null') {
-      idEntite = 1; //MTFP par défaut
-    }
-    this.g_services = [];
-    this.matService.getAllService(idEntite).subscribe((res: any) => {
-      this.g_services = res.data;
-    });
-
-    // alert();
-    // this.themes=[]
-    // this.matService.getAll().subscribe((res:any)=>{
-    //   this.themes=res
-    // })
-
+    // this.g_services = [];
+    // this.matService.getAllService(idEntite).subscribe((res: any) => {
+    //   this.g_services = res.data;
+    // });
     this.structures = [];
     this.matService.getAllStructure(1, idEntite).subscribe((res: any) => {
       this.structures = res.data;
@@ -585,13 +587,13 @@ export class EspaceusagerComponent implements OnInit {
           if (param.visible == 0) {
             AppSweetAlert.simpleAlert(
               'success',
-              'Ajout requête',
-              'Requête ajoutée avec succès'
+              'Ajout préoccupation',
+              'Préoccupation ajoutée avec succès'
             );
           } else {
             AppSweetAlert.simpleAlert(
               'success',
-              'Ajout requête',
+              'Ajout préoccupation',
               'Requete ajouté et transmis avec succès'
             );
           }
@@ -668,19 +670,19 @@ export class EspaceusagerComponent implements OnInit {
     } else {
       this.loading = true;
       this.matService
-        .update(param, this.selected_data.id)
+        .updateRequete(param, this.selected_data.id)
         .subscribe((rest: any) => {
           this.loadRequest2();
           this.visible = 0;
           this.modalService.dismissAll();
           this.loading = false;
           if (rest.status == 'error') {
-            AppSweetAlert.simpleAlert('error','Modification requête',rest.message);
+            AppSweetAlert.simpleAlert('error','Modification préoccupation',rest.message);
           } else {
             AppSweetAlert.simpleAlert(
               'success',
               'Modification requete',
-              'Requête modifiée avec succès'
+              'Préoccupation modifiée avec succès'
             );
           }
         });
@@ -693,7 +695,7 @@ export class EspaceusagerComponent implements OnInit {
     //     this.services.push(item);
     // });
     this.services = [];
-    this.matService.getAllType(event.target.value).subscribe((res: any) => {
+    this.matService.getAllType(event.target.value,this.selectedEntie).subscribe((res: any) => {
       this.services = res.data;
     });
 
@@ -705,6 +707,12 @@ export class EspaceusagerComponent implements OnInit {
         this.mat_aff = false;
       }
     });
+  }
+    chargerThemes(event: any) {
+    this.themes2 = [];
+
+    this.themes.filter((el:any) => el.idEntite==event.target.value)
+   
   }
   genererPDF() {
     var param = {
@@ -727,7 +735,7 @@ export class EspaceusagerComponent implements OnInit {
       AppSweetAlert.simpleAlert(
         'error',
         'Erreur',
-        'Vous ne pouvez plus supprimer cette requête. Elle est déjà en cours de traitement.'
+        'Vous ne pouvez plus supprimer cette préoccupation. Elle est déjà en cours de traitement.'
       );
       return;
     }
@@ -766,15 +774,16 @@ export class EspaceusagerComponent implements OnInit {
     this.matService.update(value, this.selected_data2.id).subscribe(
       (res: any) => {
         this.modalService.dismissAll();
-        this.loadRequest2();
+        this.loadRdv();
         this.loading = false;
         if (res.status == 'error') {
           AppSweetAlert.simpleAlert('error', 'Erreur', res.message, 'error');
         } else {
           AppSweetAlert.simpleAlert(
+            'success',
             'Nouvelle modification',
             'Motification effectué avec succès',
-            'success'
+            
           );
         }
       },
@@ -808,7 +817,7 @@ export class EspaceusagerComponent implements OnInit {
     AppSweetAlert.confirmBox(
       'info',
       'Transmettre rdv',
-      'Cette action est irreversible. Voulez-vous continuer ?'
+      'Cette action est irreversible. Voulez-vous continuer?'
     ).then((result: any) => {
       if (result.value) {
         var param = {
@@ -819,7 +828,7 @@ export class EspaceusagerComponent implements OnInit {
 
         this.matService.saveRdvStatut(param).subscribe(
           (res: any) => {
-            this.loadRequest2();
+            this.loadRdv();
             AppSweetAlert.simpleAlert(
               'success',
               'Transmettre rdv',
@@ -852,19 +861,19 @@ export class EspaceusagerComponent implements OnInit {
       AppSweetAlert.simpleAlert(
         'error',
         'Erreur',
-        'Vous ne pouvez plus supprimer cet element. Elle est déjà en cours de traitement.'
+        'Vous ne pouvez plus supprimer cet element. Il est déjà en cours de traitement.'
       );
       return;
     }
     AppSweetAlert.confirmBox(
       'error',
       'Suppression rdv',
-      'Cette action est irreversible. Voulez-vous continuer ?'
+      'Cette action est irreversible. Voulez-vous continuer?'
     ).then((result: any) => {
       if (result.value) {
         this.matService.delete(this.selected_data2.id).subscribe(
           (res: any) => {
-            this.loadRequest2();
+            this.loadRdv();
             AppSweetAlert.simpleAlert(
               'success',
               'Suppression rdv',
@@ -975,19 +984,19 @@ export class EspaceusagerComponent implements OnInit {
       AppSweetAlert.simpleAlert(
         'error',
         'Erreur',
-        'Vous avez déjà transmis cette requête.'
+        'Vous avez déjà transmis cette préoccupation.'
       );
       return;
     }
-    // var msgConfirm = 'Voulez-vous transmettre la requête ?';
+    // var msgConfirm = 'Voulez-vous transmettre la préoccupation ?';
     // var confirmResult = confirm(msgConfirm);
     // if (confirmResult === false) return;
 
 
         AppSweetAlert.confirmBox(
       'success',
-      'Suppression rdv',
-      'Voulez-vous transmettre la requête ?'
+      'Transmission de préoocupation',
+      'Voulez-vous transmettre la préoccupation ?'
     ).then((result: any) => {
       if (result.value) {
        var param = {

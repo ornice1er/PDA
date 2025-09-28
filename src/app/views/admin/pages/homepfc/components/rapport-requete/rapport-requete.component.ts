@@ -339,7 +339,7 @@ export class RapportRequeteComponent {
   chargerPrestation(event: any) {
     this.services = [];
     this.user_auth_service
-      .getAllTypePrest(event.target.value)
+      .getAllTypePrest(event.target.value,this.selectedEntie)
       .subscribe((res: any) => {
         this.services = res;
       });
@@ -1346,7 +1346,7 @@ export class RapportRequeteComponent {
     //   this.descrCarr = res.descr
     // })
     this.user_auth_service
-      .getAllTypePrest(this.selected_data_req.service.idType)
+      .getAllTypePrest(this.selected_data_req.service.idType,this.selected_data_req.idEntite)
       .subscribe((res: any) => {
         this.services = res;
       });

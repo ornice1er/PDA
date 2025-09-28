@@ -40,6 +40,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { BarChartComponent } from '../../../../components/bar-chart/bar-chart.component';
 import { LineChartComponent } from '../../../../components/line-chart/line-chart.component';
+import { ToastrService } from 'ngx-toastr';
 
 Chart.register(...registerables, annotationPlugin, ChartDataLabels);
 
@@ -184,6 +185,7 @@ export class PerformanceRequeteComponent {
     private activatedRoute: ActivatedRoute,
     private titleService: TitleService,
     private modalService: NgbModal,
+    private toastrService:ToastrService,
     private offcanvasService: NgbOffcanvas
   ) {
     if (localStorage.getItem(GlobalName.tokenNameMat) != undefined)
@@ -261,6 +263,10 @@ export class PerformanceRequeteComponent {
     // console.log(dates);
     // const start_date = this.onFormatDate(dates[0]);
     // const end_date = this.onFormatDate(dates[1]);
+    if (dates.length!=2) {
+      this.toastrService.warning('Sélecttion un interval de date','Date')
+      return
+    }
 
     this.lineChartData.datasets[0].data = [];
     this.lineChartData.labels = [];

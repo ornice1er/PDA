@@ -255,7 +255,7 @@ export class RequeteComponent implements OnInit {
   chargerPrestation(event: any) {
     this.services = [];
     this.user_auth_service
-      .getAllTypePrest(event.target.value)
+      .getAllTypePrest(event.target.value,this.selectedEntie)
       .subscribe((res: any) => {
         this.services = res?.data;
       });
@@ -506,7 +506,7 @@ export class RequeteComponent implements OnInit {
             AppSweetAlert.simpleAlert('Erreur', rest.message, 'error');
           } else {
             AppSweetAlert.simpleAlert(
-              'error',
+              'success',
               'Soumission de préoccupation',
               'Votre préoccupation a été bien transmise aux autorités compétentes'
             );

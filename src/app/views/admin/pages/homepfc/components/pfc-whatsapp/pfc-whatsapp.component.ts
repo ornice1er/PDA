@@ -183,7 +183,7 @@ active=1
 
   chargerPrestation(event:any){
     this.services=[]
-    this.user_auth_service.getAllTypePrest(event.target.value).subscribe((res:any)=>{
+    this.user_auth_service.getAllTypePrest(event.target.value, this.selectedEntie).subscribe((res:any)=>{
       this.services=res
     })
     
@@ -945,7 +945,7 @@ checkedReq(event:any, el:any) {
   // this.user_auth_service.getThema(this.selected_data_req).subscribe((res:any)=>{
   //   this.descrCarr = res.descr
   // })
-  this.user_auth_service.getAllTypePrest(this.selected_data_req.service.idType).subscribe((res:any)=>{
+  this.user_auth_service.getAllTypePrest(this.selected_data_req.service.idType,this.selected_data_req.idEntite).subscribe((res:any)=>{
     this.services=res
   })
 }

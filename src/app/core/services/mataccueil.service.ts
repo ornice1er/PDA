@@ -47,12 +47,21 @@ export class MataccueilService {
     );
   }
 
-  getAllForUsagerNT(idUsager: any, per_page: any, page: any) {
-    return this.http.get(
+  getAllForUsagerNT(idUsager: any, per_page?: any, page?: any) {
+    if (per_page!=undefined && page!=undefined) {
+          return this.http.get(
       `${ConfigService.toMataccueilApiUrl(
         'requeteusager/getrequetebyusagerNT'
       )}/${idUsager}?page=${page}&per_page=${per_page}`
     );
+    }else{
+          return this.http.get(
+      `${ConfigService.toMataccueilApiUrl(
+        'requeteusager/getrequetebyusagerNT'
+      )}/${idUsager}`
+    );
+    }
+
   }
   getAllForUsager(idUsager: any, per_page: any, page: any) {
     return this.http.get(
@@ -100,9 +109,9 @@ export class MataccueilService {
       ressource
     );
   }
-  getAllType(type: any) {
+  getAllType(type: any,idEntite: any) {
     return this.http.get(
-      `${ConfigService.toMataccueilApiUrl('service/type')}/${type}`
+      `${ConfigService.toMataccueilApiUrl('service/type')}/${type}/${idEntite}`
     );
   }
 

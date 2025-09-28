@@ -184,8 +184,8 @@ export class AuthService {
     return this.http.post<any>(`${this.url2 + 'reset-password'}`, ressource);
   }
 
-  getAllTypePrest(type: any) {
-    return this.http.get<any[]>(`${this.url2 + 'service/type'}/${type}`);
+  getAllTypePrest(type: any, idEntite:any) {
+    return this.http.get<any[]>(`${this.url2 + 'service/type'}/${type}/${idEntite}`);
   }
 
   getThema(id: any) {
