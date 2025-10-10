@@ -32,7 +32,7 @@ export class ServicesComponent {
         "Trouvez vos points de contact sur toute l'étendue du territoire national",
       link: '/ccsps',
       color: '#11845A',
-      image: '/assets/165463.webp',
+      image: 'https://preprodmtfp.gouv.bj/pprod-pda/assets/165463.webp',
     },
     {
       title: 'Catalogue des Prestations',
@@ -40,7 +40,7 @@ export class ServicesComponent {
         'Consultez la liste exhaustive de toutes nos prestations administratives',
       link: '/prestations-par-thematique',
       color: '#023E79',
-     image: '/assets/2150282045.webp',
+     image: 'https://preprodmtfp.gouv.bj/pprod-pda/assets/2150282045.webp',
     },
   ];
 
