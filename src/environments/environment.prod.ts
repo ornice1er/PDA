@@ -4,10 +4,10 @@ export const environment = {
     accessToken: 'pk.eyJ1Ijoic2NoYWRyYWMtc29kZSIsImEiOiJjbWQzNzdubzQwMXdiMmtzZG45NG16cTdzIn0.IdIFjYGQKRv7DBD1c9qfLw'
   },
   API_SCHEME: 'https',
-  API_DOMAIN: 'back.guvmtfp.gouv.bj/api',
-  API_FILE: 'back.guvmtfp.gouv.bj',
+  API_DOMAIN: 'guvmtfp.gouv.bj/api',
+  API_FILE: 'guvmtfp.gouv.bj',
   API_VERSION: 'v1',
-  API_MATACCUEIL_DOMAIN: 'mataccueil-api.mtfp-ctd.bj/api',
-  API_ESERVICE_DOMAIN: 'boeservices-api.mtfp-ctd.bj/api',
-  API_MATACCUEIL_FILE: 'mataccueil-api.mtfp-ctd.bj'
+  API_MATACCUEIL_DOMAIN: 'api.mataccueil.gouv.bj/api',
+  API_ESERVICE_DOMAIN: 'api.managemtfp.gouv.bj/api',
+  API_MATACCUEIL_FILE: 'api.mataccueil.gouv.bj'
 };
