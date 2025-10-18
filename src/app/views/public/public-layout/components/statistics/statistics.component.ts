@@ -64,11 +64,11 @@ export class StatisticsComponent implements OnInit {
     this.pdaService.getPrestationsDashStat().subscribe((res)=>{
       console.log(res);
       const data = res?.data;
-      this.stats[0].value = data.nb_prestations;
-      this.stats[1].value = data.nb_preoccupations;
-      this.stats[2].value = data.nb_usagers;
-      this.stats[3].value = data.taux_satisfaction;
-      this.stats[4].value = data.nb_acteurs_ccsp_gsru;
+      // this.stats[0].value = data.nb_prestations;
+      // this.stats[1].value = data.nb_preoccupations;
+      // this.stats[2].value = data.nb_usagers;
+      this.stats[3].value = "86%"//data.taux_satisfaction;
+      this.stats[4].value = 28  //data.nb_acteurs_ccsp_gsru;
 
     })
   }
