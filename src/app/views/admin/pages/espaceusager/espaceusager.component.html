@@ -76,13 +76,14 @@
             <td class="px-4 py-2">{{el.objet}}{{el.matricule ? ' / Matricule: ' + el.matricule : ''}}</td>
             <td class="px-4 py-2">{{el.msgrequest}}</td>
             <td class="px-4 py-2">
-              <span *ngIf="el.visible==0">En attente</span>
-              <span *ngIf="el.visible==1">En cours - {{el.entite?.sigle || '--'}}</span>
-              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.rejete==1">Rejeté</span>
-              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.interrompu==1">Interrompu</span>
-              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.rejete==0 && el.interrompu==0">Finalisé</span>
+              <span *ngIf="el.visible==0">En attente</span> <br>
+              <span *ngIf="el.visible==1">En cours - {{el.entite?.sigle || '--'}}</span><br>
+              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.rejete==1">Rejeté</span><br>
+              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.interrompu==1">Interrompu</span><br>
+              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.rejete==0 && el.interrompu==0">Finalisé</span><br>
             </td>
             <td class="px-4 py-2">
+              <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.rejete==0 && el.interrompu==0">{{el.reponseStructure}}</span><br>
               <span *ngIf="el.fichier_joint">
                 Fichier: <a target="_blank" (click)="ChangerFile(el.fichier_joint)">{{el.fichier_joint}}</a>
               </span>
