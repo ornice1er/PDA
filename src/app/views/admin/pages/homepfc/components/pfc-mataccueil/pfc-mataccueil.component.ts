@@ -117,6 +117,7 @@ export class PfcMataccueilComponent {
 
     if (localStorage.getItem(GlobalName.tokenNameMat) != null) {
       this.user = this.localStorageService.get(GlobalName.userNameMat);
+      this.selectedEntie=this.user?.idEntite
       //Controle pour acceder à l'onglet WhatsApp
       if (this.user?.attribu_com != null) {
         this.onglet_What = true;
