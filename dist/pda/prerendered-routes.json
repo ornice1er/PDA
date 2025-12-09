@@ -14,6 +14,7 @@
     "/admin/forgot-password",
     "/admin/home",
     "/admin/homepfc",
+    "/admin/homepfc/date-closed",
     "/admin/homepfc/pending-rapports",
     "/admin/homepfc/performances",
     "/admin/homepfc/pfc-mataccueil",

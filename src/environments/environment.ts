@@ -12,6 +12,7 @@ export const environment = {
   API_MATACCUEIL_DOMAIN: 'localhost:8001/api',
   API_MATACCUEIL_FILE: 'localhost:8001',
   API_FILE: 'localhost:8000',
+  API_ESERVICE_DOMAIN: 'localhost:8002/api',
   API_VERSION: 'v1'
 };
 

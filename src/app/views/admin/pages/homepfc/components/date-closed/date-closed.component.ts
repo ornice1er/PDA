@@ -1,50 +1,46 @@
 import { CommonModule } from '@angular/common';
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  ModalDismissReasons,
-  NgbModal,
-  NgbModule,
-  NgbOffcanvas,
-} from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModule, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SharedModule } from 'primeng/api';
 import { SampleSearchPipe } from '../../../../../../core/pipes/sample-search.pipe';
 import { LoadingComponent } from '../../../../../components/loading/loading.component';
 import { StatutComponent } from '../../../../../components/statut/statut.component';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 import { AuthService } from '../../../../../../core/services/auth.service';
+import { FileService } from '../../../../../../core/services/file.service';
+import { ReportTransmissionService } from '../../../../../../core/services/report-transmission.service';
+import { ReportService } from '../../../../../../core/services/report.service';
 import { AppSweetAlert } from '../../../../../../core/utils/app-sweet-alert';
 import { ConfigService } from '../../../../../../core/utils/config-service';
 import { GlobalName } from '../../../../../../core/utils/global-name';
 import { LocalStorageService } from '../../../../../../core/utils/local-stoarge-service';
 import { TitleService } from '../../../../../../core/utils/title.service';
-import { ReportTransmissionService } from '../../../../../../core/services/report-transmission.service';
-import { ReportService } from '../../../../../../core/services/report.service';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FileService } from '../../../../../../core/services/file.service';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-rapport-requete',
+  selector: 'app-date-closed',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    NgbModule,
-    LoadingComponent,
-    SampleSearchPipe,
-    NgSelectModule,
-    NgxPaginationModule,
-    StatutComponent,
-    NgxExtendedPdfViewerModule,
-    FontAwesomeModule,
+   CommonModule,
+      FormsModule,
+      NgbModule,
+      LoadingComponent,
+      SampleSearchPipe,
+      NgSelectModule,
+      NgxPaginationModule,
+      StatutComponent,
+      NgxExtendedPdfViewerModule,
+      FontAwesomeModule,
   ],
-  templateUrl: './rapport-requete.component.html',
-  styleUrl: './rapport-requete.component.css',
+  templateUrl: './date-closed.component.html',
+  styleUrl: './date-closed.component.css'
 })
-export class RapportRequeteComponent {
+export class DateClosedComponent {
   active = 1;
   @ViewChild('contentRetraite') contentRetraite: any;
   @ViewChild('contentCarriere') contentCarriere: any;
@@ -95,7 +91,7 @@ export class RapportRequeteComponent {
     private offcanvasService: NgbOffcanvas
   ) {
     if (localStorage.getItem(GlobalName.tokenNameMat) != undefined)
-      this.user = this.local_service.get(GlobalName.userNameMat);
+      this.user = this.local_service.get(GlobalName.tokenNameMat);
     const currentYear = new Date().getFullYear();
     const range = 5;
 
@@ -143,27 +139,54 @@ export class RapportRequeteComponent {
   // Declaration
   matricu_rv = '';
   loading2: any = false;
-
+  month:any
   ngOnInit(): void {
     this.titleService.setTitle('Rapports mensuels de visite');
 
-    this.getReports();
+  if (localStorage.getItem(GlobalName.tokenNameMat) != undefined)
+      this.user = this.local_service.get(GlobalName.userNameMat);
+
+    const now = new Date();
+    this.month = `${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}`;
+    this.getDateNotClosed();
   }
 
   checkedRegistreReport(el: any) {
     this.selected_data = el;
   }
 
-  getReports() {
+  getDateNotClosed() {
     this.loading2 = true;
-    this.reportService.getAll().subscribe(
+    this.reportService.getDateNotClosed(this.user?.agent_user?.id,this.month).subscribe(
       (res: any) => {
-        this.registresReports = res.data;
-        this.pg2.pageSize = 10;
-        this.pg2.p = 1;
-        this.pg2.total = res.data.length;
+        this.data = res.data;
+        // this.pg2.pageSize = 10;
+        // this.pg2.p = 1;
+        // this.pg2.total = res.data.length;
         this.modalService.dismissAll();
         this.loading2 = false;
+      },
+      (err: any) => {
+        this.loading2 = false;
+        AppSweetAlert.simpleAlert(
+          'error',
+          'Visites',
+          err.error.message
+        );
+      }
+    );
+  }
+
+
+  setCloture(date:any){
+this.loading2 = true;
+    this.reportService.setCloture({
+      id_user:this.user?.agent_user?.id,
+      date_cloture:date,
+
+    }).subscribe(
+      (res: any) => {
+        this.getDateNotClosed()
       },
       (err: any) => {
         this.loading2 = false;
@@ -182,7 +205,7 @@ export class RapportRequeteComponent {
       (res: any) => {
         this.getFile(res.data);
         this.modalService.dismissAll();
-        this.getReports();
+        this.getDateNotClosed();
 
         this.loading2 = false;
       },
@@ -203,7 +226,7 @@ export class RapportRequeteComponent {
         this.getFile(res.data);
         this.modalService.dismissAll();
         this.loading2 = false;
-        this.getReports();
+        this.getDateNotClosed();
       },
       (err: any) => {
         this.loading2 = false;
@@ -225,7 +248,7 @@ export class RapportRequeteComponent {
       if (result.isConfirmed) {
         this.reportService.delete(id).subscribe(
           (res: any) => {
-            this.getReports();
+            this.getDateNotClosed();
           },
           (err: any) => {
             AppSweetAlert.simpleAlert(
@@ -260,7 +283,7 @@ export class RapportRequeteComponent {
       .subscribe(
         (res: any) => {
           this.loading2 = false;
-          this.getReports();
+          this.getDateNotClosed();
         },
         (err: any) => {
           this.loading2 = false;
@@ -1564,4 +1587,5 @@ export class RapportRequeteComponent {
         }
       );
   }
+
 }

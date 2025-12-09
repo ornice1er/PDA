@@ -1,0 +1,298 @@
+<div class="flex flex-col gap-y-8 w-full">
+  <div>
+    <h2 class="text-3xl font-semibold text-dark-900 mb-2 text-balance">Liste des dates non clôturées</h2>
+  </div>
+  <div class="w-full bg-white rounded-3xl shadow-sm border border-gray-100 p-6 animate-in">
+    <div class="flex flex-row justify-between items-center">
+      <h3 class="text-base lg:text-lg 2xl:text-xl font-medium text-dark-900 mb-6">
+        <p>{{registresReports!.length}} élément(s)</p>
+      </h3>
+    </div>
+
+    <div class="space-y-4">
+      <div class="table-responsive">
+        <table class="w-full rounded-t-lg border-separate border-spacing-0">
+          <thead class="bg-primary">
+            <tr>
+              <th class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary rounded-tl-lg">
+                Date
+              </th>
+              <th class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Statut
+                </th>
+              <th class="py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Nombre
+              </th>
+              <th class="rounded-tr-lg py-3.5 px-4 text-start text-xs font-semibold text-white border-b border-primary">
+                Action
+
+              </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="data.length !== 0">
+            <tr *ngFor="let rgr of data
+                             | sampleSearch:search_text">
+              <!-- <td>
+                <input type="radio" (change)="checkedRegistreReport(rgr)">
+
+              </td> -->
+              <td class="py-2.5 px-4 text-xs font-medium border border-gray-200">{{rgr.date}} </td>
+
+              <td class="py-2.5 px-4 text-xs font-medium border border-gray-200">
+                <span *ngIf="rgr.is_cloture==0">Non</span>
+                <span *ngIf="rgr.is_cloture==1">Oui</span>
+              </td>
+                            <td class="py-2.5 px-4 text-xs font-medium border border-gray-200">{{rgr.nbrvisite}} </td>
+
+              <td class="py-2.5 px-4 text-xs font-medium text-center border border-gray-200">
+                <div class="flex flex-row items-center justify-center gap-3">
+                
+                 <button *ngIf="rgr.is_cloture==0" [disabled]="loading2" (click)="setCloture(rgr.date)"
+                    class="text-sky-500 bg-sky-500/20 flex items-center justify-center rounded-full size-8">
+                    <span class="sr-only">Clôturer</span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="m9 12 2 2 4-4" />
+                    </svg>
+
+                    </button>
+
+                </div>
+
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+      <pagination-controls id="ngxP2" (pageChange)="getPage2($event)" [maxSize]="9" [directionLinks]="true"
+        [autoHide]="true" [responsive]="true" [previousLabel]="'Précédent'" [nextLabel]="'Suivant'"
+        [screenReaderPaginationLabel]="'Pagination'" [screenReaderPageLabel]="'page'"
+        [screenReaderCurrentLabel]="'Vous êtes sur la page'">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
+<ng-template #addReport let-modal>
+  <form #addReportForm="ngForm" (ngSubmit)="storeReport(addReportForm.value)" class="form-horizontal " novalidate="">
+
+    <div class="modal-header  d-flex justify-content-between align-items-center bg-secondary d-flex justify-content-between ">
+      <h5 class="modal-title text-white" id="modal-basic-title">Générer un rapport</h5>
+      <span (click)="modal.dismiss('Cross click')" class="text-danger" style="cursor:pointer"> <i
+          class="fa fa-times fa-1x" aria-hidden="true"></i> </span>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+      <div class="row">
+        <div class="col-12 mb-3">
+          <label for="">Année</label>
+          <select name="year" ngModel class="form-control form-control-sm has-error">
+            <option *ngFor="let y of years" [value]="y">{{y}}</option>
+          </select>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Mois</label>
+            <select name="month" ngModel class="form-control">
+              <option value="01">Janvier</option>
+              <option value="02">Février</option>
+              <option value="03">Mars</option>
+              <option value="04">Avril</option>
+              <option value="05">Mai</option>
+              <option value="06">Juin</option>
+              <option value="07">Juillet</option>
+              <option value="08">Août</option>
+              <option value="09">Septembre</option>
+              <option value="10">Octobre</option>
+              <option value="11">Novembre</option>
+              <option value="12">Décembre</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <label for="">Sexe</label>
+          <select name="sex" ngModel class="form-control form-control-sm has-error">
+            <option value="all">Tout</option>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+          </select>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Principales raisons d'insatisfaction</label>
+            <textarea name="unsatified_reason" ngModel class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Problèmes / difficultés rencontrées par le Point Focal </label>
+            <textarea name="difficult" ngModel class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Approches de solutions préconisées par le Point Focal </label>
+            <textarea name="solution" ngModel class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Observations</label>
+            <textarea name="observation" ngModel class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="loading2" class="btn btn-secondary mx-1"><i
+          class="fas fa-save"></i>&nbsp;Générer</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #editReport let-modal>
+  <form #editReportForm="ngForm" (ngSubmit)="updateReport(editReportForm.value)" class="form-horizontal " novalidate="">
+
+    <div class="modal-header  d-flex justify-content-between align-items-center bg-secondary">
+      <h5 class="modal-title text-white" id="modal-basic-title">Mettre à jour le rapport</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        X
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+      <div class="row">
+
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Principales raisons d'insatisfaction</label>
+            <textarea name="unsatified_reason" [(ngModel)]="selected_data.unsatified_reason"
+              class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Problèmes / difficultés rencontrées par le Point Focal </label>
+            <textarea name="difficult" [(ngModel)]="selected_data.difficult" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Approches de solutions préconisées par le Point Focal </label>
+            <textarea name="solution" [(ngModel)]="selected_data.solution" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Observations</label>
+            <textarea name="observation" [(ngModel)]="selected_data.observation" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-secondary mx-1"><i class="fas fa-save"></i>&nbsp;Modifier</button>
+    </div>
+  </form>
+</ng-template>
+<ng-template #showReport let-modal>
+  <form #editReportForm="ngForm" (ngSubmit)="updateReport(editReportForm.value)" class="form-horizontal " novalidate="">
+
+    <div class="modal-header  d-flex justify-content-between align-items-center bg-secondary">
+      <h5 class="modal-title text-white" id="modal-basic-title">Détails rapport</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        X
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red">{{errormessage}}</div>
+
+      <div class="row">
+
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Usagers reçus</label>
+            <p>{{selected_data.customer_recieved}}</p>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Usagers satisfaits</label>
+            <p>{{selected_data.customer_satisfied}}</p>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Principales raisons d'insatisfaction</label>
+            <p>{{selected_data.unsatified_reason}}</p>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Problèmes / difficultés rencontrées par le Point Focal </label>
+            <p>{{selected_data.difficult}}</p>
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Approches de solutions préconisées par le Point Focal </label>
+            {{selected_data.solution}}
+          </div>
+        </div>
+        <div class="col-12 mb-3">
+          <div class="form-group">
+            <label for="">Observations</label>
+            {{selected_data.observation}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </form>
+</ng-template>
+<ng-template #contentPDF let-offcanvas>
+  <div class="offcanvas-header">
+
+    <h4 class="offcanvas-title">Visualiseur de fichier</h4>
+    <button id="closePDFBtn" type="button" class="btn-close" aria-label="Close"
+      (click)="offcanvas.dismiss('Cross click')"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ngx-extended-pdf-viewer [src]="pdfSrc" style="width: 100%; height: 100%"></ngx-extended-pdf-viewer>
+  </div>
+</ng-template>
+<ng-template #correctReport let-modal>
+
+  <div class="modal-header  d-flex justify-content-between align-items-center bg-secondary">
+    <h5 class="modal-title text-white" id="modal-basic-title">Détails instruction</h5>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      X
+    </button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row">
+
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for="">Instruction</label>
+          <p>{{selected_data.transmission?.instruction}}</p>
+        </div>
+      </div>
+      <div class="col-12 mb-3">
+        <div class="form-group">
+          <label for="">Delai</label>
+          <p>{{selected_data.transmission?.delay | date:"dd-MM-yyyy"}}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

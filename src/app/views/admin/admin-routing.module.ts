@@ -31,6 +31,7 @@ import { RapportRequeteComponent } from './pages/homepfc/components/rapport-requ
 import { PerformanceRequeteComponent } from './pages/homepfc/components/performance-requete/performance-requete.component';
 import { PfcAccueilComponent } from './pages/homepfc/components/accueil/accueil.component';
 import { CspReportPendingComponent } from './pages/homepfc/components/report-pending/csp-report-pending.component';
+import { DateClosedComponent } from './pages/homepfc/components/date-closed/date-closed.component';
 
 export const AdminRoutes: any = [
   // ✅ Doit être un tableau
@@ -159,6 +160,10 @@ export const AdminRoutes: any = [
           {
             component: PfcWhatsappComponent,
             path: 'pfc-whatsapp',
+          },
+           {
+            component: DateClosedComponent,
+            path: 'date-closed',
           },
           {
             component: RapportRequeteComponent,

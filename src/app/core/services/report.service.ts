@@ -39,4 +39,13 @@ export class ReportService {
   validate(id: any) {
     return this.http.get<any[]>(`${this.url}ccsp-reports-validation/${id}`);
   }
+
+
+    getDateNotClosed(id_user: any,mois: any) {
+    return this.http.get<any[]>(`${this.url}clotures?id_user=${id_user}&mois=${mois}`);
+  }
+
+  setCloture(resource:any) {
+    return this.http.post<any[]>(`${this.url}set-clotures`,resource);
+  }
 }
