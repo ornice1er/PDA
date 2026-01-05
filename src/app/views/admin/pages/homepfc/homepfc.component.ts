@@ -25,7 +25,7 @@ export class HomepfcComponent implements OnInit {
     console.log(this.user);
     if (this.user) {
       this.titleService.setUserConnectedState(this.user);
-      if (this.user?.agent_user?.categorie_acteur === 'Mairie') {
+      if (this.user?.agent_user?.categorie_acteur.toLowerCase() === 'mairie') {
         this.titleService.setPfcState(3);
       } else {
         this.titleService.setPfcState(1);
