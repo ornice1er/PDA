@@ -46,81 +46,7 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
   searchResults: any[] = [];
 
   contactPoints: any[] = [
-    // {
-    //   id: 1,
-    //   title: 'Centre Communal de Cotonou',
-    //   address: 'Avenue Jean-Paul II, Cotonou, Littoral',
-    //   phone: '+229 21 30 12 34',
-    //   email: 'centre.cotonou@mtfp.gouv.bj',
-    //   hours: 'Lun-Ven: 7h30-17h30',
-    //   services: ['Borne tactile', 'Assistance usager', 'Information'],
-    //   region: 'Littoral',
-    //   type: 'centre',
-    // },
-    // {
-    //   id: 2,
-    //   title: 'Guichet de Service Porto-Novo',
-    //   address: 'Place des Martyrs, Porto-Novo, Ouémé',
-    //   phone: '+229 20 21 23 45',
-    //   email: 'guichet.portonovo@mtfp.gouv.bj',
-    //   hours: 'Lun-Ven: 8h00-17h00',
-    //   services: ['Borne tactile', 'Enregistrement préoccupations'],
-    //   region: 'Ouémé',
-    //   type: 'guichet',
-    // },
-    // {
-    //   id: 3,
-    //   title: 'Centre Communal de Parakou',
-    //   address: 'Quartier Banikanni, Parakou, Borgou',
-    //   phone: '+229 23 61 12 78',
-    //   email: 'centre.parakou@mtfp.gouv.bj',
-    //   hours: 'Lun-Ven: 7h30-17h30',
-    //   services: [
-    //     'Borne tactile',
-    //     'Assistance usager',
-    //     'Information',
-    //     'Formation',
-    //   ],
-    //   region: 'Borgou',
-    //   type: 'centre',
-    // },
-    // {
-    //   id: 4,
-    //   title: 'Antenne de Bohicon',
-    //   address: 'Carrefour Gare, Bohicon, Zou',
-    //   phone: '+229 22 51 34 56',
-    //   email: 'antenne.bohicon@mtfp.gouv.bj',
-    //   hours: 'Lun-Ven: 8h00-16h30',
-    //   services: ['Information', 'Orientation'],
-    //   region: 'Zou',
-    //   type: 'centre',
-    // },
-    // {
-    //   id: 5,
-    //   title: "Centre Communal d'Abomey-Calavi",
-    //   address: 'Rond-point Godomey, Abomey-Calavi, Atlantique',
-    //   phone: '+229 21 35 67 89',
-    //   email: 'centre.abomeycalavi@mtfp.gouv.bj',
-    //   hours: 'Lun-Ven: 7h30-17h30',
-    //   services: ['Borne tactile', 'Assistance usager', 'Information'],
-    //   region: 'Atlantique',
-    //   type: 'centre',
-    // },
-    // {
-    //   id: 6,
-    //   title: 'Guichet de Service Natitingou',
-    //   address: 'Avenue Kaba, Natitingou, Atacora',
-    //   phone: '+229 23 82 45 67',
-    //   email: 'guichet.natitingou@mtfp.gouv.bj',
-    //   hours: 'Lun-Ven: 8h00-17h00',
-    //   services: [
-    //     'Borne tactile',
-    //     'Enregistrement préoccupations',
-    //     'Information',
-    //   ],
-    //   region: 'Atacora',
-    //   type: 'guichet',
-    // },
+
   ];
 
   constructor(
@@ -155,13 +81,24 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
       this.contactPoints = res?.data;
       this.filteredContactPoints = [...this.contactPoints];
       if (this.filteredContactPoints.length > 0) {
-        this.filteredContactPoints.forEach((point) => {
-          console.log(this.convertToArray(point?.geolocalisation as string));
+       this.filteredContactPoints.forEach((point) => {
 
-          const marker = new mapboxgl.Marker({ color: '#ff0000' })
-            .setLngLat(this.convertToArray(point?.geolocalisation as string))
-            .addTo(this.map);
-        });
+  const geo = point?.geolocalisation;
+
+  if (!geo) return;
+
+  const coords = this.convertToArray(geo);
+
+  if (!coords) {
+    console.warn('Adresse non convertible en coordonnées :', geo);
+    return;
+  }
+
+  new mapboxgl.Marker({ color: '#ff0000' })
+    .setLngLat(coords)
+    .addTo(this.map);
+});
+
       }
     });
 
@@ -184,10 +121,30 @@ export class ContactPointsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  convertToArray(text: string): [number, number] {
-    const numbers = text.split(';');
-    return [parseFloat(numbers[1]), parseFloat(numbers[0])];
+convertToArray(text: string): [number, number] | null {
+
+  if (!text || typeof text !== 'string') {
+    return null;
   }
+
+  // Regex latitude,longitude
+  const regex = /^\s*(-?\d+(\.\d+)?)\s*,\s*(-?\d+(\.\d+)?)\s*$/;
+
+  const match = text.match(regex);
+
+  if (!match) {
+    return null; // 👉 Ce n’est pas une coordonnée
+  }
+
+  const lat = parseFloat(match[1]);
+  const lng = parseFloat(match[3]);
+
+  if (isNaN(lat) || isNaN(lng)) {
+    return null;
+  }
+
+  return [lng, lat]; // ton ordre d'origine
+}
 
   filterContactPoints() {
     this.filteredContactPoints = this.contactPoints.filter((point) => {
