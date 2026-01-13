@@ -223,7 +223,7 @@
               point?.address
               }}</span>
           </div>
-
+<!-- 
           <div class="flex items-center gap-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
               <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -240,7 +240,7 @@
               </g>
             </svg>
             <span class="text-gray-600 text-sm">{{ point?.email }}</span>
-          </div>
+          </div> -->
 
           <div class="flex items-center gap-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 flex-shrink-0" viewBox="0 0 24 24">
@@ -249,12 +249,12 @@
                 <circle cx="12" cy="12" r="10" />
               </g>
             </svg>
-            <span class="text-gray-600 text-sm">{{ point?.horaire }}</span>
+            <span class="text-gray-600 text-sm">{{ point?.horaire ?? "08h-12h30 & 14h-17h30" }}</span>
           </div>
         </div>
 
         <!-- Services -->
-        <div class="border-t border-gray-100 pt-4">
+        <!-- <div class="border-t border-gray-100 pt-4">
           <h4 class="text-sm font-semibold text-gray-700 mb-2">
             Services disponibles :
           </h4>
@@ -264,7 +264,7 @@
               {{ service }}
             </span>
           </div>
-        </div>
+        </div> -->
 
         <!-- Action Button -->
         <div class="mt-4 pt-4 border-t border-gray-100">
