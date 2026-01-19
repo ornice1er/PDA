@@ -285,6 +285,8 @@ export class WelcomeComponent {
     user_count: 0,
   };
 
+idEntite=1
+
   ngOnInit(): void {
     this.getIP();
 
@@ -305,7 +307,7 @@ export class WelcomeComponent {
     //     this.stats_guv = res.data
     // });
 
-    this.pdaService.getPrestations().subscribe((res: any) => {
+    this.pdaService.getPrestations(this.idEntite).subscribe((res: any) => {
       this.count_prestation = res.length;
     });
 

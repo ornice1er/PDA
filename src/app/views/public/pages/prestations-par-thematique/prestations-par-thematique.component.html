@@ -96,7 +96,7 @@
           </div>
         </ng-template>
       </p-dropdown>
-      <input [(ngModel)]="searchText" name="searchText" (keyup)="search()" placeholder="Rechercher...." id=""
+      <input [(ngModel)]="searchText" name="searchText"  placeholder="Rechercher...." id=""
         class="form-control">
     </div>
     <div class="col-md-12 col-12 col-sm-12">
@@ -110,7 +110,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let el of data  index as i">
+          <tr *ngFor="let el of data  | sampleSearch: searchText
+                      | paginate: {
+                          id: 'ngxP1',
+                          itemsPerPage: pg.pageSize,
+                          currentPage: pg.p,
+                          totalItems: pg.total
+                        };  index as i;">
             <td>{{el.libelle}}</td>
 
             <td class="text-center">
@@ -133,7 +139,7 @@
         </tbody>
       </table>
       <div class="d-flex justify-content-between p-2">
-        <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+        <ngb-pagination class=""  (pageChange)="getPage($event)" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
           [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
         </ngb-pagination>
 

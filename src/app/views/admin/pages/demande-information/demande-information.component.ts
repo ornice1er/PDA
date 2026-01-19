@@ -33,7 +33,7 @@ export class DemandeInformationComponent implements OnInit {
   @ViewChild('contentRetraite') contentRetraite : any;
   @ViewChild('contentCarriere') contentCarriere : any;
   @ViewChild('contentFormation') contentFormation : any;
-
+idEntite=1
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -58,7 +58,7 @@ export class DemandeInformationComponent implements OnInit {
   ngOnInit(): void {
     window.scroll(0,0);
 
-    this.pdaService.getPrestations().subscribe(
+    this.pdaService.getPrestations(this.idEntite).subscribe(
       (res:any)=>{
           this._temp=res;
           this.prestations=this._temp.filter((e:any)=>(e.idParent==15 || e.idParent==16 || e.idParent==106))

@@ -43,23 +43,19 @@ export class PrestationsParThematiqueComponent implements OnInit {
   page = 1;
   pageSize = 15;
   loading = false;
-
-  search() {
-    this.data = this._temp.filter((r: any) => {
-      const term = this.searchText.toLowerCase();
-      return r.libelle.toLowerCase().includes(term);
-    });
-    this.selected_key = '';
-    this.collectionSize = this.data.length;
+idEntite=1
+  pg:any={
+    pageSize:50,
+    p:1,
+    total:0
   }
+
   constructor(private pdaService: PdaService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     // window.scroll(0, 0);
     this.thematiques = [{ id: 0, libelle: 'Toutes' }];
-    this.pdaService.getThematiques().subscribe((res: any) => {
-      this.thematiques = res?.data;
-    });
+   this.getThematiques()
     this.loading = true;
     this.data = [];
     this._temp = [];
@@ -81,13 +77,25 @@ export class PrestationsParThematiqueComponent implements OnInit {
         this.institutions = [];
       }
     });
-      this.pdaService.getPrestations().subscribe((res: any) => {
+     this.getPrestations()
+    }
+  }
+
+  getPrestations(){
+     this.pdaService.getPrestations(this.idEntite).subscribe((res: any) => {
         this.data = res?.data;
         this._temp = this.data;
         this.collectionSize = this.data.length;
         this.loading = false;
       });
-    }
+  }
+
+  getThematiques(){
+     this.pdaService.getThematiques(this.idEntite).subscribe((res: any) => {
+      this.thematiques = res?.data;
+          this.thematiques2 = [...[{ id: 0, libelle: 'Toutes' }],...this.thematiques.filter((e: any) => e.idEntite == this.idEntite)];
+
+    });
   }
 
 
@@ -96,14 +104,12 @@ export class PrestationsParThematiqueComponent implements OnInit {
     if (event.value === 0) {
       this.data = this._temp;
     } else {
-      this.data = this._temp.filter((e: any) => e.idEntite == event.value);
+      this.idEntite=event.value
+      this.getPrestations()
+      this.getThematiques()
     }
     this.searchText = '';
     this.collectionSize = this.data.length;
-
-    this.thematiques2 = [...[{ id: 0, libelle: 'Toutes' }],...this.thematiques.filter((e: any) => e.idEntite == event.value)];
-
-    console.log(this.thematiques2 )
   }
 
 
@@ -121,4 +127,9 @@ export class PrestationsParThematiqueComponent implements OnInit {
   onActivate() {
     // window.scroll(0, 0);
   }
+
+    getPage(event:any){
+    this.pg.p=event
+  }
+
 }

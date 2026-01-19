@@ -18,7 +18,8 @@ export class SampleSearchPipe implements PipeTransform {
            item?.address?.toLowerCase().includes(searchText.toLowerCase()) ||
            item?.fonction?.toLowerCase().includes(searchText.toLowerCase()) ||
            item?.email?.toLowerCase().includes(searchText.toLowerCase()) ||
-           item?.phone?.toLowerCase().includes(searchText.toLowerCase())
+           item?.phone?.toLowerCase().includes(searchText.toLowerCase())||
+            item?.libelle?.toLowerCase().includes(searchText.toLowerCase())
     }) : value;
   }
 

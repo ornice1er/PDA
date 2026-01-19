@@ -27,8 +27,14 @@ export class PrestationsParStructureComponent implements OnInit {
   collectionSize=0
   page=1
   pageSize=15
-
+idEntite=1
   loading=false
+
+    pg:any={
+    pageSize:10,
+    p:1,
+    total:0
+  }
   search(){
     this.data=this._temp.filter((r:any) => {
       const term = this.searchText.toLowerCase();
@@ -61,7 +67,7 @@ export class PrestationsParStructureComponent implements OnInit {
                 this.loading=false
         },)
     }else{
-      this.pdaService.getPrestations().subscribe(
+      this.pdaService.getPrestations(this.idEntite).subscribe(
         (res:any)=>{
             this.data=res.filter((e:any)=>{
               if(e.service_parent != null){
@@ -69,8 +75,8 @@ export class PrestationsParStructureComponent implements OnInit {
               }
               return ;
             })
-            this._temp=this.data
-            this.collectionSize=this.data.length
+            this.data=this.data
+            this.pg.total=this.data.length
             this.loading=false
             // console.log(res)
 
