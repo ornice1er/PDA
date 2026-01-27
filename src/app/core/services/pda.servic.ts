@@ -77,8 +77,8 @@ export class PdaService {
       ConfigService.httpHeader()
     );
   }
-  getThematiques(): Observable<any> {
-    return this.http.get<any[]>(`${this.url}type/1`);
+  getThematiques(id:any): Observable<any> {
+    return this.http.get<any[]>(`${this.url}type/${id}`);
   }
   getOneThematique(id: any): Observable<any> {
     return this.http.get<any[]>(
@@ -92,9 +92,9 @@ export class PdaService {
       ConfigService.httpHeader()
     );
   }
-  getPrestations(): Observable<any> {
+  getPrestations(id:any): Observable<any> {
     return this.http.get<any[]>(
-      `${this.url}service/1`,
+      `${this.url}service/${id}`,
       ConfigService.httpHeader()
     );
   }

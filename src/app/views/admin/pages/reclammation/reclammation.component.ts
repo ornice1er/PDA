@@ -48,10 +48,10 @@ export class ReclammationComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
+idEntite=1
   ngOnInit(): void {
     window.scroll(0, 0);
-    this.pdaService.getPrestations().subscribe(
+    this.pdaService.getPrestations(this.idEntite).subscribe(
       (res: any) => {
         this.prestations = res;
 
