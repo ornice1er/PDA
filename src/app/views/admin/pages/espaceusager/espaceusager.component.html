@@ -825,7 +825,7 @@
                     </div-->
           <div class="form-group row mb-3">
 
-            <label for="plainte" class="col-sm-4 control-label">Entité administrative :</label>
+            <label for="plainte" class="col-sm-4 control-label">Entité administrative actuelle :</label>
             <div class="col-sm-8">
               <select name="selectedEntie" id="plainte" (change)="onEntiteChange($event)" class="form-control form-control-sm" required
                 [(ngModel)]="selectedEntie">
@@ -956,7 +956,7 @@
           </svg>
         </button>
 
-        <button type="button" (click)="setVisible()"
+        <button type="submit" (click)="setVisible()"
                 class="flex-1 flex items-center gap-2 justify-center py-3 px-6 rounded-xl font-semibold
                       bg-gradient-to-r from-cyan-300 to-blue-300 text-[#162233]
                       hover:shadow-md hover:scale-105 transition-all duration-300
